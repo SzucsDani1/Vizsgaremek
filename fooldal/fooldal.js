@@ -1,4 +1,0 @@
-function alapBetoltes(){
-    //Kártyák betöltése
-    
-}
