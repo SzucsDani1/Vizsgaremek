@@ -78,35 +78,51 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+           
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                      <label class="form-label">e-mail cím</label>
-                      <input type="email" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Jelszó</label>
-                      <input type="password" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Jelszó újra</label>
-                        <input type="password" class="form-control">
-                      </div>
-                    <div class="mb-3">
-                        <label class="form-label">Felhasználónév</label>
-                        <input type="text" class="form-control">
-                    </div>
-                  </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
-                <button type="button" class="btn btn-primary">Regisztráció</button>
-            </div>
+                        <label class="form-label">e-mail cím</label>
+                        <input type="email" class="form-control" id ="email" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Jelszó</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Jelszó újra</label>
+                            <input type="password" class="form-control" id = "passwordMegint">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Felhasználónév</label>
+                            <input type="text" class="form-control" id="felhasznalonev">
+                        </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+                    <button type="button" class="btn btn-primary" id = "regisztral">Regisztráció</button>
+                </div>
+                </form>
+          
         </div>
     </div>
     </div>
     <!--END FELUGRÓ ABLAK-->
     
+    <!-- bejelentkezés WIP!!!!-->
+    <div>
+        <?php 
+            if(isset($_POST[""])){
+                if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["passwordAgain"]) && !empty($_POST["felhasznalonev"])){
+                    echo "a";
+                }
+                else{
+                    echo '<script>alert("Kérem minden adatott adjon meg!")</script>';
+                }
+            }
+        ?>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -117,5 +133,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 
+    <script src="./bejelentkezes.js"></script>
+
 </body>
 </html>
+
