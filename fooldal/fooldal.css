@@ -37,11 +37,12 @@
    max-width: 50%;
 }
 
-.kereses{
-    margin-top: 20px;
-}
 
 legend {
     padding: 5px 10px;
     background-color: rgb(202, 202, 202);
   }
+
+#fieldset {
+    width: 80%;
+}

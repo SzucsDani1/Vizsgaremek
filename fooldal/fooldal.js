@@ -103,7 +103,6 @@ function kartyaBetoltes(){
 
     for(let recept of receptek){
         //Kártya generálás
-
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
