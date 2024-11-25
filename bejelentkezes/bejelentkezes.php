@@ -27,28 +27,29 @@
 
     <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                <input type="text" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
+        <form method="get">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
+                </div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                <input type="text" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
+                </div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                <button type="button" class="btn btn-outline-primary btn-md w-100 inputMezo">Bejelentkezés</button>
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 inputMezo" />
+                </div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-        </div>
-        
+            </form>
     </div>
     <!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
 
@@ -82,8 +83,9 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label class="form-label">e-mail cím</label>
-                        <input type="email" class="form-control" id ="email" >
+                    <div class="mb-3">
+                            <label class="form-label">Felhasználónév</label>
+                            <input type="text" class="form-control" id="felhasznalonev">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jelszó</label>
@@ -93,10 +95,9 @@
                             <label for="exampleInputPassword1" class="form-label">Jelszó újra</label>
                             <input type="password" class="form-control" id = "passwordMegint">
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Felhasználónév</label>
-                            <input type="text" class="form-control" id="felhasznalonev">
-                        </div>
+                        <label class="form-label">e-mail cím</label>
+                        <input type="email" class="form-control" id ="email" >
+                        </div>                        
                     
                 </div>
                 <div class="modal-footer">
@@ -113,13 +114,8 @@
     <!-- bejelentkezés WIP!!!!-->
     <div>
         <?php 
-            if(isset($_POST[""])){
-                if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["passwordAgain"]) && !empty($_POST["felhasznalonev"])){
-                    echo "a";
-                }
-                else{
-                    echo '<script>alert("Kérem minden adatott adjon meg!")</script>';
-                }
+            if(isset($_GET["bejelentkezes"])){
+                echo "Szia;";
             }
         ?>
     </div>

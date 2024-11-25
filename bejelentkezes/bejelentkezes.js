@@ -20,6 +20,7 @@ async function regisztracio(){
             })
             let valasz = await kuldes.json();
             console.log(valasz)
+            alert(valasz["message"]);
         } catch (error) {
             console.log(error);
         }

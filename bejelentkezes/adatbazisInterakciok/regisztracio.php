@@ -1,4 +1,23 @@
 <?php 
+
+function adatokLekerdezese($muvelet) {
+    $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
+    if ($db->connect_errno == 0 ) {
+        $eredmeny = $db->query($muvelet);
+        if ($db->errno == 0) {
+            if ($eredmeny->num_rows != 0) {
+                return $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+            }
+            else {
+                return 'Nincs találat!';
+            }
+        }
+        return $db->error;
+    }
+    else {
+        return $db->connect_error;
+    }
+}
     function regisztracio($felhnev, $email, $jelszo) {
         
         $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
@@ -33,9 +52,15 @@
         $email = $adat['email'];
         $jelszo = password_hash($adat["jelszo"], PASSWORD_DEFAULT);
         
-    
-        // Call the insertData function
-        $valasz = regisztracio($felhnev, $email, $jelszo);
+        $muvelet = "SELECT * FROM `felhasznalok` where `felhasznalok`.`felhnev` LIKE '". $felhnev ."';";
+        $foglalt = adatokLekerdezese($muvelet);
+        if(is_array($foglalt)){
+            $valasz = ["message" => "Ez a felhasználónév foglalt. Kérjük válasszon másikat."];
+        }
+        else{
+            // Call the insertData function
+            $valasz =  ["message" => regisztracio($felhnev, $email, $jelszo)];
+        }
     } else {
         // Return an error message if required data is missing
         $valasz = ["message" => "Nem megfelelő adatok. Felhasználónév, email cím és jelszó kötelező."];
