@@ -4,7 +4,7 @@ async function regisztracio(){
     let felhasznalonev = document.getElementById("felhasznalonev").value;
     let email = document.getElementById("email").value;
 
-    if(jelszo.trim().length != 0 ||jelszoBiztos.trim().length != 0  ||felhasznalonev.trim().length != 0 ||email.trim().length != 0 ){
+    if(jelszo.trim().length != 0 && jelszoBiztos.trim().length != 0  && felhasznalonev.trim().length != 0 && email.trim().length != 0 && jelszo == jelszoBiztos){
         try {
             //./adatbazisInterakciok/adatbazisInterakciok.php
             let kuldes = await fetch("./adatbazisInterakciok/regisztracio.php", {
@@ -13,12 +13,12 @@ async function regisztracio(){
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "felhnev": felhasznalonev,
-                    "email": email,
-                    "jelszo" : jelszo
+                    felhnev: felhasznalonev,
+                    email: email,
+                    jelszo : jelszo
                 })
             })
-            let valasz = kuldes.json();
+            let valasz = await kuldes.json();
             console.log(valasz)
         } catch (error) {
             console.log(error);

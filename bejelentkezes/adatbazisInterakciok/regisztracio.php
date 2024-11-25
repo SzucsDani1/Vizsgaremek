@@ -4,7 +4,8 @@
         $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
         if ($db->connect_errno == 0 ) {
             //muvelet megírása
-            $muvelet = "";
+            $muvelet = "INSERT INTO `felhasznalok` (`id`, `felhnev`, `jelszo`, `joga_id`, `email`, `profilkep`, `letrehozas`, `feltoltot_receptek_szama`) 
+            VALUES (NULL, '". $felhnev ."', '". $jelszo ."', '2', '". $email ."', NULL, current_timestamp(), NULL);";
             $db->query($muvelet);
             if ($db->errno == 0) {
                 if ($db->affected_rows > 0) {
@@ -26,10 +27,11 @@
 
     $adat = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['felhnev']) && isset($data['email']) && isset($data['jelszo'])) {
-        $felhnev = $data['felhnev'];
-        $email = $data['email'];
-        $jelszo = password_hash($data["jelszo"], PASSWORD_DEFAULT);
+    
+    if (isset($adat['felhnev']) && isset($adat['email']) && isset($adat['jelszo'])) {
+        $felhnev = $adat['felhnev'];
+        $email = $adat['email'];
+        $jelszo = password_hash($adat["jelszo"], PASSWORD_DEFAULT);
         
     
         // Call the insertData function
