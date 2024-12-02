@@ -93,7 +93,7 @@ receptek = [{
 
 
 function kartyaBetoltes(receptek){
-    let divContainer = document.getElementById("kartyak");
+    let divContainer = document.getElementById("legujabbReceptekKartyak");
     divContainer.innerHTML = "";  
     let szamlalo = 0
 
