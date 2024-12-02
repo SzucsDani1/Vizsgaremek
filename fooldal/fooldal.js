@@ -94,6 +94,7 @@ receptek = [{
 
 function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
+    divContainer.innerHTML = "";  
     let szamlalo = 0
 
     let divRow = document.createElement("div");
@@ -102,6 +103,15 @@ function kartyaBetoltes(receptek){
     divContainer.innerHTML = "";
 
     divContainer.appendChild(divRow);
+
+
+    if (receptek.length === 0) {
+        divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
+        let p = document.createElement("p");
+        p.classList = "text-center text-muted";
+        p.innerHTML = "Nincs találat";
+        return;
+    }
 
 
     for(let recept of receptek){
@@ -158,9 +168,14 @@ function kartyaBetoltes(receptek){
 
 
 function kereses(){
-    //TODO
+    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
+    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
+    
+    kartyaBetoltes(szurtReceptek); 
 }
 
 
 document.getElementById("button_kereses").addEventListener("click", kereses)
-window.addEventListener("load", kartyaBetoltes(receptek));
+window.addEventListener("load", function() {
+    kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
+});
