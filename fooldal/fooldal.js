@@ -92,20 +92,24 @@ receptek = [{
 ]
 
 
-function kartyaBetoltes(){
+function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
     let szamlalo = 0
 
     let divRow = document.createElement("div");
     divRow.classList = "row";
+    
+    divContainer.innerHTML = "";
 
     divContainer.appendChild(divRow);
+
 
     for(let recept of receptek){
         //Kártya generálás
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
+        divCard.id = recept.nev;
 
         let img = document.createElement("img");
         img.src = recept.kep;
@@ -152,4 +156,11 @@ function kartyaBetoltes(){
 }
 
 
-window.addEventListener("load", kartyaBetoltes);
+
+function kereses(){
+    //TODO
+}
+
+
+document.getElementById("button_kereses").addEventListener("click", kereses)
+window.addEventListener("load", kartyaBetoltes(receptek));
