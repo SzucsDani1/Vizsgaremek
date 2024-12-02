@@ -1,3 +1,4 @@
+<?php include "./adatbazisInterakciok/adatbazisInterakciok.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,14 +32,16 @@
             <div class="row">
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <input type="text" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
+                    <!-- FELHASZNÁLÓVÉV -->
+                    <input type="text" name="Bejfelhasznalonev" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
                 </div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>
             <div class="row">
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <input type="text" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
+                    <!-- JELSZÓ -->
+                    <input type="text" name="Bejjelszo" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
                 </div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>
@@ -53,7 +56,42 @@
     </div>
     <!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
 
-
+<!-- bejelentkezés -->
+    <div>
+        <?php 
+            if(isset($_GET["bejelentkezes"])){
+                $felhasznalonev = $_GET["Bejfelhasznalonev"];
+                $jelszo = $_GET["Bejjelszo"];
+                if(!empty($felhasznalonev) && !empty($jelszo)){
+                    try {
+                        $muvelet = "SELECT `felhasznalok`.`id`, `felhasznalok`.`felhnev`, `felhasznalok`.`jelszo` FROM `felhasznalok` where `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
+                        $lekerdez = adatokLekerdezese($muvelet);
+                        if(is_array($lekerdez)){
+                            $lekertJelszo = $lekerdez[0]["jelszo"];
+                            if(password_verify($jelszo, $lekertJelszo)){
+                                echo "<h2>Sikeres bejelentkezés</h2>";
+                                $cookie_value = $lekerdez[0]["id"];
+                                setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
+                            }
+                            else{
+                                echo "<h2>Sikertelen bejelentkezés!</h2>";
+                            }
+                        }
+                        else{
+                            echo "<h2>Sikertelen bejelentkezés!</h2>";
+                        }
+                        
+                    }
+                    catch(Exception $e) {
+                        echo 'Message: ' .$e->getMessage();
+                    }
+                }
+                else{
+                    echo("<h2>Kérem minden adatott adjon meg!</h2>");
+                }
+            }
+            ?>
+    </div>
 
 
     <!--START FELUGRÓ ABLAK GOMBJA-->
@@ -85,18 +123,18 @@
                     <div class="mb-3">
                     <div class="mb-3">
                             <label class="form-label">Felhasználónév</label>
-                            <input type="text" class="form-control" id="felhasznalonev">
+                            <input type="text" class="form-control" id="Regfelhasznalonev">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jelszó</label>
-                            <input type="password" class="form-control" id="password">
+                            <input type="password" class="form-control" id="Regpassword">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Jelszó újra</label>
-                            <input type="password" class="form-control" id = "passwordMegint">
+                            <input type="password" class="form-control" id = "RegpasswordMegint">
                         </div>
                         <label class="form-label">e-mail cím</label>
-                        <input type="email" class="form-control" id ="email" >
+                        <input type="email" class="form-control" id ="Regemail" >
                         </div>                        
                     
                 </div>
@@ -111,14 +149,7 @@
     </div>
     <!--END FELUGRÓ ABLAK-->
     
-    <!-- bejelentkezés WIP!!!!-->
-    <div>
-        <?php 
-            if(isset($_GET["bejelentkezes"])){
-                echo "Szia;";
-            }
-        ?>
-    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

@@ -1,8 +1,8 @@
 async function regisztracio(){
-    let jelszo=document.getElementById("password").value;
-    let jelszoBiztos =document.getElementById("passwordMegint").value;
-    let felhasznalonev = document.getElementById("felhasznalonev").value;
-    let email = document.getElementById("email").value;
+    let jelszo=document.getElementById("Regpassword").value;
+    let jelszoBiztos =document.getElementById("RegpasswordMegint").value;
+    let felhasznalonev = document.getElementById("Regfelhasznalonev").value;
+    let email = document.getElementById("Regemail").value;
 
     if(jelszo.trim().length != 0 && jelszoBiztos.trim().length != 0  && felhasznalonev.trim().length != 0 && email.trim().length != 0 && jelszo == jelszoBiztos){
         try {

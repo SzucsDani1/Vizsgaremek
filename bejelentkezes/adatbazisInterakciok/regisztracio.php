@@ -1,6 +1,7 @@
 <?php 
 
 function adatokLekerdezese($muvelet) {
+    //adatbazisra kapcsolodás
     $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
     if ($db->connect_errno == 0 ) {
         $eredmeny = $db->query($muvelet);

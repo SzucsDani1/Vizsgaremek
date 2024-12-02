@@ -1,5 +1,5 @@
 <?php
-/*
+
 //SQL function lekérdezésekhez:
 function adatokLekerdezese($muvelet) {
     $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
@@ -18,7 +18,7 @@ function adatokLekerdezese($muvelet) {
     else {
         return $db->connect_error;
     }
-}*/
+}
 
 
 //SQL function módosításhoz:
@@ -44,5 +44,6 @@ function adatokValtoztatasa($muvelet) {
         return $db->connect_error;
     }
 }
+
 
 ?>
