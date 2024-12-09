@@ -42,7 +42,7 @@
           </div>
         </div>
       </nav>
-    <!--VÉGE NAVBAR-->    
+    <!--END NAVBAR-->    
 
 
      <!--START CAROUSEL-->
@@ -92,10 +92,10 @@
                     <!-- Kategóriák szűrő -->
                     <div class="dropdown">
                         <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Kategóriák
+                            Ételfajta
                         </button>
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="etelfajta">
+                        <!--<li>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox">
                             <label class="form-check-label">Levesek</label>
@@ -113,6 +113,7 @@
                             <label class="form-check-label">Desszertek</label>
                         </div>
                         </li>
+                      -->
                     </ul>
                     </div>
 
