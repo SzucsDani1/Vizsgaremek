@@ -43,6 +43,7 @@
         </div>
       </nav>
     <!--END NAVBAR-->    
+    <!--END NAVBAR-->    
 
 
      <!--START CAROUSEL-->
@@ -94,7 +95,25 @@
                         <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             Ételfajta
                         </button>
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="etelfajta">
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                        <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">Levesek</label>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">Főételek</label>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">Desszertek</label>
+                        </div>
+                        </li>
                     </ul>
                     </div>-->
 

@@ -112,6 +112,64 @@ async function etelfajtaBetoltes(){
 
 async function nehezsegLekeres(){
     try{
+        let eredmeny = await fetch("/nehezseg");
+        if(eredmeny.ok){
+            let nehezseg = await eredmeny.json;
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+function etelfajtaGeneralas(etelfajtak){
+    let ul = document.getElementById("etelfajta");
+    for(let etelfajta of etelfajtak){
+        //A szűrésnél az ételfajták betöltése
+        let li = document.createElement("li");
+
+        let div = document.createElement("div");
+        div.classList = "form-check";
+
+        let input = document.createElement("input");
+        input.classList = "form-check-input";
+        input.type = "checkbox";
+        input.id = etelfajta.neve;
+
+        let label = document.createElement("label");
+        label.classList = "form-check-label";
+        label.innerHTML = etelfajta.neve;
+        label.htmlFor = etelfajta.neve
+
+        ul.appendChild(li);
+        li.appendChild(div);
+
+        div.appendChild(input);
+        div.appendChild(label);
+    }
+}
+
+async function etelfajtaBetoltes(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            let etelfajta = await eredmeny.json();
+            console.log(etelfajta);
+            etelfajtaGeneralas(etelfajta);
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+
+async function nehezsegLekeres(){
+    try{
         let eredmeny = await fetch("./nehezseg");
         if(eredmeny.ok){
             let nehezseg = await eredmeny.json;
@@ -216,6 +274,7 @@ function kartyaBetoltes(receptek){
         divCard.style = "width: 18rem;";
         divCard.id = recept.nev;
 
+        //Kép generálása
         //Kép generálása
         let img = document.createElement("img");
         img.src = recept.kep;
@@ -410,7 +469,3 @@ document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
-window.addEventListener("load", etelfajtaBetoltes)
-
-document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
-window.addEventListener("load", nehezsegFigyel)
