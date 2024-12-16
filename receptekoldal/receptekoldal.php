@@ -42,7 +42,7 @@
           </div>
         </div>
       </nav>
-    <!--VÉGE NAVBAR-->    
+    <!--END NAVBAR-->    
 
 
      <!--START CAROUSEL-->
@@ -90,36 +90,27 @@
                     <hr>
 
                     <!-- Kategóriák szűrő -->
-                    <div class="dropdown">
+                    <!--<div class="dropdown">
                         <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Kategóriák
+                            Ételfajta
                         </button>
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Levesek</label>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Főételek</label>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Desszertek</label>
-                        </div>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="etelfajta">
                     </ul>
-                    </div>
+                    </div>-->
+
+                    <div class="mb-3">
+    <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
+    <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
+</div>
+<ul class="list-group" id="kategoriakLista"></ul>
+<div class="mt-3" id="kivalasztottKategoriak"></div>
+
 
                     <!-- Nehézségi szint szűrő -->
                     <div class="mb-3">
                         <label class="form-label">Nehézségi szint</label>
-                        <input type="range" class="form-range" min="0" max="10" step="1">
+                        <input type="range" class="form-range" id="nehezsegInput" min="0" max="2" step="1">
+                        <div id="nehezsegFigyel" class="form-text"></div>
                     </div>
 
                     <!-- Elkészítési idő szűrő -->
@@ -130,20 +121,12 @@
                     </div>
 
                     <!-- Checkbox szűrő -->
-                    <div class="mb-3">
-                        <h6>Speciális igények</h6>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Gluténmentes</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Laktózmentes</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Vegán</label>
-                        </div>
+                    <div class="dropdown">
+                        <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Speciális igények
+                        </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
+                    </ul>
                     </div>
 
                     <!-- Szűrés gomb -->

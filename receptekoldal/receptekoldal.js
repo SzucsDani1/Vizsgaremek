@@ -91,6 +91,101 @@ receptek = [{
 
 ]
 
+async function etelfajtaBetoltes(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            let etelfajta = await eredmeny.json();
+            console.log(etelfajta);
+            etelfajtaGeneralas(etelfajta);
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+
+async function nehezsegLekeres(){
+    try{
+        let eredmeny = await fetch("./nehezseg");
+        if(eredmeny.ok){
+            let nehezseg = await eredmeny.json;
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+function nehezsegFigyel(){
+    let range = document.getElementById("nehezsegInput").value;
+    let kiir = document.getElementById("nehezsegFigyel");
+    if(range == 0){
+        kiir.innerHTML = "Könnyű";
+    }
+    if(range == 1){
+        kiir.innerHTML = "Közepes";
+    }
+    if(range == 2){
+        kiir.innerHTML = "Nehéz";
+    }
+}
+
+
+
+function etelfajtaGeneralas(etelfajtak){
+    let ul = document.getElementById("etelfajta");
+    for(let etelfajta of etelfajtak){
+        //A szűrésnél az ételfajták betöltése
+        let li = document.createElement("li");
+
+        let div = document.createElement("div");
+        div.classList = "form-check";
+
+        let input = document.createElement("input");
+        input.classList = "form-check-input";
+        input.type = "checkbox";
+        input.id = etelfajta.neve;
+
+        let label = document.createElement("label");
+        label.classList = "form-check-label";
+        label.innerHTML = etelfajta.neve;
+        label.htmlFor = etelfajta.neve
+
+        ul.appendChild(li);
+        li.appendChild(div);
+
+        div.appendChild(input);
+        div.appendChild(label);
+    }
+}
+
+
+async function sepicalisIgenyekLekeres(){
+    try{
+        let eredmeny = await fetch("./specialisIgenyek");
+        if(eredmeny.ok){
+            specialisIgenyekBetoltes();
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+function specialisIgenyekBetoltes(){
+
+}
 
 function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
@@ -121,6 +216,7 @@ function kartyaBetoltes(receptek){
         divCard.style = "width: 18rem;";
         divCard.id = recept.nev;
 
+        //Kép generálása
         let img = document.createElement("img");
         img.src = recept.kep;
         img.classList = "card-img-top";
@@ -128,6 +224,7 @@ function kartyaBetoltes(receptek){
         img.width = 250
         img.height = 200
 
+        //Body rész generálása
         let divCardBody = document.createElement("div");
         divCardBody.classList = "card-body";
 
@@ -144,6 +241,7 @@ function kartyaBetoltes(receptek){
 
         let br = document.createElement("br");
 
+        //Gomb generálása
         let inputButton = document.createElement("input");
         inputButton.type = "button";
         inputButton.classList = "btn btn-primary";
@@ -175,7 +273,144 @@ function kereses(){
 }
 
 
+
+
+
+document.addEventListener("DOMContentLoaded", inicializalas);
+
+function inicializalas() {
+    var kategoriak = inicializalKategoriakat();
+    inicializalKeresest();
+    elrejtKategoriaListatKikattintasra();
+}
+
+function inicializalKategoriakat() {
+    return ["Levesek", "Főételek", "Desszertek", "Vegetáriánus ételek", "Péksütemények", "Saláták", "Kenyérfélék", "Tésztafélék"];
+}
+
+function kategoriakListajanakGeneralasa(kategoriak) {
+    var listaElem = document.getElementById("kategoriakLista");
+    listaElem.innerHTML = "";
+    kategoriak.forEach(function(kategoria) {
+        var li = letrehozListaElemet(kategoria);
+        listaElem.appendChild(li);
+    });
+}
+
+function letrehozListaElemet(kategoria) {
+    var li = document.createElement("li");
+    li.classList.add("list-group-item");
+    
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("btn-check");
+    checkbox.id = "checkbox-" + kategoria;
+    
+    var label = document.createElement("label");
+    label.classList.add("btn", "btn-outline-primary");
+    label.setAttribute("for", "checkbox-" + kategoria);
+    label.textContent = kategoria;
+    
+    li.appendChild(checkbox);
+    li.appendChild(label);
+    
+    checkbox.addEventListener("change", function() {
+        if (checkbox.checked) {
+            hozzaadKivalasztottKategoriat(kategoria);
+        } else {
+            eltavolitKivalasztottKategoriat(kategoria);
+        }
+    });
+    
+    return li;
+}
+
+function inicializalKeresest() {
+    var keresomezo = document.getElementById("kategoriakSearch");
+    keresomezo.addEventListener("input", function() {
+        var keresesiKifejezes = keresomezo.value.toLowerCase();
+        if (keresesiKifejezes) {
+            var kategoriak = inicializalKategoriakat();
+            kategoriakListajanakGeneralasa(kategoriak);
+            szuresiFunkcio(keresesiKifejezes);
+        } else {
+            document.getElementById("kategoriakLista").innerHTML = "";
+        }
+    });
+
+    keresomezo.addEventListener("focus", function() {
+        var keresesiKifejezes = keresomezo.value.toLowerCase();
+        if (keresesiKifejezes) {
+            var kategoriak = inicializalKategoriakat();
+            kategoriakListajanakGeneralasa(kategoriak);
+            szuresiFunkcio(keresesiKifejezes);
+        }
+    });
+}
+
+function szuresiFunkcio(keresesiKifejezes) {
+    var listaElemei = document.querySelectorAll("#kategoriakLista li");
+    listaElemei.forEach(function(elem) {
+        megjelenitVagyElrejtElemet(elem, keresesiKifejezes);
+    });
+}
+
+function megjelenitVagyElrejtElemet(elem, keresesiKifejezes) {
+    var kategoriaSzoveg = elem.textContent.toLowerCase();
+    elem.style.display = kategoriaSzoveg.includes(keresesiKifejezes) ? "block" : "none";
+}
+
+function hozzaadKivalasztottKategoriat(kategoria) {
+    var kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("btn-check");
+    checkbox.id = "kivalasztott-" + kategoria;
+    checkbox.checked = true;
+    checkbox.addEventListener("change", function() {
+        if (!checkbox.checked) {
+            eltavolitKivalasztottKategoriat(kategoria);
+            document.getElementById("checkbox-" + kategoria).checked = false;
+        }
+    });
+    
+    var label = document.createElement("label");
+    label.classList.add("btn", "btn-outline-primary");
+    label.setAttribute("for", "kivalasztott-" + kategoria);
+    label.textContent = kategoria;
+    
+    kivalasztottContainer.appendChild(checkbox);
+    kivalasztottContainer.appendChild(label);
+}
+
+function eltavolitKivalasztottKategoriat(kategoria) {
+    var checkbox = document.getElementById("kivalasztott-" + kategoria);
+    var label = checkbox ? checkbox.nextSibling : null;
+    if (checkbox && label) {
+        checkbox.remove();
+        label.remove();
+    }
+}
+
+function elrejtKategoriaListatKikattintasra() {
+    document.addEventListener("click", function(e) {
+        var keresomezo = document.getElementById("kategoriakSearch");
+        var kategoriakLista = document.getElementById("kategoriakLista");
+        if (!keresomezo.contains(e.target) && !kategoriakLista.contains(e.target)) {
+            kategoriakLista.innerHTML = "";
+        }
+    });
+}
+
+
+
+
+
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
+window.addEventListener("load", etelfajtaBetoltes)
+
+document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
+window.addEventListener("load", nehezsegFigyel)

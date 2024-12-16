@@ -49,3 +49,22 @@
   .filter-box hr {
     margin: 1rem 0;
   }
+
+
+
+  #kategoriakSearch {
+    margin-bottom: 10px;
+  }
+  #kategoriakLista li {
+    display: none; /* Kezdetben rejtve van, majd JavaScript megjeleníti */
+    border-top: none;
+    border-right: none;
+    border-left: none;
+  }
+  .kijelolt {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  #kivalasztottKategoriak .btn-check + .btn {
+    margin-right: 5px;
+  }
