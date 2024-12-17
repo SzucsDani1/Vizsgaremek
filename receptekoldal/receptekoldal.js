@@ -275,7 +275,6 @@ function kartyaBetoltes(receptek){
         divCard.id = recept.nev;
 
         //Kép generálása
-        //Kép generálása
         let img = document.createElement("img");
         img.src = recept.kep;
         img.classList = "card-img-top";
@@ -338,40 +337,44 @@ function kereses(){
 document.addEventListener("DOMContentLoaded", inicializalas);
 
 function inicializalas() {
-    var kategoriak = inicializalKategoriakat();
-    inicializalKeresest();
+    let kategoriak = kategoriakLista();
+    keresesMukodtet();
     elrejtKategoriaListatKikattintasra();
 }
 
-function inicializalKategoriakat() {
+function kategoriakLista() {
     return ["Levesek", "Főételek", "Desszertek", "Vegetáriánus ételek", "Péksütemények", "Saláták", "Kenyérfélék", "Tésztafélék"];
 }
 
 function kategoriakListajanakGeneralasa(kategoriak) {
-    var listaElem = document.getElementById("kategoriakLista");
+    let listaElem = document.getElementById("kategoriakLista");
     listaElem.innerHTML = "";
-    kategoriak.forEach(function(kategoria) {
-        var li = letrehozListaElemet(kategoria);
-        listaElem.appendChild(li);
-    });
+    for (let kategoria of kategoriak) {
+        let elem = letrehozListaElemet(kategoria);
+        listaElem.appendChild(elem);
+    }
 }
 
 function letrehozListaElemet(kategoria) {
-    var li = document.createElement("li");
-    li.classList.add("list-group-item");
+    let div = document.createElement("div");
+    div.classList.add("dropdown-item");
     
-    var checkbox = document.createElement("input");
+    let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("btn-check");
     checkbox.id = "checkbox-" + kategoria;
     
-    var label = document.createElement("label");
+    let label = document.createElement("label");
     label.classList.add("btn", "btn-outline-primary");
     label.setAttribute("for", "checkbox-" + kategoria);
     label.textContent = kategoria;
     
-    li.appendChild(checkbox);
-    li.appendChild(label);
+    div.appendChild(checkbox);
+    div.appendChild(label);
+    
+    if (document.getElementById("kivalasztott-" + kategoria)) {
+        checkbox.checked = true;
+    }
     
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
@@ -381,88 +384,114 @@ function letrehozListaElemet(kategoria) {
         }
     });
     
-    return li;
+    return div;
 }
 
-function inicializalKeresest() {
-    var keresomezo = document.getElementById("kategoriakSearch");
+function keresesMukodtet() {
+    let keresomezo = document.getElementById("kategoriakSearch");
     keresomezo.addEventListener("input", function() {
-        var keresesiKifejezes = keresomezo.value.toLowerCase();
-        if (keresesiKifejezes) {
-            var kategoriak = inicializalKategoriakat();
-            kategoriakListajanakGeneralasa(kategoriak);
-            szuresiFunkcio(keresesiKifejezes);
-        } else {
-            document.getElementById("kategoriakLista").innerHTML = "";
-        }
+        inditsKeresest(keresomezo);
     });
-
     keresomezo.addEventListener("focus", function() {
-        var keresesiKifejezes = keresomezo.value.toLowerCase();
-        if (keresesiKifejezes) {
-            var kategoriak = inicializalKategoriakat();
-            kategoriakListajanakGeneralasa(kategoriak);
-            szuresiFunkcio(keresesiKifejezes);
-        }
+        inditsKeresest(keresomezo);
     });
+}
+
+function inditsKeresest(keresomezo) {
+    let keresesiKifejezes = keresomezo.value.toLowerCase();
+    let dropdownMenu = document.getElementById("kategoriakLista");
+    if (keresesiKifejezes) {
+        let kategoriak = kategoriakLista();
+        kategoriakListajanakGeneralasa(kategoriak);
+        szuresiFunkcio(keresesiKifejezes);
+        dropdownMenu.style.display = "block";
+    } else {
+        dropdownMenu.style.display = "none";
+    }
 }
 
 function szuresiFunkcio(keresesiKifejezes) {
-    var listaElemei = document.querySelectorAll("#kategoriakLista li");
-    listaElemei.forEach(function(elem) {
-        megjelenitVagyElrejtElemet(elem, keresesiKifejezes);
-    });
+    let listaElemei = document.querySelectorAll("#kategoriakLista .dropdown-item");
+    let talalatVan = false;
+
+    for (let elem of listaElemei) {
+        let kategoriaSzoveg = elem.textContent.toLowerCase();
+        if (kategoriaSzoveg.includes(keresesiKifejezes)) {
+            elem.style.display = "block";
+            talalatVan = true;
+        } else {
+            elem.style.display = "none";
+        }
+    }
+
+    // Ha nincs találat, jelenjen meg a "Nincs találat" szöveg
+    let dropdownMenu = document.getElementById("kategoriakLista");
+    let nincsTalalatElem = document.getElementById("nincsTalalat");
+
+    if (!talalatVan) {
+        if (!nincsTalalatElem) {
+            nincsTalalatElem = document.createElement("div");
+            nincsTalalatElem.id = "nincsTalalat";
+            nincsTalalatElem.textContent = "Nincs találat";
+            nincsTalalatElem.style.color = "red";
+            nincsTalalatElem.style.textAlign = "center";
+            dropdownMenu.appendChild(nincsTalalatElem);
+        }
+        nincsTalalatElem.style.display = "block";
+    } else if (nincsTalalatElem) {
+        nincsTalalatElem.style.display = "none";
+    }
 }
 
+
 function megjelenitVagyElrejtElemet(elem, keresesiKifejezes) {
-    var kategoriaSzoveg = elem.textContent.toLowerCase();
+    let kategoriaSzoveg = elem.textContent.toLowerCase();
     elem.style.display = kategoriaSzoveg.includes(keresesiKifejezes) ? "block" : "none";
 }
 
 function hozzaadKivalasztottKategoriat(kategoria) {
-    var kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("btn-check");
-    checkbox.id = "kivalasztott-" + kategoria;
-    checkbox.checked = true;
-    checkbox.addEventListener("change", function() {
-        if (!checkbox.checked) {
+    if (!document.getElementById("kivalasztott-" + kategoria)) {
+        let kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
+
+        // Létrehozzuk a "tag"-et
+        let tag = document.createElement("div");
+        tag.classList.add("kivalasztott-tag", "badge", "bg-primary", "me-2", "mb-2");
+        tag.id = "kivalasztott-" + kategoria;
+        tag.textContent = kategoria;
+
+        // Hozzáadunk egy törlés (x) gombot
+        let removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
+        removeBtn.setAttribute("aria-label", "Törlés");
+        removeBtn.addEventListener("click", function () {
             eltavolitKivalasztottKategoriat(kategoria);
             document.getElementById("checkbox-" + kategoria).checked = false;
-        }
-    });
-    
-    var label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-primary");
-    label.setAttribute("for", "kivalasztott-" + kategoria);
-    label.textContent = kategoria;
-    
-    kivalasztottContainer.appendChild(checkbox);
-    kivalasztottContainer.appendChild(label);
-}
+        });
 
-function eltavolitKivalasztottKategoriat(kategoria) {
-    var checkbox = document.getElementById("kivalasztott-" + kategoria);
-    var label = checkbox ? checkbox.nextSibling : null;
-    if (checkbox && label) {
-        checkbox.remove();
-        label.remove();
+        tag.appendChild(removeBtn);
+        kivalasztottContainer.appendChild(tag);
     }
 }
 
+
 function elrejtKategoriaListatKikattintasra() {
-    document.addEventListener("click", function(e) {
-        var keresomezo = document.getElementById("kategoriakSearch");
-        var kategoriakLista = document.getElementById("kategoriakLista");
-        if (!keresomezo.contains(e.target) && !kategoriakLista.contains(e.target)) {
-            kategoriakLista.innerHTML = "";
+    let keresomezo = document.getElementById("kategoriakSearch");
+    let kategoriakDropdown = document.getElementById("kategoriakLista");
+
+    document.addEventListener("click", function(event) {
+        if (!keresomezo.contains(event.target) && !kategoriakDropdown.contains(event.target)) {
+            kategoriakDropdown.style.display = "none";
         }
     });
 }
 
-
-
+function eltavolitKivalasztottKategoriat(kategoria) {
+    let tag = document.getElementById("kivalasztott-" + kategoria);
+    if (tag) {
+        tag.remove();
+    }
+}
 
 
 document.getElementById("button_kereses").addEventListener("click", kereses)

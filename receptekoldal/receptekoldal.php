@@ -43,7 +43,6 @@
         </div>
       </nav>
     <!--END NAVBAR-->    
-    <!--END NAVBAR-->    
 
 
      <!--START CAROUSEL-->
@@ -117,11 +116,14 @@
                     </ul>
                     </div>-->
 
+                    <!--Kategóriák szűrése-->
                     <div class="mb-3">
     <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
     <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
 </div>
-<ul class="list-group" id="kategoriakLista"></ul>
+<div class="dropdown" id="kategoriakDropdown">
+    <div class="dropdown-menu" id="kategoriakLista"></div>
+</div>
 <div class="mt-3" id="kivalasztottKategoriak"></div>
 
 
