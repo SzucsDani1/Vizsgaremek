@@ -118,13 +118,13 @@
 
                     <!--Kategóriák szűrése-->
                     <div class="mb-3">
-    <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
-    <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
-</div>
-<div class="dropdown" id="kategoriakDropdown">
-    <div class="dropdown-menu" id="kategoriakLista"></div>
-</div>
-<div class="mt-3" id="kivalasztottKategoriak"></div>
+                      <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
+                      <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
+                    </div>
+                    <div class="dropdown" id="kategoriakDropdown">
+                      <div class="dropdown-menu" id="kategoriakLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottKategoriak"></div>
 
 
                     <!-- Nehézségi szint szűrő -->
