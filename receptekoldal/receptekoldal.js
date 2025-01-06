@@ -1,3 +1,6 @@
+let kategoriak = new Set();
+
+
 receptek = [{
     "nev" : "Palacsinta",
     "kaloria" : 100,
@@ -146,23 +149,6 @@ function etelfajtaGeneralas(etelfajtak){
 
         div.appendChild(input);
         div.appendChild(label);
-    }
-}
-
-async function etelfajtaBetoltes(){
-    try{
-        let eredmeny = await fetch("./etelfajta");
-        if(eredmeny.ok){
-            let etelfajta = await eredmeny.json();
-            console.log(etelfajta);
-            etelfajtaGeneralas(etelfajta);
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
     }
 }
 
@@ -332,17 +318,33 @@ function kereses(){
 
 
 
-function inicializalas() {
+function inicializalas(){
     let kategoriak = kategoriakLista();
     keresesMukodtet();
     elrejtKategoriaKeresesiTalalatokKattintasra();
 }
 
-function kategoriakLista() {
-    return ["Levesek", "Főételek", "Desszertek", "Vegetáriánus ételek", "Péksütemények", "Saláták", "Kenyérfélék", "Tésztafélék"];
+
+async function kategoriakLista(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const kategoria of lista){
+                kategoriak.add(kategoria.neve)
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
-function kategoriakListajanakGeneralasa(kategoriak) {
+
+function kategoriakListajanakGeneralasa() {
     let listaElem = document.getElementById("kategoriakLista");
     listaElem.innerHTML = "";
     for (let kategoria of kategoriak) {
@@ -489,6 +491,7 @@ function eltavolitKivalasztottKategoriat(kategoria) {
 //Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
 document.addEventListener("DOMContentLoaded", inicializalas);
 
+window.addEventListener("load", kategoriakLista)
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
