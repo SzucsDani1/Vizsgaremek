@@ -89,33 +89,6 @@
                     <h4>Szűrés</h4>
                     <hr>
 
-                    <!-- Kategóriák szűrő -->
-                    <!--<div class="dropdown">
-                        <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Ételfajta
-                        </button>
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Levesek</label>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Főételek</label>
-                        </div>
-                        </li>
-                        <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Desszertek</label>
-                        </div>
-                        </li>
-                    </ul>
-                    </div>-->
-
                     <!--Kategóriák szűrése-->
                     <div class="mb-3">
                       <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>

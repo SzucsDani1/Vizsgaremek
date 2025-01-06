@@ -332,14 +332,10 @@ function kereses(){
 
 
 
-
-
-document.addEventListener("DOMContentLoaded", inicializalas);
-
 function inicializalas() {
     let kategoriak = kategoriakLista();
     keresesMukodtet();
-    elrejtKategoriaListatKikattintasra();
+    elrejtKategoriaKeresesiTalalatokKattintasra();
 }
 
 function kategoriakLista() {
@@ -376,6 +372,7 @@ function letrehozListaElemet(kategoria) {
         checkbox.checked = true;
     }
     
+    // Elindítja az adott függvényt a checkbox változtatásakor
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
             hozzaadKivalasztottKategoriat(kategoria);
@@ -400,6 +397,7 @@ function keresesMukodtet() {
 function inditsKeresest(keresomezo) {
     let keresesiKifejezes = keresomezo.value.toLowerCase();
     let dropdownMenu = document.getElementById("kategoriakLista");
+
     if (keresesiKifejezes) {
         let kategoriak = kategoriakLista();
         kategoriakListajanakGeneralasa(kategoriak);
@@ -424,7 +422,6 @@ function szuresiFunkcio(keresesiKifejezes) {
         }
     }
 
-    // Ha nincs találat, jelenjen meg a "Nincs találat" szöveg
     let dropdownMenu = document.getElementById("kategoriakLista");
     let nincsTalalatElem = document.getElementById("nincsTalalat");
 
@@ -444,22 +441,17 @@ function szuresiFunkcio(keresesiKifejezes) {
 }
 
 
-function megjelenitVagyElrejtElemet(elem, keresesiKifejezes) {
-    let kategoriaSzoveg = elem.textContent.toLowerCase();
-    elem.style.display = kategoriaSzoveg.includes(keresesiKifejezes) ? "block" : "none";
-}
-
 function hozzaadKivalasztottKategoriat(kategoria) {
     if (!document.getElementById("kivalasztott-" + kategoria)) {
         let kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
 
-        // Létrehozzuk a "tag"-et
+        // div létrehozása
         let tag = document.createElement("div");
         tag.classList.add("kivalasztott-tag", "badge", "bg-primary", "me-2", "mb-2");
         tag.id = "kivalasztott-" + kategoria;
         tag.textContent = kategoria;
 
-        // Hozzáadunk egy törlés (x) gombot
+        // x törlés gomb hozzáadása
         let removeBtn = document.createElement("button");
         removeBtn.type = "button";
         removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
@@ -475,7 +467,7 @@ function hozzaadKivalasztottKategoriat(kategoria) {
 }
 
 
-function elrejtKategoriaListatKikattintasra() {
+function elrejtKategoriaKeresesiTalalatokKattintasra() {
     let keresomezo = document.getElementById("kategoriakSearch");
     let kategoriakDropdown = document.getElementById("kategoriakLista");
 
@@ -493,6 +485,9 @@ function eltavolitKivalasztottKategoriat(kategoria) {
     }
 }
 
+
+//Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
+document.addEventListener("DOMContentLoaded", inicializalas);
 
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
