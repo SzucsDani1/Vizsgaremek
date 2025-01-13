@@ -113,18 +113,6 @@ async function etelfajtaBetoltes(){
 
 
 
-async function nehezsegLekeres(){
-    try{
-        let eredmeny = await fetch("/nehezseg");
-        if(eredmeny.ok){
-            let nehezseg = await eredmeny.json;
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
 function etelfajtaGeneralas(etelfajtak){
     let ul = document.getElementById("etelfajta");
     for(let etelfajta of etelfajtak){
@@ -169,9 +157,10 @@ async function nehezsegLekeres(){
 
 function nehezsegFigyel(){
     let range = document.getElementById("nehezsegInput").value;
-    let kiir = document.getElementById("nehezsegFigyel");
+    let kiir = document.getElementById("nehezsegKiir");
     if(range == 0){
         kiir.innerHTML = "Könnyű";
+        
     }
     if(range == 1){
         kiir.innerHTML = "Közepes";
@@ -227,9 +216,6 @@ async function sepicalisIgenyekLekeres(){
 }
 
 
-function specialisIgenyekBetoltes(){
-
-}
 
 function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
@@ -490,7 +476,6 @@ function eltavolitKivalasztottKategoriat(kategoria) {
 
 //Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
 document.addEventListener("DOMContentLoaded", inicializalas);
-
 window.addEventListener("load", kategoriakLista)
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {

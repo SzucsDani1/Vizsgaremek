@@ -103,8 +103,8 @@
                     <!-- Nehézségi szint szűrő -->
                     <div class="mb-3">
                         <label class="form-label">Nehézségi szint</label>
-                        <input type="range" class="form-range" id="nehezsegInput" min="0" max="2" step="1">
-                        <div id="nehezsegFigyel" class="form-text"></div>
+                        <input type="range" class="form-range" id="nehezsegInput" onchange="nehezsegFigyel()" value="1" min="0" max="2" step="1">
+                        <div id="nehezsegKiir" class="form-text"></div>
                     </div>
 
                     <!-- Elkészítési idő szűrő -->
