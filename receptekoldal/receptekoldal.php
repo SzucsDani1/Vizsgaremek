@@ -103,7 +103,7 @@
                     <!-- Nehézségi szint szűrő -->
                     <div class="mb-3">
                         <label class="form-label">Nehézségi szint</label>
-                        <input type="range" class="form-range" id="nehezsegInput" onchange="nehezsegFigyel()" value="1" min="0" max="2" step="1">
+                        <input type="range" class="form-range" id="nehezsegInput" value="1" min="0" max="2" step="1">
                         <div id="nehezsegKiir" class="form-text"></div>
                     </div>
 
@@ -114,6 +114,35 @@
                         <input type="number" class="form-control mt-2" placeholder="Max idő">
                     </div>
 
+
+                    <!-- Napszak szűrő -->
+                    <div class="btn-group d-flex flex-wrap" role="group">
+                      <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off">
+                      <label class="btn btn-outline-primary flex-fill" for="napszakReggeli">Reggeli</label>
+
+                      <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off">
+                      <label class="btn btn-outline-primary flex-fill" for="napszakTizorai">Tízórai</label>
+
+                      <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off">
+                      <label class="btn btn-outline-primary flex-fill" for="napszakEbed">Ebéd</label>
+
+                      <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off">
+                      <label class="btn btn-outline-primary flex-fill" for="napszakUzsonna">Uzsonna</label>
+
+                      <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off">
+                      <label class="btn btn-outline-primary flex-fill" for="napszakVacsora">Vacsora</label>
+                    </div>
+
+                    <!--Kategóriák szűrése-->
+                    <div class="mb-3">
+                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
+                      <input type="text" class="form-control" id="AlapanyagSearch" placeholder="Keresés a kategóriák között...">
+                    </div>
+                    <div class="dropdown" id="kategoriakDropdown">
+                      <div class="dropdown-menu" id="kategoriakLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottKategoriak"></div>
+
                     <!-- Checkbox szűrő -->
                     <div class="dropdown">
                         <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -122,6 +151,7 @@
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
                     </ul>
                     </div>
+
 
                     <!-- Szűrés gomb -->
                     <button class="btn btn-primary w-100" id="szures_gomb">Szűrés</button>

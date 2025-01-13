@@ -1,5 +1,5 @@
 let kategoriak = new Set();
-
+let alapanyagok = new Set();
 
 receptek = [{
     "nev" : "Palacsinta",
@@ -160,7 +160,6 @@ function nehezsegFigyel(){
     let kiir = document.getElementById("nehezsegKiir");
     if(range == 0){
         kiir.innerHTML = "Könnyű";
-        
     }
     if(range == 1){
         kiir.innerHTML = "Közepes";
@@ -306,8 +305,8 @@ function kereses(){
 
 function inicializalas(){
     let kategoriak = kategoriakLista();
-    keresesMukodtet();
-    elrejtKategoriaKeresesiTalalatokKattintasra();
+    keresesMukodtetSzuroben();
+    elrejtAdatotKeresesiTalalatokKattintasra();
 }
 
 
@@ -329,6 +328,25 @@ async function kategoriakLista(){
     }
 }
 
+async function alapanyagLista(){
+    try{
+        let eredmeny = await fetch("./alapanyag");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const alapanyag of lista){
+                alapanyagok.add(alapanyag.hozzavalo)
+            }
+            console.log(alapanyagok);
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 
 function kategoriakListajanakGeneralasa() {
     let listaElem = document.getElementById("kategoriakLista");
@@ -339,50 +357,50 @@ function kategoriakListajanakGeneralasa() {
     }
 }
 
-function letrehozListaElemet(kategoria) {
+function letrehozListaElemet(szuroAdatok) {
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
     
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("btn-check");
-    checkbox.id = "checkbox-" + kategoria;
+    checkbox.id = "checkbox-" + szuroAdatok;
     
     let label = document.createElement("label");
     label.classList.add("btn", "btn-outline-primary");
-    label.setAttribute("for", "checkbox-" + kategoria);
-    label.textContent = kategoria;
+    label.setAttribute("for", "checkbox-" + szuroAdatok);
+    label.textContent = szuroAdatok;
     
     div.appendChild(checkbox);
     div.appendChild(label);
     
-    if (document.getElementById("kivalasztott-" + kategoria)) {
+    if (document.getElementById("kivalasztott-" + szuroAdatok)) {
         checkbox.checked = true;
     }
     
     // Elindítja az adott függvényt a checkbox változtatásakor
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
-            hozzaadKivalasztottKategoriat(kategoria);
+            hozzaadKivalasztottAdatot(szuroAdatok);
         } else {
-            eltavolitKivalasztottKategoriat(kategoria);
+            eltavolitKivalasztottAdatot(szuroAdatok);
         }
     });
     
     return div;
 }
 
-function keresesMukodtet() {
+function keresesMukodtetSzuroben() {
     let keresomezo = document.getElementById("kategoriakSearch");
     keresomezo.addEventListener("input", function() {
-        inditsKeresest(keresomezo);
+        inditsKeresestSzuroben(keresomezo);
     });
     keresomezo.addEventListener("focus", function() {
-        inditsKeresest(keresomezo);
+        inditsKeresestSzuroben(keresomezo);
     });
 }
 
-function inditsKeresest(keresomezo) {
+function inditsKeresestSzuroben(keresomezo) {
     let keresesiKifejezes = keresomezo.value.toLowerCase();
     let dropdownMenu = document.getElementById("kategoriakLista");
 
@@ -429,15 +447,15 @@ function szuresiFunkcio(keresesiKifejezes) {
 }
 
 
-function hozzaadKivalasztottKategoriat(kategoria) {
-    if (!document.getElementById("kivalasztott-" + kategoria)) {
+function hozzaadKivalasztottAdatot(szuroAdatok) {
+    if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
         let kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
 
         // div létrehozása
         let tag = document.createElement("div");
         tag.classList.add("kivalasztott-tag", "badge", "bg-primary", "me-2", "mb-2");
-        tag.id = "kivalasztott-" + kategoria;
-        tag.textContent = kategoria;
+        tag.id = "kivalasztott-" + szuroAdatok;
+        tag.textContent = szuroAdatok;
 
         // x törlés gomb hozzáadása
         let removeBtn = document.createElement("button");
@@ -445,8 +463,8 @@ function hozzaadKivalasztottKategoriat(kategoria) {
         removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
         removeBtn.setAttribute("aria-label", "Törlés");
         removeBtn.addEventListener("click", function () {
-            eltavolitKivalasztottKategoriat(kategoria);
-            document.getElementById("checkbox-" + kategoria).checked = false;
+            eltavolitKivalasztottAdatot(szuroAdatok);
+            document.getElementById("checkbox-" + szuroAdatok).checked = false;
         });
 
         tag.appendChild(removeBtn);
@@ -455,7 +473,7 @@ function hozzaadKivalasztottKategoriat(kategoria) {
 }
 
 
-function elrejtKategoriaKeresesiTalalatokKattintasra() {
+function elrejtAdatotKeresesiTalalatokKattintasra() {
     let keresomezo = document.getElementById("kategoriakSearch");
     let kategoriakDropdown = document.getElementById("kategoriakLista");
 
@@ -466,8 +484,8 @@ function elrejtKategoriaKeresesiTalalatokKattintasra() {
     });
 }
 
-function eltavolitKivalasztottKategoriat(kategoria) {
-    let tag = document.getElementById("kivalasztott-" + kategoria);
+function eltavolitKivalasztottAdatot(szuroAdatok) {
+    let tag = document.getElementById("kivalasztott-" + szuroAdatok);
     if (tag) {
         tag.remove();
     }
@@ -476,7 +494,10 @@ function eltavolitKivalasztottKategoriat(kategoria) {
 
 //Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
 document.addEventListener("DOMContentLoaded", inicializalas);
+window.addEventListener("load", nehezsegFigyel)
+document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
 window.addEventListener("load", kategoriakLista)
+window.addEventListener("load", alapanyagLista);
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor

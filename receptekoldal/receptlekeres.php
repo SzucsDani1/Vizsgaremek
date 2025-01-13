@@ -38,6 +38,22 @@
             header('bad request', true, 400);
         }
         break;
+        case "alapanyag":
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                $alapanyag = adatokLekerdezese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
+                if(is_array($alapanyag) && !empty($alapanyag)){
+                    echo json_encode($alapanyag, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
         default:
             echo "Hiba";
     }
