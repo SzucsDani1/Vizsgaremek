@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="receptekoldal.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body>
+<body style="background-color: rgb(253, 222, 197);">
     <!--START NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -118,19 +118,19 @@
                     <!-- Napszak szűrő -->
                     <div class="btn-group d-flex flex-wrap" role="group">
                       <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakReggeli">Reggeli</label>
+                      <label class="btn btn-outline-danger flex-fill" for="napszakReggeli">Reggeli</label>
 
                       <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakTizorai">Tízórai</label>
+                      <label class="btn btn-outline-danger flex-fill" for="napszakTizorai">Tízórai</label>
 
                       <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakEbed">Ebéd</label>
+                      <label class="btn btn-outline-danger flex-fill" for="napszakEbed">Ebéd</label>
 
                       <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakUzsonna">Uzsonna</label>
+                      <label class="btn btn-outline-danger flex-fill" for="napszakUzsonna">Uzsonna</label>
 
                       <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakVacsora">Vacsora</label>
+                      <label class="btn btn-outline-danger flex-fill" for="napszakVacsora">Vacsora</label>
                     </div>
 
                     <!--Kategóriák szűrése-->
@@ -154,7 +154,7 @@
 
 
                     <!-- Szűrés gomb -->
-                    <button class="btn btn-primary w-100" id="szures_gomb">Szűrés</button>
+                    <button class="btn btn-danger w-100" id="szures_gomb">Szűrés</button>
                 </div>
             </div>
             <!--Káryák-->
