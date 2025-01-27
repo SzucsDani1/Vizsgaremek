@@ -135,8 +135,8 @@
 
                     <!--Kategóriák szűrése-->
                     <div class="mb-3">
-                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
-                      <input type="text" class="form-control" id="AlapanyagSearch" placeholder="Keresés a kategóriák között...">
+                        <label for="AlapanyagSearch" class="form-label mt-2">Alapanyagok</label>
+                      <input type="text" class="form-control" id="AlapanyagSearch" placeholder="Keresés az alapanyagok között...">
                     </div>
                     <div class="dropdown" id="kategoriakDropdown">
                       <div class="dropdown-menu" id="kategoriakLista"></div>
