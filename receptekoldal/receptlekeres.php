@@ -1,5 +1,7 @@
 <?php
 //RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
+//RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
+
     include "./sql_fuggvenyek.php";
     $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
     $url = explode("?", end($teljesURL));

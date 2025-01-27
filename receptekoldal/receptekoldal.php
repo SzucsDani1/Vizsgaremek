@@ -133,15 +133,15 @@
                       <label class="btn btn-outline-danger flex-fill" for="napszakVacsora">Vacsora</label>
                     </div>
 
-                    <!--Kategóriák szűrése-->
+                    <!--Alapanyagok szűrése-->
                     <div class="mb-3">
                         <label for="AlapanyagSearch" class="form-label mt-2">Alapanyagok</label>
                       <input type="text" class="form-control" id="AlapanyagSearch" placeholder="Keresés az alapanyagok között...">
                     </div>
-                    <div class="dropdown" id="kategoriakDropdown">
-                      <div class="dropdown-menu" id="kategoriakLista"></div>
+                    <div class="dropdown" id="alapanyagDropdown">
+                      <div class="dropdown-menu" id="alapanyagLista"></div>
                     </div>
-                    <div class="mt-3" id="kivalasztottKategoriak"></div>
+                    <div class="mt-3" id="kivalasztottAlapanyagok"></div>
 
                     <!-- Checkbox szűrő -->
                     <div class="dropdown">

@@ -357,6 +357,15 @@ function kategoriakListajanakGeneralasa() {
     }
 }
 
+function alapanyagListajanakGeneralasa(){
+    let listaElem = document.getElementById("alapanyagokLista");
+    listaElem.innerHTML = "";
+    for (let alapanyag of alapanyagok) {
+        let elem = letrehozListaElemet(alapanyag);
+        listaElem.appendChild(elem);
+    }
+}
+
 function letrehozListaElemet(szuroAdatok) {
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
@@ -449,7 +458,8 @@ function szuresiFunkcio(keresesiKifejezes) {
 
 function hozzaadKivalasztottAdatot(szuroAdatok) {
     if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
-        let kivalasztottContainer = document.getElementById("kivalasztottKategoriak");
+        let kivalasztottContainerKategoria = document.getElementById("kivalasztottKategoriak");
+        let kivalasztottContainerAlapanyag = document.getElementById("kivalasztottAlapanyagok");
 
         // div létrehozása
         let tag = document.createElement("div");
@@ -468,7 +478,8 @@ function hozzaadKivalasztottAdatot(szuroAdatok) {
         });
 
         tag.appendChild(removeBtn);
-        kivalasztottContainer.appendChild(tag);
+        kivalasztottContainerKategoria.appendChild(tag);
+        kivalasztottContainerAlapanyag.appendChild(tag);
     }
 }
 
