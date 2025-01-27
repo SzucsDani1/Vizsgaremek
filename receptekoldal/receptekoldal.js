@@ -273,7 +273,7 @@ function kartyaBetoltes(receptek){
         //Gomb generálása
         let inputButton = document.createElement("input");
         inputButton.type = "button";
-        inputButton.classList = "btn btn-primary";
+        inputButton.classList = "btn btn-danger";
         inputButton.value = "Részletek";
 
         divRow.appendChild(divCard);
@@ -367,7 +367,7 @@ function letrehozListaElemet(szuroAdatok) {
     checkbox.id = "checkbox-" + szuroAdatok;
     
     let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-primary");
+    label.classList.add("btn", "btn-outline-danger");
     label.setAttribute("for", "checkbox-" + szuroAdatok);
     label.textContent = szuroAdatok;
     
@@ -453,7 +453,7 @@ function hozzaadKivalasztottAdatot(szuroAdatok) {
 
         // div létrehozása
         let tag = document.createElement("div");
-        tag.classList.add("kivalasztott-tag", "badge", "bg-primary", "me-2", "mb-2");
+        tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
         tag.id = "kivalasztott-" + szuroAdatok;
         tag.textContent = szuroAdatok;
 
