@@ -56,7 +56,7 @@
     </div>
     <!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
 
-<!-- bejelentkezés -->
+<!-- START BEJELENTKEZÉS -->
     <div>
         <?php 
             if(isset($_GET["bejelentkezes"])){
@@ -69,7 +69,7 @@
                         if(is_array($lekerdez)){
                             $lekertJelszo = $lekerdez[0]["jelszo"];
                             if(password_verify($jelszo, $lekertJelszo)){
-                                echo "<h2>Sikeres bejelentkezés</h2>";
+                                
                                 $cookie_value = $lekerdez[0]["id"];
                                 setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
                             }
@@ -92,6 +92,7 @@
             }
             ?>
     </div>
+    <!-- END BEJELENTKEZÉS -->
 
 
     <!--START FELUGRÓ ABLAK GOMBJA-->
@@ -149,7 +150,7 @@
     </div>
     <!--END FELUGRÓ ABLAK-->
     
-    
+    <!--START JS MEGHÍVÁSOK-->
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -161,7 +162,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
 
     <script src="./bejelentkezes.js"></script>
+    <script src="./bejeletkezesVizsgalasa/bejelentkezesVizsgalat.js"></script>
 
+     <!--END JS MEGHÍVÁSOK-->
 </body>
 </html>
 
