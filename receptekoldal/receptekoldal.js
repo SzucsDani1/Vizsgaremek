@@ -292,6 +292,29 @@ function kartyaBetoltes(receptek){
 
 }
 
+function arFigyel() {
+    const range = document.getElementById("arInput");
+    let arKiir = document.getElementById("arKiir");
+
+    range.addEventListener('input', frissitAr); // Csúszka mozgatására
+    range.addEventListener('mousedown', function() { // Egér lenyomásakor
+        frissitAr(); // Azonnal frissít
+        range.addEventListener('mousemove', frissitAr); // Egér mozgatására, amíg lenyomva van
+    });
+    range.addEventListener('mouseup', function() { // Egér felengedésekor
+        range.removeEventListener('mousemove', frissitAr); // Eltávolítja a felesleges figyelőt
+    });
+
+    function frissitAr() {
+        if (range.value == 0) {
+            arKiir.innerHTML = "Olcsó";
+        } else if (range.value == 1) {
+            arKiir.innerHTML = "Átlagos";
+        } else {
+            arKiir.innerHTML = "Drága";
+        }
+    }
+}
 
 
 function kereses(){
@@ -641,3 +664,6 @@ document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
+
+window.addEventListener("load", arFigyel);
+document.getElementById('nehezsegInput').addEventListener("input", arFigyel);

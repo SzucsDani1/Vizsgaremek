@@ -142,6 +142,13 @@
                     </div>
                     <div class="mt-3" id="kivalasztottAlapanyagok"></div>
 
+                    <!-- Ár szint szűrő -->
+                    <div class="mb-3">
+                        <label class="form-label">Ár</label>
+                        <input type="range" class="form-range" id="arInput" value="1" min="0" max="2" step="1">
+                        <div id="arKiir" class="form-text"></div>
+                    </div>
+
                     <!-- Checkbox szűrő -->
                     <div class="dropdown">
                         <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,6 +157,8 @@
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
                     </ul>
                     </div>
+
+                    
 
                     <!-- Szűrés gomb -->
                     <button class="btn btn-danger w-100" id="szures_gomb">Szűrés</button>
