@@ -1,9 +1,6 @@
 let kategoriak = new Set();
 let alapanyagok = new Set();
-alapanyagok.add("ilyen")
-alapanyagok.add("olyan")
-alapanyagok.add("amolyan")
-alapanyagok.add("emilyen")
+
 receptek = [{
     "nev" : "Palacsinta",
     "kaloria" : 100,
@@ -324,7 +321,7 @@ async function kategoriakLista(){
     }
 }
 
-/*async function alapanyagLista(){
+async function alapanyagLista(){
     try{
         let eredmeny = await fetch("./alapanyag");
         if(eredmeny.ok){
@@ -341,14 +338,14 @@ async function kategoriakLista(){
     catch(error){
         console.log(error);
     }
-}*/
+}
 
 
 function kategoriakListajanakGeneralasa() {
     let listaElem = document.getElementById("kategoriakLista");
     listaElem.innerHTML = "";
     for (let kategoria of kategoriak) {
-        let elem = letrehozListaElemet(kategoria);
+        let elem = letrehozKategoriaListaElemet(kategoria);
         listaElem.appendChild(elem);
     }
 }
@@ -357,7 +354,7 @@ function alapanyagListajanakGeneralasa(){
     let listaElem = document.getElementById("alapanyagLista");
     listaElem.innerHTML = "";
     for (let alapanyag of alapanyagok) {
-        let elem = letrehozListaElemet(alapanyag);
+        let elem = letrehozAlapanyagListaElemet(alapanyag);
         listaElem.appendChild(elem);
     }
 }
@@ -374,7 +371,7 @@ function inicializalasAlapanyagot(){
 }
 
 
-function letrehozListaElemet(szuroAdatok) {
+function letrehozKategoriaListaElemet(szuroAdatok) {
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
     
@@ -398,7 +395,40 @@ function letrehozListaElemet(szuroAdatok) {
     // Elindítja az adott függvényt a checkbox változtatásakor
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
-            hozzaadKivalasztottAdatot(szuroAdatok);
+            hozzaadKivalasztottKategoriat(szuroAdatok);
+        } else {
+            eltavolitKivalasztottAdatot(szuroAdatok);
+        }
+    });
+    
+    return div;
+}
+
+function letrehozAlapanyagListaElemet(szuroAdatok) {
+    let div = document.createElement("div");
+    div.classList.add("dropdown-item");
+    
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("btn-check");
+    checkbox.id = "checkbox-" + szuroAdatok;
+    
+    let label = document.createElement("label");
+    label.classList.add("btn", "btn-outline-danger");
+    label.setAttribute("for", "checkbox-" + szuroAdatok);
+    label.textContent = szuroAdatok;
+    
+    div.appendChild(checkbox);
+    div.appendChild(label);
+    
+    if (document.getElementById("kivalasztott-" + szuroAdatok)) {
+        checkbox.checked = true;
+    }
+    
+    // Elindítja az adott függvényt a checkbox változtatásakor
+    checkbox.addEventListener("change", function() {
+        if (checkbox.checked) {
+            hozzaadKivalasztottAlapanyagot(szuroAdatok);
         } else {
             eltavolitKivalasztottAdatot(szuroAdatok);
         }
@@ -521,10 +551,9 @@ function szuresiFunkcioAlapanyagok(keresesiKifejezes) {
 }
 
 
-function hozzaadKivalasztottAdatot(szuroAdatok) {
+function hozzaadKivalasztottKategoriat(szuroAdatok) {
     if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
         let kivalasztottContainerKategoria = document.getElementById("kivalasztottKategoriak");
-        let kivalasztottContainerAlapanyag = document.getElementById("kivalasztottAlapanyagok");
 
         // div létrehozása
         let tag = document.createElement("div");
@@ -544,17 +573,50 @@ function hozzaadKivalasztottAdatot(szuroAdatok) {
 
         tag.appendChild(removeBtn);
         kivalasztottContainerKategoria.appendChild(tag);
+    }
+}
+
+function hozzaadKivalasztottAlapanyagot(szuroAdatok) {
+    if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
+        let kivalasztottContainerAlapanyag = document.getElementById("kivalasztottAlapanyagok");
+
+        // div létrehozása
+        let tag = document.createElement("div");
+        tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
+        tag.id = "kivalasztott-" + szuroAdatok;
+        tag.textContent = szuroAdatok;
+
+        // x törlés gomb hozzáadása
+        let removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
+        removeBtn.setAttribute("aria-label", "Törlés");
+        removeBtn.addEventListener("click", function () {
+            eltavolitKivalasztottAdatot(szuroAdatok);
+            document.getElementById("checkbox-" + szuroAdatok).checked = false;
+        });
+
+        tag.appendChild(removeBtn);
         kivalasztottContainerAlapanyag.appendChild(tag);
     }
 }
 
 
 function elrejtAdatotKeresesiTalalatokKattintasra() {
-    let keresomezo = document.getElementById("kategoriakSearch");
+    let kategoriaKeresomezo = document.getElementById("kategoriakSearch");
+    let alapanyagKeresomezo = document.getElementById("alapanyagSearch");
+
     let kategoriakDropdown = document.getElementById("kategoriakLista");
+    let alapanyagDropdown = document.getElementById("alapanyagLista");
 
     document.addEventListener("click", function(event) {
-        if (!keresomezo.contains(event.target) && !kategoriakDropdown.contains(event.target)) {
+        if (!alapanyagKeresomezo.contains(event.target) && !alapanyagDropdown.contains(event.target)) {
+            alapanyagDropdown.style.display = "none";
+        }
+    });
+
+    document.addEventListener("click", function(event) {
+        if (!kategoriaKeresomezo.contains(event.target) && !kategoriakDropdown.contains(event.target)) {
             kategoriakDropdown.style.display = "none";
         }
     });
@@ -574,7 +636,7 @@ document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
 window.addEventListener("load", kategoriakLista)
-//window.addEventListener("load", alapanyagLista);
+window.addEventListener("load", alapanyagLista);
 document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor

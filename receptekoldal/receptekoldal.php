@@ -76,7 +76,6 @@
         </div>
       </div>
     </div>
-    
     <!--END KERESÉS-->
 
 
@@ -151,7 +150,6 @@
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
                     </ul>
                     </div>
-
 
                     <!-- Szűrés gomb -->
                     <button class="btn btn-danger w-100" id="szures_gomb">Szűrés</button>
