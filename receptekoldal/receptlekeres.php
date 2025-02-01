@@ -57,6 +57,40 @@
             header('bad request', true, 400);
         }
         break;
+
+        case "konyha":
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                $konyha = adatokLekerdezese("SELECT konyha.neve FROM konyha");
+                if(is_array($konyha) && !empty($konyha)){
+                    echo json_encode($konyha, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
+        case "etrend":
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                $etrend = adatokLekerdezese("SELECT etrend.neve FROM `etrend`;");
+                if(is_array($etrend) && !empty($etrend)){
+                    echo json_encode($etrend, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
         default:
             echo "Hiba";
     }

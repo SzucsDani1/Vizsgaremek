@@ -145,9 +145,37 @@
                     <!-- Ár szint szűrő -->
                     <div class="mb-3">
                         <label class="form-label">Ár</label>
-                        <input type="range" class="form-range" id="arInput" value="1" min="0" max="2" step="1">
-                        <div id="arKiir" class="form-text"></div>
+                        <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
+                        <div id="arKiir" class="form-text">Mind</div>
                     </div>
+
+                    <!-- Kalória szint szűrő -->
+                    <div class="mb-3">
+                        <label class="form-label">Kalória</label>
+                        <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
+                        <div id="kaloriaKiir" class="form-text">Mind</div>
+                    </div>
+
+                    <!-- Adag szint szűrő -->
+                    <div class="mb-3">
+                        <label class="form-label">Adag</label>
+                        <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
+                        <div id="adagKiir" class="form-text">1 adag</div>
+                    </div>
+
+                    <!-- Konyha szűrő -->
+                    <div class="btn-group d-flex flex-wrap" role="group" id="konyhaDiv">
+                    </div>
+
+                    <!--Étrend szűrő-->
+                    <div class="mb-3">
+                      <label for="etrendSearch" class="form-label mt-2">Étrend</label>
+                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+                    </div>
+                    <div class="dropdown" id="etrendDropdown">
+                      <div class="dropdown-menu" id="etrendLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottEtrend"></div>
 
                     <!-- Checkbox szűrő -->
                     <div class="dropdown">
