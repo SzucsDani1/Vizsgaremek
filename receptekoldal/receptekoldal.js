@@ -101,7 +101,6 @@ async function etelfajtaBetoltes(){
         let eredmeny = await fetch("./etelfajta");
         if(eredmeny.ok){
             let etelfajta = await eredmeny.json();
-            console.log(etelfajta);
             etelfajtaGeneralas(etelfajta);
         }
         else{
@@ -367,7 +366,7 @@ function adagFigyel() {
 
     function frissitAdag() {
         if (range.value == 0) {
-            adagKiir.innerHTML = "1";
+            adagKiir.innerHTML = "1 adag";
         } else if (range.value == 1) {
             adagKiir.innerHTML = "2 adag";
         }else if (range.value == 2) {
@@ -394,7 +393,7 @@ function adagFigyel() {
         }
     }
 }
-/*
+
 async function konyhaLista(){
     try{
         let eredmeny = await fetch("./konyha");
@@ -403,8 +402,7 @@ async function konyhaLista(){
             for(const konyha of lista){
                 konyhak.add(konyha.neve)
             }
-            konyhaCheckboxGeneral()
-            
+            console.log(konyhak);
         }
         else{
             console.log(eredmeny.status);
@@ -414,7 +412,7 @@ async function konyhaLista(){
         console.log(error);
     }
 }
-*/
+
 
 async function etrendLista(){
     try{
@@ -424,8 +422,6 @@ async function etrendLista(){
             for(const etrend of lista){
                 etrendek.add(etrend.neve);
             }
-            console.log(etrendek);
-            etrendCheckboxGeneral();
             
         }
         else{
@@ -435,10 +431,6 @@ async function etrendLista(){
     catch(error){
         console.log(error);
     }
-}
-
-function etrendCheckboxGeneral(){
-
 }
 
 
@@ -516,6 +508,15 @@ function etrendListajanakGeneralasa() {
     }
 }
 
+function konyhaListajanakGeneralasa() {
+    let listaElem = document.getElementById("konyhaLista");
+    listaElem.innerHTML = "";
+    for (let konyha of konyhak) {
+        let elem = letrehozKonyhaListaElemet(konyha);
+        listaElem.appendChild(elem);
+    }
+}
+
 function inicializalasKategoriat(){
     keresesMukodtetSzurobenKategora();
     elrejtAdatotKeresesiTalalatokKattintasra();
@@ -528,6 +529,11 @@ function inicializalasAlapanyagot(){
 
 function inicializalasEtrendet(){
     keresesMukodtetSzurobenEtrend();
+    elrejtAdatotKeresesiTalalatokKattintasra();
+}
+
+function inicializalasKonyhat(){
+    keresesMukodtetSzurobenKonyha();
     elrejtAdatotKeresesiTalalatokKattintasra();
 }
 
@@ -634,6 +640,39 @@ function letrehozEtrendListaElemet(szuroAdatok) {
     return div;
 }
 
+function letrehozKonyhaListaElemet(szuroAdatok) {
+    let div = document.createElement("div");
+    div.classList.add("dropdown-item");
+    
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("btn-check");
+    checkbox.id = "checkbox-" + szuroAdatok;
+    
+    let label = document.createElement("label");
+    label.classList.add("btn", "btn-outline-danger");
+    label.setAttribute("for", "checkbox-" + szuroAdatok);
+    label.textContent = szuroAdatok;
+    
+    div.appendChild(checkbox);
+    div.appendChild(label);
+    
+    if (document.getElementById("kivalasztott-" + szuroAdatok)) {
+        checkbox.checked = true;
+    }
+    
+    // Elindítja az adott függvényt a checkbox változtatásakor
+    checkbox.addEventListener("change", function() {
+        if (checkbox.checked) {
+            hozzaadKivalasztottKonyhat(szuroAdatok);
+        } else {
+            eltavolitKivalasztottAdatot(szuroAdatok);
+        }
+    });
+    
+    return div;
+}
+
 
 function keresesMukodtetSzurobenKategora() {
     let keresomezo = document.getElementById("kategoriakSearch");
@@ -666,12 +705,21 @@ function keresesMukodtetSzurobenEtrend() {
     });
 }
 
+function keresesMukodtetSzurobenKonyha() {
+    let keresomezo = document.getElementById("konyhaSearch");
+    keresomezo.addEventListener("input", function() {
+        inditsKeresestSzurobenKonyha(keresomezo);
+    });
+    keresomezo.addEventListener("focus", function() {
+        inditsKeresestSzurobenKonyha(keresomezo);
+    });
+}
+
 function inditsKeresestSzurobenKategoriak(keresomezo) {
     let keresesiKifejezes = keresomezo.value.toLowerCase();
     let dropdownMenu = document.getElementById("kategoriakLista");
 
     if (keresesiKifejezes) {
-        console.log(kategoriak)
         kategoriakListajanakGeneralasa(kategoriak);
         szuresiFunkcioKategoriak(keresesiKifejezes);
         dropdownMenu.style.display = "block";
@@ -701,6 +749,19 @@ function inditsKeresestSzurobenEtrend(keresomezo) {
     if (keresesiKifejezes) {
         etrendListajanakGeneralasa(etrendek);
         szuresiFunkcioEtrendek(keresesiKifejezes);
+        dropdownMenu.style.display = "block";
+    } else {
+        dropdownMenu.style.display = "none";
+    }
+}
+
+function inditsKeresestSzurobenKonyha(keresomezo) {
+    let keresesiKifejezes = keresomezo.value.toLowerCase();
+    let dropdownMenu = document.getElementById("konyhaLista");
+
+    if (keresesiKifejezes) {
+        konyhaListajanakGeneralasa(etrendek);
+        szuresiFunkcioKonyhak(keresesiKifejezes);
         dropdownMenu.style.display = "block";
     } else {
         dropdownMenu.style.display = "none";
@@ -745,8 +806,8 @@ function szuresiFunkcioAlapanyagok(keresesiKifejezes) {
     let talalatVan = false;
 
     for (let elem of listaElemei) {
-        let kategoriaSzoveg = elem.textContent.toLowerCase();
-        if (kategoriaSzoveg.includes(keresesiKifejezes)) {
+        let alapanyagSzoveg = elem.textContent.toLowerCase();
+        if (alapanyagSzoveg.includes(keresesiKifejezes)) {
             elem.style.display = "block";
             talalatVan = true;
         } else {
@@ -778,8 +839,8 @@ function szuresiFunkcioEtrendek(keresesiKifejezes) {
     let talalatVan = false;
 
     for (let elem of listaElemei) {
-        let kategoriaSzoveg = elem.textContent.toLowerCase();
-        if (kategoriaSzoveg.includes(keresesiKifejezes)) {
+        let etrendSzoveg = elem.textContent.toLowerCase();
+        if (etrendSzoveg.includes(keresesiKifejezes)) {
             elem.style.display = "block";
             talalatVan = true;
         } else {
@@ -804,6 +865,40 @@ function szuresiFunkcioEtrendek(keresesiKifejezes) {
         nincsTalalatElem.style.display = "none";
     }
 }
+
+
+function szuresiFunkcioKonyhak(keresesiKifejezes) {
+    let listaElemei = document.querySelectorAll("#konyhaLista .dropdown-item");
+    let talalatVan = false;
+
+    for (let elem of listaElemei) {
+        let konyhaSzoveg = elem.textContent.toLowerCase();
+        if (konyhaSzoveg.includes(keresesiKifejezes)) {
+            elem.style.display = "block";
+            talalatVan = true;
+        } else {
+            elem.style.display = "none";
+        }
+    }
+
+    let dropdownMenu = document.getElementById("konyhaLista");
+    let nincsTalalatElem = document.getElementById("nincsTalalatKonyha");
+
+    if (!talalatVan) {
+        if (!nincsTalalatElem) {
+            nincsTalalatElem = document.createElement("div");
+            nincsTalalatElem.id = "nincsTalalatKonyha";
+            nincsTalalatElem.textContent = "Nincs találat";
+            nincsTalalatElem.style.color = "red";
+            nincsTalalatElem.style.textAlign = "center";
+            dropdownMenu.appendChild(nincsTalalatElem);
+        }
+        nincsTalalatElem.style.display = "block";
+    } else if (nincsTalalatElem) {
+        nincsTalalatElem.style.display = "none";
+    }
+}
+
 
 
 function hozzaadKivalasztottKategoriat(szuroAdatok) {
@@ -882,14 +977,42 @@ function hozzaadKivalasztottEtrendet(szuroAdatok) {
 }
 
 
+function hozzaadKivalasztottKonyhat(szuroAdatok) {
+    if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
+        let kivalasztottContainerKonyha = document.getElementById("kivalasztottKonyha");
+
+        // div létrehozása
+        let tag = document.createElement("div");
+        tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
+        tag.id = "kivalasztott-" + szuroAdatok;
+        tag.textContent = szuroAdatok;
+
+        // x törlés gomb hozzáadása
+        let removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
+        removeBtn.setAttribute("aria-label", "Törlés");
+        removeBtn.addEventListener("click", function () {
+            eltavolitKivalasztottAdatot(szuroAdatok);
+            document.getElementById("checkbox-" + szuroAdatok).checked = false;
+        });
+
+        tag.appendChild(removeBtn);
+        kivalasztottContainerKonyha.appendChild(tag);
+    }
+}
+
+
 function elrejtAdatotKeresesiTalalatokKattintasra() {
     let kategoriaKeresomezo = document.getElementById("kategoriakSearch");
     let alapanyagKeresomezo = document.getElementById("alapanyagSearch");
     let etrendKeresomezo = document.getElementById("etrendSearch");
+    let konyhaKeresomezo = document.getElementById("konyhaSearch");
 
     let kategoriakDropdown = document.getElementById("kategoriakLista");
     let alapanyagDropdown = document.getElementById("alapanyagLista");
     let etrendDropdown = document.getElementById("etrendLista");
+    let konyhaDropdown = document.getElementById("konyhaLista");
 
     document.addEventListener("click", function(event) {
         if (!alapanyagKeresomezo.contains(event.target) && !alapanyagDropdown.contains(event.target)) {
@@ -908,6 +1031,12 @@ function elrejtAdatotKeresesiTalalatokKattintasra() {
             etrendDropdown.style.display = "none";
         }
     });
+
+    document.addEventListener("click", function(event) {
+        if (!konyhaKeresomezo.contains(event.target) && !konyhaDropdown.contains(event.target)) {
+            konyhaDropdown.style.display = "none";
+        }
+    });
 }
 
 function eltavolitKivalasztottAdatot(szuroAdatok) {
@@ -922,6 +1051,7 @@ function eltavolitKivalasztottAdatot(szuroAdatok) {
 document.addEventListener("DOMContentLoaded", inicializalasKategoriat);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 document.addEventListener("DOMContentLoaded", inicializalasEtrendet);
+document.addEventListener("DOMContentLoaded", inicializalasKonyhat);
 window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
 window.addEventListener("load", kategoriakLista)
@@ -935,4 +1065,5 @@ window.addEventListener("load", arFigyel);
 window.addEventListener("load", kaloriaFigyel);
 window.addEventListener("load", adagFigyel);
 window.addEventListener("load", etrendLista);
+window.addEventListener("load", konyhaLista);
 //document.getElementById('nehezsegInput').addEventListener("input", arFigyel);

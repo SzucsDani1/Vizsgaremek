@@ -142,6 +142,29 @@
                     </div>
                     <div class="mt-3" id="kivalasztottAlapanyagok"></div>
 
+
+                    <!--Étrend szűrő-->
+                    <div class="mb-3">
+                      <label for="etrendSearch" class="form-label mt-2">Étrend</label>
+                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+                    </div>
+                    <div class="dropdown" id="etrendDropdown">
+                      <div class="dropdown-menu" id="etrendLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottEtrend"></div>
+
+
+                    <!--Konyha szűrő-->
+                    <div class="mb-3">
+                      <label for="konyhaSearch" class="form-label mt-2">Konyha</label>
+                      <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés a konyhák között...">
+                    </div>
+                    <div class="dropdown" id="konyhaDropdown">
+                      <div class="dropdown-menu" id="konyhaLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottKonyha"></div>
+
+
                     <!-- Ár szint szűrő -->
                     <div class="mb-3">
                         <label class="form-label">Ár</label>
@@ -167,23 +190,8 @@
                     <div class="btn-group d-flex flex-wrap" role="group" id="konyhaDiv">
                     </div>
 
-                    <!--Étrend szűrő-->
-                    <div class="mb-3">
-                      <label for="etrendSearch" class="form-label mt-2">Étrend</label>
-                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
-                    </div>
-                    <div class="dropdown" id="etrendDropdown">
-                      <div class="dropdown-menu" id="etrendLista"></div>
-                    </div>
-                    <div class="mt-3" id="kivalasztottEtrend"></div>
-
-                    <!-- Checkbox szűrő -->
-                    <div class="dropdown">
-                        <button class="btn btn-warning dropdown-toggle w-100" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Speciális igények
-                        </button>
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
-                    </ul>
+                    
+                
                     </div>
 
                     
