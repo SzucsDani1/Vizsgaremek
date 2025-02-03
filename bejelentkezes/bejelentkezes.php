@@ -41,7 +41,7 @@
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12">
                     <!-- JELSZÓ -->
-                    <input type="text" name="Bejjelszo" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
+                    <input type="password" name="Bejjelszo" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
                 </div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
             </div>

@@ -31,10 +31,10 @@ function adatokLekerdezese($muvelet) {
             $db->query($muvelet);
             if ($db->errno == 0) {
                 if ($db->affected_rows > 0) {
-                    return 'Sikeres művelet!';
+                    return 'Sikeres regisztráció!';
                 }
                 else if ($db->affected_rows == 0) {
-                    return 'Sikertelen művelet!';
+                    return 'Sikertelen regisztráció!';
                 }
                 else {
                     return $db->error;

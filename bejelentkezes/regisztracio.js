@@ -22,6 +22,9 @@ async function regisztracio(){
             let valasz = await kuldes.json();
             console.log(valasz)
             alert(valasz["message"]);
+            if(valasz["message"] == "Sikeres regisztráció!"){
+                torol()
+            }
         } catch (error) {
             console.log(error);
         }
@@ -32,6 +35,11 @@ async function regisztracio(){
 
 }
 
-
+function torol(){
+    document.getElementById("Regpassword").value = "";
+    document.getElementById("Regfelhasznalonev").value = "";
+    document.getElementById("RegpasswordMegint").value = "";
+    document.getElementById("Regemail").value = "";
+}
 
 document.getElementById("regisztral").addEventListener("click", regisztracio)
