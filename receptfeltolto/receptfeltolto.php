@@ -61,22 +61,47 @@
     </div>
     
     <div class="filter-box border p-3 bg-light rounded my-3">
-        <h4 class="display-6 text-start">Hozzávalók</h4>
+        <h4 class="display-6 text-start">Hozzávalók</h4> 
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
-                    <input type="text" class="form-control" id="hozzavalo1" placeholder="Hozzávaló">
-                    <label for="hozzavalo1">Hozzávaló</label>
+                    <input type="text" class="form-control" id="hozzavalo_neve" placeholder="Hozzávaló">
+                    <label for="hozzavalo_neve">Hozzávaló neve</label>
                 </form>
             </div>
-            <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
-                    <input type="text" class="form-control" id="hozzavalo2" placeholder="Hozzávaló">
-                    <label for="hozzavalo2">Hozzávaló</label>
+                    <input type="text" class="form-control" id="hozzavalo_mennyiseg" placeholder="Hozzávaló mennyiség">
+                    <label for="hozzavalo_mennyiseg">Hozzávaló mennyiség</label>
                 </form>
             </div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
+                <form class="form-floating">
+                    <input type="text" class="form-control" id="hozzavalo_mertekegyseg" placeholder="Hozzávaló mennyiség">
+                    <label for="hozzavalo_mertekegyseg">Hozzávaló mértékegysége</label>
+                </form>
+            </div>
+            <button type="button" class="btn btn-success" id="btn_hozzaad">Hozzáad</button>
         </div>
     </div>
+
+    <div class="row">
+    <table class="table table-success" id="table_hozzavalok">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Név</th>
+          <th scope="col">Mennyiség</th>
+          <th scope="col">Mértékegység</th>
+        </tr>
+      </thead>
+      <tbody id="tbody_hozzavalok">
+      </tbody>
+</table>
+
+    </div>
+
+   
 </div>
 
     <!--END ŰRLAP ELEMEK-->
@@ -88,6 +113,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="receptekoldal.js"></script>
+<script src="receptfeltolto.js"></script>
 </body>
 </html>
