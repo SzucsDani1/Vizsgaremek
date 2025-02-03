@@ -5,6 +5,7 @@ async function regisztracio(){
     let email = document.getElementById("Regemail").value;
 
     if(jelszo.trim().length != 0 && jelszoBiztos.trim().length != 0  && felhasznalonev.trim().length != 0 && email.trim().length != 0 && jelszo == jelszoBiztos){
+      
         try {
             //./adatbazisInterakciok/adatbazisInterakciok.php
             let kuldes = await fetch("./adatbazisInterakciok/regisztracio.php", {
@@ -26,7 +27,7 @@ async function regisztracio(){
         }
     }
     else{
-        alert("Kérem minden adatott töltsön ki!");
+        alert("Kérem minden adatott helyesen töltsön ki!");
     }
 
 }

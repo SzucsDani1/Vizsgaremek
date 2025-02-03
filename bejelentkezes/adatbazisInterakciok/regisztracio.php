@@ -43,6 +43,7 @@ function adatokLekerdezese($muvelet) {
         else {
             return $db->connect_error;
         }
+        $db->close();
     }
 
     $adat = json_decode(file_get_contents("php://input"), true);

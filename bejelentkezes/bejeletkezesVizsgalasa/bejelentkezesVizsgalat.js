@@ -11,7 +11,7 @@ function bejelenzkezesVizsg(){
         }
     }
     else{
-        if (megnyitottOldal != "tesztOldal.html") {
+        if (megnyitottOldal == "bejelentkezes.php") {
             window.open("tesztOldal.html", "_self");
         }
     }
