@@ -200,23 +200,6 @@ function etelfajtaGeneralas(etelfajtak){
 }
 
 
-async function sepicalisIgenyekLekeres(){
-    try{
-        let eredmeny = await fetch("./specialisIgenyek");
-        if(eredmeny.ok){
-            specialisIgenyekBetoltes();
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-
-
 function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
     divContainer.innerHTML = "";  

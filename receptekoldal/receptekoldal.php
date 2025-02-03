@@ -193,9 +193,6 @@
                     
                     <!-- Checkbox szűrő -->
                     <div class="dropdown">
-                        
-                    <ul class="dropdown-menu" aria-labelledby="filterDropdown" id="specialisIgenyek">
-                    </ul>
                     </div>
 
                     
