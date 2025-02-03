@@ -24,8 +24,10 @@ function adatokLekerdezese($muvelet) {
         $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
         if ($db->connect_errno == 0 ) {
             //muvelet megírása
-            $muvelet = "INSERT INTO `felhasznalok` (`id`, `felhnev`, `jelszo`, `joga_id`, `email`, `profilkep`, `letrehozas`, `feltoltot_receptek_szama`) 
-            VALUES (NULL, '". $felhnev ."', '". $jelszo ."', '2', '". $email ."', NULL, current_timestamp(), NULL);";
+            $muvelet = "INSERT INTO `felhasznalok` (`felhnev`, `jelszo`, `joga_id`, `email`, `profilkep`, `letrehozas`, `feltoltot_receptek_szama`) 
+            VALUES ('" . $felhnev . "', '" . $jelszo . "', '2', '" . $email . "', NULL, current_timestamp(), NULL);";
+            
+          
             $db->query($muvelet);
             if ($db->errno == 0) {
                 if ($db->affected_rows > 0) {
