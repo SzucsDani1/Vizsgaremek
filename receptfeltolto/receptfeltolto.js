@@ -1,19 +1,17 @@
 let szamlalo = 1;
 
 function receptFeltolto() {
-    let hozzavaloNeve = document.getElementById("hozzavalo_neve");
-    let hozzavaloMennyiseg = document.getElementById("hozzavalo_mennyiseg");
-    let hozzavaloMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
-    let tbody = document.getElementById("tbody_hozzavalok");
+    const hozzavaloNeve = document.getElementById("hozzavalo_neve");
+    const hozzavaloMennyiseg = document.getElementById("hozzavalo_mennyiseg");
+    const hozzavaloMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
+    const tbody = document.getElementById("tbody_hozzavalok");
 
-    let tr = document.createElement("tr");
+    const tr = document.createElement("tr");
     
-    let tdSzamlalo = document.createElement("td");
-    let tdHozzvaloNeve = document.createElement("td"); 
-    let tdHozzvaloMennyiseg = document.createElement("td"); 
-    let tdHozzvaloMertekegyseg = document.createElement("td"); 
-
-    console.log(hozzavaloMennyiseg.value)
+    const tdSzamlalo = document.createElement("td");
+    const tdHozzvaloNeve = document.createElement("td"); 
+    const tdHozzvaloMennyiseg = document.createElement("td"); 
+    const tdHozzvaloMertekegyseg = document.createElement("td"); 
 
     tdSzamlalo.innerHTML = szamlalo;
     tdHozzvaloNeve.innerHTML = hozzavaloNeve.value;
