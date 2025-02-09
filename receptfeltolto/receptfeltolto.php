@@ -59,8 +59,11 @@
             </form>
         </div>
     </div>
-    
-    <div class="filter-box border p-3 bg-light rounded my-3">
+    <button type="button" class="btn btn-success w-100" id="hozzaadKategoriaGomb">Kategória hozzáadása</button>
+
+    <div id="hozzavaloKategoriak"></div>
+
+    <div class="filter-box border p-3 bg-light rounded my-3" hidden>
         <h4 class="display-6 text-start">Hozzávalók</h4> 
         <div class="row">
             <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
