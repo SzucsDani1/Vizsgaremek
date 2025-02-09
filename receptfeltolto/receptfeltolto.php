@@ -84,21 +84,24 @@
             <button type="button" class="btn btn-success" id="btn_hozzaad">Hozzáad</button>
         </div>
     </div>
-
+    
     <div class="row">
-    <table class="table table-success" id="table_hozzavalok">
+    <table class="table table-success" id="table_hozzavalok" hidden>
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Név</th>
           <th scope="col">Mennyiség</th>
           <th scope="col">Mértékegység</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody id="tbody_hozzavalok">
       </tbody>
 </table>
+    <div class="alert alert-danger" id="figyelmezteto_uzenet" hidden role="alert">
 
+    </div>
     </div>
 
    
