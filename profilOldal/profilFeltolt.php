@@ -15,21 +15,38 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./profiloldal.js"></script>
 </body>
 </html>
 
 <?php
+    // ! Töröld majd ki csak ideiglenes teszt!!!!
+    setcookie("felhasznalonev", "PistaBá", time() + 2 * 24 * 60 * 60); 
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-            $feltoltesiUtvonal = '../feltoltotKepek/profilKepek/'; // Tároló mappa elérési utvonala
-            $feltoltendoFajl = $feltoltesiUtvonal . basename($_FILES['image']['name']); 
-        
+            $felhasznalonev = $_COOKIE["felhasznalonev"];
+            $feltoltesiUtvonal = '../feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
+            
+            if(!file_exists($feltoltesiUtvonal)){
+                mkdir($feltoltesiUtvonal,0777, true);
+            }
+
+            // Get the file extension of the uploaded image
+            $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+            // Create a custom filename (e.g., "username_profilkep_randomID.jpg")
+            $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
+
+            // Set the full path for saving the image
+            $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
+
+
             // Vizsgálja, hogy kép e
             $check = getimagesize($_FILES['image']['tmp_name']);
 
         if ($check !== false) {
-            if(!file_exists("")){
-
-            }
+           
 
             //! feltöltöt file a kijelolt mappába rakása
             if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
