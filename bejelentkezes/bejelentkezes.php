@@ -76,15 +76,19 @@
                                         ON `felhasznalok`.`joga_id` = `felhasznalojog`.`id`
                                     WHERE 
                                         `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
+                        
                         $lekerdez = adatokLekerdezese($muvelet);
+
                         if(is_array($lekerdez)){
                             $lekertJelszo = $lekerdez[0]["jelszo"];
                             if(password_verify($jelszo, $lekertJelszo)){
                                 
                                 $cookie_value = $lekerdez[0]["id"];
                                 setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
+                                
                                 $felhasznalonev_value = $lekerdez[0]["felhnev"];
                                 setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
+                                
                                 $felhasznalojoga_value = $lekerdez[0]["jognev"];
                                 setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
 
