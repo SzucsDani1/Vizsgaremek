@@ -105,6 +105,19 @@
     <div class="alert alert-danger" id="figyelmezteto_uzenet" hidden role="alert">
 
     </div>
+
+    <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+            <div class="mb-3">
+                <label for="etelfajtaSearch" class="form-label">Ételfajta keresése</label>
+                <input type="text" class="form-control" id="etelfajtaSearch" placeholder="Keresés az Ételfajták között...">
+            </div>
+            <div class="dropdown" id="etelfajtaDropdown">
+                <div class="dropdown-menu" id="etelfajtaLista"></div>
+            </div>
+            <div class="mt-3" id="kivalasztottEtelfajta"></div>
+        </div>
+            
     </div>
 
    

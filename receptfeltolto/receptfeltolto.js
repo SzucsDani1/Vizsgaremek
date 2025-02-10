@@ -1,4 +1,5 @@
 let kategoriaSzamlalo = 0;
+let etelfajtak = new Set();
 
 function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat) {
     document.getElementById("figyelmezteto_uzenet").hidden = true;
@@ -289,6 +290,39 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
         receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat);
     });
 }
+
+
+async function etelfajtakLista(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const etelfajta of lista){
+                etelfajtak.add(etelfajta.neve)
+            }
+            
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+function etelfajtaListajanakGeneralasa() {
+    let listaElem = document.getElementById("etelfajtaLista");
+    listaElem.innerHTML = "";
+    for (let etelfajta of etelfajtak) {
+        let elem = letrehozKategoriaListaElemet(etelfajta);
+        listaElem.appendChild(elem);
+    }
+}
+
+
+
+
 
 
 document.getElementById("btn_hozzaad").addEventListener("click", function () {
