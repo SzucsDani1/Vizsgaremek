@@ -36,10 +36,7 @@ async function regisztracio(){
 }
 
 function torol(){
-    document.getElementById("Regpassword").value = "";
-    document.getElementById("Regfelhasznalonev").value = "";
-    document.getElementById("RegpasswordMegint").value = "";
-    document.getElementById("Regemail").value = "";
+    window.location.reload(true);
 }
 
 document.getElementById("regisztral").addEventListener("click", regisztracio)
