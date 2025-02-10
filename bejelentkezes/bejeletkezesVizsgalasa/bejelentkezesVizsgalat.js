@@ -16,7 +16,7 @@ function bejelenzkezesVizsg(){
         }
     }
 }
-
+//? felhasznalonev
 
 function cookieLekeres(neve){ //megkeresi a cookieban a bejelentkezet felhasználó id-ját
     let nev = neve + "=";

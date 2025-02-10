@@ -72,6 +72,8 @@
                                 
                                 $cookie_value = $lekerdez[0]["id"];
                                 setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
+                                $felhasznalonev_value = $lekerdez[0]["felhnev"];
+                                setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
                             }
                             else{
                                 echo "<h2>Sikertelen bejelentkezés!</h2>";
