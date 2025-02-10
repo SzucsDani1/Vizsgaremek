@@ -59,7 +59,7 @@
             </form>
         </div>
     </div>
-    <button type="button" class="btn btn-success w-100" id="hozzaadKategoriaGomb">Kategória hozzáadása</button>
+    <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Kategória hozzáadása</button>
 
     <div id="hozzavaloKategoriak"></div>
 
@@ -101,7 +101,7 @@
       </thead>
       <tbody id="tbody_hozzavalok">
       </tbody>
-</table>
+    </table>
     <div class="alert alert-danger" id="figyelmezteto_uzenet" hidden role="alert">
 
     </div>

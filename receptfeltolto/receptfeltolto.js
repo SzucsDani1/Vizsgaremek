@@ -1,26 +1,21 @@
-// A globális számlálót eltávolítjuk, mert mostantól minden táblázatnak saját számlálója lesz.
 let kategoriaSzamlalo = 0;
 
 function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat) {
-    // Elrejtjük a figyelmeztető üzenetet
     document.getElementById("figyelmezteto_uzenet").hidden = true;
     
-    // Ha nincs minden mező kitöltve, figyelmeztetünk
     if (inputMennyiseg.value === "" || inputMertekegyseg.value === "" || inputNev.value === "") {
         document.getElementById("figyelmezteto_uzenet").innerHTML = "Kérem töltsön ki minden mezőt!";
         document.getElementById("figyelmezteto_uzenet").hidden = false;
         return;
     }
     
-    let table, tbody, counter;
+    let table, tbody, sorSzamlal;
     
     if (divTablazat) {
-        // Ha egy kategóriás filterboxban dolgozunk, keressük meg annak tartalmában a táblázatot
         table = divTablazat.querySelector("table");
         if (!table) {
-            // Ha még nincs létrehozva, egyszer létrehozzuk a táblázatot
             table = document.createElement("table");
-            table.classList = "table table-success";
+            table.classList = "table table";
             
             // Táblázat fejlécének összeállítása
             const thead = document.createElement("thead");
@@ -35,29 +30,25 @@ function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat
             thead.appendChild(trThead);
             table.appendChild(thead);
             
-            // Táblázat törzs létrehozása
             tbody = document.createElement("tbody");
             table.appendChild(tbody);
             
-            // Hozzáadjuk a táblázatot a kategóriához tartozó divhez,
-            // és inicializáljuk a saját számlálóját (kezdjük 1-el)
-            table.dataset.counter = "1";
+            table.dataset.sorSzamlal = "1";
             divTablazat.appendChild(table);
         } else {
             tbody = table.querySelector("tbody");
         }
-        counter = parseInt(table.dataset.counter, 10);
+        sorSzamlal = parseInt(table.dataset.sorSzamlal, 10);
     } else {
-        // Ha a fő hozzávalók filterboxról dolgozunk,
-        // akkor a HTML-ben létező táblázatot használjuk
         table = document.getElementById("table_hozzavalok");
         tbody = document.getElementById("tbody_hozzavalok");
         table.hidden = false;
-        // Ha még nincs számláló érték beállítva, inicializáljuk
-        if (!table.dataset.counter) {
-            table.dataset.counter = "1";
+
+        // Ha még nincs számláló érték beállítva
+        if (!table.dataset.sorSzamlal) {
+            table.dataset.sorSzamlal = "1";
         }
-        counter = parseInt(table.dataset.counter, 10);
+        sorSzamlal = parseInt(table.dataset.sorSzamlal, 10);
     }
     
     // Új sor létrehozása a táblázathoz
@@ -65,7 +56,7 @@ function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat
     
     const tdSzamlalo = document.createElement("td");
     tdSzamlalo.classList.add("szamlalo");
-    tdSzamlalo.innerHTML = counter;
+    tdSzamlalo.innerHTML = sorSzamlal;
     
     const tdHozzvaloNeve = document.createElement("td");
     tdHozzvaloNeve.innerHTML = inputNev.value;
@@ -82,38 +73,34 @@ function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat
     tdTorlesGomb.type = "button";
     tdTorlesGomb.classList = "btn btn-danger btn-sm";
     tdTorlesGomb.innerHTML = "Törlés";
+
     tdTorlesGomb.addEventListener("click", function () {
         trTbody.remove();
-        // Az adott táblázatban újraszámozzuk a sorokat
         cellaUjraSzamlal(table);
         if (tbody.children.length === 0) {
             table.hidden = true;
         }
     });
+
     tdTorles.appendChild(tdTorlesGomb);
     
-    // A sor celláinak összeállítása
     trTbody.appendChild(tdSzamlalo);
     trTbody.appendChild(tdHozzvaloNeve);
     trTbody.appendChild(tdHozzvaloMennyiseg);
     trTbody.appendChild(tdHozzvaloMertekegyseg);
     trTbody.appendChild(tdTorles);
     
-    // Az új sor beszúrása a táblázat törzsébe
     tbody.appendChild(trTbody);
     
-    // Frissítjük a táblázathoz tartozó számlálót
-    counter++;
-    table.dataset.counter = counter;
+    sorSzamlal++;
+    table.dataset.sorSzamlal = sorSzamlal;
     
-    // A mezők törlése a felhasználói élmény javítása érdekében
     inputNev.value = "";
     inputMennyiseg.value = "";
     inputMertekegyseg.value = "";
 }
 
 function cellaUjraSzamlal(table) {
-    // Az adott táblázat törzsében újraszámozzuk az összes sorszámot
     const tbody = table.querySelector("tbody");
     let index = 1;
     for (const row of tbody.children) {
@@ -121,8 +108,7 @@ function cellaUjraSzamlal(table) {
         cell.innerHTML = index;
         index++;
     }
-    // Frissítjük a táblázathoz tartozó számlálót
-    table.dataset.counter = index;
+    table.dataset.sorSzamlal = index;
 }
 
 
@@ -130,7 +116,8 @@ function kategoriaHozzaadasa() {
     const kategoriakKiir = document.getElementById("hozzavaloKategoriak");
     const divTablazat = document.createElement("div"); 
 
-    // Figyelmeztető elem létrehozása, ha nem adnak nevet
+
+    // Figyelmeztető elem létrehozása
     const divFigyelmeztet = document.createElement("div");
     divFigyelmeztet.classList = "alert alert-danger";
     divFigyelmeztet.role = "alert";
@@ -138,9 +125,11 @@ function kategoriaHozzaadasa() {
     divFigyelmeztet.hidden = true;
     divFigyelmeztet.id = "kategoriaFigyelmeztet" + kategoriaSzamlalo;
 
+    // Filterbox elem létrehozása
     const divFilterBox = document.createElement("div");
     divFilterBox.classList = "filter-box border p-3 bg-light rounded my-3";
 
+    // Törlés gomb létrehozása
     const btnTorlesKategoria = document.createElement("button");
     btnTorlesKategoria.type = "button";
     btnTorlesKategoria.classList = "btn btn-danger btn-sm mb-3";
@@ -150,6 +139,7 @@ function kategoriaHozzaadasa() {
         divFigyelmeztet.remove();
     });
 
+    // Cím
     const h4 = document.createElement("h4");
     h4.classList = "display-6 text-start";
     h4.innerHTML = "Kategória";
@@ -178,13 +168,12 @@ function kategoriaHozzaadasa() {
     btn_hozzaad.classList = "btn btn-primary w-50 mx-auto";
     btn_hozzaad.innerHTML = "Hozzáad";
     
-    // A kategória filter box és figyelmeztető elem hozzáadása a konténerhez
-    kategoriakKiir.appendChild(divFilterBox);
-    kategoriakKiir.appendChild(divFigyelmeztet);
-    // Itt hozzuk létre a hozzá tartozó táblázatot (amely majd saját számlálóval működik)
-    kategoriakKiir.appendChild(divTablazat);
+    // Az alábbi három sor módosítása: az új kategóriát a lista elejére tesszük
+    kategoriakKiir.prepend(divTablazat);
+    kategoriakKiir.prepend(divFigyelmeztet);
+    kategoriakKiir.prepend(divFilterBox);
 
-    // A filter box tartalomának összeállítása
+    // A filter box tartalmának összeállítása
     divFilterBox.appendChild(btnTorlesKategoria);
     divFilterBox.appendChild(h4);
     divFilterBox.appendChild(divRow);
@@ -196,11 +185,11 @@ function kategoriaHozzaadasa() {
 
     kategoriaSzamlalo++;
 
-    // Ha a "Hozzáad" gombra kattintunk, az adott kategória átalakul Hozzávalókká
     btn_hozzaad.addEventListener("click", function () {
         hozzavaloHozzaadasa(divFilterBox, input.value, divFigyelmeztet, divTablazat);
     });
 }
+
 
 function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divTablazat) {
     if (kategoriaInput == "") {
@@ -212,7 +201,7 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     // így a box tartalma átalakul csak Hozzávalókká
     divFilterBox.innerHTML = "";
 
-    // Törlés gomb létrehozása (jobb felső sarokban) – a teljes Hozzávalók box törlésére
+    // Törlés gomb létrehozása a hozzávalóknál
     const btnTorlesHozzavalo = document.createElement("button");
     btnTorlesHozzavalo.type = "button";
     btnTorlesHozzavalo.classList = "btn btn-danger btn-sm mb-3";
@@ -223,16 +212,13 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     });
     divFilterBox.appendChild(btnTorlesHozzavalo);
 
-    // Hozzávalók fejléc létrehozása
     const h4 = document.createElement("h4");
     h4.classList = "display-6 text-start";
-    h4.innerHTML = "Hozzávalók";
+    h4.innerHTML = kategoriaInput+" hozzávaló(i)";
 
-    // Egy új sor a mezők számára
     const divRow = document.createElement("div");
     divRow.classList = "row";
 
-    // Hozzávaló neve input
     const divColNev = document.createElement("div");
     divColNev.classList = "col-12 col-lg-4 col-md-12 col-sm-12 mb-3";
 
@@ -246,7 +232,6 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const labelNev = document.createElement("label");
     labelNev.innerHTML = "Hozzávaló neve";
 
-    // Hozzávaló mennyiség input
     const divColMennyiseg = document.createElement("div");
     divColMennyiseg.classList = "col-12 col-lg-4 col-md-12 col-sm-12 mb-3";
 
@@ -261,7 +246,6 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const labelMennyiseg = document.createElement("label");
     labelMennyiseg.innerHTML = "Hozzávaló mennyiség";
 
-    // Hozzávaló mértékegység input
     const divColMertekegyseg = document.createElement("div");
     divColMertekegyseg.classList = "col-12 col-lg-4 col-md-12 col-sm-12 mb-3";
 
@@ -276,13 +260,11 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const labelMertekegyseg = document.createElement("label");
     labelMertekegyseg.innerHTML = "Hozzávaló mértékegysége";
 
-    // Hozzáadás gomb
     const btnHozzaad = document.createElement("button");
     btnHozzaad.type = "button";
-    btnHozzaad.classList = "btn btn-success";
+    btnHozzaad.classList = "btn btn-success w-50 mx-auto";
     btnHozzaad.innerHTML = "Hozzáad";
 
-    // Összeállítjuk a hierarchiát
     divFilterBox.appendChild(h4);
     divFilterBox.appendChild(divRow);
 
@@ -310,7 +292,6 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
 
 
 document.getElementById("btn_hozzaad").addEventListener("click", function () {
-    // A fő hozzávalók esetén nincs saját divTablazat, így a receptFeltolto() a fő táblázatot használja
     const inputNev = document.getElementById("hozzavalo_neve");
     const inputMennyiseg = document.getElementById("hozzavalo_mennyiseg");
     const inputMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
