@@ -15,11 +15,12 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="./profiloldal.js"></script>
+  
 </body>
 </html>
 
 <?php
+    include "../adatbazisInterakciok/adatbazisInterakciok.php";
     // ! Töröld majd ki csak ideiglenes teszt!!!!
     setcookie("felhasznalonev", "PistaBá", time() + 2 * 24 * 60 * 60); 
 
@@ -32,13 +33,13 @@
                 mkdir($feltoltesiUtvonal,0777, true);
             }
 
-            // Get the file extension of the uploaded image
+            // fájl formátum
             $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
 
-            // Create a custom filename (e.g., "username_profilkep_randomID.jpg")
+            // fájl neve
             $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
 
-            // Set the full path for saving the image
+            // fájl az elérési utvonalal
             $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
 
 
@@ -48,9 +49,20 @@
         if ($check !== false) {
            
 
-            //! feltöltöt file a kijelolt mappába rakása
+            // * feltöltöt file a kijelolt mappába rakása
             if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
                 echo "Profilkép sikeresen fellet töltve";
+                $eleresiUtvonal = "UPDATE 
+                                        `felhasznalok` 
+                                    SET 
+                                        `profilkep` = '". $feltoltendoFajl ."' 
+                                    WHERE 
+                                        `felhasznalok`.`felhnev` 
+                                    LIKE 
+                                    '". $felhasznalonev."';";
+
+          
+                adatokValtoztatasa($eleresiUtvonal);
             } 
             else 
             {
