@@ -64,7 +64,18 @@
                 $jelszo = $_GET["Bejjelszo"];
                 if(!empty($felhasznalonev) && !empty($jelszo)){
                     try {
-                        $muvelet = "SELECT `felhasznalok`.`id`, `felhasznalok`.`felhnev`, `felhasznalok`.`jelszo` FROM `felhasznalok` where `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
+                        $muvelet = "SELECT 
+                                        `felhasznalok`.`id`, 
+                                        `felhasznalok`.`felhnev`, 
+                                        `felhasznalok`.`jelszo`, 
+                                        `felhasznalojog`.`jognev` 
+                                    FROM 
+                                        `felhasznalok`
+                                    INNER JOIN 
+                                        `felhasznalojog` 
+                                        ON `felhasznalok`.`joga_id` = `felhasznalojog`.`id`
+                                    WHERE 
+                                        `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
                         $lekerdez = adatokLekerdezese($muvelet);
                         if(is_array($lekerdez)){
                             $lekertJelszo = $lekerdez[0]["jelszo"];
@@ -74,6 +85,9 @@
                                 setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
                                 $felhasznalonev_value = $lekerdez[0]["felhnev"];
                                 setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
+                                $felhasznalojoga_value = $lekerdez[0]["jognev"];
+                                setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
+
                             }
                             else{
                                 echo "<h2>Sikertelen bejelentkezés!</h2>";
