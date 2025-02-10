@@ -20,14 +20,18 @@
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-            $feltoltesiUtvonal = '../feltoltotKepek/profilKepek/'; // Tároló mapp elérési utvonala
+            $feltoltesiUtvonal = '../feltoltotKepek/profilKepek/'; // Tároló mappa elérési utvonala
             $feltoltendoFajl = $feltoltesiUtvonal . basename($_FILES['image']['name']); 
         
             // Vizsgálja, hogy kép e
             $check = getimagesize($_FILES['image']['tmp_name']);
 
         if ($check !== false) {
-            // Move the uploaded file to the target directory
+            if(!file_exists("")){
+
+            }
+
+            //! feltöltöt file a kijelolt mappába rakása
             if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
                 echo "Profilkép sikeresen fellet töltve";
             } 
