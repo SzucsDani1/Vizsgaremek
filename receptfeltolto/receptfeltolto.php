@@ -117,8 +117,37 @@
             </div>
             <div class="mt-3" id="kivalasztottEtelfajta"></div>
         </div>
-            
     </div>
+
+    <!--Étrend szűrő-->
+    <div class="row">
+      <div class="filter-box border p-3 bg-light rounded my-3">
+        <div class="mb-3">
+          <label for="etrendSearch" class="form-label mt-2">Étrend</label>
+          <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+        </div>
+        <div class="dropdown" id="etrendDropdown">
+          <div class="dropdown-menu" id="etrendLista"></div>
+        </div>
+        <div class="mt-3" id="kivalasztottEtrend"></div>
+      </div>          
+    </div>
+
+    <!--Konyha szűrő-->
+    <div class="row">
+      <div class="filter-box border p-3 bg-light rounded my-3">
+        <div class="mb-3">
+          <label for="konyhaSearch" class="form-label mt-2">Konyhák</label>
+          <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés az konyhák között...">
+        </div>
+        <div class="dropdown" id="konyhaDropdown">
+          <div class="dropdown-menu" id="konyhaLista"></div>
+        </div>
+        <div class="mt-3" id="kivalasztottKonyha"></div>
+      </div>          
+    </div>
+
+    
 
    
 </div>
