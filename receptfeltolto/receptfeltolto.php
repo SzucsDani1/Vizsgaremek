@@ -147,6 +147,20 @@
       </div>          
     </div>
 
+     <!--Alapanyagok szűrése-->
+     <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="mb-3">
+            <label for="AlapanyagSearch" class="form-label mt-2">Alapanyagok</label>
+            <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+          </div>
+          <div class="dropdown" id="alapanyagDropdown">
+            <div class="dropdown-menu" id="alapanyagLista"></div>
+          </div>
+          <div class="mt-3" id="kivalasztottAlapanyagok"></div>
+        </div>
+     </div>
+
     
 
    
