@@ -923,6 +923,8 @@ function nehezsegFigyel() {
     const range = document.getElementById("nehezsegInput");
     let nehezsegKiir = document.getElementById("nehezsegKiir");
 
+    window.addEventListener("load", frissitNehezseg);
+
     range.addEventListener('input', frissitNehezseg);
     range.addEventListener('mousedown', function() { 
         frissitNehezseg();
@@ -942,6 +944,108 @@ function nehezsegFigyel() {
         }
          else {
             nehezsegKiir.innerHTML = "Nehéz";
+        }
+    }
+}
+
+function arFigyel() {
+    const range = document.getElementById("arInput");
+    let arKiir = document.getElementById("arKiir");
+
+    range.addEventListener('input', frissitAr); 
+    range.addEventListener('mousedown', function() { 
+        frissitAr(); 
+        range.addEventListener('mousemove', frissitAr); 
+    });
+    range.addEventListener('mouseup', function() {
+        range.removeEventListener('mousemove', frissitAr);
+    });
+    window.addEventListener("load", frissitAr);
+
+    function frissitAr() {
+        if (range.value == 0) {
+            arKiir.innerHTML = "Mind";
+        } else if (range.value == 1) {
+            arKiir.innerHTML = "Olcsó";
+        } else if (range.value == 2) {
+            arKiir.innerHTML = "Átlagos";
+        }
+         else {
+            arKiir.innerHTML = "Drága";
+        }
+    }
+}
+
+
+function kaloriaFigyel() {
+    const range = document.getElementById("kaloriaInput");
+    let kaloriaKiir = document.getElementById("kaloriaKiir");
+
+    range.addEventListener('input', frissitKaloria);
+    range.addEventListener('mousedown', function() { 
+        frissitKaloria(); 
+        range.addEventListener('mousemove', frissitKaloria); 
+    });
+    range.addEventListener('mouseup', function() { 
+        range.removeEventListener('mousemove', frissitKaloria); 
+    });
+
+    function frissitKaloria() {
+        if (range.value == 0) {
+            kaloriaKiir.innerHTML = "Mind";
+        } else if (range.value == 1) {
+            kaloriaKiir.innerHTML = "200 kcal";
+        }else if (range.value == 2) {
+            kaloriaKiir.innerHTML = "400 kcal";
+        } else if (range.value == 3) {
+            kaloriaKiir.innerHTML = "600 kcal";
+        }
+        else {
+            kaloriaKiir.innerHTML = "600 kcal felett";
+        }
+    }
+}
+
+
+function adagFigyel() {
+    const range = document.getElementById("adagInput");
+    let adagKiir = document.getElementById("adagKiir");
+
+    range.addEventListener('input', frissitAdag);
+    range.addEventListener('mousedown', function() { 
+        frissitAdag(); 
+        range.addEventListener('mousemove', frissitAdag); 
+    });
+    range.addEventListener('mouseup', function() { 
+        range.removeEventListener('mousemove', frissitAdag); 
+    });
+
+    function frissitAdag() {
+        if (range.value == 0) {
+            adagKiir.innerHTML = "1 adag";
+        } else if (range.value == 1) {
+            adagKiir.innerHTML = "2 adag";
+        }else if (range.value == 2) {
+            adagKiir.innerHTML = "3 adag";
+        } else if (range.value == 3) {
+            adagKiir.innerHTML = "4 adag";
+        }
+        else if (range.value == 4) {
+            adagKiir.innerHTML = "5 adag";
+        }
+        else if (range.value == 5) {
+            adagKiir.innerHTML = "6 adag";
+        }else if (range.value == 6) {
+            adagKiir.innerHTML = "7 adag";
+        }
+        else if (range.value == 7) {
+            adagKiir.innerHTML = "8 adag";
+        }
+        else if (range.value == 8) {
+            adagKiir.innerHTML = "9 adag";
+        }
+        else {
+            adagKiir.innerHTML = "10 adag";
         }
     }
 }
@@ -966,3 +1070,6 @@ document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 window.addEventListener("load", alapanyagLista);
 
 window.addEventListener("load", nehezsegFigyel);
+window.addEventListener("load", arFigyel);
+window.addEventListener("load", kaloriaFigyel);
+window.addEventListener("load", adagFigyel);

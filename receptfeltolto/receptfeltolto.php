@@ -109,8 +109,11 @@
     <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
             <div class="mb-3">
-                <label for="etelfajtaSearch" class="form-label">Ételfajta keresése</label>
+              <label class="mb-1">Ételfajták</label>
+              <form class="form-floating">
                 <input type="text" class="form-control" id="etelfajtaSearch" placeholder="Keresés az Ételfajták között...">
+                <label for="etelfajtaSearch" class="form-label">Ételfajta keresése</label>
+              </form>
             </div>
             <div class="dropdown" id="etelfajtaDropdown">
                 <div class="dropdown-menu" id="etelfajtaLista"></div>
@@ -123,8 +126,11 @@
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
-          <label for="etrendSearch" class="form-label mt-2">Étrend</label>
-          <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+          <label class="mb-1">Étrend</label>
+          <form class="form-floating">
+            <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+            <label for="etrendSearch" class="form-label">Étrend keresése</label>
+          </form>
         </div>
         <div class="dropdown" id="etrendDropdown">
           <div class="dropdown-menu" id="etrendLista"></div>
@@ -137,8 +143,11 @@
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
-          <label for="konyhaSearch" class="form-label mt-2">Konyhák</label>
-          <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés az konyhák között...">
+          <label class="mb-1">Konyhák</label>
+          <form class="form-floating">
+            <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés az konyhák között...">
+            <label for="konyhaSearch" class="form-label">Konyhák keresése</label>
+          </form>
         </div>
         <div class="dropdown" id="konyhaDropdown">
           <div class="dropdown-menu" id="konyhaLista"></div>
@@ -151,8 +160,11 @@
      <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
-            <label for="AlapanyagSearch" class="form-label mt-2">Alapanyagok</label>
-            <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+            <label class="mb-1">Alapanyagok</label>
+            <form class="form-floating">
+              <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+              <label for="AlapanyagSearch" class="form-label">Alapanyagok keresése</label>
+            </form>
           </div>
           <div class="dropdown" id="alapanyagDropdown">
             <div class="dropdown-menu" id="alapanyagLista"></div>
@@ -167,8 +179,51 @@
           <div class="mb-3">
             <label class="form-label">Nehézségi szint</label>
             <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
-            <div id="nehezsegKiir" class="form-text"></div>
+            <div id="nehezsegKiir" class="form-text">Mind</div>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="mb-3">
+            <label class="form-label">Ár</label>
+            <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
+            <div id="arKiir" class="form-text">Mind</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kalória szint szűrő -->
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="mb-3">
+            <label class="form-label">Kalória</label>
+            <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
+            <div id="kaloriaKiir" class="form-text">Mind</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adag szint szűrő -->
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="mb-3">
+            <label class="form-label">Adag</label>
+            <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
+            <div id="adagKiir" class="form-text">1 adag</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <label class="mb-1">Idő</label> 
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                <form class="form-floating">
+                    <input type="text" class="form-control" id="ido" placeholder="Idő beállítása">
+                    <label for="ido">Idő</label>
+                </form>
+            </div>
         </div>
       </div>
 </div>
