@@ -919,12 +919,32 @@ function eltavolitKivalasztottAdatot(szuroAdatok) {
     }
 }
 
+function nehezsegFigyel() {
+    const range = document.getElementById("nehezsegInput");
+    let nehezsegKiir = document.getElementById("nehezsegKiir");
 
+    range.addEventListener('input', frissitNehezseg);
+    range.addEventListener('mousedown', function() { 
+        frissitNehezseg();
+        range.addEventListener('mousemove', frissitNehezseg); 
+    });
+    range.addEventListener('mouseup', function() {
+        range.removeEventListener('mousemove', frissitNehezseg); 
+    });
 
-
-
-
-
+    function frissitNehezseg() {
+        if (range.value == 0) {
+            nehezsegKiir.innerHTML = "Mind";
+        } else if (range.value == 1) {
+            nehezsegKiir.innerHTML = "Könnyű";
+        } else if (range.value == 2) {
+            nehezsegKiir.innerHTML = "Átlagos";
+        }
+         else {
+            nehezsegKiir.innerHTML = "Nehéz";
+        }
+    }
+}
 
 
 
@@ -934,6 +954,7 @@ document.getElementById("btn_hozzaad").addEventListener("click", function () {
     const inputMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
     receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg);
 });
+
 document.getElementById("hozzaadKategoriaGomb").addEventListener("click", kategoriaHozzaadasa);
 document.addEventListener("DOMContentLoaded", inicializalasEtelfajta);
 window.addEventListener("load", etelfajtakLista)
@@ -944,3 +965,4 @@ window.addEventListener("load", konyhaLista);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 window.addEventListener("load", alapanyagLista);
 
+window.addEventListener("load", nehezsegFigyel);

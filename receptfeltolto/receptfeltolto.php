@@ -161,9 +161,16 @@
         </div>
      </div>
 
-    
-
-   
+     <!-- Nehézségi szint szűrő -->
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="mb-3">
+            <label class="form-label">Nehézségi szint</label>
+            <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
+            <div id="nehezsegKiir" class="form-text"></div>
+          </div>
+        </div>
+      </div>
 </div>
 
     <!--END ŰRLAP ELEMEK-->
