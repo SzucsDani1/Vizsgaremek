@@ -3,6 +3,8 @@ let etelfajtak = new Set();
 let etrendek = new Set();
 let konyhak = new Set();
 let alapanyagok = new Set();
+let feltoltottKepek = [];
+
 
 function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat) {
     document.getElementById("figyelmezteto_uzenet").hidden = true;
@@ -1050,7 +1052,48 @@ function adagFigyel() {
     }
 }
 
+function kepfeltolto() {
+    const kepMegjelenit = document.getElementById('kepMegjelenit');
+    const faljok = event.target.files;
+  
+    for (let i = 0; i < faljok.length; i++) {
+      const falj = faljok[i];
+      if (falj && falj.type.startsWith('image/')) {
+        const faljBeolvas = new FileReader();
+        faljBeolvas.onload = function(e) {
+            const kepNev = falj.name; 
+            feltoltottKepek.push(kepNev);
 
+          
+          const colDiv = document.createElement('div');
+          colDiv.className = 'col-12 col-lg-3 col-md-6 col-sm-6 position-relative mb-3';
+  
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.className = 'img-thumbnail img-preview';
+          img.style.height = '300px';
+          img.style.width = "auto";
+
+          const btnTorles = document.createElement('button');
+          btnTorles.className = 'btn btn-danger btn-sm position-absolute top-0 start-0';
+          btnTorles.innerHTML = '&times;';
+          btnTorles.addEventListener('click', function() {
+            colDiv.remove();
+            feltoltottKepek = feltoltottKepek.filter(nev => nev !== kepNev);
+          });
+  
+          colDiv.appendChild(img);
+          colDiv.appendChild(btnTorles);
+          kepMegjelenit.appendChild(colDiv);
+        };
+        faljBeolvas.readAsDataURL(falj);
+      }
+    }
+    event.target.value = "";
+  }
+
+
+  
 
 document.getElementById("btn_hozzaad").addEventListener("click", function () {
     const inputNev = document.getElementById("hozzavalo_neve");
@@ -1073,3 +1116,4 @@ window.addEventListener("load", nehezsegFigyel);
 window.addEventListener("load", arFigyel);
 window.addEventListener("load", kaloriaFigyel);
 window.addEventListener("load", adagFigyel);
+document.getElementById('kepFeltoltInput').addEventListener('change', kepfeltolto);

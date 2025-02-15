@@ -59,6 +59,7 @@
             </form>
         </div>
     </div>
+
     <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Kategória hozzáadása</button>
 
     <div id="hozzavaloKategoriak"></div>
@@ -226,6 +227,34 @@
             </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <label class="mb-1">Recept leírása</label>
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="Recept leírása" id="receptLeiras" style="height: 200px"></textarea>
+            <label for="receptLeiras">Recept Leírás</label>
+          </div>
+        </div>
+    </div>
+
+      <!--START KÉPFELTÖLTÉS-->
+      <div class="row">
+        <div class="filter-box border p-3 bg-light rounded my-3">
+          <div class="col-12">
+            <label class="mb-1">Kép feltöltés</label>
+            <div class="form-group">
+              <label for="kepFeltoltInput" class="btn btn-primary w-100">
+                Fájlok kiválasztása
+              </label>
+              <input type="file" class="d-none" id="kepFeltoltInput" multiple accept="image/*">
+            </div>
+            <div class="row" id="kepMegjelenit">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END KÉPFELTÖLTÉS-->
 </div>
 
     <!--END ŰRLAP ELEMEK-->
