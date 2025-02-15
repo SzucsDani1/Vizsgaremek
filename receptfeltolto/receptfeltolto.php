@@ -50,6 +50,8 @@
 
 
     <!--START ŰRLAP ELEMEK-->
+
+    <!--RECEPT NEVE-->
     <div class="container">
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
@@ -64,6 +66,7 @@
 
     <div id="hozzavaloKategoriak"></div>
 
+    <!--HOZZÁVALÓK FELVITELÁHEZ SZÜKSÉGES INPUT MEZŐK-->
     <div class="filter-box border p-3 bg-light rounded my-3" hidden>
         <h4 class="display-6 text-start">Hozzávalók</h4> 
         <div class="row">
@@ -89,6 +92,7 @@
         </div>
     </div>
     
+    <!--RECEPT HOZZÁVALÓ TÁBLÁZAT-->
     <div class="row">
     <table class="table table-success" id="table_hozzavalok" hidden>
       <thead>
@@ -107,6 +111,7 @@
 
     </div>
 
+    <!--ÉTELFAJTÁK SZŰRÉSE-->
     <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
             <div class="mb-3">
@@ -123,7 +128,7 @@
         </div>
     </div>
 
-    <!--Étrend szűrő-->
+    <!--ÉTREND SZŰRÉSE-->
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
@@ -140,7 +145,7 @@
       </div>          
     </div>
 
-    <!--Konyha szűrő-->
+    <!--KONYHÁK SZŰRÉSE-->
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
@@ -157,7 +162,7 @@
       </div>          
     </div>
 
-     <!--Alapanyagok szűrése-->
+     <!--ALAPANYAGOK SZŰRÉSE-->
      <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
@@ -174,7 +179,7 @@
         </div>
      </div>
 
-     <!-- Nehézségi szint szűrő -->
+     <!--NEHÉZSÉG FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
@@ -184,7 +189,8 @@
           </div>
         </div>
       </div>
-
+      
+      <!--ÁR FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
@@ -195,7 +201,7 @@
         </div>
       </div>
 
-      <!-- Kalória szint szűrő -->
+      <!--KALÓRIA FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
@@ -206,7 +212,7 @@
         </div>
       </div>
 
-      <!-- Adag szint szűrő -->
+      <!--ADAG FELVITELE -->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="mb-3">
@@ -216,6 +222,8 @@
           </div>
         </div>
       </div>
+
+      <!--IDŐ FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <label class="mb-1">Idő</label> 
@@ -228,6 +236,7 @@
         </div>
       </div>
 
+      <!--RECEPT LEÍRÁSA-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <label class="mb-1">Recept leírása</label>
@@ -238,7 +247,7 @@
         </div>
     </div>
 
-      <!--START KÉPFELTÖLTÉS-->
+      <!--KÉPFELTÖLTÉS-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
           <div class="col-12">
@@ -254,7 +263,6 @@
           </div>
         </div>
       </div>
-      <!--END KÉPFELTÖLTÉS-->
 </div>
 
     <!--END ŰRLAP ELEMEK-->
