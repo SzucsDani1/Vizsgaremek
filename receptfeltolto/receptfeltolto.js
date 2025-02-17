@@ -1066,7 +1066,7 @@ function kepfeltolto() {
 
           
           const colDiv = document.createElement('div');
-          colDiv.className = 'col-12 col-lg-3 col-md-6 col-sm-6 position-relative mb-3';
+          colDiv.className = 'col-12 col-lg-3 col-md-6 col-sm-6 position-relative my-3';
   
           const img = document.createElement('img');
           img.src = e.target.result;
@@ -1075,7 +1075,7 @@ function kepfeltolto() {
           img.style.width = "auto";
 
           const btnTorles = document.createElement('button');
-          btnTorles.className = 'btn btn-danger btn-sm position-absolute top-0 start-0';
+          btnTorles.className = 'btn btn-danger btn-sm position-absolute top-0 start-0 ';
           btnTorles.innerHTML = '&times;';
           btnTorles.addEventListener('click', function() {
             colDiv.remove();
