@@ -142,6 +142,16 @@
                     </div>
                     <div class="mt-3" id="kivalasztottAlapanyagok"></div>
 
+                     <!--Alapanyag nélkül szűrése-->
+                     <div class="mb-3">
+                      <label for="AlapanyagNelkulSearch" class="form-label mt-2">Alapanyagok nélkül</label>
+                      <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+                    </div>
+                    <div class="dropdown" id="alapanyagNelkulDropdown">
+                      <div class="dropdown-menu" id="alapanyagNelkulLista"></div>
+                    </div>
+                    <div class="mt-3" id="kivalasztottAlapanyagokNelkul"></div>
+
 
                     <!--Étrend szűrő-->
                     <div class="mb-3">
