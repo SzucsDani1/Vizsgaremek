@@ -476,30 +476,12 @@ function kategoriakListajanakGeneralasa() {
 function alapanyagListajanakGeneralasa() {
     let listaElem = document.getElementById("alapanyagLista");
     listaElem.innerHTML = "";
-    console.log(alapanyagok)
-    // Iterálunk az összes alapanyagon
     for (let alapanyag of alapanyagok) {
-        // Ha az alapanyag már ki van választva a "kizárandó" (alapanyag nélkül) oldalon, akkor kihagyjuk
-        if (document.getElementById("kivalasztott-alapanyagNelkul-" + alapanyag)) {
-            continue;
-        }
         let elem = letrehozAlapanyagListaElemet(alapanyag);
         listaElem.appendChild(elem);
     }
 }
 
-function alapanyagNelkulListajanakGeneralasa() {
-    let listaElem = document.getElementById("alapanyagNelkulLista");
-    listaElem.innerHTML = "";
-    for (let alapanyag of alapanyagok) {
-        // Ha az alapanyag már ki van választva a normál (inclusion) listán, akkor kihagyjuk
-        if (document.getElementById("kivalasztott-alapanyag-" + alapanyag)) {
-            continue;
-        }
-        let elem = letrehozAlapanyagNelkulListaElemet(alapanyag);
-        listaElem.appendChild(elem);
-    }
-}
 
 function etrendListajanakGeneralasa() {
     let listaElem = document.getElementById("etrendLista");
@@ -697,16 +679,6 @@ function keresesMukodtetSzurobenAlapanyag() {
     });
 }
 
-function keresesMukodtetSzurobenAlapanyagNelkul() {
-    let keresomezo = document.getElementById("alapanyagNelkulSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenAlapanyagNelkul(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenAlapanyagNelkul(keresomezo);
-    });
-}
-
 function keresesMukodtetSzurobenEtrend() {
     let keresomezo = document.getElementById("etrendSearch");
     keresomezo.addEventListener("input", function() {
@@ -747,19 +719,6 @@ function inditsKeresestSzurobenAlapanyag(keresomezo) {
     if (keresesiKifejezes) {
         alapanyagListajanakGeneralasa(alapanyagok);
         szuresiFunkcioAlapanyagok(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
-
-function inditsKeresestSzurobenAlapanyagNelkul(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("alapanyagNelkulLista");
-
-    if (keresesiKifejezes) {
-        alapanyagNelkulListajanakGeneralasa();
-        szuresiFunkcioAlapanyagokNelkul(keresesiKifejezes);
         dropdownMenu.style.display = "block";
     } else {
         dropdownMenu.style.display = "none";
@@ -859,34 +818,6 @@ function szuresiFunkcioAlapanyagok(keresesiKifejezes) {
     }
 }
 
-function szuresiFunkcioAlapanyagokNelkul(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#alapanyagNelkulLista .dropdown-item");
-    let talalatVan = false;
-    for (let elem of listaElemei) {
-        let szoveg = elem.textContent.toLowerCase();
-        if (szoveg.includes(keresesiKifejezes)) {
-            elem.style.display = "block";
-            talalatVan = true;
-        } else {
-            elem.style.display = "none";
-        }
-    }
-    let dropdownMenu = document.getElementById("alapanyagNelkulLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatAlapanyagNelkul");
-    if (!talalatVan) {
-        if (!nincsTalalatElem) {
-            nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatAlapanyagNelkul";
-            nincsTalalatElem.textContent = "Nincs találat";
-            nincsTalalatElem.style.color = "red";
-            nincsTalalatElem.style.textAlign = "center";
-            dropdownMenu.appendChild(nincsTalalatElem);
-        }
-        nincsTalalatElem.style.display = "block";
-    } else if (nincsTalalatElem) {
-        nincsTalalatElem.style.display = "none";
-    }
-}
 
 
 function szuresiFunkcioEtrendek(keresesiKifejezes) {
@@ -1000,9 +931,6 @@ function hozzaadKivalasztottAlapanyagot(szuroAdatok) {
 
         tag.appendChild(removeBtn);
         container.appendChild(tag);
-
-        // Frissítjük a "kizárandó" dropdown listát, hogy eltűnjön az átfedés
-        alapanyagNelkulListajanakGeneralasa();
     }
 }
 
@@ -1105,8 +1033,6 @@ function eltavolitKivalasztottAlapanyagot(szuroAdatok) {
     let tag = document.getElementById("kivalasztott-alapanyag-" + szuroAdatok);
     if (tag) {
         tag.remove();
-        // Frissítjük a "kizárandó" dropdown listát, mert most újra választható lehet
-        alapanyagNelkulListajanakGeneralasa();
     }
 }
 
@@ -1128,11 +1054,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // A már meglévő alapanyag kereső inicializálása
     keresesMukodtetSzurobenAlapanyag();
     // Új inicializálás az "alapanyag nélkül" keresőhöz
-    keresesMukodtetSzurobenAlapanyagNelkul();
     
     // A dropdown listák első generálása
     alapanyagListajanakGeneralasa();
-    alapanyagNelkulListajanakGeneralasa();
 });
 
 window.addEventListener("load", arFigyel);
