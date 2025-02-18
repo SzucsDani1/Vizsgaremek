@@ -478,16 +478,21 @@ function alapanyagListajanakGeneralasa() {
     listaElem.innerHTML = "";
     for (let alapanyag of alapanyagok) {
         let elem = letrehozAlapanyagListaElemet(alapanyag);
-        listaElem.appendChild(elem);
+        if (elem) {
+            listaElem.appendChild(elem);
+        }
     }
 }
 
+// Újragenerálja az "alapanyag nélküli" dropdown listáját.
 function alapanyagNelkulListajanakGeneralasa() {
     let listaElem = document.getElementById("alapanyagNelkulLista");
     listaElem.innerHTML = "";
     for (let alapanyag of alapanyagok) {
         let elem = letrehozAlapanyagNelkulListaElemet(alapanyag);
-        listaElem.appendChild(elem);
+        if (elem) {
+            listaElem.appendChild(elem);
+        }
     }
 }
 
@@ -570,26 +575,29 @@ function letrehozKategoriaListaElemet(szuroAdatok) {
 }
 
 
-
 function letrehozAlapanyagListaElemet(szuroAdatok) {
+    // Ha az elem már kiválasztásra került az "alapanyag nélküli" oldalon, akkor ne hozza létre
+    if (document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
+        return null;
+    }
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
 
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("btn-check");
-    // egyedi id: pl. "checkbox-<alapanyag>"
-    checkbox.id = "checkbox-" + szuroAdatok;
+    // Egyedi azonosító az alapanyag listához
+    checkbox.id = "checkbox-alapanyag-" + szuroAdatok;
 
     let label = document.createElement("label");
     label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-" + szuroAdatok);
+    label.setAttribute("for", "checkbox-alapanyag-" + szuroAdatok);
     label.textContent = szuroAdatok;
 
     div.appendChild(checkbox);
     div.appendChild(label);
 
-    // Ha az elem már ki van választva (ez itt általában false lesz, mert az eltérő konténer kezeli)
+    // Ha már kiválasztották az adott elemet az alapanyagok között, a checkbox checked legyen
     if (document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
         checkbox.checked = true;
     }
@@ -598,33 +606,36 @@ function letrehozAlapanyagListaElemet(szuroAdatok) {
         if (checkbox.checked) {
             hozzaadKivalasztottAlapanyagot(szuroAdatok);
         } else {
-            eltavolitKivalasztottAdatot(szuroAdatok);
+            eltavolitKivalasztottAdatotAlapanyag(szuroAdatok);
         }
     });
 
     return div;
 }
 
-
+// Generálja az "alapanyag nélküli" listáját, de kihagyja azokat az elemeket, amelyek az "alapanyag" kiválasztottak között szerepelnek.
 function letrehozAlapanyagNelkulListaElemet(szuroAdatok) {
+    // Ha az elem már kiválasztásra került az "alapanyag" oldalon, akkor ne hozza létre
+    if (document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
+        return null;
+    }
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
 
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("btn-check");
-    // egyedi id: pl. "checkbox-<alapanyag>"
-    checkbox.id = "checkbox-" + szuroAdatok;
+    // Egyedi azonosító az alapanyag nélküli listához
+    checkbox.id = "checkbox-alapanyagNelkul-" + szuroAdatok;
 
     let label = document.createElement("label");
     label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-" + szuroAdatok);
+    label.setAttribute("for", "checkbox-alapanyagNelkul-" + szuroAdatok);
     label.textContent = szuroAdatok;
 
     div.appendChild(checkbox);
     div.appendChild(label);
 
-    // Ha az elem már ki van választva (ez itt általában false lesz, mert az eltérő konténer kezeli)
     if (document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
         checkbox.checked = true;
     }
@@ -633,13 +644,12 @@ function letrehozAlapanyagNelkulListaElemet(szuroAdatok) {
         if (checkbox.checked) {
             hozzaadKivalasztottAlapanyagNelkul(szuroAdatok);
         } else {
-            eltavolitKivalasztottAdatot(szuroAdatok);
+            eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok);
         }
     });
 
     return div;
 }
-
 
 function letrehozEtrendListaElemet(szuroAdatok) {
     let div = document.createElement("div");
@@ -1018,52 +1028,55 @@ function hozzaadKivalasztottKategoriat(szuroAdatok) {
 }
 
 function hozzaadKivalasztottAlapanyagot(szuroAdatok) {
-    if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
+    if (!document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
         let kivalasztottContainerAlapanyag = document.getElementById("kivalasztottAlapanyagok");
 
-        // div létrehozása
         let tag = document.createElement("div");
         tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
-        tag.id = "kivalasztott-" + szuroAdatok;
+        tag.id = "kivalasztott-alapanyag-" + szuroAdatok;
         tag.textContent = szuroAdatok;
 
-        // x törlés gomb hozzáadása
         let removeBtn = document.createElement("button");
         removeBtn.type = "button";
         removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
         removeBtn.setAttribute("aria-label", "Törlés");
         removeBtn.addEventListener("click", function () {
-            eltavolitKivalasztottAdatot(szuroAdatok);
-            document.getElementById("checkbox-" + szuroAdatok).checked = false;
+            eltavolitKivalasztottAdatotAlapanyag(szuroAdatok);
+            let checkbox = document.getElementById("checkbox-alapanyag-" + szuroAdatok);
+            if (checkbox) checkbox.checked = false;
+            refreshAlapanyagNelkulList();
         });
 
         tag.appendChild(removeBtn);
         kivalasztottContainerAlapanyag.appendChild(tag);
+        refreshAlapanyagNelkulList();
     }
 }
 
+// Hozzáadja a kiválasztott "alapanyag nélküli" elemet, majd frissíti az alapanyagok listáját.
 function hozzaadKivalasztottAlapanyagNelkul(szuroAdatok) {
-    if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
+    if (!document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
         let kivalasztottContainerAlapanyagNelkul = document.getElementById("kivalasztottAlapanyagNelkul");
 
-        // div létrehozása
         let tag = document.createElement("div");
         tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
-        tag.id = "kivalasztott-" + szuroAdatok;
+        tag.id = "kivalasztott-alapanyagNelkul-" + szuroAdatok;
         tag.textContent = szuroAdatok;
 
-        // x törlés gomb hozzáadása
         let removeBtn = document.createElement("button");
         removeBtn.type = "button";
         removeBtn.classList.add("btn-close", "btn-close-white", "ms-2");
         removeBtn.setAttribute("aria-label", "Törlés");
         removeBtn.addEventListener("click", function () {
-            eltavolitKivalasztottAdatot(szuroAdatok);
-            document.getElementById("checkbox-" + szuroAdatok).checked = false;
+            eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok);
+            let checkbox = document.getElementById("checkbox-alapanyagNelkul-" + szuroAdatok);
+            if (checkbox) checkbox.checked = false;
+            refreshAlapanyagList();
         });
 
         tag.appendChild(removeBtn);
         kivalasztottContainerAlapanyagNelkul.appendChild(tag);
+        refreshAlapanyagList();
     }
 }
 
@@ -1170,6 +1183,33 @@ function eltavolitKivalasztottAdatot(szuroAdatok) {
 }
 
 
+function eltavolitKivalasztottAdatotAlapanyag(szuroAdatok) {
+    let tag = document.getElementById("kivalasztott-alapanyag-" + szuroAdatok);
+    if (tag) {
+        tag.remove();
+    }
+    refreshAlapanyagNelkulList();
+}
+
+// Eltávolítja a kiválasztott "alapanyag nélküli" elemet, majd frissíti az alapanyagok listáját.
+function eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok) {
+    let tag = document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok);
+    if (tag) {
+        tag.remove();
+    }
+    refreshAlapanyagList();
+}
+
+// Ezek a függvények újragerendezik az adott listát a módosítások után.
+function refreshAlapanyagList() {
+    alapanyagListajanakGeneralasa();
+}
+
+function refreshAlapanyagNelkulList() {
+    alapanyagNelkulListajanakGeneralasa();
+}
+
+
 
 
 //Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
@@ -1186,16 +1226,6 @@ document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
-
-/*document.addEventListener("DOMContentLoaded", function() {
-    // A már meglévő alapanyag kereső inicializálása
-    keresesMukodtetSzurobenAlapanyag();
-    // Új inicializálás az "alapanyag nélkül" keresőhöz
-    
-    // A dropdown listák első generálása
-    alapanyagListajanakGeneralasa();
-    alapanyagNelkulListajanakGeneralasa();
-});*/
 
 window.addEventListener("load", arFigyel);
 window.addEventListener("load", kaloriaFigyel);
