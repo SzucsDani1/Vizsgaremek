@@ -46,39 +46,49 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12 mx-auto my-2 col-lg-3 col-md-3 col-sm-6">
+            <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
                 <input type="radio" class="btn-check" id="btnHetfo" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnHetfo">Hétfő</label>
             </div>
-            <div class="col-12 mx-auto my-2 col-lg-3 col-md-3 col-sm-6">
+            <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
                 <input type="radio" class="btn-check" id="btnKedd" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnKedd">Kedd</label>
             </div>
-            <div class="col-12 mx-auto my-2 col-lg-3 col-md-3 col-sm-6">
+            <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
                 <input type="radio" class="btn-check" id="btnSzerda" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnSzerda">Szerda</label>
             </div>
-            <div class="col-12 mx-auto my-2 col-lg-3 col-md-3 col-sm-6">
+            <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
                 <input type="radio" class="btn-check" id="btnCsutortok" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnCsutortok">Csütörtök</label>
             </div>
-            <div class="col-12 mx-auto my-2 col-lg-3 col-md-3 col-sm-6">
+            <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
                 <input type="radio" class="btn-check" id="btnPentek" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnPentek">Péntek</label>
             </div>
-            <div class="mx-auto my-2 col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class="mx-auto col-lg-3 col-md-3 col-sm-6 my-2 col-12">
                 <input type="radio" class="btn-check" id="btnSzombat" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnSzombat">Szombat</label>
             </div>
-            <div class=" mx-auto my-2 col-12 col-lg-3 col-md-3 col-sm-6">
+            <div class=" mx-auto col-lg-3 col-md-3 col-sm-6 my-2 col-12">
                 <input type="radio" class="btn-check" id="btnVasarnap" name="hetNapjai" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnVasarnap">Vasárnap</label>
             </div>
         </div>
+        <div class="row filter-box border p-3 bg-light rounded">
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto">
+            <h3>Reggeli</h3>
+            <div id="reggeli"></div>
+          </div>
+          <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto">
+            <h3>Ebéd</h3>
+            <div id="ebéd"></div>
+          </div>
+        </div>
     </div>
 
 
-
+    <script src="hetimenuoldal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
