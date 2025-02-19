@@ -484,7 +484,6 @@ function alapanyagListajanakGeneralasa() {
     }
 }
 
-// Újragenerálja az "alapanyag nélküli" dropdown listáját.
 function alapanyagNelkulListajanakGeneralasa() {
     let listaElem = document.getElementById("alapanyagNelkulLista");
     listaElem.innerHTML = "";
@@ -613,7 +612,6 @@ function letrehozAlapanyagListaElemet(szuroAdatok) {
     return div;
 }
 
-// Generálja az "alapanyag nélküli" listáját, de kihagyja azokat az elemeket, amelyek az "alapanyag" kiválasztottak között szerepelnek.
 function letrehozAlapanyagNelkulListaElemet(szuroAdatok) {
     // Ha az elem már kiválasztásra került az "alapanyag" oldalon, akkor ne hozza létre
     if (document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
@@ -1044,16 +1042,15 @@ function hozzaadKivalasztottAlapanyagot(szuroAdatok) {
             eltavolitKivalasztottAdatotAlapanyag(szuroAdatok);
             let checkbox = document.getElementById("checkbox-alapanyag-" + szuroAdatok);
             if (checkbox) checkbox.checked = false;
-            refreshAlapanyagNelkulList();
+            AlapanyagNelkulListaUjratoltese();
         });
 
         tag.appendChild(removeBtn);
         kivalasztottContainerAlapanyag.appendChild(tag);
-        refreshAlapanyagNelkulList();
+        AlapanyagNelkulListaUjratoltese();
     }
 }
 
-// Hozzáadja a kiválasztott "alapanyag nélküli" elemet, majd frissíti az alapanyagok listáját.
 function hozzaadKivalasztottAlapanyagNelkul(szuroAdatok) {
     if (!document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
         let kivalasztottContainerAlapanyagNelkul = document.getElementById("kivalasztottAlapanyagNelkul");
@@ -1071,12 +1068,12 @@ function hozzaadKivalasztottAlapanyagNelkul(szuroAdatok) {
             eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok);
             let checkbox = document.getElementById("checkbox-alapanyagNelkul-" + szuroAdatok);
             if (checkbox) checkbox.checked = false;
-            refreshAlapanyagList();
+            AlapanyagListaUjratoltese();
         });
 
         tag.appendChild(removeBtn);
         kivalasztottContainerAlapanyagNelkul.appendChild(tag);
-        refreshAlapanyagList();
+        AlapanyagListaUjratoltese();
     }
 }
 
@@ -1188,24 +1185,22 @@ function eltavolitKivalasztottAdatotAlapanyag(szuroAdatok) {
     if (tag) {
         tag.remove();
     }
-    refreshAlapanyagNelkulList();
+    AlapanyagNelkulListaUjratoltese();
 }
 
-// Eltávolítja a kiválasztott "alapanyag nélküli" elemet, majd frissíti az alapanyagok listáját.
 function eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok) {
     let tag = document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok);
     if (tag) {
         tag.remove();
     }
-    refreshAlapanyagList();
+    AlapanyagListaUjratoltese();
 }
 
-// Ezek a függvények újragerendezik az adott listát a módosítások után.
-function refreshAlapanyagList() {
+function AlapanyagListaUjratoltese() {
     alapanyagListajanakGeneralasa();
 }
 
-function refreshAlapanyagNelkulList() {
+function AlapanyagNelkulListaUjratoltese() {
     alapanyagNelkulListajanakGeneralasa();
 }
 

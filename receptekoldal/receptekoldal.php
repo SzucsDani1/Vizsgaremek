@@ -89,14 +89,14 @@
                     <hr>
 
                     <!--Kategóriák szűrése-->
-                    <div class="mb-3">
-                      <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
+                    <div class="mt-2 form-floating">
                       <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
+                      <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
                     </div>
                     <div class="dropdown" id="kategoriakDropdown">
                       <div class="dropdown-menu" id="kategoriakLista"></div>
                     </div>
-                    <div class="mt-3" id="kivalasztottKategoriak"></div>
+                    <div id="kivalasztottKategoriak"></div>
 
 
                     <!-- Nehézségi szint szűrő -->
@@ -133,9 +133,9 @@
                     </div>
 
                     <!--Alapanyagok szűrése-->
-                    <div class="mb-3">
-                      <label for="AlapanyagSearch" class="form-label mt-2">Alapanyagok</label>
+                    <div class="mt-2 form-floating">
                       <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
                     </div>
                     <div class="dropdown" id="alapanyagDropdown">
                       <div class="dropdown-menu" id="alapanyagLista"></div>
@@ -143,36 +143,36 @@
                     <div class="mt-3" id="kivalasztottAlapanyagok"></div>
 
                      <!--Alapanyag nélkül szűrése-->
-                     <div class="mb-3">
-                      <label for="AlapanyagNelkulSearch" class="form-label mt-2">Alapanyagok nélkül</label>
+                     <div class="mt-2 form-floating">
                       <input type="text" class="form-control" id="alapanyagNelkulSearch" placeholder="Keresés az alapanyagok között...">
+                      <label for="AlapanyagNelkulSearch" class="form-label">Alapanyagok nélkül</label>
                     </div>
                     <div class="dropdown" id="alapanyagNelkulDropdown">
                       <div class="dropdown-menu" id="alapanyagNelkulLista"></div>
                     </div>
-                    <div class="mt-3" id="kivalasztottAlapanyagNelkul"></div>
+                    <div id="kivalasztottAlapanyagNelkul"></div>
 
 
                     <!--Étrend szűrő-->
-                    <div class="mb-3">
-                      <label for="etrendSearch" class="form-label mt-2">Étrend</label>
+                    <div class="mt-2 form-floating">
                       <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+                      <label for="etrendSearch" class="form-label">Étrend</label>
                     </div>
                     <div class="dropdown" id="etrendDropdown">
                       <div class="dropdown-menu" id="etrendLista"></div>
                     </div>
-                    <div class="mt-3" id="kivalasztottEtrend"></div>
+                    <div id="kivalasztottEtrend"></div>
 
 
                     <!--Konyha szűrő-->
-                    <div class="mb-3">
-                      <label for="konyhaSearch" class="form-label mt-2">Konyha</label>
+                    <div class="mt-2 form-floating">
                       <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés a konyhák között...">
+                      <label for="konyhaSearch" class="form-label">Konyha</label>
                     </div>
                     <div class="dropdown" id="konyhaDropdown">
                       <div class="dropdown-menu" id="konyhaLista"></div>
                     </div>
-                    <div class="mt-3" id="kivalasztottKonyha"></div>
+                    <div id="kivalasztottKonyha"></div>
 
 
                     <!-- Ár szint szűrő -->
