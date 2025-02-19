@@ -16,6 +16,16 @@ async function receptek(){
     
 }
 
+async function napLeker(){
+    try {
+        let leker = await fetch("randomhetimenu.php");
+        if(leker.ok){
+
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 function kartyaBetoltes(receptek){
     let napszakok = new Set();
@@ -90,3 +100,38 @@ function kartyaBetoltes(receptek){
 
 
 window.addEventListener("load", receptek)
+
+
+
+
+
+
+
+
+/*
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        let response = await fetch("random.php"); // A PHP script hívása
+        if (!response.ok) throw new Error("Hálózati hiba!");
+
+        let menu = await response.json();
+        const days = ["hetfo", "kedd", "szerda", "csutortok", "pentek", "szombat", "vasarnap"];
+        const meals = ["reggeli", "ebéd", "vacsora"];
+        
+        days.forEach(day => {
+            document.getElementById(`btn${capitalize(day)}`).addEventListener("click", () => {
+                meals.forEach(meal => {
+                    let mealData = menu[day][meal];
+                    let mealDiv = document.getElementById(meal);
+                    mealDiv.innerHTML = `<h4>${mealData.neve}</h4><img src='${mealData.kepek}' alt='${mealData.neve}' width='200'><p>${mealData.kaloria} kcal</p>`;
+                });
+            });
+        });
+    } catch (error) {
+        console.error("Hiba történt: ", error);
+    }
+});
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}*/
