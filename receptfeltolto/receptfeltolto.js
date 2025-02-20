@@ -1076,8 +1076,14 @@ function kepfeltolto() {
             const kepNev = falj.name; 
             feltoltottKepek.push(kepNev);
 
+<<<<<<< HEAD
             const colDiv = document.createElement('div');
             colDiv.className = 'col-12 col-lg-3 col-md-6 col-sm-6 position-relative mb-3';
+=======
+          
+          const colDiv = document.createElement('div');
+          colDiv.className = 'col-12 col-lg-3 col-md-6 col-sm-6 position-relative my-3';
+>>>>>>> 4c56aeaab2cb32c2ad0a3b4fc8420fbfda35f001
   
             const img = document.createElement('img');
             img.src = e.target.result;
@@ -1085,6 +1091,7 @@ function kepfeltolto() {
             img.style.height = '300px';
             img.style.width = "auto";
 
+<<<<<<< HEAD
             const btnTorles = document.createElement('button');
             btnTorles.className = 'btn btn-danger btn-sm position-absolute top-0 start-0';
             btnTorles.innerHTML = '&times;';
@@ -1092,6 +1099,15 @@ function kepfeltolto() {
                 colDiv.remove();
                 feltoltottKepek = feltoltottKepek.filter(nev => nev !== kepNev);
             });
+=======
+          const btnTorles = document.createElement('button');
+          btnTorles.className = 'btn btn-danger btn-sm position-absolute top-0 start-0 ';
+          btnTorles.innerHTML = '&times;';
+          btnTorles.addEventListener('click', function() {
+            colDiv.remove();
+            feltoltottKepek = feltoltottKepek.filter(nev => nev !== kepNev);
+          });
+>>>>>>> 4c56aeaab2cb32c2ad0a3b4fc8420fbfda35f001
   
             colDiv.appendChild(img);
             colDiv.appendChild(btnTorles);
