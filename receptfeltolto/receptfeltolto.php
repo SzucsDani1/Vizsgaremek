@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
             <form class="form-floating">
-                <input type="text" class="form-control" id="recept_nev" placeholder="Név">
+                <input type="text" class="form-control" id="receptNev" placeholder="Név">
                 <label for="recept_nev">Recept neve</label>
             </form>
         </div>
@@ -261,6 +261,12 @@
             <div class="row" id="kepMegjelenit">
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+          <input type="button" value="Recept feltöltése" class="btn btn-warning w-100 m-2" id="receptFeltoltes">
         </div>
       </div>
 </div>
