@@ -28,7 +28,7 @@
 
     <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
     <div class="container">
-        <form method="get">
+        <form method="post">
             <div class="row">
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
                 <div class="col-12 col-lg-4 col-md-4 col-sm-12">
@@ -59,16 +59,17 @@
 <!-- START BEJELENTKEZÉS -->
     <div>
         <?php 
-            if(isset($_GET["bejelentkezes"])){
-                $felhasznalonev = $_GET["Bejfelhasznalonev"];
-                $jelszo = $_GET["Bejjelszo"];
+            if(isset($_POST["bejelentkezes"])){
+                $felhasznalonev = $_POST["Bejfelhasznalonev"];
+                $jelszo = $_POST["Bejjelszo"];
                 if(!empty($felhasznalonev) && !empty($jelszo)){
                     try {
                         $muvelet = "SELECT 
                                         `felhasznalok`.`id`, 
                                         `felhasznalok`.`felhnev`, 
                                         `felhasznalok`.`jelszo`, 
-                                        `felhasznalojog`.`jognev` 
+                                        `felhasznalojog`.`jognev`,
+                                        `felhasznalok`.`profilkep` 
                                     FROM 
                                         `felhasznalok`
                                     INNER JOIN 
@@ -84,21 +85,29 @@
                             if(password_verify($jelszo, $lekertJelszo)){
                                 
                                 $cookie_value = $lekerdez[0]["id"];
-                                setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 nap
+                                setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 1honap 2nap
                                 
                                 $felhasznalonev_value = $lekerdez[0]["felhnev"];
                                 setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
                                 
                                 $felhasznalojoga_value = $lekerdez[0]["jognev"];
                                 setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
+                                
+                                
+                                $profilkep_value = $lekerdez[0]["profilkep"];
+                                if(empty($profilkep_value)){
+                                    $profilkep_value = "../feltoltotKepek/profilKepek/alapkep.png";
+                                }
+                                setcookie("profilkep", $profilkep_value, time() + (86400 * 30), "/");
 
                             }
                             else{
-                                echo "<h2>Sikertelen bejelentkezés!</h2>";
+                                bejelentHiba("Sikertelen bejelentkezés!");     
+
                             }
                         }
                         else{
-                            echo "<h2>Sikertelen bejelentkezés!</h2>";
+                            bejelentHiba("Sikertelen bejelentkezés!");     
                         }
                         
                     }
@@ -107,7 +116,7 @@
                     }
                 }
                 else{
-                    echo("<h2>Kérem minden adatott adjon meg!</h2>");
+                    bejelentHiba("Kérem minden adatott adjon meg!");     
                 }
             }
             ?>
@@ -169,7 +178,22 @@
     </div>
     </div>
     <!--END FELUGRÓ ABLAK-->
+        
+    <!--START BEJENTKEZÉS ALERT--> 
+    <?php
+        function bejelentHiba($uzenet){
+            if(!empty($uzenet)){
+            echo "
+                <div class='alert alert-danger text-center' role='alert'>
+                    $uzenet
+                </div>
+                ";
+            }
+        }
+    ?>
+    <!--END BEJENTKEZÉS ALERT--> 
     
+
     <!--START JS MEGHÍVÁSOK-->
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
