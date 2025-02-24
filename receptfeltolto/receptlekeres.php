@@ -27,7 +27,7 @@
         break;
         case "etelfajta":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $etelfajta = adatokLekerdezese("SELECT etelfajta.neve FROM etelfajta;");
+                $etelfajta = adatokLekerdezese("SELECT * FROM etelfajta ORDER BY etelfajta.neve;");
                 if(is_array($etelfajta) && !empty($etelfajta)){
                     echo json_encode($etelfajta, JSON_UNESCAPED_UNICODE);
                 }
@@ -60,7 +60,7 @@
 
         case "konyha":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $konyha = adatokLekerdezese("SELECT konyha.neve FROM konyha");
+                $konyha = adatokLekerdezese("SELECT * FROM konyha ORDER BY konyha.neve");
                 if(is_array($konyha) && !empty($konyha)){
                     echo json_encode($konyha, JSON_UNESCAPED_UNICODE);
                 }

@@ -6,7 +6,7 @@
     <title>Receptek</title>
     <link rel="stylesheet" href="receptfeltolto.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+  </head>
 <body style="background-color: rgb(253, 222, 197);">
     <!--START NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -115,16 +115,11 @@
     <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
             <div class="mb-3">
-              <label class="mb-1">Ételfajták</label>
-              <form class="form-floating">
-                <input type="text" class="form-control" id="etelfajtaSearch" placeholder="Keresés az Ételfajták között...">
-                <label for="etelfajtaSearch" class="form-label">Ételfajta keresése</label>
-              </form>
+              <label>Ételfajták</label>
+              <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="etelfajtaSearch">
+                <option value="" data-tokens=""></option>
+              </select>
             </div>
-            <div class="dropdown" id="etelfajtaDropdown">
-                <div class="dropdown-menu" id="etelfajtaLista"></div>
-            </div>
-            <div class="mt-3" id="kivalasztottEtelfajta"></div>
         </div>
     </div>
 
@@ -149,16 +144,11 @@
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
-          <label class="mb-1">Konyhák</label>
-          <form class="form-floating">
-            <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés az konyhák között...">
-            <label for="konyhaSearch" class="form-label">Konyhák keresése</label>
-          </form>
+          <label>Konyhák</label>
+          <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="konyhaSearch">
+            <option value="" data-tokens=""></option>
+          </select>
         </div>
-        <div class="dropdown" id="konyhaDropdown">
-          <div class="dropdown-menu" id="konyhaLista"></div>
-        </div>
-        <div class="mt-3" id="kivalasztottKonyha"></div>
       </div>          
     </div>
 
