@@ -36,7 +36,7 @@ async function regisztracio(){
 }
 
 function torol(){
-    window.location.reload(true);
+    location.reload(true);
 }
 
 document.getElementById("regisztral").addEventListener("click", regisztracio)
