@@ -1,4 +1,0 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/hetimenuoldal/receptlekeres.php [NC,L,QSA]

@@ -25,3 +25,18 @@
  .navbar-nav .nav-link:hover::after {
      width: 100%; 
  }
+
+ .carousel-item img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+ .star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.2s;
+  }
+  .star.filled {
+    color: gold;
+  }
