@@ -57,11 +57,11 @@
 
       <!--Csillagos értékelés-->
       <div id="ertekelesMegjelenites" class="text-center">
-        <span class="star" data-value="1">&#9734;</span>
-        <span class="star" data-value="2">&#9734;</span>
-        <span class="star" data-value="3">&#9734;</span>
-        <span class="star" data-value="4">&#9734;</span>
-        <span class="star" data-value="5">&#9734;</span>
+        <span class="star" id="csillagMegjelen" data-value="1">&#9734;</span>
+        <span class="star" id="csillagMegjelen" data-value="2">&#9734;</span>
+        <span class="star" id="csillagMegjelen" data-value="3">&#9734;</span>
+        <span class="star" id="csillagMegjelen" data-value="4">&#9734;</span>
+        <span class="star" id="csillagMegjelen" data-value="5">&#9734;</span>
       </div>
 
       <!--Kép megjelenítés-->
@@ -78,8 +78,53 @@
           </div>
         </div>
       </div>
-    </div>
 
+      <!--Idő, költség és nehézség táblázatban-->
+      <table class="table table-bordered w-75 mx-auto mt-3 text-center table-warning ">
+        <thead>
+          <tr class="border-top-0 border-bottom-0">
+            <th scope="col">Idő</th>
+            <th scope="col">Költség</th>
+            <th scope="col">Nehézség</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-top-0 border-bottom-0">
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+      
+
+      
+      <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
+
+      <!--Csillagos értékelés a felhasználótól-->
+      <div class="filter-box border p-3 bg-light rounded my-3 w-50 mx-auto">
+        <h1 class="display-6 text-center">Értékelés</h1>
+        <div id="ertekelesFelhasznalotol" class="text-center">
+          <span class="star" id="csillagErtekel" data-value="1">&#9734;</span>
+          <span class="star" id="csillagErtekel" data-value="2">&#9734;</span>
+          <span class="star" id="csillagErtekel" data-value="3">&#9734;</span>
+          <span class="star" id="csillagErtekel" data-value="4">&#9734;</span>
+          <span class="star" id="csillagErtekel" data-value="5">&#9734;</span>
+        </div>
+      </div>
+      
+
+      <h1 class="display-6 text-center">Hozzászólás írása</h1>
+
+      <!--Hozzászólás-->
+      <div class="form-floating">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+        <label for="floatingTextarea2">Hozzászólás</label>
+      </div>
+    </div>
     
     
   <script src="reszletesreceptoldal.js"></script>

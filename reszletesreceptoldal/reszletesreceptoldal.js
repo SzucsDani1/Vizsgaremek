@@ -1,8 +1,8 @@
 
 // Frissíti a csillagok megjelenítését az adott értékelés alapján
 function ertekelesMegjelenit() {
-  const csillagok = document.querySelectorAll('.star');
-  let ertekelesSzama = 3;
+  const csillagok = document.querySelectorAll('#csillagMegjelen');
+  let ertekelesSzama = 2;
   for (const csillag of csillagok) {
       if (csillag.getAttribute('data-value') <= ertekelesSzama) {
       csillag.classList.add('filled');
@@ -19,13 +19,13 @@ function ertekelesMegjelenit() {
 window.addEventListener('load', ertekelesMegjelenit);
 
 
-/*function csillagErtekelo() {
-    const csillagok = document.querySelectorAll('.star');
+function csillagErtekeloFelhasznalotol() {
+    const csillagok = document.querySelectorAll('#csillagErtekel');
     const ertekelesEredmeny = document.getElementById('ertekeles-eredmeny');
     let ertekelesSzama = 0;
   
     // Frissíti a csillagok megjelenítését az adott értékelés alapján
-    function frissitCsillagok(ertekelesSzama) {
+    function frissitCsillagok1(ertekelesSzama) {
       for (const csillag of csillagok) {
         if (csillag.getAttribute('data-value') <= ertekelesSzama) {
           csillag.classList.add('filled');
@@ -41,7 +41,7 @@ window.addEventListener('load', ertekelesMegjelenit);
       // Kattintáskor rögzítjük az értékelést
       csillag.addEventListener('click', function() {
         ertekelesSzama = csillag.getAttribute('data-value');
-        frissitCsillagok(ertekelesSzama);
+        frissitCsillagok1(ertekelesSzama);
         ertekelesEredmeny.textContent = "Értékelés: " + ertekelesSzama + " csillag";
       });
   
@@ -49,6 +49,6 @@ window.addEventListener('load', ertekelesMegjelenit);
   }
   
   // Inicializálás az oldal betöltésekor
-  document.addEventListener('DOMContentLoaded', csillagErtekelo);*/
+  document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
 
 
