@@ -50,7 +50,8 @@
       
           
       
-          <div class="container mt-4">
+    
+    <div class="container mt-4">
         <div class="row">
           <div class="col-12 col-lg-6 order-lg-1 text-center">
                 <div class="profile-container">
