@@ -121,13 +121,21 @@
 
       <!--Hozzászólás-->
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+        <textarea class="form-control" placeholder="Leave a comment here" id="hozzaszolas" style="height: 100px"></textarea>
         <label for="floatingTextarea2">Hozzászólás</label>
       </div>
 
       <!--Küldés gomb-->
-    <input type="button" value="Küldés" class="btn btn-primary w-100 mt-4" id="btnKuldes">
+      <input type="button" value="Küldés" class="btn btn-primary w-100 mt-4" id="btnHozzaszolasKuldes">
+
+      <!--Hozzászólás elküldésének sikeressége-->
+      <div id="hozzaszolasUzenet"></div>
+
+      <div>
+        <ul class="list-group list-group-flush"  id="hozzaszolasok"></ul>
+      </div>
     </div>
+    
 
     
   <script src="reszletesreceptoldal.js"></script>
