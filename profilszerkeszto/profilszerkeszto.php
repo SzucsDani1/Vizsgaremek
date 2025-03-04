@@ -78,7 +78,7 @@
                 <div class="filter-box border p-3 bg-light rounded">
                     <label class="mb-1">Jelszó</label>
                     <form class="form-floating">
-                        <input type="password" class="form-control" id="jelszo" disabled>
+                        <input value="placeholder" type="password" class="form-control" id="jelszo"  disabled>
                         <label for="jelszo" class="form-label">Jelszó</label>
                     </form>
                 </div>
@@ -89,8 +89,13 @@
                         <label for="email" class="form-label">E-mail cím</label>
                     </form>
                 </div>
+                <div >
+                    <button  type="button" class="btn btn-primary w-100 ">Módosítás</button>
+                </div>
             </div>
         </div>
+
+      
     </div>
       
     <script src="profilszerkeszto.js"></script>
