@@ -89,8 +89,8 @@
                         <label for="email" class="form-label">E-mail cím</label>
                     </form>
                 </div>
-                <div >
-                    <button  type="button" class="btn btn-primary w-100 ">Módosítás</button>
+                <div  id="gombokHelye">
+                    <button id="modositas"  type="button" class="btn btn-primary w-100 ">Módosítás</button>
                 </div>
             </div>
         </div>

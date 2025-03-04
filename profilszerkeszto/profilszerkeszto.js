@@ -69,4 +69,60 @@ function adatokMegjelenitese(adatok){
     emailCim.value = adatok[0]["email"]
 }
 
+function modositasFelold(){
+    let emailCimMod = document.getElementById("email")
+    let jelszoMod = document.getElementById("jelszo")
+    
+    emailCimMod.removeAttribute("disabled")
+    jelszoMod.removeAttribute("disabled")
+    jelszoMod.value = ""
+
+    gombokValtoztat()
+}
+
+function modositasAlap(){
+    let emailCim = document.getElementById("email")
+    let jelszo = document.getElementById("jelszo")
+    let alapEmail = lekerCookie("")
+    emailCimMod.setAttribute("disabled", "true");
+    jelszoMod.setAttribute("disabled", "true");
+    jelszoMod.value = "placeholder"
+    adatokLeker()
+}
+
+function gombokValtoztat(){
+    let gombokHelye =   document.getElementById("gombokHelye")
+    let mentesButton = document.createElement("input")
+    let megseButton =document.createElement("input")
+     
+    gombokHelye.innerHTML = ""
+    megseButton.type = "button"
+    mentesButton.type = "button"
+
+    mentesButton.classList.add("btn", "btn-success", "w-50")
+    megseButton.classList.add("btn", "btn-secondary", "w-50")
+
+    megseButton.value ="Mégse"
+    mentesButton.value ="Mentés"
+
+    
+    megseButton.onclick = (event) => gombNyomas("megse");
+    mentesButton.onclick = (event) => gombNyomas("mentes");
+
+    gombokHelye.appendChild(mentesButton)
+    gombokHelye.appendChild(megseButton)
+}
+
+function gombNyomas(melyikGomb){
+    console.log(melyikGomb)
+    if(melyikGomb == "megse"){
+        modositasAlap()
+    }
+    else if(melyikGomb == "mentes"){
+
+    }
+}
+
 window.addEventListener("load", adatokLeker)
+
+document.getElementById("modositas").addEventListener("click", modositasFelold)
