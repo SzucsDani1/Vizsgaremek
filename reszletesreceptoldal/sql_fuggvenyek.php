@@ -7,7 +7,8 @@ function adatokLekerdezese($muvelet) {
         $eredmeny = $db->query($muvelet);
         if ($db->errno == 0) {
             if ($eredmeny->num_rows != 0) {
-                return $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+                $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+                return $adatok;
             }
             else {
                 return 'Nincs találat!';
@@ -24,27 +25,20 @@ function adatokLekerdezese($muvelet) {
 //SQL function módosításhoz:
 function adatokValtoztatasa($muvelet) {
     $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
-    if ($db->connect_errno == 0 ) {
+    if ($db->connect_errno == 0) {
         $db->query($muvelet);
         if ($db->errno == 0) {
             if ($db->affected_rows > 0) {
-                echo 'Sikeres művelet!';
-                exit;
-            }
-            else if ($db->affected_rows == 0) {
-                echo 'Sikertelen művelet!';
-                exit;
-            }
-            else {
-                return $db->error;
+                return "Sikeres művelet!";
+            } else { 
+                return "Sikertelen művelet!";
             }
         }
         return $db->error;
     }
-    else {
-        return $db->connect_error;
-    }
+    return $db->connect_error;
 }
+
 
 
 ?>

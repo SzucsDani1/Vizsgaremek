@@ -100,8 +100,9 @@
                     echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                 }
                 else{
-                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
                     header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    
                 }
            }
            else{
@@ -118,8 +119,9 @@
                     echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                 }
                 else{
-                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
                     header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    
                 }
            }
            else{
@@ -134,26 +136,33 @@
                     $hozzaszolas = $bodyAdatok["hozzaszolas"];
                     $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
                     $receptek_id = $bodyAdatok["receptek_id"];
-                    $sql_feltoltes = adatokValtoztatasa("INSERT INTO `hozzaszolasok`(`felhasznalo_id`, `hozzaszolas`, `receptek_id`, `ido`) VALUES ({$felhasznalo_id},'{$hozzaszolas}',{$receptek_id},NOW())");
-
+                    $sql_feltoltes = adatokValtoztatasa("INSERT INTO `hozzaszolasok`(`felhasznalo_id`, `hozzaszolas`, `receptek_id`) VALUES ({$felhasznalo_id},'{$hozzaszolas}',{$receptek_id})");
+        
                     if($sql_feltoltes == "Sikeres művelet!"){
-                        echo json_encode(["valasz" => "Hozzászólás elküldve"], JSON_UNESCAPED_UNICODE);
                         header("CREATED", true, 201);
+                        echo json_encode(["valasz" => "Hozzászólás elküldve"], JSON_UNESCAPED_UNICODE);
+                        
                     }
                     else{
-                        echo json_encode(["valasz" => "Sikertelen művelet"], JSON_UNESCAPED_UNICODE);
                         header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Sikertelen művelet"], JSON_UNESCAPED_UNICODE);
+                        
                     }
                 }
                 else{
-                    echo json_encode(["valasz" => "Hiányos adatok"], JSON_UNESCAPED_UNICODE);
                     header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Hiányos adatok"], JSON_UNESCAPED_UNICODE);
+                    
                 }
             }
             else{
-                echo json_encode(["valasz" => "Hibás metódus"], JSON_UNESCAPED_UNICODE);
                 header("bad request", true, 400);
+                echo json_encode(["valasz" => "Hibás metódus"], JSON_UNESCAPED_UNICODE);
+                
             }
+            break;
+        
+            
             break;
         default:
             echo "Hiba";

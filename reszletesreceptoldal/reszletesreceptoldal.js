@@ -8,6 +8,7 @@ async function hozzaszolasElkuld(){
     if(hozzaszolas == ""){
       uzenet.innerHTML = "Kérem írjon hozzászólást!";
       uzenet.classList = "alert alert-danger my-3 text-center w-80";
+      return;
     }
 
     let kuldes = await fetch("./hozzaszolasfeltoltes", {
@@ -23,7 +24,7 @@ async function hozzaszolasElkuld(){
     })
 
     let valasz = await kuldes.json();
-
+    console.log(kuldes.status)
     if(kuldes.ok){
       uzenet.innerHTML = valasz.valasz;
       uzenet.classList = "alert alert-primary my-3 text-center w-80";
@@ -40,7 +41,7 @@ async function hozzaszolasElkuld(){
 }
 
 async function hozzaszolasLeker(){
-  let lekerHozzaszolas = await fetch("./hozzaszolasLeker", {
+  let lekerHozzaszolas = await fetch("./hozzaszolasleker", {
     method : "POST",
     headers : {
       "Content-Type" : "application/json"
@@ -59,12 +60,13 @@ async function hozzaszolasLeker(){
       "felhasznalo_id" : 5
     })
   });
+
+
   if(lekerHozzaszolas.ok && lekerNev.ok){
 
     let hozzaszolasok = await lekerHozzaszolas.json();
     let nevek = await lekerNev.json();
     hozzaszolasGeneral(hozzaszolasok, nevek)
-    
 
   }
 }
@@ -91,6 +93,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
   let felhasznalo_id = 1;
   //let felhasznalo_id = getCookie("bejelentkezettFelhasznaloId");
 
+
   for(let hozzaszolas of hozzaszolasok){
     for(let nev of nevek){
       if(hozzaszolas.receptek_id == 1){
@@ -107,7 +110,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
         img.style.width = "40px";
         img.style.height = "40px";
 
-        spanFelh.innerHTML = nev.felhnev;
+        spanFelh.innerHTML = "<b>" + nev.felhnev + "</b>";
 
         spanIdo.innerHTML = hozzaszolas.ido;
         spanIdo.classList = "text-body-secondary ms-4";
@@ -119,9 +122,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
         else{
           li.classList = "list-group-item my-2";
         }
-
-        divFejlec.classList = "mb-2";
-
+        divFejlec.classList = "mb-2 text-secondary";
         divTartalom.innerHTML = hozzaszolas.hozzaszolas;
 
         ul.appendChild(li);

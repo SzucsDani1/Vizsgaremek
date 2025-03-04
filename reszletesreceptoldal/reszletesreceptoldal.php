@@ -115,12 +115,14 @@
       </div>
 
       <!--Küldés gomb-->
-      <input type="button" value="Küldés" class="btn btn-primary w-100 mt-4" id="btnHozzaszolasKuldes">
+      <input type="button" value="Küldés" class="btn btn-primary w-100 my-4" id="btnHozzaszolasKuldes">
+
 
       <!--Hozzászólás elküldésének sikeressége-->
       <div id="hozzaszolasUzenet"></div>
 
-      <div>
+      <div id="divHozzaszolasok" class="filter-box border p-3 bg-light rounded">
+        <h1 id="cimHozzaszolas" class="display-6 mb-4">Hozzászólások</h1>
         <ul class="list-group list-group-flush"  id="hozzaszolasok"></ul>
       </div>
     </div>
