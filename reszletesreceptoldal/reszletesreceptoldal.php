@@ -44,6 +44,7 @@
       </nav>
     <!--END NAVBAR-->
 
+    
     <div class="container">
       <!--Ételfajta-->
       <h1 class="display-6 text-body-secondary text-center my-3">Ételfajta</h1>
