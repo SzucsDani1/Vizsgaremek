@@ -44,7 +44,7 @@
       </nav>
     <!--END NAVBAR-->
 
-    
+
     <div class="container">
       <!--Ételfajta-->
       <h1 class="display-6 text-body-secondary text-center my-3">Ételfajta</h1>
@@ -66,19 +66,7 @@
       </div>
 
       <!--Kép megjelenítés-->
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="https://www.cdc.gov/diabetes/news/media/images/GettyImages1457889029carblist.jpg" class="d-block mx-auto img-fliud rounded" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="https://images.immediate.co.uk/production/volatile/sites/30/2023/06/Ultraprocessed-food-58d54c3.jpg?quality=90&resize=440,400" class="d-block mx-auto img-fliud rounded" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-        </div>
-      </div>
+      <img src="https://www.kreactivity.hu/img/23190/G00176/264x264,r/Kis-tigris-festes-es-gyemantszemes-kreativ-hibrid-kep.webp?time=1715340732" class="rounded mx-auto img-fluid d-block" alt="...">
 
       <!--Idő, költség és nehézség táblázatban-->
       <table class="table table-bordered w-75 mx-auto mt-3 text-center table-warning ">

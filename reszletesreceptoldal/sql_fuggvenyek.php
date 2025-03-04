@@ -28,10 +28,12 @@ function adatokValtoztatasa($muvelet) {
         $db->query($muvelet);
         if ($db->errno == 0) {
             if ($db->affected_rows > 0) {
-                return 'Sikeres művelet!';
+                echo 'Sikeres művelet!';
+                exit;
             }
             else if ($db->affected_rows == 0) {
-                return 'Sikertelen művelet!';
+                echo 'Sikertelen művelet!';
+                exit;
             }
             else {
                 return $db->error;

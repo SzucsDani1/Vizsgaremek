@@ -1,20 +1,3 @@
-let felhasznalo_id;
-
-function getCookie(cname) {
-  let name = cname + "=";
-  let ca = document.cookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
 
 async function hozzaszolasElkuld(){
   try {
@@ -86,8 +69,27 @@ async function hozzaszolasLeker(){
   }
 }
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+
 function hozzaszolasGeneral(hozzaszolasok, nevek){
   let ul = document.getElementById("hozzaszolasok");
+  let felhasznalo_id = 1;
+  //let felhasznalo_id = getCookie("bejelentkezettFelhasznaloId");
 
   for(let hozzaszolas of hozzaszolasok){
     for(let nev of nevek){
@@ -111,13 +113,12 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
         spanIdo.classList = "text-body-secondary ms-4";
 
 
-        if(hozzaszolas.felhasznalo_id == 4){
+        if(hozzaszolas.felhasznalo_id == felhasznalo_id){
           li.classList = "list-group-item list-group-item-primary my-2";
         }
         else{
           li.classList = "list-group-item my-2";
         }
-
 
         divFejlec.classList = "mb-2";
 
