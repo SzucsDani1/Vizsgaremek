@@ -23,7 +23,7 @@
         </div>
     </div>
     
-    <!--END CAROUSEL-->
+    <!--END CAROUSEL -->
 
 
     <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
