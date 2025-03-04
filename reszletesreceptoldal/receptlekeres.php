@@ -110,6 +110,24 @@
         }
         break;
 
+        case "nevleker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                $leker = adatokLekerdezese("SELECT felhasznalok.felhnev, felhasznalok.id FROM felhasznalok WHERE felhasznalok.id = {$felhasznalo_id};");
+                if(is_array($leker)){
+                    echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
         case "hozzaszolasfeltoltes":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(!empty($bodyAdatok["hozzaszolas"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["receptek_id"])){

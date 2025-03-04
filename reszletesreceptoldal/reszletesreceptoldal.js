@@ -1,3 +1,20 @@
+let felhasznalo_id;
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 
 async function hozzaszolasElkuld(){
   try {
@@ -40,7 +57,7 @@ async function hozzaszolasElkuld(){
 }
 
 async function hozzaszolasLeker(){
-  let leker = await fetch("./hozzaszolasLeker", {
+  let lekerHozzaszolas = await fetch("./hozzaszolasLeker", {
     method : "POST",
     headers : {
       "Content-Type" : "application/json"
@@ -50,28 +67,72 @@ async function hozzaszolasLeker(){
     })
   });
 
-  if(leker.ok){
+  let lekerNev = await fetch("./nevleker", {
+    method : "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body : JSON.stringify({
+      "felhasznalo_id" : 5
+    })
+  });
+  if(lekerHozzaszolas.ok && lekerNev.ok){
 
-    let hozzaszolasok = await leker.json();
-    let ul = document.getElementById("hozzaszolasok");
-
-    for(let hozzaszolas of hozzaszolasok){
-      if(hozzaszolas.receptek_id == 1){
-        let li  = document.createElement("li");
-        li.innerHTML = hozzaszolas.hozzaszolas;
-        if(hozzaszolas.felhasznalo_id == 4){
-          li.classList = "list-group-item list-group-item-primary";
-        }
-        else{
-          li.classList = "list-group-item";
-        }
-        ul.appendChild(li)
-      }
-    }
+    let hozzaszolasok = await lekerHozzaszolas.json();
+    let nevek = await lekerNev.json();
+    hozzaszolasGeneral(hozzaszolasok, nevek)
+    
 
   }
 }
 
+function hozzaszolasGeneral(hozzaszolasok, nevek){
+  let ul = document.getElementById("hozzaszolasok");
+
+  for(let hozzaszolas of hozzaszolasok){
+    for(let nev of nevek){
+      if(hozzaszolas.receptek_id == 1){
+        let li  = document.createElement("li");
+        let divFejlec = document.createElement("div");
+        let divTartalom = document.createElement("div");
+        let img = document.createElement("img");
+        let spanFelh  = document.createElement("span");
+        let spanIdo = document.createElement("span");
+
+        img.src = "./kepek/profile.jpg";
+        img.alt = "Profil";
+        img.classList = "rounded-circle me-2"; 
+        img.style.width = "40px";
+        img.style.height = "40px";
+
+        spanFelh.innerHTML = nev.felhnev;
+
+        spanIdo.innerHTML = hozzaszolas.ido;
+        spanIdo.classList = "text-body-secondary ms-4";
+
+
+        if(hozzaszolas.felhasznalo_id == 4){
+          li.classList = "list-group-item list-group-item-primary my-2";
+        }
+        else{
+          li.classList = "list-group-item my-2";
+        }
+
+
+        divFejlec.classList = "mb-2";
+
+        divTartalom.innerHTML = hozzaszolas.hozzaszolas;
+
+        ul.appendChild(li);
+        li.appendChild(divFejlec);
+        divFejlec.appendChild(img);
+        divFejlec.appendChild(spanFelh);
+        divFejlec.appendChild(spanIdo);
+        li.appendChild(divTartalom);
+      }
+    }
+  }
+}
 
 // Frissíti a csillagok megjelenítését az adott értékelés alapján
 function ertekelesMegjelenit() {
