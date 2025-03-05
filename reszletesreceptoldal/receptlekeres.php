@@ -162,9 +162,7 @@
             }
             break;
         
-            
-            break;
-        default:
+            default:
             echo "Hiba";
     }
 

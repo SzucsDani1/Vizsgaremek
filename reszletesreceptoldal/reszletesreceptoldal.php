@@ -85,11 +85,6 @@
           </tr>
         </tbody>
       </table>
-
-
-
-      
-
       
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
