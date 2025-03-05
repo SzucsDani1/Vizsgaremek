@@ -91,11 +91,48 @@ receptek = [{
 
 ]
 
+async function receptekLeker(){
+    try {
+        let leker = await fetch("./legujabbreceptek");
 
-function kartyaBetoltes(receptek){
-    let divContainer = document.getElementById("legujabbReceptekKartyak");
+        if(leker.ok){
+            let legujabbReceptek = await leker.json();
+            console.log(legujabbReceptek)
+            let divContainer = document.getElementById("legujabbReceptekKartyak");
+
+            legujabbReceptekBetoltes(legujabbReceptek, divContainer);
+        }
+        else{
+            console.log(leker.status);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+async function ajanlottReceptekLeker(){
+    try {
+        let leker = await fetch("./ajanlottreceptek");
+
+        if(leker.ok){
+            let ajanlottReceptek = await leker.json();
+            console.log(ajanlottReceptek)
+            let divContainer = document.getElementById("ajanlottReceptekKartyak");
+
+            legujabbReceptekBetoltes(ajanlottReceptek, divContainer);
+        }
+        else{
+            console.log(leker.status);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+function legujabbReceptekBetoltes(receptek, divContainer){
     divContainer.innerHTML = "";  
-    let szamlalo = 0
 
     let divRow = document.createElement("div");
     divRow.classList = "row";
@@ -105,42 +142,30 @@ function kartyaBetoltes(receptek){
     divContainer.appendChild(divRow);
 
 
-    if (receptek.length === 0) {
-        divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
-        let p = document.createElement("p");
-        p.classList = "text-center text-muted";
-        p.innerHTML = "Nincs találat";
-        return;
-    }
-
-
     for(let recept of receptek){
         //Kártya generálás
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
-        divCard.id = recept.nev;
+        divCard.id = recept.neve;
 
         let img = document.createElement("img");
         img.src = recept.kep;
         img.classList = "card-img-top";
-        img.alt = recept.nev;
-        img.width = 250
-        img.height = 200
+        img.alt = recept.neve;
+        img.width = 250;
+        img.height = 200;
 
         let divCardBody = document.createElement("div");
         divCardBody.classList = "card-body";
 
         let h5 = document.createElement("h5");
         h5.classList = "card-title";
-        h5.innerHTML = recept.nev;
+        h5.innerHTML = recept.neve;
 
         let pJellemzok = document.createElement("p");
         pJellemzok.classList = "text-body-secondary fw-light";
-        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag;
-
-        let pCardText = document.createElement("card-text");
-        pCardText.innerHTML = recept.leiras;
+        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
 
         let br = document.createElement("br");
 
@@ -148,6 +173,10 @@ function kartyaBetoltes(receptek){
         inputButton.type = "button";
         inputButton.classList = "btn btn-primary";
         inputButton.value = "Részletek";
+
+        let pfeltolto = document.createElement("p");
+        pfeltolto.classList = "text-body-secondary fw-light";
+        pfeltolto.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
 
         divRow.appendChild(divCard);
 
@@ -160,22 +189,52 @@ function kartyaBetoltes(receptek){
         divCardBody.appendChild(br);
         divCardBody.appendChild(inputButton);
 
-        szamlalo++;
     }
 
 }
 
 
 
-function kereses(){
-    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
-    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
-    
-    kartyaBetoltes(szurtReceptek); 
+async function kereses(){
+    try {
+        let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
+
+        let keresesiTalalat = document.getElementById("keresesiTalalat");
+
+        let leker = await fetch("./keresesrecept",{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                "recept_neve" : keresesiSzoveg
+            })
+        });
+        if(leker.ok){
+            let receptek = await leker.json();
+            legujabbReceptekBetoltes(receptek, keresesiTalalat);
+        }
+        else{
+            let szoveg = await leker.json();
+            keresesiTalalat.innerHTML = szoveg.valasz;
+            keresesiTalalat.classList = "alert alert-danger text-center mx-auto my-3";
+            keresesiTalalat.role = "alert";
+            keresesiTalalat.style.width = "80%";
+
+            let input = document.createElement("input");
+            input.type = "button";
+            input.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
+            input.setAttribute("data-bs-dismiss", "alert");
+            input.setAttribute("aria-label", "Close");;
+
+            keresesiTalalat.appendChild(input);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
 document.getElementById("button_kereses").addEventListener("click", kereses)
-window.addEventListener("load", function() {
-    kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
-});
+window.addEventListener("load", receptekLeker)
+window.addEventListener("load", ajanlottReceptekLeker)
