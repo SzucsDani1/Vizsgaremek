@@ -3,201 +3,127 @@ let alapanyagok = new Set();
 let konyhak = new Set();
 let etrendek = new Set();
 
-receptek = [{
-    "nev" : "Palacsinta",
-    "kaloria" : 100,
-    "nehezseg" : "könnyű",
-    "ido" : 55,
-    "adag" : 1,
-    "felh_nev" : "Kiss Pista",
-    "kep" : "./kepek/palacsinta.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-}
 
-]
 
-async function etelfajtaBetoltes(){
-    try{
-        let eredmeny = await fetch("./etelfajta");
-        if(eredmeny.ok){
-            let etelfajta = await eredmeny.json();
-            etelfajtaGeneralas(etelfajta);
+// Function to collect all selected filters and send them to the server
+// Teljes JavaScript kód – Szűrési funkció
+
+async function szuresOsszes() {
+    try {
+      // Kiválasztott kategóriák összegyűjtése
+      let valasztottKategoriak = [];
+      const kategoriaElemek = document.querySelectorAll('#kivalasztottKategoriak .kivalasztott-tag');
+      for (const elem of kategoriaElemek) {
+        let szoveg = elem.textContent.trim();
+        if (szoveg.includes('×')) {
+          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
         }
-        else{
-            console.log(eredmeny.status);
+        valasztottKategoriak.push(szoveg);
+      }
+      
+      // Kiválasztott alapanyagok összegyűjtése
+      let valasztottAlapanyagok = [];
+      const alapanyagElemek = document.querySelectorAll('#kivalasztottAlapanyagok .kivalasztott-tag');
+      for (const elem of alapanyagElemek) {
+        let szoveg = elem.textContent.trim();
+        if (szoveg.includes('×')) {
+          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
         }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-
-
-function etelfajtaGeneralas(etelfajtak){
-    let ul = document.getElementById("etelfajta");
-    for(let etelfajta of etelfajtak){
-        //A szűrésnél az ételfajták betöltése
-        let li = document.createElement("li");
-
-        let div = document.createElement("div");
-        div.classList = "form-check";
-
-        let input = document.createElement("input");
-        input.classList = "form-check-input";
-        input.type = "checkbox";
-        input.id = etelfajta.neve;
-
-        let label = document.createElement("label");
-        label.classList = "form-check-label";
-        label.innerHTML = etelfajta.neve;
-        label.htmlFor = etelfajta.neve
-
-        ul.appendChild(li);
-        li.appendChild(div);
-
-        div.appendChild(input);
-        div.appendChild(label);
-    }
-}
-
-
-
-async function nehezsegLekeres(){
-    try{
-        let eredmeny = await fetch("./nehezseg");
-        if(eredmeny.ok){
-            let nehezseg = await eredmeny.json;
+        valasztottAlapanyagok.push(szoveg);
+      }
+      
+      // Kiválasztott, kizárt alapanyagok összegyűjtése
+      let valasztottAlapanyagNelkul = [];
+      const alapanyagNelkulElemek = document.querySelectorAll('#kivalasztottAlapanyagNelkul .kivalasztott-tag');
+      for (const elem of alapanyagNelkulElemek) {
+        let szoveg = elem.textContent.trim();
+        if (szoveg.includes('×')) {
+          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
         }
+        valasztottAlapanyagNelkul.push(szoveg);
+      }
+      
+      // Kiválasztott étrendek összegyűjtése
+      let valasztottEtrendek = [];
+      const etrendElemek = document.querySelectorAll('#kivalasztottEtrend .kivalasztott-tag');
+      for (const elem of etrendElemek) {
+        let szoveg = elem.textContent.trim();
+        if (szoveg.includes('×')) {
+          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        }
+        valasztottEtrendek.push(szoveg);
+      }
+      
+      // Kiválasztott konyhák összegyűjtése
+      let valasztottKonyhak = [];
+      const konyhaElemek = document.querySelectorAll('#kivalasztottKonyha .kivalasztott-tag');
+      for (const elem of konyhaElemek) {
+        let szoveg = elem.textContent.trim();
+        if (szoveg.includes('×')) {
+          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        }
+        valasztottKonyhak.push(szoveg);
+      }
+      
+      // Kérés küldése a szerver felé JSON adatokkal
+      const valasz = await fetch("./szures", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "kategoriak": valasztottKategoriak,
+          "alapanyagok": valasztottAlapanyagok,
+          "alapanyagok_nelkul": valasztottAlapanyagNelkul,
+          "etrend": valasztottEtrendek,
+          "konyha": valasztottKonyhak
+        })
+      });
+      
+      if (valasz.ok) {
+        const receptek = await valasz.json();
+        kartyaBetoltes(receptek); // Meglévő függvény a kártyák betöltéséhez
+      } else {
+        const hibaValasz = await valasz.json();
+        document.getElementById("kartyak").innerHTML = `<div class="alert alert-warning">${hibaValasz.valasz}</div>`;
+      }
+      
+    } catch (hibauzenet) {
+      console.log(hibauzenet);
+      document.getElementById("kartyak").innerHTML = `<div class="alert alert-danger">Hiba történt a szűrés során!</div>`;
     }
-    catch(error){
-        console.log(error);
-    }
-}
+  }
+  
+  // Példa: a szűrési műveletet a "Szűrés" gombhoz rendelhetjük
+  document.getElementById("szuroGomb").addEventListener("click", szuresOsszes);
+  
 
 
-function nehezsegFigyel(){
-    let range = document.getElementById("nehezsegInput").value;
-    let kiir = document.getElementById("nehezsegKiir");
-    if(range == 0){
-        kiir.innerHTML = "Könnyű";
-    }
-    if(range == 1){
-        kiir.innerHTML = "Közepes";
-    }
-    if(range == 2){
-        kiir.innerHTML = "Nehéz";
-    }
-}
+// Find and add event listener to the szures button
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all buttons with text "Szűrés"
+    document.querySelectorAll('button[type="button"]').forEach(button => {
+        if (button.textContent.trim() === "Szűrés") {
+            button.addEventListener('click', szuresOsszes);
+        }
+    });
+});
+
+document.getElementById("btnSzures").addEventListener("click", szuresOsszes)
+// Add event listeners to filter changes
+document.querySelectorAll('.kivalasztott-tag').forEach(tag => {
+    tag.addEventListener('added', szuresOsszes);
+    tag.addEventListener('removed', szuresOsszes);
+});
+
+// Also listen for slider changes
+document.getElementById('arInput').addEventListener('change', szuresOsszes);
+document.getElementById('kaloriaInput').addEventListener('change', szuresOsszes);
+// etc.
 
 
 
-function etelfajtaGeneralas(etelfajtak){
-    let ul = document.getElementById("etelfajta");
-    for(let etelfajta of etelfajtak){
-        //A szűrésnél az ételfajták betöltése
-        let li = document.createElement("li");
 
-        let div = document.createElement("div");
-        div.classList = "form-check";
-
-        let input = document.createElement("input");
-        input.classList = "form-check-input";
-        input.type = "checkbox";
-        input.id = etelfajta.neve;
-
-        let label = document.createElement("label");
-        label.classList = "form-check-label";
-        label.innerHTML = etelfajta.neve;
-        label.htmlFor = etelfajta.neve
-
-        ul.appendChild(li);
-        li.appendChild(div);
-
-        div.appendChild(input);
-        div.appendChild(label);
-    }
-}
 
 
 function kartyaBetoltes(receptek){
@@ -333,6 +259,32 @@ function kaloriaFigyel() {
     }
 }
 
+function nehezsegFigyel() {
+    const range = document.getElementById("nehezsegInput");
+    let nehezsegKiir = document.getElementById("nehezsegKiir");
+
+    range.addEventListener('input', frissitNehezseg);
+    range.addEventListener('mousedown', function() { 
+        frissitNehezseg(); 
+        range.addEventListener('mousemove', frissitNehezseg); 
+    });
+    range.addEventListener('mouseup', function() { 
+        range.removeEventListener('mousemove', frissitNehezseg); 
+    });
+
+    function frissitNehezseg() {
+        if (range.value == 0) {
+            nehezsegKiir.innerHTML = "Mind";
+        } else if (range.value == 1) {
+            nehezsegKiir.innerHTML = "Könnyű";
+        }else if (range.value == 2) {
+            nehezsegKiir.innerHTML = "Közepes";
+        } else {
+            nehezsegKiir.innerHTML = "Nehéz";
+        }
+    }
+}
+
 
 function adagFigyel() {
     const range = document.getElementById("adagInput");
@@ -377,6 +329,15 @@ function adagFigyel() {
     }
 }
 
+
+function kereses(){
+    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
+    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
+    
+    kartyaBetoltes(szurtReceptek); 
+}
+
+
 async function konyhaLista(){
     try{
         let eredmeny = await fetch("./konyha");
@@ -415,15 +376,6 @@ async function etrendLista(){
         console.log(error);
     }
 }
-
-
-function kereses(){
-    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
-    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
-    
-    kartyaBetoltes(szurtReceptek); 
-}
-
 
 async function kategoriakLista(){
     try{
@@ -1205,19 +1157,9 @@ function AlapanyagNelkulListaUjratoltese() {
 }
 
 
-
-
-//Ha a HTML dokumentum teljesen betöltődik az inicializalas függvény
-document.addEventListener("DOMContentLoaded", inicializalasKategoriat);
-document.addEventListener("DOMContentLoaded", inicializalasEtrendet);
-document.addEventListener("DOMContentLoaded", inicializalasKonyhat);
-document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
-document.addEventListener("DOMContentLoaded", inicializalasAlapanyagNelkul);
 window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
-window.addEventListener("load", kategoriakLista)
 //window.addEventListener("load", alapanyagLista);
-document.getElementById("button_kereses").addEventListener("click", kereses)
 window.addEventListener("load", function() {
     kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
@@ -1225,7 +1167,13 @@ window.addEventListener("load", function() {
 window.addEventListener("load", arFigyel);
 window.addEventListener("load", kaloriaFigyel);
 window.addEventListener("load", adagFigyel);
+document.addEventListener("DOMContentLoaded", inicializalasKategoriat);
+document.addEventListener("DOMContentLoaded", inicializalasEtrendet);
+document.addEventListener("DOMContentLoaded", inicializalasKonyhat);
+document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
+document.addEventListener("DOMContentLoaded", inicializalasAlapanyagNelkul);
 window.addEventListener("load", etrendLista);
 window.addEventListener("load", konyhaLista);
 window.addEventListener("load", alapanyagLista);
-//document.getElementById('nehezsegInput').addEventListener("input", arFigyel);
+window.addEventListener("load", kategoriakLista)
+document.getElementById("button_kereses").addEventListener("click", kereses)

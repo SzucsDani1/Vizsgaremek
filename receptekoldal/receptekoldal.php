@@ -82,14 +82,14 @@
     <!--START SZŰRÉS-->
     <div class="container">
         <div class="row">
-            <!-- Szűrőpanel helye -->
+            <!-- Szűrőpanel-->
             <div class="col-lg-4 col-md-5 col-sm-12">
                 <div class="filter-box border p-3 bg-light rounded">
                     <h4>Szűrés</h4>
                     <hr>
 
                     <!--Kategóriák szűrése-->
-                    <div class="mt-2 form-floating">
+                    <div class="my-2 form-floating">
                       <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
                       <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
                     </div>
@@ -98,19 +98,52 @@
                     </div>
                     <div id="kivalasztottKategoriak"></div>
 
-
-                    <!-- Nehézségi szint szűrő -->
-                    <div class="mb-3">
-                        <label class="form-label">Nehézségi szint</label>
-                        <input type="range" class="form-range" id="nehezsegInput" value="1" min="0" max="2" step="1">
-                        <div id="nehezsegKiir" class="form-text"></div>
+                    <!--Alapanyagok szűrése-->
+                    <div class="my-2 form-floating">
+                      <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
+                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
                     </div>
+                    <div class="dropdown" id="alapanyagDropdown">
+                      <div class="dropdown-menu" id="alapanyagLista"></div>
+                    </div>
+                    <div class="my-3" id="kivalasztottAlapanyagok"></div>
+
+                     <!--Alapanyag nélkül szűrése-->
+                     <div class="my-2 form-floating">
+                      <input type="text" class="form-control" id="alapanyagNelkulSearch" placeholder="Keresés az alapanyagok között...">
+                      <label for="AlapanyagNelkulSearch" class="form-label">Alapanyagok nélkül</label>
+                    </div>
+                    <div class="dropdown" id="alapanyagNelkulDropdown">
+                      <div class="dropdown-menu" id="alapanyagNelkulLista"></div>
+                    </div>
+                    <div id="kivalasztottAlapanyagNelkul"></div>
+
+
+                    <!--Étrend szűrő-->
+                    <div class="my-2 form-floating">
+                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+                      <label for="etrendSearch" class="form-label">Étrend</label>
+                    </div>
+                    <div class="dropdown" id="etrendDropdown">
+                      <div class="dropdown-menu" id="etrendLista"></div>
+                    </div>
+                    <div id="kivalasztottEtrend"></div>
+
+                    <!--Konyha szűrő-->
+                    <div class="my-2 form-floating">
+                      <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés a konyhák között...">
+                      <label for="konyhaSearch" class="form-label">Konyha</label>
+                    </div>
+                    <div class="dropdown" id="konyhaDropdown">
+                      <div class="dropdown-menu" id="konyhaLista"></div>
+                    </div>
+                    <div id="kivalasztottKonyha"></div>
 
                     <!-- Elkészítési idő szűrő -->
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label for="timeRange" class="form-label">Elkészítési idő (perc)</label>
                         <input type="number" class="form-control" id="timeMin" placeholder="Min idő">
-                        <input type="number" class="form-control mt-2" placeholder="Max idő">
+                        <input type="number" class="form-control my-2" placeholder="Max idő">
                     </div>
 
 
@@ -132,68 +165,32 @@
                       <label class="btn btn-outline-danger flex-fill" for="napszakVacsora">Vacsora</label>
                     </div>
 
-                    <!--Alapanyagok szűrése-->
-                    <div class="mt-2 form-floating">
-                      <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
-                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
-                    </div>
-                    <div class="dropdown" id="alapanyagDropdown">
-                      <div class="dropdown-menu" id="alapanyagLista"></div>
-                    </div>
-                    <div class="mt-3" id="kivalasztottAlapanyagok"></div>
-
-                     <!--Alapanyag nélkül szűrése-->
-                     <div class="mt-2 form-floating">
-                      <input type="text" class="form-control" id="alapanyagNelkulSearch" placeholder="Keresés az alapanyagok között...">
-                      <label for="AlapanyagNelkulSearch" class="form-label">Alapanyagok nélkül</label>
-                    </div>
-                    <div class="dropdown" id="alapanyagNelkulDropdown">
-                      <div class="dropdown-menu" id="alapanyagNelkulLista"></div>
-                    </div>
-                    <div id="kivalasztottAlapanyagNelkul"></div>
-
-
-                    <!--Étrend szűrő-->
-                    <div class="mt-2 form-floating">
-                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
-                      <label for="etrendSearch" class="form-label">Étrend</label>
-                    </div>
-                    <div class="dropdown" id="etrendDropdown">
-                      <div class="dropdown-menu" id="etrendLista"></div>
-                    </div>
-                    <div id="kivalasztottEtrend"></div>
-
-
-                    <!--Konyha szűrő-->
-                    <div class="mt-2 form-floating">
-                      <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés a konyhák között...">
-                      <label for="konyhaSearch" class="form-label">Konyha</label>
-                    </div>
-                    <div class="dropdown" id="konyhaDropdown">
-                      <div class="dropdown-menu" id="konyhaLista"></div>
-                    </div>
-                    <div id="kivalasztottKonyha"></div>
-
-
                     <!-- Ár szint szűrő -->
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label class="form-label">Ár</label>
                         <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
                         <div id="arKiir" class="form-text">Mind</div>
                     </div>
 
                     <!-- Kalória szint szűrő -->
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label class="form-label">Kalória</label>
                         <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
                         <div id="kaloriaKiir" class="form-text">Mind</div>
                     </div>
 
                     <!-- Adag szint szűrő -->
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label class="form-label">Adag</label>
                         <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
                         <div id="adagKiir" class="form-text">1 adag</div>
+                    </div>
+
+                    <!-- Nehézségi szint szűrő -->
+                    <div class="my-3">
+                      <label class="form-label">Nehézségi szint</label>
+                      <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
+                      <div id="nehezsegKiir" class="form-text">Mind</div>
                     </div>
 
                     <!-- Konyha szűrő -->
@@ -208,7 +205,7 @@
                     
 
                     <!-- Szűrés gomb -->
-                    <button class="btn btn-danger w-100" id="szures_gomb">Szűrés</button>
+                    <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
                 </div>
             </div>
             <!--Káryák-->
@@ -223,6 +220,8 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="receptekoldalkereses.js"></script>
 <script src="receptekoldal.js"></script>
+
 </body>
 </html>
