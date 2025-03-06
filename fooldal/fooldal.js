@@ -171,12 +171,12 @@ function legujabbReceptekBetoltes(receptek, divContainer){
 
         let inputButton = document.createElement("input");
         inputButton.type = "button";
-        inputButton.classList = "btn btn-primary";
+        inputButton.classList = "btn btn-danger";
         inputButton.value = "Részletek";
 
-        let pfeltolto = document.createElement("p");
-        pfeltolto.classList = "text-body-secondary fw-light";
-        pfeltolto.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
+        let pFeltolto = document.createElement("p");
+        pFeltolto.classList = "text-body-secondary fw-light mt-2";
+        pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
 
         divRow.appendChild(divCard);
 
@@ -185,9 +185,9 @@ function legujabbReceptekBetoltes(receptek, divContainer){
 
         divCardBody.appendChild(pJellemzok);
         divCardBody.appendChild(h5);
-        divCardBody.appendChild(pCardText);
         divCardBody.appendChild(br);
         divCardBody.appendChild(inputButton);
+        divCardBody.appendChild(pFeltolto);
 
     }
 

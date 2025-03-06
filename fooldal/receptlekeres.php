@@ -130,7 +130,7 @@
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(!empty($bodyAdatok["recept_neve"])){
                     $recept_nev = $bodyAdatok["recept_neve"];
-                    $keresesReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.etrend_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id WHERE receptek.neve = '{$recept_nev}';");
+                    $keresesReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.etrend_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id WHERE LOWER(receptek.neve) = LOWER('{$recept_nev}');");
                     if(is_array($keresesReceptek) && !empty($keresesReceptek)){
                         echo json_encode($keresesReceptek, JSON_UNESCAPED_UNICODE);
                     }
