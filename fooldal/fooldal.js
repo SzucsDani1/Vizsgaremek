@@ -1,95 +1,3 @@
-receptek = [{
-    "nev" : "Palacsinta",
-    "kaloria" : 100,
-    "nehezseg" : "könnyű",
-    "ido" : 55,
-    "adag" : 1,
-    "felh_nev" : "Kiss Pista",
-    "kep" : "./kepek/palacsinta.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-},
-{
-    "nev" : "Gulyás leves",
-    "kaloria" : 300,
-    "nehezseg" : "közepes",
-    "ido" : 90,
-    "adag" : 4,
-    "felh_nev" : "Lakatos Imre",
-    "kep" : "./kepek/guylas_leves.jpg",
-    "leiras" : "Ide jön a leírás"
-}
-
-]
 
 async function receptekLeker(){
     try {
@@ -143,7 +51,6 @@ function legujabbReceptekBetoltes(receptek, divContainer){
 
 
     for(let recept of receptek){
-        //Kártya generálás
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
