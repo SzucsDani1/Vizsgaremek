@@ -93,11 +93,15 @@
         break;
 
 
-        case "szures":
+        case "szuresreceptek":
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Szűréshez használt feltételek tömbje
+                // Parse the JSON data from the request body
+                $jsonData = file_get_contents('php://input');
+                $bodyAdatok = json_decode($jsonData, true);
+                
+                // Initialize array for filter conditions
                 $szuroFeltetelek = [];
-        
+                
                 // Kategória szűrés (az etelfajta táblából)
                 if (!empty($bodyAdatok["kategoriak"]) && is_array($bodyAdatok["kategoriak"])) {
                     $kategoriakAzonositoTomb = [];
@@ -113,8 +117,8 @@
                         $szuroFeltetelek[] = "receptek.etelfajta_id IN ($azonositoLista)";
                     }
                 }
-        
-                // Alapanyag szűrés (az hozzavalok táblából – a receptnek tartalmaznia kell az összes választott alapanyagot)
+                
+                // Alapanyag szűrés (az hozzavalok táblából)
                 if (!empty($bodyAdatok["alapanyagok"]) && is_array($bodyAdatok["alapanyagok"])) {
                     $alapanyagFeltetelek = [];
                     foreach ($bodyAdatok["alapanyagok"] as $kivalasztottAlapanyag) {
@@ -125,8 +129,8 @@
                         $szuroFeltetelek[] = "(" . implode(" AND ", $alapanyagFeltetelek) . ")";
                     }
                 }
-        
-                // Kizárt alapanyag szűrés (azok a receptek, amelyek nem tartalmazzák a választott kizárt alapanyagokat)
+                
+                // Kizárt alapanyag szűrés
                 if (!empty($bodyAdatok["alapanyagok_nelkul"]) && is_array($bodyAdatok["alapanyagok_nelkul"])) {
                     $kizartAlapanyagFeltetelek = [];
                     foreach ($bodyAdatok["alapanyagok_nelkul"] as $kivalasztottKizartAlapanyag) {
@@ -137,7 +141,7 @@
                         $szuroFeltetelek[] = "(" . implode(" AND ", $kizartAlapanyagFeltetelek) . ")";
                     }
                 }
-        
+                
                 // Étrend szűrés (az etrend táblából)
                 if (!empty($bodyAdatok["etrend"]) && is_array($bodyAdatok["etrend"])) {
                     $etrendAzonositoTomb = [];
@@ -153,7 +157,7 @@
                         $szuroFeltetelek[] = "receptek.etrend_id IN ($azonositoLista)";
                     }
                 }
-        
+                
                 // Konyha szűrés (a konyha táblából)
                 if (!empty($bodyAdatok["konyha"]) && is_array($bodyAdatok["konyha"])) {
                     $konyhaAzonositoTomb = [];
@@ -169,35 +173,100 @@
                         $szuroFeltetelek[] = "receptek.konyha_id IN ($azonositoLista)";
                     }
                 }
-        
+                
+                // Elkészítési idő szűrés
+                if (!empty($bodyAdatok["ido"])) {
+                    $szuroFeltetelek[] = "receptek.ido <= " . intval($bodyAdatok["ido"]);
+                }
+                
+                // Napszak szűrés
+                if (!empty($bodyAdatok["napszak"])) {
+                    $napszak = trim($bodyAdatok["napszak"]);
+                    $szuroFeltetelek[] = "LOWER(receptek.napszak) = LOWER('$napszak')";
+                }
+                
+                // Ár szűrés
+                if (!empty($bodyAdatok["ar"])) {
+                    $ar = trim($bodyAdatok["ar"]);
+                    $szuroFeltetelek[] = "LOWER(receptek.ar) = LOWER('$ar')";
+                }
+                
+                // Kalória szűrés
+                if (!empty($bodyAdatok["kaloria"])) {
+                    $kaloria = intval($bodyAdatok["kaloria"]);
+                    if ($kaloria === 1000) { // "600 felett"
+                        $szuroFeltetelek[] = "receptek.kaloria > 600";
+                    } else {
+                        $szuroFeltetelek[] = "receptek.kaloria <= " . $kaloria;
+                    }
+                }
+                
+                // Adag szűrés
+                if (!empty($bodyAdatok["adag"])) {
+                    $szuroFeltetelek[] = "receptek.adag = " . intval($bodyAdatok["adag"]);
+                }
+                
+                // Nehézségi szint szűrés
+                if (!empty($bodyAdatok["nehezseg"])) {
+                    $nehezseg = trim($bodyAdatok["nehezseg"]);
+                    $szuroFeltetelek[] = "LOWER(receptek.nehezseg) = LOWER('$nehezseg')";
+                }
+                
                 // A végső SQL lekérdezés összeállítása
-                $sql = "SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.etrend_id, receptek.napszak, 
-                               receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, 
-                               receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, 
-                               felhasznalok.felhnev 
-                        FROM receptek 
-                        INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id";
+                $sql = "SELECT 
+                        receptek.id, 
+                        receptek.neve, 
+                        receptek.felhasznalo_id,
+                        receptek.etrend_id, 
+                        receptek.napszak, 
+                        receptek.etelfajta_id, 
+                        receptek.kaloria,
+                        receptek.kepek, 
+                        receptek.nehezseg, 
+                        receptek.ido, 
+                        receptek.adag, 
+                        receptek.ar,
+                        receptek.elkeszites
+                    FROM receptek";
                 
                 // Ha van érvényes szűrőfeltétel, azt hozzáadjuk a lekérdezéshez
                 if (!empty($szuroFeltetelek)) {
                     $sql .= " WHERE " . implode(" AND ", $szuroFeltetelek);
                 }
-        
-                // Lekérdezés végrehajtása a meglévő függvénnyel
+                
+                // Receptek rendezése név szerint
+                $sql .= " ORDER BY receptek.neve ASC";
+                
+                // Lekérdezés végrehajtása
                 $receptLista = adatokLekerdezese($sql);
-        
-                // Találatok visszaadása vagy hibaüzenet
+                
+                // Formázott adatok előkészítése
                 if (is_array($receptLista) && !empty($receptLista)) {
-                    echo json_encode($receptLista, JSON_UNESCAPED_UNICODE);
+                    $formattedReceptek = [];
+                    foreach ($receptLista as $recept) {
+                        $formattedReceptek[] = [
+                            'id' => $recept['id'],
+                            'nev' => $recept['neve'],
+                            'kep' => $recept['kepek'],
+                            'kaloria' => $recept['kaloria'],
+                            'nehezseg' => $recept['nehezseg'],
+                            'ido' => $recept['ido'],
+                            'adag' => $recept['adag'],
+                            'leiras' => $recept['elkeszites']
+                        ];
+                    }
+                    
+                    echo json_encode($formattedReceptek, JSON_UNESCAPED_UNICODE);
                 } else {
                     echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
                     header("bad request", true, 400);
                 }
             } else {
-                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
                 header('bad request', true, 400);
             }
             break;
+        
         
 
             
