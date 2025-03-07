@@ -4,122 +4,137 @@ let konyhak = new Set();
 let etrendek = new Set();
 
 
-
-// Function to collect all selected filters and send them to the server
-// Teljes JavaScript kód – Szűrési funkció
-
-async function szuresOsszes() {
+async function filterReceptek() {
     try {
-      // Kiválasztott kategóriák összegyűjtése
-      let valasztottKategoriak = [];
-      const kategoriaElemek = document.querySelectorAll('#kivalasztottKategoriak .kivalasztott-tag');
-      for (const elem of kategoriaElemek) {
-        let szoveg = elem.textContent.trim();
-        if (szoveg.includes('×')) {
-          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        // Get all filter values from the selected tags
+        const kategoriak = getSelectedCategories('kivalasztottKategoriak');
+        const alapanyagok = getSelectedCategories('kivalasztottAlapanyagok');
+        const alapanyagok_nelkul = getSelectedCategories('kivalasztottAlapanyagNelkul');
+        const etrend = getSelectedCategories('kivalasztottEtrend');
+        const konyha = getSelectedCategories('kivalasztottKonyha');        
+        // Get preparation time value
+        const idoInput = document.getElementById('idoInput');
+        const ido = idoInput && idoInput.value !== '0' ? parseInt(idoInput.value) * 15 : null;
+        
+        // Get selected time of day
+        const napszakInputs = document.querySelectorAll('input[name="napszak"]:checked');
+        const napszak = napszakInputs.length > 0 ? napszakInputs[0].value : null;
+        
+        // Get price level
+        const arInput = document.getElementById('arInput');
+        let ar = null;
+        if (arInput) {
+            const arValue = parseInt(arInput.value);
+            if (arValue === 1) ar = 'Olcsó';
+            else if (arValue === 2) ar = 'Átlagos';
+            else if (arValue === 3) ar = 'Drága';
         }
-        valasztottKategoriak.push(szoveg);
-      }
-      
-      // Kiválasztott alapanyagok összegyűjtése
-      let valasztottAlapanyagok = [];
-      const alapanyagElemek = document.querySelectorAll('#kivalasztottAlapanyagok .kivalasztott-tag');
-      for (const elem of alapanyagElemek) {
-        let szoveg = elem.textContent.trim();
-        if (szoveg.includes('×')) {
-          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        
+        // Get calorie value
+        const kaloriaInput = document.getElementById('kaloriaInput');
+        let kaloria = null;
+        if (kaloriaInput) {
+            const kaloriaValue = parseInt(kaloriaInput.value);
+            if (kaloriaValue === 1) kaloria = 200;
+            else if (kaloriaValue === 2) kaloria = 400;
+            else if (kaloriaValue === 3) kaloria = 600;
+            else if (kaloriaValue === 4) kaloria = 1000; // For "600 felett"
         }
-        valasztottAlapanyagok.push(szoveg);
-      }
-      
-      // Kiválasztott, kizárt alapanyagok összegyűjtése
-      let valasztottAlapanyagNelkul = [];
-      const alapanyagNelkulElemek = document.querySelectorAll('#kivalasztottAlapanyagNelkul .kivalasztott-tag');
-      for (const elem of alapanyagNelkulElemek) {
-        let szoveg = elem.textContent.trim();
-        if (szoveg.includes('×')) {
-          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        
+        // Get portion size
+        const adagInput = document.getElementById('adagInput');
+        const adag = adagInput && adagInput.value !== '0' ? parseInt(adagInput.value) : null;
+        
+        // Get difficulty level
+        const nehezsegInput = document.getElementById('nehezsegInput');
+        let nehezseg = null;
+        if (nehezsegInput) {
+            const nehezsegValue = parseInt(nehezsegInput.value);
+            if (nehezsegValue === 1) nehezseg = 'Könnyű';
+            else if (nehezsegValue === 2) nehezseg = 'Közepes';
+            else if (nehezsegValue === 3) nehezseg = 'Nehéz';
         }
-        valasztottAlapanyagNelkul.push(szoveg);
-      }
-      
-      // Kiválasztott étrendek összegyűjtése
-      let valasztottEtrendek = [];
-      const etrendElemek = document.querySelectorAll('#kivalasztottEtrend .kivalasztott-tag');
-      for (const elem of etrendElemek) {
-        let szoveg = elem.textContent.trim();
-        if (szoveg.includes('×')) {
-          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
+        
+        // Prepare request body with all filter criteria
+        const requestBody = {
+            kategoriak,
+            alapanyagok,
+            alapanyagok_nelkul,
+            etrend,
+            konyha,
+            ido,
+            napszak,
+            ar,
+            kaloria,
+            adag,
+            nehezseg
+        };
+        
+        // Remove null or empty array properties to ignore those filters
+        Object.keys(requestBody).forEach(key => {
+            if (
+                requestBody[key] === null || 
+                (Array.isArray(requestBody[key]) && requestBody[key].length === 0)
+            ) {
+                delete requestBody[key];
+            }
+        });
+        
+        // Make request to server
+        const response = await fetch('./szuresreceptek', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+        
+        if (response.ok) {
+            const receptek = await response.json();
+            kartyaBetoltes(receptek);
+        } else {
+            try {
+                const errorData = await response.json();
+                document.getElementById('kartyak').innerHTML = `
+                    <div class="alert alert-warning" role="alert">
+                        ${errorData.valasz || 'Nincs találat a megadott feltételekkel.'}
+                    </div>
+                `;
+            } catch (e) {
+                document.getElementById('kartyak').innerHTML = `
+                    <div class="alert alert-warning" role="alert">
+                        Nincs találat a megadott feltételekkel.
+                    </div>
+                `;
+            }
         }
-        valasztottEtrendek.push(szoveg);
-      }
-      
-      // Kiválasztott konyhák összegyűjtése
-      let valasztottKonyhak = [];
-      const konyhaElemek = document.querySelectorAll('#kivalasztottKonyha .kivalasztott-tag');
-      for (const elem of konyhaElemek) {
-        let szoveg = elem.textContent.trim();
-        if (szoveg.includes('×')) {
-          szoveg = szoveg.substring(0, szoveg.indexOf('×')).trim();
-        }
-        valasztottKonyhak.push(szoveg);
-      }
-      
-      // Kérés küldése a szerver felé JSON adatokkal
-      const valasz = await fetch("./szures", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          "kategoriak": valasztottKategoriak,
-          "alapanyagok": valasztottAlapanyagok,
-          "alapanyagok_nelkul": valasztottAlapanyagNelkul,
-          "etrend": valasztottEtrendek,
-          "konyha": valasztottKonyhak
-        })
-      });
-      
-      if (valasz.ok) {
-        const receptek = await valasz.json();
-        kartyaBetoltes(receptek); // Meglévő függvény a kártyák betöltéséhez
-      } else {
-        const hibaValasz = await valasz.json();
-        document.getElementById("kartyak").innerHTML = `<div class="alert alert-warning">${hibaValasz.valasz}</div>`;
-      }
-      
-    } catch (hibauzenet) {
-      console.log(hibauzenet);
-      document.getElementById("kartyak").innerHTML = `<div class="alert alert-danger">Hiba történt a szűrés során!</div>`;
+    } catch (error) {
+        console.error('Hiba a szűrés során:', error);
+        document.getElementById('kartyak').innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                Hiba történt a szűrés során. Kérjük, próbálja újra később.
+            </div>
+        `;
     }
-  }
-  
-  // Példa: a szűrési műveletet a "Szűrés" gombhoz rendelhetjük
-  document.getElementById("szuroGomb").addEventListener("click", szuresOsszes);
-  
+}
 
-
-// Find and add event listener to the szures button
-document.addEventListener('DOMContentLoaded', function() {
-    // Find all buttons with text "Szűrés"
-    document.querySelectorAll('button[type="button"]').forEach(button => {
-        if (button.textContent.trim() === "Szűrés") {
-            button.addEventListener('click', szuresOsszes);
-        }
+function getSelectedCategories(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return [];
+    
+    const selectedItems = [];
+    const badges = container.querySelectorAll('.kivalasztott-tag');
+    
+    badges.forEach(badge => {
+        // Extract the text content (exclude the X button)
+        const text = badge.textContent.trim().replace('×', '').trim();
+        selectedItems.push(text);
     });
-});
+    
+    return selectedItems;
+}
 
-document.getElementById("btnSzures").addEventListener("click", szuresOsszes)
-// Add event listeners to filter changes
-document.querySelectorAll('.kivalasztott-tag').forEach(tag => {
-    tag.addEventListener('added', szuresOsszes);
-    tag.addEventListener('removed', szuresOsszes);
-});
-
-// Also listen for slider changes
-document.getElementById('arInput').addEventListener('change', szuresOsszes);
-document.getElementById('kaloriaInput').addEventListener('change', szuresOsszes);
-// etc.
+document.getElementById('btnSzures').addEventListener('click', filterReceptek);
 
 
 
