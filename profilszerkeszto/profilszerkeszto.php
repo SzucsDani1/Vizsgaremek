@@ -90,7 +90,7 @@
                     </form>
                 </div>
                 <div  id="gombokHelye">
-                    <button id="modositas"  type="button" class="btn btn-primary w-100 ">Módosítás</button>
+                    <button id="modositas"  type="button" class="btn btn-primary w-100 " onclick="modositasFelold()">Módosítás</button>
                 </div>
             </div>
         </div>

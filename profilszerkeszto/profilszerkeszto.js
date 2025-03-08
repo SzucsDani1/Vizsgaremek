@@ -77,40 +77,52 @@ function modositasFelold(){
     jelszoMod.removeAttribute("disabled")
     jelszoMod.value = ""
 
-    gombokValtoztat()
+    gombokValtoztat(true)
 }
 
 function modositasAlap(){
     let emailCim = document.getElementById("email")
     let jelszo = document.getElementById("jelszo")
     let alapEmail = lekerCookie("")
-    emailCimMod.setAttribute("disabled", "true");
-    jelszoMod.setAttribute("disabled", "true");
-    jelszoMod.value = "placeholder"
+    emailCim.setAttribute("disabled", "true");
+    jelszo.setAttribute("disabled", "true");
+    jelszo.value = "placeholder"
+    gombokValtoztat(false)
     adatokLeker()
 }
 
-function gombokValtoztat(){
+function gombokValtoztat(alapot){
     let gombokHelye =   document.getElementById("gombokHelye")
-    let mentesButton = document.createElement("input")
-    let megseButton =document.createElement("input")
-     
     gombokHelye.innerHTML = ""
-    megseButton.type = "button"
-    mentesButton.type = "button"
+    if(alapot == true){ 
+        let mentesButton = document.createElement("input")
+        let megseButton =document.createElement("input")
+        
+        megseButton.type = "button"
+        mentesButton.type = "button"
 
-    mentesButton.classList.add("btn", "btn-success", "w-50")
-    megseButton.classList.add("btn", "btn-secondary", "w-50")
+        mentesButton.classList.add("btn", "btn-success", "w-50")
+        megseButton.classList.add("btn", "btn-secondary", "w-50")
 
-    megseButton.value ="Mégse"
-    mentesButton.value ="Mentés"
+        megseButton.value ="Mégse"
+        mentesButton.value ="Mentés"
 
-    
-    megseButton.onclick = (event) => gombNyomas("megse");
-    mentesButton.onclick = (event) => gombNyomas("mentes");
+        
+        megseButton.onclick = (event) => gombNyomas("megse");
+        mentesButton.onclick = (event) => gombNyomas("mentes");
 
-    gombokHelye.appendChild(mentesButton)
-    gombokHelye.appendChild(megseButton)
+        gombokHelye.appendChild(mentesButton)
+        gombokHelye.appendChild(megseButton)
+    }
+    else if(alapot == false){
+        let modositButton = document.createElement("button")
+        modositButton.id =  "modositas"
+        modositButton.innerHTML = "Módosítás"
+        modositButton.type = "button"
+        modositButton.classList.add("btn" , "btn-primary", "w-100")
+        modositButton.onclick = modositasFelold
+        gombokHelye.appendChild(modositButton)
+    }
 }
 
 function gombNyomas(melyikGomb){
@@ -125,4 +137,3 @@ function gombNyomas(melyikGomb){
 
 window.addEventListener("load", adatokLeker)
 
-document.getElementById("modositas").addEventListener("click", modositasFelold)
