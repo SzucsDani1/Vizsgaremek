@@ -11,10 +11,7 @@ async function filterReceptek() {
         const alapanyagok = getSelectedCategories('kivalasztottAlapanyagok');
         const alapanyagok_nelkul = getSelectedCategories('kivalasztottAlapanyagNelkul');
         const etrend = getSelectedCategories('kivalasztottEtrend');
-        const konyha = getSelectedCategories('kivalasztottKonyha');        
-        // Get preparation time value
-        const idoInput = document.getElementById('idoInput');
-        const ido = idoInput && idoInput.value !== '0' ? parseInt(idoInput.value) * 15 : null;
+        const konyha = getSelectedCategories('kivalasztottKonyha');
         
         // Get selected time of day
         const napszakInputs = document.querySelectorAll('input[name="napszak"]:checked');
@@ -28,6 +25,16 @@ async function filterReceptek() {
             if (arValue === 1) ar = 'Olcsó';
             else if (arValue === 2) ar = 'Átlagos';
             else if (arValue === 3) ar = 'Drága';
+        }
+
+        // Get price level
+        const idoInput = document.getElementById('idoInput');
+        let ido = null;
+        if (idoInput) {
+            const idoValue = parseInt(idoInput.value);
+            if (idoValue === 1) ido = 'Gyorsan';
+            else if (idoValue === 2) ido = 'Átlagosan';
+            else if (idoValue === 3) ido = 'Hosszan';
         }
         
         // Get calorie value
@@ -296,6 +303,33 @@ function nehezsegFigyel() {
             nehezsegKiir.innerHTML = "Közepes";
         } else {
             nehezsegKiir.innerHTML = "Nehéz";
+        }
+    }
+}
+
+
+function idoFigyel() {
+    const range = document.getElementById("idoInput");
+    let idoKiir = document.getElementById("idoKiir");
+
+    range.addEventListener('input', frissitIdo);
+    range.addEventListener('mousedown', function() { 
+        frissitIdo(); 
+        range.addEventListener('mousemove', frissitIdo); 
+    });
+    range.addEventListener('mouseup', function() { 
+        range.removeEventListener('mousemove', frissitIdo); 
+    });
+
+    function frissitIdo() {
+        if (range.value == 0) {
+            idoKiir.innerHTML = "Mind";
+        } else if (range.value == 1) {
+            idoKiir.innerHTML = "Gyorsan";
+        }else if (range.value == 2) {
+            idoKiir.innerHTML = "Átlagosan";
+        } else {
+            idoKiir.innerHTML = "Hosszan";
         }
     }
 }
@@ -1176,10 +1210,11 @@ window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
 //window.addEventListener("load", alapanyagLista);
 window.addEventListener("load", function() {
-    kartyaBetoltes(receptek); // Alapértelmezett kártyák betöltése az oldal betöltésekor
+    kartyaBetoltes(); // Alapértelmezett kártyák betöltése az oldal betöltésekor
 });
 
 window.addEventListener("load", arFigyel);
+window.addEventListener("load", idoFigyel);
 window.addEventListener("load", kaloriaFigyel);
 window.addEventListener("load", adagFigyel);
 document.addEventListener("DOMContentLoaded", inicializalasKategoriat);

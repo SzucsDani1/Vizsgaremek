@@ -139,14 +139,6 @@
                     </div>
                     <div id="kivalasztottKonyha"></div>
 
-                    <!-- Elkészítési idő szűrő -->
-                    <div class="my-3">
-                        <label for="timeRange" class="form-label">Elkészítési idő (perc)</label>
-                        <input type="number" class="form-control" id="timeMin" placeholder="Min idő">
-                        <input type="number" class="form-control my-2" placeholder="Max idő">
-                    </div>
-
-
                     <!-- Napszak szűrő -->
                     <div class="btn-group d-flex flex-wrap" role="group">
                       <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off">
@@ -170,6 +162,13 @@
                         <label class="form-label">Ár</label>
                         <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
                         <div id="arKiir" class="form-text">Mind</div>
+                    </div>
+
+                     <!-- Idő szint szűrő -->
+                     <div class="my-3">
+                        <label class="form-label">Elkészítési idő</label>
+                        <input type="range" class="form-range" id="idoInput" value="0" min="0" max="3" step="1">
+                        <div id="idoKiir" class="form-text">Mind</div>
                     </div>
 
                     <!-- Kalória szint szűrő -->

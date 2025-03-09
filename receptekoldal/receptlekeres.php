@@ -174,22 +174,27 @@
                     }
                 }
                 
-                // Elkészítési idő szűrés
+                // Idő szűrés
                 if (!empty($bodyAdatok["ido"])) {
-                    $szuroFeltetelek[] = "receptek.ido <= " . intval($bodyAdatok["ido"]);
+                    $ido = trim($bodyAdatok["ido"]);
+                    $szuroFeltetelek[] = "receptek.elkeszites LIKE '$ido'";
                 }
+                
                 
                 // Napszak szűrés
                 if (!empty($bodyAdatok["napszak"])) {
                     $napszak = trim($bodyAdatok["napszak"]);
                     $szuroFeltetelek[] = "LOWER(receptek.napszak) = LOWER('$napszak')";
                 }
+
                 
                 // Ár szűrés
                 if (!empty($bodyAdatok["ar"])) {
                     $ar = trim($bodyAdatok["ar"]);
                     $szuroFeltetelek[] = "LOWER(receptek.ar) = LOWER('$ar')";
                 }
+
+                
                 
                 // Kalória szűrés
                 if (!empty($bodyAdatok["kaloria"])) {
@@ -239,8 +244,20 @@
                 
                 // Lekérdezés végrehajtása
                 $receptLista = adatokLekerdezese($sql);
-                
                 // Formázott adatok előkészítése
+                foreach ($receptLista as $recept) {
+                    $formattedReceptek[] = [
+                        'id' => $recept['id'],
+                        'nev' => $recept['neve'],
+                        'kep' => $recept['kepek'],
+                        'kaloria' => $recept['kaloria'],
+                        'nehezseg' => $recept['nehezseg'],
+                        'ido' => $recept['ido'],
+                        'adag' => $recept['adag'],
+                        'leiras' => $recept['elkeszites']
+                        
+                    ];
+                }
                 if (is_array($receptLista) && !empty($receptLista)) {
                     $formattedReceptek = [];
                     foreach ($receptLista as $recept) {
