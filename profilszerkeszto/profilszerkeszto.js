@@ -1,25 +1,30 @@
-const fileInput = document.getElementById('fileInput');
-        const profilePicture = document.getElementById('profilePicture');
-        const removeButton = document.getElementById('removeButton');
-        
-        fileInput.addEventListener('change', function() {
-            removeButton.hidden = false;
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profilePicture.innerHTML = `<img src="${e.target.result}" alt="Profilkép">`;
-                    removeButton.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-        
-        removeButton.addEventListener('click', function() {
-            profilePicture.innerHTML = 'Nincs profilkép';
-            fileInput.value = "";
-            removeButton.style.display = 'none';
-        });
+function ujprofilKep(){
+    const fileInput = document.getElementById('fileInput');
+    const profilePicture = document.getElementById('profilePicture');
+    const removeButton = document.getElementById('removeButton');
+    const mentesButton = document.getElementById("profilkepMentesButton")
+    
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            profilePicture.innerHTML = `<img src="${e.target.result}" alt="Profilkép">`;
+            
+        }
+        reader.readAsDataURL(file);
+        mentesButton.style.display = 'block';
+        removeButton.style.display = 'block';
+    }
+   
+    
+    removeButton.addEventListener('click', function() {
+        profilePicture.innerHTML = 'Nincs profilkép';
+        fileInput.value = "";
+        removeButton.style.display = 'none';
+        mentesButton.style.display = 'none';
+    });
+    
+}
 
 async function adatokLeker() {
     let felhasznaloId = lekerCookie("bejelentkezetFelhasznaloId")
@@ -49,6 +54,7 @@ async function adatokLeker() {
 }
 
 function lekerCookie(name) {
+
     let cookies = document.cookie.split("; ");
     for (let cookie of cookies) {
         let [cookieName, cookieValue] = cookie.split("=");
@@ -81,6 +87,7 @@ function modositasFelold(){
 }
 
 function modositasAlap(){
+   
     let emailCim = document.getElementById("email")
     let jelszo = document.getElementById("jelszo")
     let alapEmail = lekerCookie("")
@@ -137,3 +144,4 @@ function gombNyomas(melyikGomb){
 
 window.addEventListener("load", adatokLeker)
 
+document.getElementById('fileInput').addEventListener("change", ujprofilKep)
