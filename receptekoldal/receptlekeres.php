@@ -142,7 +142,7 @@
                     }
                 }
                 
-                // Étrend szűrés (az etrend táblából)
+               // Étrend szűrés (receptetrend tábla használata)
                 if (!empty($bodyAdatok["etrend"]) && is_array($bodyAdatok["etrend"])) {
                     $etrendAzonositoTomb = [];
                     foreach ($bodyAdatok["etrend"] as $kivalasztottEtrend) {
@@ -154,16 +154,21 @@
                     }
                     if (!empty($etrendAzonositoTomb)) {
                         $azonositoLista = implode(",", $etrendAzonositoTomb);
-                        $szuroFeltetelek[] = "receptek.etrend_id IN ($azonositoLista)";
+                        $szuroFeltetelek[] = "EXISTS (
+                            SELECT 1 FROM receptetrend 
+                            WHERE receptetrend.recept_id = receptek.id 
+                            AND receptetrend.etrend_id IN ($azonositoLista)
+                        )";
                     }
                 }
+
                 
-                // Konyha szűrés (a konyha táblából)
+                // Konyha szűrés javított verziója
                 if (!empty($bodyAdatok["konyha"]) && is_array($bodyAdatok["konyha"])) {
                     $konyhaAzonositoTomb = [];
                     foreach ($bodyAdatok["konyha"] as $kivalasztottKonyha) {
-                        $konyhaNev = trim($kivalasztottKonyha);
-                        $eredmenySor = adatokLekerdezese("SELECT id FROM konyha WHERE LOWER(neve) = LOWER('$konyhaNev')");
+                        $konyhaNev = trim(strtolower($kivalasztottKonyha));
+                        $eredmenySor = adatokLekerdezese("SELECT id FROM konyha WHERE neve = '$konyhaNev'");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $konyhaAzonositoTomb[] = $eredmenySor[0]['id'];
                         }
@@ -173,11 +178,14 @@
                         $szuroFeltetelek[] = "receptek.konyha_id IN ($azonositoLista)";
                     }
                 }
+
+
+
                 
                 // Idő szűrés
                 if (!empty($bodyAdatok["ido"])) {
                     $ido = trim($bodyAdatok["ido"]);
-                    $szuroFeltetelek[] = "receptek.elkeszites LIKE '$ido'";
+                    $szuroFeltetelek[] = "receptek.ido LIKE '$ido'";
                 }
                 
                 
@@ -218,21 +226,21 @@
                 }
                 
                 // A végső SQL lekérdezés összeállítása
-                $sql = "SELECT 
-                        receptek.id, 
-                        receptek.neve, 
-                        receptek.felhasznalo_id,
-                        receptek.etrend_id, 
-                        receptek.napszak, 
-                        receptek.etelfajta_id, 
-                        receptek.kaloria,
-                        receptek.kepek, 
-                        receptek.nehezseg, 
-                        receptek.ido, 
-                        receptek.adag, 
-                        receptek.ar,
-                        receptek.elkeszites
+                $sql = "SELECT
+                    receptek.id,
+                    receptek.neve,
+                    receptek.felhasznalo_id,
+                    receptek.napszak,
+                    receptek.etelfajta_id,
+                    receptek.kaloria,
+                    receptek.kepek,
+                    receptek.nehezseg,
+                    receptek.ido,
+                    receptek.adag,
+                    receptek.ar,
+                    receptek.elkeszites
                     FROM receptek";
+            
                 
                 // Ha van érvényes szűrőfeltétel, azt hozzáadjuk a lekérdezéshez
                 if (!empty($szuroFeltetelek)) {

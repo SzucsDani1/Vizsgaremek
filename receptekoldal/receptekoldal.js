@@ -4,8 +4,63 @@ let konyhak = new Set();
 let etrendek = new Set();
 
 
+const szuroKonfig = {
+  kategoriak: {
+    keresesiMezo: 'kategoriakSearch',
+    listaElem: 'kategoriakLista',
+    containerId: 'kivalasztottKategoriak',
+    prefix: '',
+    adatTípus: 'kategoria'
+  },
+  etrend: {
+    keresesiMezo: 'etrendSearch',
+    listaElem: 'etrendLista',
+    containerId: 'kivalasztottEtrend',
+    prefix: '',
+    adatTípus: 'etrend'
+  },
+  konyha: {
+    keresesiMezo: 'konyhaSearch',
+    listaElem: 'konyhaLista',
+    containerId: 'kivalasztottKonyha',
+    prefix: '',
+    adatTípus: 'konyha'
+  },
+  alapanyag: {
+    keresesiMezo: 'alapanyagSearch',
+    listaElem: 'alapanyagLista',
+    containerId: 'kivalasztottAlapanyagok',
+    prefix: 'alapanyag-',
+    ellentettLista: 'alapanyagNelkul'
+  },
+  alapanyagNelkul: {
+    keresesiMezo: 'alapanyagNelkulSearch',
+    listaElem: 'alapanyagNelkulLista',
+    containerId: 'kivalasztottAlapanyagNelkul',
+    prefix: 'alapanyagNelkul-',
+    ellentettLista: 'alapanyag'
+  }
+};
+
+
+
+
 async function filterReceptek() {
     try {
+
+
+        let kategoriaKeresomezo = document.getElementById("kategoriakSearch");
+        let alapanyagKeresomezo = document.getElementById("alapanyagSearch");
+        let alapanyagNelkulKeresomezo = document.getElementById("alapanyagNelkulSearch");
+        let etrendKeresomezo = document.getElementById("etrendSearch");
+        let konyhaKeresomezo = document.getElementById("konyhaSearch");
+
+        kategoriaKeresomezo.value = "";
+        alapanyagKeresomezo.value = "";
+        alapanyagNelkulKeresomezo.value = "";
+        etrendKeresomezo.value = "";
+        konyhaKeresomezo.value = "";
+
         // Get all filter values from the selected tags
         const kategoriak = getSelectedCategories('kivalasztottKategoriak');
         const alapanyagok = getSelectedCategories('kivalasztottAlapanyagok');
@@ -32,9 +87,9 @@ async function filterReceptek() {
         let ido = null;
         if (idoInput) {
             const idoValue = parseInt(idoInput.value);
-            if (idoValue === 1) ido = 'Gyorsan';
-            else if (idoValue === 2) ido = 'Átlagosan';
-            else if (idoValue === 3) ido = 'Hosszan';
+            if (idoValue === 1) ido = 30;
+            else if (idoValue === 2) ido = 60;
+            else if (idoValue === 3) ido = 120;
         }
         
         // Get calorie value
@@ -1171,6 +1226,7 @@ function elrejtAdatotKeresesiTalalatokKattintasra() {
             konyhaDropdown.style.display = "none";
         }
     });
+
 }
 
 function eltavolitKivalasztottAdatot(szuroAdatok) {
