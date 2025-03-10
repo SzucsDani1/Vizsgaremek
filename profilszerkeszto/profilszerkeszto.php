@@ -143,7 +143,7 @@
 
             // * feltöltöt file a kijelolt mappába rakása
             if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
-                echo "Profilkép sikeresen fellet töltve";
+                bejelentHiba("Profilkép sikeresen fellet töltve", false);
                 $eleresiUtvonal = "UPDATE 
                                         `felhasznalok` 
                                     SET 
@@ -160,13 +160,31 @@
             } 
             else 
             {
-                echo "Hiba történt a kép feltöltése közben.";
+                bejelentHiba("Hiba történt a kép feltöltése közben.", true);
             }
         } 
         else 
         {
-            echo "A feltöltendő kép formátuma nem megfelelő !";
+             bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
         }
     }
+
+    function bejelentHiba($uzenet, $hibae){
+        if(!empty($uzenet) && $hibae == true){
+        echo "
+            <div class='alert alert-danger text-center' role='alert'>
+                $uzenet
+            </div>
+            ";
+        }
+        else{
+            echo "
+            <div class='alert alert-success text-center' role='alert'>
+                $uzenet
+            </div>
+            ";
+        }
+    }
+
 
 ?>
