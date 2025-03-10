@@ -57,12 +57,12 @@
                 <div class="profile-container">
                 
                     <div id="profilePicture" class="profile-picture">Nincs profilkép</div>
-                    <input type="file" id="fileInput" class="form-control mt-2" accept="image/*">
-                    <div class="d-flex gap-2">
-                        <form method="POST" enctype="multipart/form-data" class="flex-grow-1">
+                    <div >
+                        <form method="POST" enctype="multipart/form-data" >
+                            <input type="file" id="fileInput" name="image" class="form-control mt-2" accept="image/*">
                             <button id="profilkepMentesButton" type="submit" class="btn btn-success w-100" style="display: none;">Mentés</button>
                         </form>
-                        <button id="removeButton" class="btn btn-danger flex-grow-1" style="display: none;">Mégsem</button>
+                        <button id="removeButton" class="btn btn-danger w-100 mt-2" style="display: none; ">Mégsem</button>
                     </div>
                 </div>
                
@@ -113,10 +113,10 @@
 
 <?php
     include "./adatbazisInterakciok/adatbazisFeltolt.php";
+    // ! Töröld majd ki csak ideiglenes teszt!!!!
     
 
-    function kepFeltolt() 
-    {
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
             $felhasznalonev = $_COOKIE["felhasznalonev"];
             $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
@@ -153,8 +153,10 @@
                                     LIKE 
                                     '". $felhasznalonev."';";
 
-          
+                
                 adatokValtoztatasa($eleresiUtvonal);
+                
+                
             } 
             else 
             {
@@ -166,5 +168,5 @@
             echo "A feltöltendő kép formátuma nem megfelelő !";
         }
     }
-}
+
 ?>

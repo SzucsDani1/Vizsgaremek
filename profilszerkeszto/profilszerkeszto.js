@@ -1,3 +1,17 @@
+function alapProfilkep(kep){
+
+    const profilePicture = document.getElementById('profilePicture');
+       
+      
+        profilePicture.innerHTML = `<img src="${kep}" alt="Profilkép">`;
+            
+        
+       
+    
+        
+    
+}
+
 function ujprofilKep(){
     const fileInput = document.getElementById('fileInput');
     const profilePicture = document.getElementById('profilePicture');
@@ -66,6 +80,10 @@ function lekerCookie(name) {
 }
 
 function adatokMegjelenitese(adatok){
+    let profilkep = lekerCookie("profilkep")
+    if(profilkep != ""){
+        alapProfilkep(profilkep)
+    }
     let regdatum = document.getElementById("regisztracioDatuma")
     let felhasznaloNev = document.getElementById("felhasznalonev")
     let emailCim = document.getElementById("email")
@@ -90,7 +108,7 @@ function modositasAlap(){
    
     let emailCim = document.getElementById("email")
     let jelszo = document.getElementById("jelszo")
-    let alapEmail = lekerCookie("")
+   
     emailCim.setAttribute("disabled", "true");
     jelszo.setAttribute("disabled", "true");
     jelszo.value = "placeholder"
@@ -133,13 +151,19 @@ function gombokValtoztat(alapot){
 }
 
 function gombNyomas(melyikGomb){
-    console.log(melyikGomb)
+    
     if(melyikGomb == "megse"){
         modositasAlap()
     }
     else if(melyikGomb == "mentes"){
-
+        modositAlapinf()
     }
+}
+
+async function modositAlapinf() {
+    let emailCim = document.getElementById("email").value
+    let jelszo = document.getElementById("jelszo").value
+    
 }
 
 window.addEventListener("load", adatokLeker)

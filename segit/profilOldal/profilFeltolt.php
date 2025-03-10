@@ -24,8 +24,7 @@
     // ! Töröld majd ki csak ideiglenes teszt!!!!
     setcookie("felhasznalonev", "PistaBá", time() + 2 * 24 * 60 * 60); 
 
-    function kepFeltolt() 
-    {
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
             $felhasznalonev = $_COOKIE["felhasznalonev"];
             $feltoltesiUtvonal = '../feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
@@ -75,7 +74,7 @@
             echo "A feltöltendő kép formátuma nem megfelelő !";
         }
     }
-}
+
 ?>
 
 
