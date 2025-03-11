@@ -69,8 +69,17 @@ async function filterReceptek() {
         const konyha = getSelectedCategories('kivalasztottKonyha');
         
         // Get selected time of day
-        const napszakInputs = document.querySelectorAll('input[name="napszak"]:checked');
-        const napszak = napszakInputs.length > 0 ? napszakInputs[0].value : null;
+        const checkboxes = document.querySelectorAll('.btn-check');
+        const napszak = [];
+
+        // Végigiterálunk a checkboxokon a for...of ciklussal
+        for (const checkbox of checkboxes) {
+            // Ha a checkbox be van pipálva, akkor hozzáadjuk az azonosítóját a tömbhöz
+            if (checkbox.checked) {
+                napszak.push(checkbox.value);
+                // Ha esetleg a value attribútumot szeretnéd eltárolni, használd: checkbox.value
+            }
+        }
         
         // Get price level
         const arInput = document.getElementById('arInput');
@@ -100,7 +109,7 @@ async function filterReceptek() {
             if (kaloriaValue === 1) kaloria = 200;
             else if (kaloriaValue === 2) kaloria = 400;
             else if (kaloriaValue === 3) kaloria = 600;
-            else if (kaloriaValue === 4) kaloria = 1000; // For "600 felett"
+            else if (kaloriaValue === 4) kaloria = 601; // For "600 felett"
         }
         
         // Get portion size
@@ -324,11 +333,11 @@ function kaloriaFigyel() {
         if (range.value == 0) {
             kaloriaKiir.innerHTML = "Mind";
         } else if (range.value == 1) {
-            kaloriaKiir.innerHTML = "200 kcal";
+            kaloriaKiir.innerHTML = "200 kcal alatt";
         }else if (range.value == 2) {
-            kaloriaKiir.innerHTML = "400 kcal";
+            kaloriaKiir.innerHTML = "200-400 kcal";
         } else if (range.value == 3) {
-            kaloriaKiir.innerHTML = "600 kcal";
+            kaloriaKiir.innerHTML = "400-600 kcal";
         }
         else {
             kaloriaKiir.innerHTML = "600 kcal felett";
