@@ -67,7 +67,10 @@ async function filterReceptek() {
         const alapanyagok_nelkul = getSelectedCategories('kivalasztottAlapanyagNelkul');
         const etrend = getSelectedCategories('kivalasztottEtrend');
         const konyha = getSelectedCategories('kivalasztottKonyha');
+
+        const kereses = document.getElementById('text_kereses')?.value.trim() || '';
         
+
         // Get selected time of day
         const checkboxes = document.querySelectorAll('.btn-check');
         const napszak = [];
@@ -128,6 +131,7 @@ async function filterReceptek() {
         
         // Prepare request body with all filter criteria
         const requestBody = {
+            kereses, // A keresési kifejezés hozzáadása
             kategoriak,
             alapanyagok,
             alapanyagok_nelkul,
@@ -443,12 +447,6 @@ function adagFigyel() {
 }
 
 
-function kereses(){
-    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
-    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
-    
-    kartyaBetoltes(szurtReceptek); 
-}
 
 
 async function konyhaLista(){
@@ -1270,6 +1268,21 @@ function AlapanyagNelkulListaUjratoltese() {
     alapanyagNelkulListajanakGeneralasa();
 }
 
+function receptKereses(){
+    const recipeSearchInput = document.getElementById('text_kereses');
+    const searchButton = document.getElementById('button_kereses');
+    
+    if (recipeSearchInput && searchButton) {
+      // Keresés gomb kattintáskor
+      searchButton.addEventListener('click', filterReceptek);
+    }
+}
+
+// Eseményfigyelő a keresőmezőhöz
+document.addEventListener("DOMContentLoaded", receptKereses);
+  
+
+
 
 window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
@@ -1291,4 +1304,3 @@ window.addEventListener("load", etrendLista);
 window.addEventListener("load", konyhaLista);
 window.addEventListener("load", alapanyagLista);
 window.addEventListener("load", kategoriakLista)
-document.getElementById("button_kereses").addEventListener("click", kereses)

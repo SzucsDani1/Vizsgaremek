@@ -204,6 +204,7 @@
                     
 
                     <!-- Szűrés gomb -->
+                    <button class="btn btn-warning w-100" id="btnReset">Szűrők lenullázása</button>
                     <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
                 </div>
             </div>

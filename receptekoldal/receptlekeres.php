@@ -248,6 +248,14 @@
                     $szuroFeltetelek[] = "LOWER(receptek.nehezseg) = LOWER('$nehezseg')";
                 }
                 
+                
+                // Recept név keresés
+                if (!empty($bodyAdatok["kereses"])) {
+                    $searchTerm = trim($bodyAdatok["kereses"]);
+                    $szuroFeltetelek[] = "LOWER(receptek.neve) LIKE LOWER('%$searchTerm%')";
+                }
+  
+
                 // A végső SQL lekérdezés összeállítása
                 $sql = "SELECT
                     receptek.id,
