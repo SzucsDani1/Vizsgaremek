@@ -11,7 +11,7 @@
     switch (mb_strtolower($url[0])){
         case "legujabbreceptek":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $legujabbReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.etrend_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id ORDER by receptek.mikor_feltolt DESC LIMIT 15;");
+                $legujabbReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, etrend.neve FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id ORDER by receptek.mikor_feltolt DESC LIMIT 15;;");
                 if(is_array($legujabbReceptek) && !empty($legujabbReceptek)){
                     echo json_encode($legujabbReceptek, JSON_UNESCAPED_UNICODE);
                 }
@@ -28,7 +28,7 @@
 
         case "ajanlottreceptek":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $ajanlottReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptetrend.etrend_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.receptid = receptek.id INNER JOIN etrend ON receptetrend.etrend_id = etrend.id ORDER BY ertekeles.ertek;");
+                $ajanlottReceptek = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, etrend.neve, etrend.id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, AVG(ertekeles.ertek) FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id GROUP BY receptek.id ORDER BY ertekeles.ertek;");
                 if(is_array($ajanlottReceptek) && !empty($ajanlottReceptek)){
                     echo json_encode($ajanlottReceptek, JSON_UNESCAPED_UNICODE);
                 }//SELECT felhasznalok.felhnev, receptek.mikor_feltolt FROM receptek INNER JOIN felhasznalok ON receptek.felhasznalo_id = felhasznalok.id
