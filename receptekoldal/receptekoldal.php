@@ -101,7 +101,7 @@
                     <!--Alapanyagok szűrése-->
                     <div class="my-2 form-floating">
                       <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
-                      <label for="AlapanyagSearch" class="form-label">Alapanyagok</label>
+                      <label for="alapanyagSearch" class="form-label">Alapanyagok</label>
                     </div>
                     <div class="dropdown" id="alapanyagDropdown">
                       <div class="dropdown-menu" id="alapanyagLista"></div>
