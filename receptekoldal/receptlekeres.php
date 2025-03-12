@@ -147,6 +147,7 @@
                     $etrendAzonositoTomb = [];
                     foreach ($bodyAdatok["etrend"] as $kivalasztottEtrend) {
                         $etrendNev = trim($kivalasztottEtrend);
+                        // Biztosítjuk a kis- és nagybetűk kezelését és a szóközök eltávolítását
                         $eredmenySor = adatokLekerdezese("SELECT id FROM etrend WHERE LOWER(neve) = LOWER('$etrendNev')");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $etrendAzonositoTomb[] = $eredmenySor[0]['id'];
@@ -155,12 +156,13 @@
                     if (!empty($etrendAzonositoTomb)) {
                         $azonositoLista = implode(",", $etrendAzonositoTomb);
                         $szuroFeltetelek[] = "EXISTS (
-                            SELECT 1 FROM receptetrend 
-                            WHERE receptetrend.recept_id = receptek.id 
+                            SELECT 1 FROM receptetrend
+                            WHERE receptetrend.recept_id = receptek.id
                             AND receptetrend.etrend_id IN ($azonositoLista)
                         )";
                     }
                 }
+
 
                 
                 // Konyha szűrés javított verziója
@@ -184,16 +186,33 @@
                 
                 // Idő szűrés
                 if (!empty($bodyAdatok["ido"])) {
-                    $ido = trim($bodyAdatok["ido"]);
-                    $szuroFeltetelek[] = "receptek.ido LIKE '$ido'";
+                    $ido = (int)$bodyAdatok["ido"];
+                    if ($ido === 30) { // "Gyorsan"
+                        $szuroFeltetelek[] = "receptek.ido < 30";
+                    } else if ($ido === 60) { // "Átlagosan"
+                        $szuroFeltetelek[] = "receptek.ido >= 30 AND receptek.ido <= 60";
+                    } else if ($ido === 120) { // "Hosszan"
+                        $szuroFeltetelek[] = "receptek.ido > 60";
+                    }
                 }
-                
+
                 
                 // Napszak szűrés
-                if (!empty($bodyAdatok["napszak"])) {
-                    $napszak = trim($bodyAdatok["napszak"]);
-                    $szuroFeltetelek[] = "LOWER(receptek.napszak) = LOWER('$napszak')";
+                if (!empty($bodyAdatok["napszak"]) && is_array($bodyAdatok["napszak"])) {
+                    $validNapszakok = [];
+                    foreach ($bodyAdatok["napszak"] as $napszak) {
+                        $napszak = strtolower(trim($napszak));
+                        if ($napszak == "reggeli" || $napszak == "tízórai" || $napszak == "ebéd" || $napszak =="vacsora" || $napszak == "uzsonna") {
+                            $validNapszakok[] = "'" . $napszak . "'";
+                        }
+                    }
+                    
+                    if (!empty($validNapszakok)) {
+                        $szuroFeltetelek[] = "LOWER(receptek.napszak) IN (" . implode(",", $validNapszakok) . ")";
+                    }
                 }
+
+
 
                 
                 // Ár szűrés
@@ -206,11 +225,15 @@
                 
                 // Kalória szűrés
                 if (!empty($bodyAdatok["kaloria"])) {
-                    $kaloria = intval($bodyAdatok["kaloria"]);
-                    if ($kaloria === 1000) { // "600 felett"
+                    $kaloria = (int)$bodyAdatok["kaloria"];
+                    if ($kaloria === 200) { 
+                        $szuroFeltetelek[] = "receptek.kaloria < 200";
+                    } else if ($kaloria === 400) { 
+                        $szuroFeltetelek[] = "receptek.kaloria >= 200 AND receptek.kaloria <= 400";
+                    } else if ($kaloria === 600) {
+                        $szuroFeltetelek[] = "receptek.kaloria >= 400 AND receptek.kaloria <= 600";
+                    } else if ($kaloria === 601) { 
                         $szuroFeltetelek[] = "receptek.kaloria > 600";
-                    } else {
-                        $szuroFeltetelek[] = "receptek.kaloria <= " . $kaloria;
                     }
                 }
                 
@@ -225,6 +248,14 @@
                     $szuroFeltetelek[] = "LOWER(receptek.nehezseg) = LOWER('$nehezseg')";
                 }
                 
+                
+                // Recept név keresés
+                if (!empty($bodyAdatok["kereses"])) {
+                    $searchTerm = trim($bodyAdatok["kereses"]);
+                    $szuroFeltetelek[] = "LOWER(receptek.neve) LIKE LOWER('%$searchTerm%')";
+                }
+  
+
                 // A végső SQL lekérdezés összeállítása
                 $sql = "SELECT
                     receptek.id,

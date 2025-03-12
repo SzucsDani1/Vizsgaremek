@@ -61,18 +61,26 @@ async function filterReceptek() {
         etrendKeresomezo.value = "";
         konyhaKeresomezo.value = "";
 
-        // Get all filter values from the selected tags
         const kategoriak = getSelectedCategories('kivalasztottKategoriak');
         const alapanyagok = getSelectedCategories('kivalasztottAlapanyagok');
         const alapanyagok_nelkul = getSelectedCategories('kivalasztottAlapanyagNelkul');
         const etrend = getSelectedCategories('kivalasztottEtrend');
         const konyha = getSelectedCategories('kivalasztottKonyha');
+
+        const kereses = document.getElementById('text_kereses')?.value.trim() || '';
         
-        // Get selected time of day
-        const napszakInputs = document.querySelectorAll('input[name="napszak"]:checked');
-        const napszak = napszakInputs.length > 0 ? napszakInputs[0].value : null;
+
+        // Napszak
+        const NapszakCheckbox = document.querySelectorAll('.btn-check');
+        const napszak = [];
+
+        for (const checkbox of NapszakCheckbox) {
+            if (checkbox.checked) {
+                napszak.push(checkbox.value);
+            }
+        }
         
-        // Get price level
+        // Ár
         const arInput = document.getElementById('arInput');
         let ar = null;
         if (arInput) {
@@ -82,7 +90,7 @@ async function filterReceptek() {
             else if (arValue === 3) ar = 'Drága';
         }
 
-        // Get price level
+        // Idő
         const idoInput = document.getElementById('idoInput');
         let ido = null;
         if (idoInput) {
@@ -92,7 +100,7 @@ async function filterReceptek() {
             else if (idoValue === 3) ido = 120;
         }
         
-        // Get calorie value
+        // Kalória
         const kaloriaInput = document.getElementById('kaloriaInput');
         let kaloria = null;
         if (kaloriaInput) {
@@ -100,10 +108,10 @@ async function filterReceptek() {
             if (kaloriaValue === 1) kaloria = 200;
             else if (kaloriaValue === 2) kaloria = 400;
             else if (kaloriaValue === 3) kaloria = 600;
-            else if (kaloriaValue === 4) kaloria = 1000; // For "600 felett"
+            else if (kaloriaValue === 4) kaloria = 601;
         }
         
-        // Get portion size
+        // Adag
         const adagInput = document.getElementById('adagInput');
         const adag = adagInput && adagInput.value !== '0' ? parseInt(adagInput.value) : null;
         
@@ -117,8 +125,8 @@ async function filterReceptek() {
             else if (nehezsegValue === 3) nehezseg = 'Nehéz';
         }
         
-        // Prepare request body with all filter criteria
         const requestBody = {
+            kereses, 
             kategoriak,
             alapanyagok,
             alapanyagok_nelkul,
@@ -132,15 +140,15 @@ async function filterReceptek() {
             nehezseg
         };
         
-        // Remove null or empty array properties to ignore those filters
-        Object.keys(requestBody).forEach(key => {
+        for (const key of Object.keys(requestBody)) {
             if (
                 requestBody[key] === null || 
                 (Array.isArray(requestBody[key]) && requestBody[key].length === 0)
             ) {
                 delete requestBody[key];
             }
-        });
+        }
+        
         
         // Make request to server
         const response = await fetch('./szuresreceptek', {
@@ -324,11 +332,11 @@ function kaloriaFigyel() {
         if (range.value == 0) {
             kaloriaKiir.innerHTML = "Mind";
         } else if (range.value == 1) {
-            kaloriaKiir.innerHTML = "200 kcal";
+            kaloriaKiir.innerHTML = "200 kcal alatt";
         }else if (range.value == 2) {
-            kaloriaKiir.innerHTML = "400 kcal";
+            kaloriaKiir.innerHTML = "200-400 kcal";
         } else if (range.value == 3) {
-            kaloriaKiir.innerHTML = "600 kcal";
+            kaloriaKiir.innerHTML = "400-600 kcal";
         }
         else {
             kaloriaKiir.innerHTML = "600 kcal felett";
@@ -434,12 +442,6 @@ function adagFigyel() {
 }
 
 
-function kereses(){
-    let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
-    let szurtReceptek = receptek.filter(recept => recept.nev.toLowerCase().includes(keresesiSzoveg));
-    
-    kartyaBetoltes(szurtReceptek); 
-}
 
 
 async function konyhaListaLeker(){
@@ -1975,6 +1977,21 @@ function AlapanyagNelkulListaUjratoltese() {
     alapanyagNelkulListajanakGeneralasa();
 }
 
+function receptKereses(){
+    const recipeSearchInput = document.getElementById('text_kereses');
+    const searchButton = document.getElementById('button_kereses');
+    
+    if (recipeSearchInput && searchButton) {
+      // Keresés gomb kattintáskor
+      searchButton.addEventListener('click', filterReceptek);
+    }
+}
+
+// Eseményfigyelő a keresőmezőhöz
+document.addEventListener("DOMContentLoaded", receptKereses);
+  
+
+
 
 window.addEventListener("load", nehezsegFigyel)
 document.getElementById("nehezsegInput").addEventListener("change", nehezsegFigyel)
@@ -1992,8 +2009,15 @@ document.addEventListener("DOMContentLoaded", inicializalasEtrendet);
 document.addEventListener("DOMContentLoaded", inicializalasKonyhat);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagNelkul);
+<<<<<<< HEAD
 window.addEventListener("load", etrendListaLeker);
 window.addEventListener("load", konyhaListaLeker);
 window.addEventListener("load", alapanyagListaLeker);
 window.addEventListener("load", kategoriakListaLeker)
 document.getElementById("button_kereses").addEventListener("click", kereses)
+=======
+window.addEventListener("load", etrendLista);
+window.addEventListener("load", konyhaLista);
+window.addEventListener("load", alapanyagLista);
+window.addEventListener("load", kategoriakLista)
+>>>>>>> 90d94a235b98e7ae503df8352162cbdce0a23cda

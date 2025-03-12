@@ -141,19 +141,19 @@
 
                     <!-- Napszak szűrő -->
                     <div class="btn-group d-flex flex-wrap" role="group">
-                      <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off">
+                      <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off" value="Reggeli">
                       <label class="btn btn-outline-danger flex-fill" for="napszakReggeli">Reggeli</label>
 
-                      <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off">
+                      <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off" value="Tízórai">
                       <label class="btn btn-outline-danger flex-fill" for="napszakTizorai">Tízórai</label>
 
-                      <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off">
+                      <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off" value="Ebéd">
                       <label class="btn btn-outline-danger flex-fill" for="napszakEbed">Ebéd</label>
 
-                      <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off">
+                      <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off" value="Uzsonna">
                       <label class="btn btn-outline-danger flex-fill" for="napszakUzsonna">Uzsonna</label>
 
-                      <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off">
+                      <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off" value="Vacsora">
                       <label class="btn btn-outline-danger flex-fill" for="napszakVacsora">Vacsora</label>
                     </div>
 
@@ -204,6 +204,7 @@
                     
 
                     <!-- Szűrés gomb -->
+                    <button class="btn btn-warning w-100" id="btnReset">Szűrők lenullázása</button>
                     <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
                 </div>
             </div>
