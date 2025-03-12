@@ -96,7 +96,7 @@
                                 
                                 $profilkep_value = $lekerdez[0]["profilkep"];
                                 if(empty($profilkep_value)){
-                                    $profilkep_value = "../feltoltotKepek/profilKepek/alapkep.png";
+                                    $profilkep_value = "";
                                 }
                                 setcookie("profilkep", $profilkep_value, time() + (86400 * 30), "/");
 
