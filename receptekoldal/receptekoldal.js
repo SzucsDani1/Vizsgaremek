@@ -527,10 +527,11 @@ function kategoriakListajanakGeneralasa() {
     let kategoriakDropdown = document.getElementById("kategoriakDropdown");
     let kategoriakLista = document.getElementById("kategoriakLista");
     let kivalasztottKategoriak = document.getElementById("kivalasztottKategoriak");
+    const szuroFajta = "kategoriak";
     kategoriakLista.innerHTML = "";
     for (let kategoria of kategoriak) {
         //let elem = letrehozKategoriaListaElemet(kategoriakLista);
-        let elem = letrehozListaElemet(kategoria, kategoriakLista, kategoriakSearch, kategoriakDropdown, kivalasztottKategoriak);
+        let elem = letrehozListaElemet(kategoria, kategoriakLista, kategoriakSearch, kategoriakDropdown, kivalasztottKategoriak, szuroFajta);
         kategoriakLista.appendChild(elem);
     }
 }
@@ -540,10 +541,11 @@ function alapanyagListajanakGeneralasa() {
     let alapanyagDropdown = document.getElementById("alapanyagDropdown");
     let alapanyagLista = document.getElementById("alapanyagLista");
     let kivalasztottAlapanyagok = document.getElementById("kivalasztottAlapanyagok");
+    const szuroFajta = "alapanyag"
     alapanyagLista.innerHTML = "";
     for (let alapanyag of alapanyagok) {
         //let elem = letrehozAlapanyagListaElemet(alapanyag);
-        let elem = letrehozListaElemet(alapanyag, alapanyagLista,alapanyagSearch, alapanyagDropdown, kivalasztottAlapanyagok);
+        let elem = letrehozListaElemet(alapanyag, alapanyagLista,alapanyagSearch, alapanyagDropdown, kivalasztottAlapanyagok, szuroFajta);
         if (elem) {
             alapanyagLista.appendChild(elem);
         }
@@ -555,10 +557,11 @@ function alapanyagNelkulListajanakGeneralasa() {
     let alapanyagNelkulDropdown = document.getElementById("alapanyagNelkulDropdown");
     let alapanyagNelkulLista = document.getElementById("alapanyagNelkulLista");
     let kivalasztottAlapanyagokNelkul = document.getElementById("kivalasztottAlapanyagokNelkul");
+    const szuroFajta = "alapanyagNelkul";
     alapanyagNelkulLista.innerHTML = "";
     for (let alapanyag of alapanyagok) {
         //let elem = letrehozAlapanyagNelkulListaElemet(alapanyag);
-        let elem = letrehozListaElemet(alapanyag, alapanyagNelkulLista,alapanyagNelkulSearch, alapanyagNelkulDropdown, kivalasztottAlapanyagokNelkul);
+        let elem = letrehozListaElemet(alapanyag, alapanyagNelkulLista,alapanyagNelkulSearch, alapanyagNelkulDropdown, kivalasztottAlapanyagokNelkul, szuroFajta);
         if (elem) {
             alapanyagNelkulLista.appendChild(elem);
         }
@@ -571,10 +574,11 @@ function etrendListajanakGeneralasa() {
     let etrendDropdown = document.getElementById("etrendDropdown");
     let etrendLista = document.getElementById("etrendLista");
     let kivalasztottEtrend = document.getElementById("kivalasztottEtrend");
+    const szuroFajta = "etrend";
     etrendLista.innerHTML = "";
     for (let etrend of etrendek) {
         //let elem = letrehozEtrendListaElemet(etrend);
-        let elem = letrehozListaElemet(etrend, etrendLista,etrendSearch, etrendDropdown, kivalasztottEtrend);
+        let elem = letrehozListaElemet(etrend, etrendLista,etrendSearch, etrendDropdown, kivalasztottEtrend, szuroFajta);
         etrendLista.appendChild(elem);
     }
 }
@@ -584,10 +588,11 @@ function konyhaListajanakGeneralasa() {
     let konyhaDropdown = document.getElementById("konyhaDropdown");
     let konyhaLista = document.getElementById("konyhaLista");
     let kivalasztottKonyha = document.getElementById("kivalasztottKonyha");
+    const szuroFajta = "konyha";
     konyhaLista.innerHTML = "";
     for (let konyha of konyhak) {
         //let elem = letrehozKonyhaListaElemet(konyha);
-        let elem = letrehozListaElemet(konyha, konyhaLista,konyhaSearch, konyhaDropdown, kivalasztottKonyha);
+        let elem = letrehozListaElemet(konyha, konyhaLista,konyhaSearch, konyhaDropdown, kivalasztottKonyha, szuroFajta);
         konyhaLista.appendChild(elem);
     }
 }
@@ -1287,32 +1292,57 @@ function AlapanyagNelkulListaUjratoltese() {
 
 
 function inicializalasKategoriat(){
-    keresesMukodtetSzurobenKategora();
-    elrejtAdatotKeresesiTalalatokKattintasra();
+    let kategoriakSearch = document.getElementById("kategoriakSearch");
+    let kategoriakDropdown = document.getElementById("kategoriakDropdown");
+    let kategoriakLista = document.getElementById("kategoriakLista");
+    let kivalasztottKategoriak = document.getElementById("kivalasztottKategoriak");
+    const szuroFajta = "kategoriak";
+    keresesMukodtetSzuroben(szuroFajta, kategoriakLista, kategoriakSearch, kategoriakDropdown, kivalasztottKategoriak);
+    elrejtAdatotKeresesiTalalatokKattintasra(szuroFajta, kategoriakLista, kategoriakSearch, kategoriakDropdown, kivalasztottKategoriak);
 }
 
 function inicializalasAlapanyagot(){
-    keresesMukodtetSzurobenAlapanyag();
-    elrejtAdatotKeresesiTalalatokKattintasra();
+    let alapanyagSearch = document.getElementById("alapanyagSearch");
+    let alapanyagDropdown = document.getElementById("alapanyagDropdown");
+    let alapanyagLista = document.getElementById("alapanyagLista");
+    let kivalasztottAlapanyagok = document.getElementById("kivalasztottAlapanyagok");
+    const szuroFajta = "alapanyag";
+    keresesMukodtetSzurobenAlapanyag(szuroFajta, alapanyagLista,alapanyagSearch, alapanyagDropdown, kivalasztottAlapanyagok);
+    elrejtAdatotKeresesiTalalatokKattintasra(szuroFajta, alapanyagLista,alapanyagSearch, alapanyagDropdown, kivalasztottAlapanyagok);
 }
 
 function inicializalasAlapanyagNelkul(){
-    keresesMukodtetSzurobenAlapanyagNelkul();
-    elrejtAdatotKeresesiTalalatokKattintasra();
+    let alapanyagNelkulSearch = document.getElementById("alapanyagNelkulSearch");
+    let alapanyagNelkulDropdown = document.getElementById("alapanyagNelkulDropdown");
+    let alapanyagNelkulLista = document.getElementById("alapanyagNelkulLista");
+    let kivalasztottAlapanyagokNelkul = document.getElementById("kivalasztottAlapanyagokNelkul");
+    const szuroFajta = "alapanyagNelkul";
+    keresesMukodtetSzurobenAlapanyagNelkul(szuroFajta, alapanyagNelkulLista,alapanyagNelkulSearch, alapanyagNelkulDropdown, kivalasztottAlapanyagokNelkul);
+    elrejtAdatotKeresesiTalalatokKattintasra(szuroFajta, alapanyagNelkulLista,alapanyagNelkulSearch, alapanyagNelkulDropdown, kivalasztottAlapanyagokNelkul);
 }
 
 function inicializalasEtrendet(){
-    keresesMukodtetSzurobenEtrend();
-    elrejtAdatotKeresesiTalalatokKattintasra();
+    let etrendSearch = document.getElementById("etrendSearch");
+    let etrendDropdown = document.getElementById("etrendDropdown");
+    let etrendLista = document.getElementById("etrendLista");
+    let kivalasztottEtrend = document.getElementById("kivalasztottEtrend");
+    const szuroFajta = "etrend";
+    keresesMukodtetSzurobenEtrend(szuroFajta, etrendLista,etrendSearch, etrendDropdown, kivalasztottEtrend);
+    elrejtAdatotKeresesiTalalatokKattintasra(szuroFajta, etrendLista,etrendSearch, etrendDropdown, kivalasztottEtrend);
 }
 
 function inicializalasKonyhat(){
-    keresesMukodtetSzurobenKonyha();
-    elrejtAdatotKeresesiTalalatokKattintasra();
+    let konyhaSearch = document.getElementById("konyhaSearch");
+    let konyhaDropdown = document.getElementById("konyhaDropdown");
+    let konyhaLista = document.getElementById("konyhaLista");
+    let kivalasztottKonyha = document.getElementById("kivalasztottKonyha");
+    const szuroFajta = "konyha"
+    keresesMukodtetSzurobenKonyha(szuroFajta, konyhaLista,konyhaSearch, konyhaDropdown, kivalasztottKonyha);
+    elrejtAdatotKeresesiTalalatokKattintasra(szuroFajta, konyhaLista,konyhaSearch, konyhaDropdown, kivalasztottKonyha);
 }
 
 
-function letrehozKategoriaListaElemet(szuroAdatok) {
+function letrehozListaElemet(szuroAdatok, szuroLista,szuroKereses, szuroDropdown, kivalasztottSzuro, szuroFajta) {
     let div = document.createElement("div");
     div.classList.add("dropdown-item");
     
@@ -1336,9 +1366,9 @@ function letrehozKategoriaListaElemet(szuroAdatok) {
     // Elindítja az adott függvényt a checkbox változtatásakor
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
-            hozzaadKivalasztottKategoriat(szuroAdatok);
+            hozzaadKivalasztottSzurot(szuroAdatok, kivalasztottSzuro, szuroFajta);
         } else {
-            eltavolitKivalasztottAdatot(szuroAdatok);
+            eltavolitKivalasztottAdatot(szuroAdatok, szuroLista,szuroKereses, szuroDropdown, kivalasztottSzuro);
         }
     });
     
@@ -1346,268 +1376,30 @@ function letrehozKategoriaListaElemet(szuroAdatok) {
 }
 
 
-function letrehozAlapanyagListaElemet(szuroAdatok) {
-    // Ha az elem már kiválasztásra került az "alapanyag nélküli" oldalon, akkor ne hozza létre
-    if (document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
-        return null;
-    }
-    let div = document.createElement("div");
-    div.classList.add("dropdown-item");
-
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("btn-check");
-    // Egyedi azonosító az alapanyag listához
-    checkbox.id = "checkbox-alapanyag-" + szuroAdatok;
-
-    let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-alapanyag-" + szuroAdatok);
-    label.textContent = szuroAdatok;
-
-    div.appendChild(checkbox);
-    div.appendChild(label);
-
-    // Ha már kiválasztották az adott elemet az alapanyagok között, a checkbox checked legyen
-    if (document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
-        checkbox.checked = true;
-    }
-    
-    checkbox.addEventListener("change", function() {
-        if (checkbox.checked) {
-            hozzaadKivalasztottAlapanyagot(szuroAdatok);
-        } else {
-            eltavolitKivalasztottAdatotAlapanyag(szuroAdatok);
-        }
+function keresesMukodtetSzuroben(szuroFajta,szuroKereses, szuroDropdown) {
+    szuroKereses.addEventListener("input", function() {
+        inditsKeresestSzurobenKategoriak(szuroFajta,szuroKereses, szuroDropdown);
     });
-
-    return div;
-}
-
-function letrehozAlapanyagNelkulListaElemet(szuroAdatok) {
-    // Ha az elem már kiválasztásra került az "alapanyag" oldalon, akkor ne hozza létre
-    if (document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
-        return null;
-    }
-    let div = document.createElement("div");
-    div.classList.add("dropdown-item");
-
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("btn-check");
-    // Egyedi azonosító az alapanyag nélküli listához
-    checkbox.id = "checkbox-alapanyagNelkul-" + szuroAdatok;
-
-    let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-alapanyagNelkul-" + szuroAdatok);
-    label.textContent = szuroAdatok;
-
-    div.appendChild(checkbox);
-    div.appendChild(label);
-
-    if (document.getElementById("kivalasztott-alapanyagNelkul-" + szuroAdatok)) {
-        checkbox.checked = true;
-    }
-    
-    checkbox.addEventListener("change", function() {
-        if (checkbox.checked) {
-            hozzaadKivalasztottAlapanyagNelkul(szuroAdatok);
-        } else {
-            eltavolitKivalasztottAdatotAlapanyagNelkul(szuroAdatok);
-        }
-    });
-
-    return div;
-}
-
-function letrehozEtrendListaElemet(szuroAdatok) {
-    let div = document.createElement("div");
-    div.classList.add("dropdown-item");
-    
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("btn-check");
-    checkbox.id = "checkbox-" + szuroAdatok;
-    
-    let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-" + szuroAdatok);
-    label.textContent = szuroAdatok;
-    
-    div.appendChild(checkbox);
-    div.appendChild(label);
-    
-    if (document.getElementById("kivalasztott-" + szuroAdatok)) {
-        checkbox.checked = true;
-    }
-    
-    // Elindítja az adott függvényt a checkbox változtatásakor
-    checkbox.addEventListener("change", function() {
-        if (checkbox.checked) {
-            hozzaadKivalasztottEtrendet(szuroAdatok);
-        } else {
-            eltavolitKivalasztottAdatot(szuroAdatok);
-        }
-    });
-    
-    return div;
-}
-
-function letrehozKonyhaListaElemet(szuroAdatok) {
-    let div = document.createElement("div");
-    div.classList.add("dropdown-item");
-    
-    let checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("btn-check");
-    checkbox.id = "checkbox-" + szuroAdatok;
-    
-    let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-danger");
-    label.setAttribute("for", "checkbox-" + szuroAdatok);
-    label.textContent = szuroAdatok;
-    
-    div.appendChild(checkbox);
-    div.appendChild(label);
-    
-    if (document.getElementById("kivalasztott-" + szuroAdatok)) {
-        checkbox.checked = true;
-    }
-    
-    // Elindítja az adott függvényt a checkbox változtatásakor
-    checkbox.addEventListener("change", function() {
-        if (checkbox.checked) {
-            hozzaadKivalasztottKonyhat(szuroAdatok);
-        } else {
-            eltavolitKivalasztottAdatot(szuroAdatok);
-        }
-    });
-    
-    return div;
-}
-
-
-function keresesMukodtetSzurobenKategora() {
-    let keresomezo = document.getElementById("kategoriakSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenKategoriak(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenKategoriak(keresomezo);
+    szuroKereses.addEventListener("focus", function() {
+        inditsKeresestSzurobenKategoriak(szuroFajta, szuroKereses, szuroDropdown);
     });
 }
 
-function keresesMukodtetSzurobenAlapanyag() {
-    let keresomezo = document.getElementById("alapanyagSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenAlapanyag(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenAlapanyag(keresomezo);
-    });
-}
 
-function keresesMukodtetSzurobenAlapanyagNelkul() {
-    let keresomezo = document.getElementById("alapanyagNelkulSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenAlapanyagNelkul(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenAlapanyagNelkul(keresomezo);
-    });
-}
-
-function keresesMukodtetSzurobenEtrend() {
-    let keresomezo = document.getElementById("etrendSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenEtrend(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenEtrend(keresomezo);
-    });
-}
-
-function keresesMukodtetSzurobenKonyha() {
-    let keresomezo = document.getElementById("konyhaSearch");
-    keresomezo.addEventListener("input", function() {
-        inditsKeresestSzurobenKonyha(keresomezo);
-    });
-    keresomezo.addEventListener("focus", function() {
-        inditsKeresestSzurobenKonyha(keresomezo);
-    });
-}
-
-function inditsKeresestSzurobenKategoriak(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("kategoriakLista");
-
+function inditsKeresestSzurobenKategoriak(szuroFajta, szuroKereses, szuroDropdown) {
+    let keresesiKifejezes = szuroKereses.value.toLowerCase();
+    
     if (keresesiKifejezes) {
-        kategoriakListajanakGeneralasa(kategoriak);
-        szuresiFunkcioKategoriak(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
+        kategoriakListajanakGeneralasa();
+        szuresiFunkcio(keresesiKifejezes, szuroFajta);
+        szuroDropdown.style.display = "block";
     } else {
-        dropdownMenu.style.display = "none";
+        szuroDropdown.style.display = "none";
     }
 }
 
-function inditsKeresestSzurobenAlapanyag(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("alapanyagLista");
-
-    if (keresesiKifejezes) {
-        alapanyagListajanakGeneralasa();
-        szuresiFunkcioAlapanyagok(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
-
-
-function inditsKeresestSzurobenAlapanyagNelkul(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("alapanyagNelkulLista");
-
-    if (keresesiKifejezes) {
-        alapanyagNelkulListajanakGeneralasa();
-        szuresiFunkcioAlapanyagNelkul(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
-
-
-
-function inditsKeresestSzurobenEtrend(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("etrendLista");
-
-    if (keresesiKifejezes) {
-        etrendListajanakGeneralasa(etrendek);
-        szuresiFunkcioEtrendek(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
-
-function inditsKeresestSzurobenKonyha(keresomezo) {
-    let keresesiKifejezes = keresomezo.value.toLowerCase();
-    let dropdownMenu = document.getElementById("konyhaLista");
-
-    if (keresesiKifejezes) {
-        konyhaListajanakGeneralasa(etrendek);
-        szuresiFunkcioKonyhak(keresesiKifejezes);
-        dropdownMenu.style.display = "block";
-    } else {
-        dropdownMenu.style.display = "none";
-    }
-}
-
-function szuresiFunkcioKategoriak(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#kategoriakLista .dropdown-item");
+function szuresiFunkcio(keresesiKifejezes, szuroFajta) {
+    let listaElemei = document.querySelectorAll("#"+szuroFajta+"Lista .dropdown-item");
     let talalatVan = false;
 
     for (let elem of listaElemei) {
@@ -1620,145 +1412,13 @@ function szuresiFunkcioKategoriak(keresesiKifejezes) {
         }
     }
 
-    let dropdownMenu = document.getElementById("kategoriakLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatKategoria");
+    let dropdownMenu = document.getElementById(szuroFajta+"Lista");
+    let nincsTalalatElem = document.getElementById("nincsTalalat"+szuroFajta);
 
     if (!talalatVan) {
         if (!nincsTalalatElem) {
             nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatKategoria";
-            nincsTalalatElem.textContent = "Nincs találat";
-            nincsTalalatElem.style.color = "red";
-            nincsTalalatElem.style.textAlign = "center";
-            dropdownMenu.appendChild(nincsTalalatElem);
-        }
-        nincsTalalatElem.style.display = "block";
-    } else if (nincsTalalatElem) {
-        nincsTalalatElem.style.display = "none";
-    }
-}
-
-
-function szuresiFunkcioAlapanyagok(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#alapanyagLista .dropdown-item");
-    let talalatVan = false;
-
-    for (let elem of listaElemei) {
-        let alapanyagSzoveg = elem.textContent.toLowerCase();
-        if (alapanyagSzoveg.includes(keresesiKifejezes)) {
-            elem.style.display = "block";
-            talalatVan = true;
-        } else {
-            elem.style.display = "none";
-        }
-    }
-
-    let dropdownMenu = document.getElementById("alapanyagLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatAlapanyag");
-
-    if (!talalatVan) {
-        if (!nincsTalalatElem) {
-            nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatAlapanyag";
-            nincsTalalatElem.textContent = "Nincs találat";
-            nincsTalalatElem.style.color = "red";
-            nincsTalalatElem.style.textAlign = "center";
-            dropdownMenu.appendChild(nincsTalalatElem);
-        }
-        nincsTalalatElem.style.display = "block";
-    } else if (nincsTalalatElem) {
-        nincsTalalatElem.style.display = "none";
-    }
-}
-
-
-function szuresiFunkcioAlapanyagNelkul(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#alapanyagNelkulLista .dropdown-item");
-    let talalatVan = false;
-
-    for (let elem of listaElemei) {
-        let alapanyagNelkulSzoveg = elem.textContent.toLowerCase();
-        if (alapanyagNelkulSzoveg.includes(keresesiKifejezes)) {
-            elem.style.display = "block";
-            talalatVan = true;
-        } else {
-            elem.style.display = "none";
-        }
-    }
-
-    let dropdownMenu = document.getElementById("alapanyagNelkulLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatAlapanyagNelkul");
-
-    if (!talalatVan) {
-        if (!nincsTalalatElem) {
-            nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatAlapanyagNelkul";
-            nincsTalalatElem.textContent = "Nincs találat";
-            nincsTalalatElem.style.color = "red";
-            nincsTalalatElem.style.textAlign = "center";
-            dropdownMenu.appendChild(nincsTalalatElem);
-        }
-        nincsTalalatElem.style.display = "block";
-    } else if (nincsTalalatElem) {
-        nincsTalalatElem.style.display = "none";
-    }
-}
-
-
-function szuresiFunkcioEtrendek(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#etrendLista .dropdown-item");
-    let talalatVan = false;
-
-    for (let elem of listaElemei) {
-        let etrendSzoveg = elem.textContent.toLowerCase();
-        if (etrendSzoveg.includes(keresesiKifejezes)) {
-            elem.style.display = "block";
-            talalatVan = true;
-        } else {
-            elem.style.display = "none";
-        }
-    }
-
-    let dropdownMenu = document.getElementById("etrendLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatEtrend");
-
-    if (!talalatVan) {
-        if (!nincsTalalatElem) {
-            nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatEtrend";
-            nincsTalalatElem.textContent = "Nincs találat";
-            nincsTalalatElem.style.color = "red";
-            nincsTalalatElem.style.textAlign = "center";
-            dropdownMenu.appendChild(nincsTalalatElem);
-        }
-        nincsTalalatElem.style.display = "block";
-    } else if (nincsTalalatElem) {
-        nincsTalalatElem.style.display = "none";
-    }
-}
-
-
-function szuresiFunkcioKonyhak(keresesiKifejezes) {
-    let listaElemei = document.querySelectorAll("#konyhaLista .dropdown-item");
-    let talalatVan = false;
-
-    for (let elem of listaElemei) {
-        let konyhaSzoveg = elem.textContent.toLowerCase();
-        if (konyhaSzoveg.includes(keresesiKifejezes)) {
-            elem.style.display = "block";
-            talalatVan = true;
-        } else {
-            elem.style.display = "none";
-        }
-    }
-
-    let dropdownMenu = document.getElementById("konyhaLista");
-    let nincsTalalatElem = document.getElementById("nincsTalalatKonyha");
-
-    if (!talalatVan) {
-        if (!nincsTalalatElem) {
-            nincsTalalatElem = document.createElement("div");
-            nincsTalalatElem.id = "nincsTalalatKonyha";
+            nincsTalalatElem.id = "nincsTalalat"+szuroFajta;
             nincsTalalatElem.textContent = "Nincs találat";
             nincsTalalatElem.style.color = "red";
             nincsTalalatElem.style.textAlign = "center";
@@ -1772,15 +1432,14 @@ function szuresiFunkcioKonyhak(keresesiKifejezes) {
 
 
 
-function hozzaadKivalasztottKategoriat(szuroAdatok) {
+function hozzaadKivalasztottSzurot(szuroAdatok, kivalasztottSzuro, szuroFajta) {
     if (!document.getElementById("kivalasztott-" + szuroAdatok)) {
-        let kivalasztottContainerKategoria = document.getElementById("kivalasztottKategoriak");
 
         // div létrehozása
-        let tag = document.createElement("div");
-        tag.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
-        tag.id = "kivalasztott-" + szuroAdatok;
-        tag.textContent = szuroAdatok;
+        let div = document.createElement("div");
+        div.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
+        div.id = "kivalasztott-" + szuroAdatok;
+        div.textContent = szuroAdatok;
 
         // x törlés gomb hozzáadása
         let removeBtn = document.createElement("button");
@@ -1792,8 +1451,8 @@ function hozzaadKivalasztottKategoriat(szuroAdatok) {
             document.getElementById("checkbox-" + szuroAdatok).checked = false;
         });
 
-        tag.appendChild(removeBtn);
-        kivalasztottContainerKategoria.appendChild(tag);
+        div.appendChild(removeBtn);
+        kivalasztottSzuro.appendChild(div);
     }
 }
 
@@ -2009,15 +1668,8 @@ document.addEventListener("DOMContentLoaded", inicializalasEtrendet);
 document.addEventListener("DOMContentLoaded", inicializalasKonyhat);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagot);
 document.addEventListener("DOMContentLoaded", inicializalasAlapanyagNelkul);
-<<<<<<< HEAD
 window.addEventListener("load", etrendListaLeker);
 window.addEventListener("load", konyhaListaLeker);
 window.addEventListener("load", alapanyagListaLeker);
 window.addEventListener("load", kategoriakListaLeker)
 document.getElementById("button_kereses").addEventListener("click", kereses)
-=======
-window.addEventListener("load", etrendLista);
-window.addEventListener("load", konyhaLista);
-window.addEventListener("load", alapanyagLista);
-window.addEventListener("load", kategoriakLista)
->>>>>>> 90d94a235b98e7ae503df8352162cbdce0a23cda
