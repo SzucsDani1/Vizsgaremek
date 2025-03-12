@@ -164,6 +164,30 @@ async function modositAlapinf() {
     let emailCim = document.getElementById("email").value
     let jelszo = document.getElementById("jelszo").value
     
+    if(empty(jelszo) && empty(emailCim)){
+        alert("Kérem változtason meg adatot!")
+        return
+    }
+    
+    try {
+        
+        let lekeres = await fetch("./adatbazisInterakciok/adatbazisFeltolt.php",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body : JSON.stringify(sqlKod)
+        });
+
+        if(lekeres.ok){
+            // oldal újratölt
+        }
+        else{
+            console.log("Nem érkeztek adatok!")
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 window.addEventListener("load", adatokLeker)
