@@ -4,45 +4,6 @@ let konyhak = new Set();
 let etrendek = new Set();
 
 
-const szuroKonfig = {
-  kategoriak: {
-    keresesiMezo: 'kategoriakSearch',
-    listaElem: 'kategoriakLista',
-    containerId: 'kivalasztottKategoriak',
-    prefix: '',
-    adatTípus: 'kategoria'
-  },
-  etrend: {
-    keresesiMezo: 'etrendSearch',
-    listaElem: 'etrendLista',
-    containerId: 'kivalasztottEtrend',
-    prefix: '',
-    adatTípus: 'etrend'
-  },
-  konyha: {
-    keresesiMezo: 'konyhaSearch',
-    listaElem: 'konyhaLista',
-    containerId: 'kivalasztottKonyha',
-    prefix: '',
-    adatTípus: 'konyha'
-  },
-  alapanyag: {
-    keresesiMezo: 'alapanyagSearch',
-    listaElem: 'alapanyagLista',
-    containerId: 'kivalasztottAlapanyagok',
-    prefix: 'alapanyag-',
-    ellentettLista: 'alapanyagNelkul'
-  },
-  alapanyagNelkul: {
-    keresesiMezo: 'alapanyagNelkulSearch',
-    listaElem: 'alapanyagNelkulLista',
-    containerId: 'kivalasztottAlapanyagNelkul',
-    prefix: 'alapanyagNelkul-',
-    ellentettLista: 'alapanyag'
-  }
-};
-
-
 
 
 async function filterReceptek() {
@@ -1438,7 +1399,7 @@ function hozzaadKivalasztottSzurot(szuroAdatok, kivalasztottSzuro, szuroFajta) {
         // div létrehozása
         let div = document.createElement("div");
         div.classList.add("kivalasztott-tag", "badge", "bg-danger", "me-2", "mb-2");
-        div.id = "kivalasztott-" + szuroAdatok;
+        div.id = "kivalasztott-" +szuroFajta+ szuroAdatok;
         div.textContent = szuroAdatok;
 
         // x törlés gomb hozzáadása
@@ -1457,7 +1418,7 @@ function hozzaadKivalasztottSzurot(szuroAdatok, kivalasztottSzuro, szuroFajta) {
 }
 
 function hozzaadKivalasztottAlapanyagot(szuroAdatok) {
-    if (!document.getElementById("kivalasztott-alapanyag-" + szuroAdatok)) {
+    if (!document.getElementById("kivalasztott-alapanyag-" +szuroFajta+ szuroAdatok)) {
         let kivalasztottContainerAlapanyag = document.getElementById("kivalasztottAlapanyagok");
 
         let tag = document.createElement("div");
