@@ -90,8 +90,8 @@
 
                     <!--Kategóriák szűrése-->
                     <div class="my-2 form-floating">
-                      <input type="text" class="form-control" id="kategoriakSearch" placeholder="Keresés a kategóriák között...">
-                      <label for="kategoriakSearch" class="form-label">Kategóriák keresése</label>
+                      <input type="text" class="form-control" id="kategoriakKereses" placeholder="Keresés a kategóriák között...">
+                      <label for="kategoriakKereses" class="form-label">Kategóriák keresése</label>
                     </div>
                     <div class="dropdown" id="kategoriakDropdown">
                       <div class="dropdown-menu" id="kategoriakLista"></div>
@@ -100,8 +100,8 @@
 
                     <!--Alapanyagok szűrése-->
                     <div class="my-2 form-floating">
-                      <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
-                      <label for="alapanyagSearch" class="form-label">Alapanyagok</label>
+                      <input type="text" class="form-control" id="alapanyagKereses" placeholder="Keresés az alapanyagok között...">
+                      <label for="alapanyagKereses" class="form-label">Alapanyagok</label>
                     </div>
                     <div class="dropdown" id="alapanyagDropdown">
                       <div class="dropdown-menu" id="alapanyagLista"></div>
@@ -110,8 +110,8 @@
 
                      <!--Alapanyag nélkül szűrése-->
                      <div class="my-2 form-floating">
-                      <input type="text" class="form-control" id="alapanyagNelkulSearch" placeholder="Keresés az alapanyagok között...">
-                      <label for="AlapanyagNelkulSearch" class="form-label">Alapanyagok nélkül</label>
+                      <input type="text" class="form-control" id="alapanyagNelkulKereses" placeholder="Keresés az alapanyagok között...">
+                      <label for="AlapanyagNelkulKereses" class="form-label">Alapanyagok nélkül</label>
                     </div>
                     <div class="dropdown" id="alapanyagNelkulDropdown">
                       <div class="dropdown-menu" id="alapanyagNelkulLista"></div>
@@ -121,8 +121,8 @@
 
                     <!--Étrend szűrő-->
                     <div class="my-2 form-floating">
-                      <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
-                      <label for="etrendSearch" class="form-label">Étrend</label>
+                      <input type="text" class="form-control" id="etrendKereses" placeholder="Keresés az étrendek között...">
+                      <label for="etrendKereses" class="form-label">Étrend</label>
                     </div>
                     <div class="dropdown" id="etrendDropdown">
                       <div class="dropdown-menu" id="etrendLista"></div>
@@ -131,8 +131,8 @@
 
                     <!--Konyha szűrő-->
                     <div class="my-2 form-floating">
-                      <input type="text" class="form-control" id="konyhaSearch" placeholder="Keresés a konyhák között...">
-                      <label for="konyhaSearch" class="form-label">Konyha</label>
+                      <input type="text" class="form-control" id="konyhaKereses" placeholder="Keresés a konyhák között...">
+                      <label for="konyhaKereses" class="form-label">Konyha</label>
                     </div>
                     <div class="dropdown" id="konyhaDropdown">
                       <div class="dropdown-menu" id="konyhaLista"></div>
@@ -204,7 +204,7 @@
                     
 
                     <!-- Szűrés gomb -->
-                    <button class="btn btn-warning w-100" id="btnReset">Szűrők lenullázása</button>
+                    <button class="btn btn-warning w-100" id="btnNullazas">Szűrők lenullázása</button>
                     <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
                 </div>
             </div>

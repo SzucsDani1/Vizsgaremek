@@ -180,10 +180,7 @@
                         $szuroFeltetelek[] = "receptek.konyha_id IN ($azonositoLista)";
                     }
                 }
-
-
-
-                
+            
                 // Idő szűrés
                 if (!empty($bodyAdatok["ido"])) {
                     $ido = (int)$bodyAdatok["ido"];
@@ -199,20 +196,18 @@
                 
                 // Napszak szűrés
                 if (!empty($bodyAdatok["napszak"]) && is_array($bodyAdatok["napszak"])) {
-                    $validNapszakok = [];
+                    $helyesNapszakok = [];
                     foreach ($bodyAdatok["napszak"] as $napszak) {
                         $napszak = strtolower(trim($napszak));
                         if ($napszak == "reggeli" || $napszak == "tízórai" || $napszak == "ebéd" || $napszak =="vacsora" || $napszak == "uzsonna") {
-                            $validNapszakok[] = "'" . $napszak . "'";
+                            $helyesNapszakok[] = "'" . $napszak . "'";
                         }
                     }
                     
-                    if (!empty($validNapszakok)) {
-                        $szuroFeltetelek[] = "LOWER(receptek.napszak) IN (" . implode(",", $validNapszakok) . ")";
+                    if (!empty($helyesNapszakok)) {
+                        $szuroFeltetelek[] = "LOWER(receptek.napszak) IN (" . implode(",", $helyesNapszakok) . ")";
                     }
                 }
-
-
 
                 
                 // Ár szűrés
@@ -257,20 +252,12 @@
   
 
                 // A végső SQL lekérdezés összeállítása
-                $sql = "SELECT
-                    receptek.id,
-                    receptek.neve,
-                    receptek.felhasznalo_id,
-                    receptek.napszak,
-                    receptek.etelfajta_id,
-                    receptek.kaloria,
-                    receptek.kepek,
-                    receptek.nehezseg,
-                    receptek.ido,
-                    receptek.adag,
-                    receptek.ar,
-                    receptek.elkeszites
-                    FROM receptek";
+                $sql = "SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.napszak, 
+                receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, 
+                receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, 
+                receptek.elkeszites, felhasznalok.felhnev, etrend.neve AS etrend_nev, 
+                etrend.id AS etrend_id FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id 
+                INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id";
             
                 
                 // Ha van érvényes szűrőfeltétel, azt hozzáadjuk a lekérdezéshez
@@ -287,13 +274,22 @@
                 foreach ($receptLista as $recept) {
                     $formattedReceptek[] = [
                         'id' => $recept['id'],
-                        'nev' => $recept['neve'],
-                        'kep' => $recept['kepek'],
+                        'felhasznalo_id' => $recept['felhasznalo_id'],
+                        'napszak' => $recept['napszak'],
+                        'etelfajta_id' => $recept['etelfajta_id'],
+                        'ar' => $recept['ar'],
+                        'mikor_feltolt' => $recept['mikor_feltolt'],
+                        'konyha_id' => $recept['konyha_id'],
+                        'felhnev' => $recept['felhnev'],
+                        'neve' => $recept['neve'],
+                        'kepek' => $recept['kepek'],
                         'kaloria' => $recept['kaloria'],
                         'nehezseg' => $recept['nehezseg'],
                         'ido' => $recept['ido'],
+                        'etrend_nev' => $recept['etrend_nev'],
+                        'etrend_id' => $recept['etrend_id'],
                         'adag' => $recept['adag'],
-                        'leiras' => $recept['elkeszites']
+                        'elkeszites' => $recept['elkeszites']
                         
                     ];
                 }
@@ -302,13 +298,22 @@
                     foreach ($receptLista as $recept) {
                         $formattedReceptek[] = [
                             'id' => $recept['id'],
-                            'nev' => $recept['neve'],
-                            'kep' => $recept['kepek'],
-                            'kaloria' => $recept['kaloria'],
-                            'nehezseg' => $recept['nehezseg'],
-                            'ido' => $recept['ido'],
-                            'adag' => $recept['adag'],
-                            'leiras' => $recept['elkeszites']
+                        'felhasznalo_id' => $recept['felhasznalo_id'],
+                        'napszak' => $recept['napszak'],
+                        'etelfajta_id' => $recept['etelfajta_id'],
+                        'ar' => $recept['ar'],
+                        'mikor_feltolt' => $recept['mikor_feltolt'],
+                        'konyha_id' => $recept['konyha_id'],
+                        'felhnev' => $recept['felhnev'],
+                        'neve' => $recept['neve'],
+                        'kepek' => $recept['kepek'],
+                        'kaloria' => $recept['kaloria'],
+                        'nehezseg' => $recept['nehezseg'],
+                        'ido' => $recept['ido'],
+                        'etrend_nev' => $recept['etrend_nev'],
+                        'etrend_id' => $recept['etrend_id'],
+                        'adag' => $recept['adag'],
+                        'elkeszites' => $recept['elkeszites']
                         ];
                     }
                     
