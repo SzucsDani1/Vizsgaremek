@@ -22,11 +22,11 @@ async function filterReceptek() {
         etrendKeresomezo.value = "";
         konyhaKeresomezo.value = "";
 
-        const kategoriak = getSelectedCategories('kivalasztottKategoriak');
-        const alapanyagok = getSelectedCategories('kivalasztottAlapanyagok');
-        const alapanyagok_nelkul = getSelectedCategories('kivalasztottAlapanyagNelkul');
-        const etrend = getSelectedCategories('kivalasztottEtrend');
-        const konyha = getSelectedCategories('kivalasztottKonyha');
+        const kategoriak = checkboxLekerdezes('kivalasztottKategoriak');
+        const alapanyagok = checkboxLekerdezes('kivalasztottAlapanyagok');
+        const alapanyagok_nelkul = checkboxLekerdezes('kivalasztottAlapanyagNelkul');
+        const etrend = checkboxLekerdezes('kivalasztottEtrend');
+        const konyha = checkboxLekerdezes('kivalasztottKonyha');
 
         const kereses = document.getElementById('text_kereses')?.value.trim() || '';
         
@@ -100,23 +100,13 @@ async function filterReceptek() {
             adag,
             nehezseg
         };
-        
-        /*for (const key of Object.keys(body)) {
-            if (
-                body[key] === null || 
-                (Array.isArray(body[key]) && body[key].length === 0)
-            ) {
-                delete body[key];
-            }
-        }*/
 
-            for (const index in body) {
-                if (body[index] === null || (Array.isArray(body[index]) && !body[index].length)) {
-                    delete body[index];
-                }
+
+        for (const index in body) {
+            if (body[index] === null || (Array.isArray(body[index]) && !body[index].length)) {
+                delete body[index];
             }
-            
-        
+        }
         
         // Make request to server
         const response = await fetch('./szuresreceptek', {
@@ -156,20 +146,19 @@ async function filterReceptek() {
     }
 }
 
-function getSelectedCategories(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return [];
+function checkboxLekerdezes(kivalasztottRecept) {
+    const recept = document.getElementById(kivalasztottRecept);
+    if (!recept) return [];
     
-    const selectedItems = [];
-    const badges = container.querySelectorAll('.kivalasztott-div');
+    const kivalasztottCheckboxok = [];
+    const checkboxok = recept.querySelectorAll('.kivalasztott-div');
     
-    badges.forEach(badge => {
-        // Extract the text content (exclude the X button)
-        const text = badge.textContent.trim().replace('×', '').trim();
-        selectedItems.push(text);
-    });
+    for (const checkbox of checkboxok) {
+        const checkboxSzoveg = checkbox.textContent.trim().replace('×', '').trim();
+        kivalasztottCheckboxok.push(checkboxSzoveg);
+    }
     
-    return selectedItems;
+    return kivalasztottCheckboxok;
 }
 
 document.getElementById('btnSzures').addEventListener('click', filterReceptek);
