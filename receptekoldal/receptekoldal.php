@@ -205,8 +205,8 @@
                     
 
                     <!-- Szűrés gomb -->
-                    <button class="btn btn-warning w-100" id="btnNullazas">Szűrők lenullázása</button>
-                    <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
+                    <button class="btn btn-warning w-100 my-2" id="btnNullazas">Szűrők lenullázása</button>
+                    <button class="btn btn-danger w-100 my-2" id="btnSzures">Szűrés</button>
                 </div>
             </div>
             <!--Káryák-->

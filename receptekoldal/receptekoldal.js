@@ -196,9 +196,7 @@ function kartyaBetoltes(receptek){
     let fieldset = document.createElement("fieldset");
     fieldset.classList = "mx-auto filter-box border p-3 bg-light rounded my-3";
 
-    let legend = document.createElement("legend");
-    legend.classList = "text-center my-4 display-6";
-    legend.innerHTML = "Keresési találatok";
+    
 
 
     let divRow = document.createElement("div");
@@ -208,7 +206,6 @@ function kartyaBetoltes(receptek){
 
     divContainer.appendChild(divRow);
     divContainer.appendChild(fieldset)
-    fieldset.appendChild(legend)
 
     if (receptek.length === 0) {
         divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
