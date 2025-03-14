@@ -92,6 +92,22 @@
         }
         break;
 
+        case "osszesrecept":
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                $osszesrecept = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_nev, etrend.id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, AVG(ertekeles.ertek) FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id GROUP BY receptek.id ORDER BY receptek.neve;");
+                if(is_array($osszesrecept) && !empty($osszesrecept)){
+                    echo json_encode($osszesrecept, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
 
         case "szuresreceptek":
             if ($_SERVER["REQUEST_METHOD"] == "POST") {

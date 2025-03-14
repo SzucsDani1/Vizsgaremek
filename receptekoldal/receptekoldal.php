@@ -45,6 +45,7 @@
     <!--END NAVBAR-->    
 
 
+
      <!--START CAROUSEL-->
      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -85,7 +86,7 @@
             <!-- Szűrőpanel-->
             <div class="col-lg-4 col-md-5 col-sm-12">
                 <div class="filter-box border p-3 bg-light rounded">
-                    <h4>Szűrés</h4>
+                    <h4 class="display-6">Szűrés</h4>
                     <hr>
 
                     <!--Kategóriák szűrése-->
@@ -204,13 +205,13 @@
                     
 
                     <!-- Szűrés gomb -->
-                    <button class="btn btn-warning w-100" id="btnNullazas">Szűrők lenullázása</button>
-                    <button class="btn btn-danger w-100" id="btnSzures">Szűrés</button>
+                    <button class="btn btn-warning w-100 my-2" id="btnNullazas">Szűrők lenullázása</button>
+                    <button class="btn btn-danger w-100 my-2" id="btnSzures">Szűrés</button>
                 </div>
             </div>
             <!--Káryák-->
             <div class="col-lg-8 col-md-7 col-sm-12">
-                <h2>Receptek listája</h2>
+                <h2 class="display-6">Receptek listája</h2>
             <div id="kartyak"></div>
             </div>
         </div>

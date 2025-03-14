@@ -2,6 +2,7 @@ let kategoriak = new Set();
 let alapanyagok = new Set();
 let konyhak = new Set();
 let etrendek = new Set();
+let osszesReceptek = new Set();
 
 
 async function filterReceptek() {
@@ -106,7 +107,6 @@ async function filterReceptek() {
             }
         }
         
-        // Make request to server
         const response = await fetch("./szuresreceptek", {
             method: "POST",
             headers: {
@@ -119,44 +119,24 @@ async function filterReceptek() {
             const receptek = await response.json();
             kartyaBetoltes(receptek);
         } else {
-            try {
-                const errorData = await response.json();
-                document.getElementById("kartyak").innerHTML = `
-                    <div class="alert alert-warning" role="alert">
-                        ${errorData.valasz || "Nincs találat a megadott feltételekkel."}
-                    </div>
-                `;
-            } catch (e) {
-                document.getElementById("kartyak").innerHTML = `
-                    <div class="alert alert-warning" role="alert">
-                        Nincs találat a megadott feltételekkel.
-                    </div>
-                `;
-            }
+            nincsTalalatKeresesre();
         }
     } catch (error) {
-        console.error("Hiba a szűrés során:", error);
-        document.getElementById("kartyak").innerHTML = `
-            <div class="alert alert-danger" role="alert">
-                Hiba történt a szűrés során. Kérjük, próbálja újra később.
-            </div>
-        `;
+        console.log(error);
+        nincsTalalatKeresesre(error)
     }
 }
 
-
-
-async function konyhaListaLeker(){
+async function osszesRecept(){
     try{
-        let eredmeny = await fetch("./konyha");
+        let eredmeny = await fetch("./osszesrecept");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
-            for(const konyha of lista){
-                konyhak.add(konyha.neve)
-            }
-            console.log(konyhak);
+            kartyaBetoltes(lista);      
         }
         else{
+            const lista = await eredmeny.json();      
+            console.log(lista);
             console.log(eredmeny.status);
         }
     }
@@ -164,65 +144,6 @@ async function konyhaListaLeker(){
         console.log(error);
     }
 }
-
-
-async function etrendListaLeker(){
-    try{
-        let eredmeny = await fetch("./etrend");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const etrend of lista){
-                etrendek.add(etrend.neve);
-            }
-            console.log(etrendek);
-            
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-async function kategoriakListaLeker(){
-    try{
-        let eredmeny = await fetch("./etelfajta");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const kategoria of lista){
-                kategoriak.add(kategoria.neve)
-            }            
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-async function alapanyagListaLeker(){
-    try{
-        let eredmeny = await fetch("./alapanyag");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const alapanyag of lista){
-                alapanyagok.add(alapanyag.hozzavalo)
-            }
-            console.log(alapanyagok);
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
 
 
 function checkboxLekerdezes(kivalasztottRecept) {
@@ -242,13 +163,41 @@ function checkboxLekerdezes(kivalasztottRecept) {
 
 
 
+function nincsTalalatKeresesre(error)
+{
+    document.getElementById("kartyak").innerHTML = "";
+    let div = document.createElement("div");
+    if(error.length != null){
+        div.classList = "alert alert-warning text-center mx-auto my-3";
+        div.role = "alert";
+        div.innerHTML = error;
+    }
+    else{
+        div.classList = "alert alert-warning text-center mx-auto my-3";
+        div.role = "alert";
+        div.innerHTML = "Nincs találat";
+    }
+    
+    let btnBezar = document.createElement("input");
+    btnBezar.type = "button";
+    btnBezar.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
+    btnBezar.setAttribute("data-bs-dismiss", "alert");
+    btnBezar.setAttribute("aria-label", "Close");
 
-
+    document.getElementById("kartyak").appendChild(div);
+    div.appendChild(btnBezar)
+}
 
 
 function kartyaBetoltes(receptek){
     let divContainer = document.getElementById("kartyak");
     divContainer.innerHTML = "";  
+
+    let fieldset = document.createElement("fieldset");
+    fieldset.classList = "mx-auto filter-box border p-3 bg-light rounded my-3";
+
+    
+
 
     let divRow = document.createElement("div");
     divRow.classList = "row";
@@ -256,7 +205,7 @@ function kartyaBetoltes(receptek){
     divContainer.innerHTML = "";
 
     divContainer.appendChild(divRow);
-
+    divContainer.appendChild(fieldset)
 
     if (receptek.length === 0) {
         divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
@@ -271,7 +220,6 @@ function kartyaBetoltes(receptek){
         divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
         divCard.id = recept.neve;
-        console.log("Revept név: "+recept)
 
         let img = document.createElement("img");
         img.src = recept.kepek;
@@ -302,7 +250,7 @@ function kartyaBetoltes(receptek){
         pFeltolto.classList = "text-body-secondary fw-light mt-2";
         pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
 
-        divRow.appendChild(divCard);
+        fieldset.appendChild(divCard);
 
         divCard.appendChild(img);
         divCard.appendChild(divCardBody);
@@ -472,6 +420,80 @@ function adagFigyel() {
 }
 
 
+
+
+async function konyhaListaLeker(){
+    try{
+        let eredmeny = await fetch("./konyha");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const konyha of lista){
+                konyhak.add(konyha.neve)
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+async function etrendListaLeker(){
+    try{
+        let eredmeny = await fetch("./etrend");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const etrend of lista){
+                etrendek.add(etrend.neve);
+            }            
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function kategoriakListaLeker(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const kategoria of lista){
+                kategoriak.add(kategoria.neve)
+            }            
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function alapanyagListaLeker(){
+    try{
+        let eredmeny = await fetch("./alapanyag");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const alapanyag of lista){
+                alapanyagok.add(alapanyag.hozzavalo)
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
 function kategoriakListajanakGeneralasa() {
     let kategoriakLista = document.getElementById("kategoriakLista");
@@ -783,7 +805,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.addEventListener("load", function() {
-    //kartyaBetoltes(); 
     arFigyel();
     idoFigyel();
     kaloriaFigyel();
@@ -793,6 +814,7 @@ window.addEventListener("load", function() {
     konyhaListaLeker();
     alapanyagListaLeker();
     kategoriakListaLeker();
+    osszesRecept();
 });
 document.getElementById("btnSzures").addEventListener("click", filterReceptek);
 document.getElementById("btnNullazas").addEventListener("click", szurokLenullazasa);
