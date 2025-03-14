@@ -47,14 +47,14 @@
 
     <div class="container">
       <!--Ételfajta-->
-      <h1 class="display-6 text-body-secondary text-center my-3">Ételfajta</h1>
+      <h1 class="display-6 text-body-secondary text-center my-3" id="etelfajtaKiir"></h1>
 
       <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-50 mx-auto">
 
 
       <!--Recept neve-->
-      <h1 class="display-1 text-center my-3">Recept neve</h1>
+      <h1 class="display-1 text-center my-3" id="receptNeve"></h1>
 
       <!--Csillagos értékelés-->
       <div id="ertekelesMegjelenites" class="text-center">
@@ -79,9 +79,9 @@
         </thead>
         <tbody>
           <tr class="border-top-0 border-bottom-0">
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td id="receptIdeje"></td>
+            <td id="receptKoltseg"></td>
+            <td id="receptNehezseg"></td>
           </tr>
         </tbody>
       </table>
@@ -89,16 +89,27 @@
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
       <!--Csillagos értékelés a felhasználótól-->
-      <div class="filter-box border p-3 bg-light rounded my-3 w-50 mx-auto">
-        <h1 class="display-6 text-center">Értékelés</h1>
-        <div id="ertekelesFelhasznalotol" class="text-center">
-          <span class="star" id="csillagErtekel" data-value="1">&#9734;</span>
-          <span class="star" id="csillagErtekel" data-value="2">&#9734;</span>
-          <span class="star" id="csillagErtekel" data-value="3">&#9734;</span>
-          <span class="star" id="csillagErtekel" data-value="4">&#9734;</span>
-          <span class="star" id="csillagErtekel" data-value="5">&#9734;</span>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="filter-box border p-3 bg-light rounded my-3 mx-auto">
+            <h1 class="display-6 text-center">Értékelés</h1>
+            <div id="ertekelesFelhasznalotol" class="text-center">
+              <span class="star" id="csillagErtekel" data-value="1">&#9734;</span>
+              <span class="star" id="csillagErtekel" data-value="2">&#9734;</span>
+              <span class="star" id="csillagErtekel" data-value="3">&#9734;</span>
+              <span class="star" id="csillagErtekel" data-value="4">&#9734;</span>
+              <span class="star" id="csillagErtekel" data-value="5">&#9734;</span>
+            </div>
+            
+          </div>
+          <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100">
+        </div>
+        <div class="mx-auto my-3 w-50">
+          
         </div>
       </div>
+      
+      
       
 
       <h1 class="display-6 text-center">Hozzászólás írása</h1>

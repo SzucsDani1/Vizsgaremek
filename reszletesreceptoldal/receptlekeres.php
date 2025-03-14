@@ -92,6 +92,24 @@
         }
         break;
 
+        case "ertekeles":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $ertekelesReceptId = $bodyAdatok["receptek_id"];
+                $ertekeles = adatokLekerdezese("SELECT AVG(ertekeles.ertek) AS ertekeles FROM `ertekeles` WHERE recept_id = {$ertekelesReceptId} ;");
+                if(is_array($ertekeles) && !empty($ertekeles)){
+                    echo json_encode($ertekeles, JSON_UNESCAPED_UNICODE);
+                }
+                else{
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
         case "hozzaszolasleker":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $receptek_id = $bodyAdatok["receptek_id"];
@@ -161,6 +179,70 @@
                 
             }
             break;
+
+            case "receptleker":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["recept_id"])){
+                        $recept_id = $bodyAdatok["recept_id"];
+                        $recept = adatokLekerdezese("SELECT
+                        receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_neve, etrend.id,
+                        receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek,
+                        receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt,
+                        receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev,
+                        etelfajta.neve AS etelfajta_nev
+                        FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id
+                        INNER JOIN etelfajta ON etelfajta.id=receptek.etelfajta_id
+                        INNER JOIN receptetrend ON receptetrend.recept_id = receptek.id
+                        INNER JOIN etrend ON etrend.id=receptetrend.etrend_id WHERE receptek.id = {$recept_id}
+                        ");
+                        if(is_array($recept) && !empty($recept)){
+                            echo json_encode($recept, JSON_UNESCAPED_UNICODE);
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+            
+            case "ertekelesfelhasznaloleker":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $recept_id = $bodyAdatok["recept_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                        $recept = adatokLekerdezese("SELECT *  FROM `ertekeles` WHERE ertekeles.recept_id = {$recept_id} AND ertekeles.felhasznalo_id = {$felhasznalo_id}");
+                        if(is_array($recept) && !empty($recept)){
+                            echo json_encode($recept, JSON_UNESCAPED_UNICODE);
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
         
             default:
             echo "Hiba";
