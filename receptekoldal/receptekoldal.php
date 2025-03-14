@@ -44,7 +44,7 @@
       </nav>
     <!--END NAVBAR-->    
 
-    
+
 
      <!--START CAROUSEL-->
      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -86,7 +86,7 @@
             <!-- Szűrőpanel-->
             <div class="col-lg-4 col-md-5 col-sm-12">
                 <div class="filter-box border p-3 bg-light rounded">
-                    <h4>Szűrés</h4>
+                    <h4 class="display-6">Szűrés</h4>
                     <hr>
 
                     <!--Kategóriák szűrése-->
@@ -211,7 +211,7 @@
             </div>
             <!--Káryák-->
             <div class="col-lg-8 col-md-7 col-sm-12">
-                <h2>Receptek listája</h2>
+                <h2 class="display-6">Receptek listája</h2>
             <div id="kartyak"></div>
             </div>
         </div>
