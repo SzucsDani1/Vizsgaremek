@@ -146,6 +146,80 @@ async function osszesRecept(){
 }
 
 
+async function konyhaListaLeker(){
+    try{
+        let eredmeny = await fetch("./konyha");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const konyha of lista){
+                konyhak.add(konyha.neve)
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
+async function etrendListaLeker(){
+    try{
+        let eredmeny = await fetch("./etrend");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const etrend of lista){
+                etrendek.add(etrend.neve);
+            }            
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function kategoriakListaLeker(){
+    try{
+        let eredmeny = await fetch("./etelfajta");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const kategoria of lista){
+                kategoriak.add(kategoria.neve)
+            }            
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function alapanyagListaLeker(){
+    try{
+        let eredmeny = await fetch("./alapanyag");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const alapanyag of lista){
+                alapanyagok.add(alapanyag.hozzavalo)
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+
 function checkboxLekerdezes(kivalasztottRecept) {
     const recept = document.getElementById(kivalasztottRecept);
     if (!recept) return [];
@@ -422,78 +496,6 @@ function adagFigyel() {
 
 
 
-async function konyhaListaLeker(){
-    try{
-        let eredmeny = await fetch("./konyha");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const konyha of lista){
-                konyhak.add(konyha.neve)
-            }
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-
-async function etrendListaLeker(){
-    try{
-        let eredmeny = await fetch("./etrend");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const etrend of lista){
-                etrendek.add(etrend.neve);
-            }            
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-async function kategoriakListaLeker(){
-    try{
-        let eredmeny = await fetch("./etelfajta");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const kategoria of lista){
-                kategoriak.add(kategoria.neve)
-            }            
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-async function alapanyagListaLeker(){
-    try{
-        let eredmeny = await fetch("./alapanyag");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const alapanyag of lista){
-                alapanyagok.add(alapanyag.hozzavalo)
-            }
-        }
-        else{
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
 
 function kategoriakListajanakGeneralasa() {
     let kategoriakLista = document.getElementById("kategoriakLista");

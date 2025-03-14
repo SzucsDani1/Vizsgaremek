@@ -9,22 +9,6 @@
     $bodyAdatok = json_decode(file_get_contents("php://input"), true);
 
     switch (mb_strtolower($url[0])){
-       case "nehezseg":
-           if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $nehezseg = adatokLekerdezese("SELECT receptek.nehezseg FROM receptek;");
-                if(is_array($nehezseg) && !empty($nehezseg)){
-                    echo json_encode($nehezseg, JSON_UNESCAPED_UNICODE);
-                }
-                else{
-                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
-                    header("bad request", true, 400);
-                }
-           }
-           else{
-            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
-            header('bad request', true, 400);
-        }
-        break;
         case "etelfajta":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $etelfajta = adatokLekerdezese("SELECT etelfajta.neve FROM etelfajta;");
@@ -197,11 +181,11 @@
                 // Idő szűrés
                 if (!empty($bodyAdatok["ido"])) {
                     $ido = (int)$bodyAdatok["ido"];
-                    if ($ido === 30) { // "Gyorsan"
+                    if ($ido === 30) { 
                         $szuroFeltetelek[] = "receptek.ido < 30";
-                    } else if ($ido === 60) { // "Átlagosan"
+                    } else if ($ido === 60) { 
                         $szuroFeltetelek[] = "receptek.ido >= 30 AND receptek.ido <= 60";
-                    } else if ($ido === 120) { // "Hosszan"
+                    } else if ($ido === 120) { 
                         $szuroFeltetelek[] = "receptek.ido > 60";
                     }
                 }
