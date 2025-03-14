@@ -17,14 +17,14 @@ async function hozzaszolasElkuld(){
         "Content-Type" : "application/json"
       },
       body : JSON.stringify({
-        "felhasznalo_id" : 4,
+        "felhasznalo_id" : 5,
         "hozzaszolas" : hozzaszolas,
         "receptek_id" : 1
       })
     })
 
     let valasz = await kuldes.json();
-    console.log(kuldes.status)
+    console.log(valasz)
     if(kuldes.ok){
       uzenet.innerHTML = valasz.valasz;
       uzenet.classList = "alert alert-primary my-3 text-center w-80";
