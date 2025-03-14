@@ -95,14 +95,12 @@
 
         case "szuresreceptek":
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Parse the JSON data from the request body
                 $jsonData = file_get_contents('php://input');
                 $bodyAdatok = json_decode($jsonData, true);
                 
-                // Initialize array for filter conditions
                 $szuroFeltetelek = [];
                 
-                // Kategória szűrés (az etelfajta táblából)
+                // Kategória szűrés
                 if (!empty($bodyAdatok["kategoriak"]) && is_array($bodyAdatok["kategoriak"])) {
                     $kategoriakAzonositoTomb = [];
                     foreach ($bodyAdatok["kategoriak"] as $kivalasztottKategoria) {
@@ -118,7 +116,7 @@
                     }
                 }
                 
-                // Alapanyag szűrés (az hozzavalok táblából)
+                // Alapanyag szűrés
                 if (!empty($bodyAdatok["alapanyagok"]) && is_array($bodyAdatok["alapanyagok"])) {
                     $alapanyagFeltetelek = [];
                     foreach ($bodyAdatok["alapanyagok"] as $kivalasztottAlapanyag) {
@@ -130,7 +128,7 @@
                     }
                 }
                 
-                // Kizárt alapanyag szűrés
+                //Alapanyag nélkül szűrés
                 if (!empty($bodyAdatok["alapanyagok_nelkul"]) && is_array($bodyAdatok["alapanyagok_nelkul"])) {
                     $kizartAlapanyagFeltetelek = [];
                     foreach ($bodyAdatok["alapanyagok_nelkul"] as $kivalasztottKizartAlapanyag) {
@@ -142,12 +140,11 @@
                     }
                 }
                 
-               // Étrend szűrés (receptetrend tábla használata)
+               // Étrend szűrés
                 if (!empty($bodyAdatok["etrend"]) && is_array($bodyAdatok["etrend"])) {
                     $etrendAzonositoTomb = [];
                     foreach ($bodyAdatok["etrend"] as $kivalasztottEtrend) {
                         $etrendNev = trim($kivalasztottEtrend);
-                        // Biztosítjuk a kis- és nagybetűk kezelését és a szóközök eltávolítását
                         $eredmenySor = adatokLekerdezese("SELECT id FROM etrend WHERE LOWER(neve) = LOWER('$etrendNev')");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $etrendAzonositoTomb[] = $eredmenySor[0]['id'];
@@ -165,7 +162,7 @@
 
 
                 
-                // Konyha szűrés javított verziója
+                // Konyha szűrés 
                 if (!empty($bodyAdatok["konyha"]) && is_array($bodyAdatok["konyha"])) {
                     $konyhaAzonositoTomb = [];
                     foreach ($bodyAdatok["konyha"] as $kivalasztottKonyha) {
@@ -251,7 +248,6 @@
                 }
   
 
-                // A végső SQL lekérdezés összeállítása
                 $sql = "SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.napszak, 
                 receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, 
                 receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, 
@@ -260,17 +256,13 @@
                 INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id";
             
                 
-                // Ha van érvényes szűrőfeltétel, azt hozzáadjuk a lekérdezéshez
                 if (!empty($szuroFeltetelek)) {
                     $sql .= " WHERE " . implode(" AND ", $szuroFeltetelek);
                 }
                 
-                // Receptek rendezése név szerint
                 $sql .= " ORDER BY receptek.neve ASC";
                 
-                // Lekérdezés végrehajtása
                 $receptLista = adatokLekerdezese($sql);
-                // Formázott adatok előkészítése
                 foreach ($receptLista as $recept) {
                     $formattedReceptek[] = [
                         'id' => $recept['id'],
@@ -297,7 +289,7 @@
                     $formattedReceptek = [];
                     foreach ($receptLista as $recept) {
                         $formattedReceptek[] = [
-                            'id' => $recept['id'],
+                        'id' => $recept['id'],
                         'felhasznalo_id' => $recept['felhasznalo_id'],
                         'napszak' => $recept['napszak'],
                         'etelfajta_id' => $recept['etelfajta_id'],
@@ -317,7 +309,7 @@
                         ];
                     }
                     
-                    echo json_encode($formattedReceptek, JSON_UNESCAPED_UNICODE);
+                    echo json_encode($receptLista, JSON_UNESCAPED_UNICODE);
                 } else {
                     echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
                     header("bad request", true, 400);
