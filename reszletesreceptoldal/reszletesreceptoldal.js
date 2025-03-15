@@ -129,7 +129,8 @@ async function ertekelesLeker(){
         });
         if(leker.ok){
             let ertekeles = await leker.json();
-            ertekelesMegjelenit(ertekeles[0].ertekeles);
+            const csillagok = document.querySelectorAll('#csillagMegjelen');
+            frissitCsillagok(ertekeles[0].ertekeles, csillagok, false);
         }
         else{
             let receptek = await leker.json();
@@ -167,6 +168,42 @@ async function ertekelesFelhasznaloLeker(){
         console.log(error);
     }
 }
+
+async function ertekelesElkuld(){
+    try {
+      const kivalasztottErtek = document.querySelector('.star.filled:last-child').getAttribute('data-value');
+  
+      console.log(kivalasztottErtek)
+      let receptId = 1; 
+      let felhasznalo_id = 14; 
+  
+      let kuldes = await fetch("./ertekeleselkuld",{
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          "recept_id" : receptId,
+          "felhasznalo_id" : felhasznalo_id,
+          "ertekeles" : kivalasztottErtek
+        })
+      });
+  
+      let valasz = await kuldes.json();
+  
+      if(kuldes.ok){
+        console.log("Értékelés sikeresen elküldve:", valasz);
+        // Itt frissítheted a felületet, például kiírhatod az üzenetet
+      } else {
+        console.error("Hiba történt:", valasz);
+        // Hibakezelés, például hibaüzenet kiírása
+      }
+  
+    } catch (error) {
+      console.error("Hálózati vagy szerverhiba történt:", error);
+    }
+  }
+  
 
 function receptMegjelenit(receptek){
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
@@ -243,7 +280,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
         }
     }
 }
-
+/*
 // Frissíti a csillagok megjelenítését az adott értékelés alapján
 function ertekelesMegjelenit(ertekeles) {
     const csillagok = document.querySelectorAll('#csillagMegjelen');
@@ -289,17 +326,45 @@ function csillagErtekeloFelhasznalotol() {
       
     }
 }
+*/
+function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
+    if(felhasznaloModosit == true){
+        ertekelesSzama = csillagLekerFelhasznalotol(csillagok);
+    }
+    console.log(ertekelesSzama)
+    for (const csillag of csillagok) {
+      if (csillag.getAttribute('data-value') <= ertekelesSzama) {
+        csillag.classList.add('filled');
+        csillag.innerHTML = '&#9733;'; 
+      } else {
+        csillag.classList.remove('filled');
+        csillag.innerHTML = '&#9734;';
+      }
+    }
+  }
 
+function csillagLekerFelhasznalotol(csillagok){
+    for (const csillag of csillagok) {
+        csillag.addEventListener('click', function() {
+        ertekelesSzama = csillag.getAttribute('data-value');
+        frissitCsillagok(ertekelesSzama, csillagok, false);
+    });
+    }
+}
 
-
-  document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
+  //document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
+document.addEventListener("DOMContentLoaded", function(){
+    const csillagok = document.querySelectorAll('#csillagErtekel');
+    frissitCsillagok(0, csillagok, true);
+})
   document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
   window.addEventListener("load", function(){
     hozzaszolasLeker();
     receptLeker();
     ertekelesLeker();
-    ertekelesMegjelenit();
+    //ertekelesMegjelenit();
     ertekelesFelhasznaloLeker();
   });
+  document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld());
 
 
