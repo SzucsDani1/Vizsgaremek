@@ -218,10 +218,11 @@
             
             case "ertekelesfelhasznaloleker":
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
-                    if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                    if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["ertekeles"])){
                         $recept_id = $bodyAdatok["recept_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                        $recept = adatokLekerdezese("SELECT *  FROM `ertekeles` WHERE ertekeles.recept_id = {$recept_id} AND ertekeles.felhasznalo_id = {$felhasznalo_id}");
+                        $ertekeles = $bodyAdatok["ertekeles"];
+                        $recept = adatokLekerdezese("INSERT INTO `ertekeles`( `felhasznalo_id`, `recept_id`, `ertek`) VALUES (5,1,1);");
                         if(is_array($recept) && !empty($recept)){
                             echo json_encode($recept, JSON_UNESCAPED_UNICODE);
                         }
