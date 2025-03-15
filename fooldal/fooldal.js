@@ -39,7 +39,7 @@ async function ajanlottReceptekLeker(){
 }
 
 
-function legujabbReceptekBetoltes(receptek, divContainer){
+function receptekBetoltes(receptek, divContainer){
     divContainer.innerHTML = "";  
 
     let divRow = document.createElement("div");
