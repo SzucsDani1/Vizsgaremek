@@ -1,3 +1,12 @@
+<?php
+    session_set_cookie_params([
+        'lifetime' => 2592000,  // egy hónap mp-ben (30 * 86400)
+        'path' => '/',          // Elérhető legyen az aloldalokon
+        'httponly' => false      // engedélyezi a JavaScript hozzáférést
+    ]);
+    session_start(); 
+   
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,7 +122,7 @@
 
 <?php
     include "./adatbazisInterakciok/adatbazisFeltolt.php";
-    // ! Töröld majd ki csak ideiglenes teszt!!!!
+    
     
 
 
@@ -143,6 +152,7 @@
 
             // * feltöltöt file a kijelolt mappába rakása
             if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
+                
                 bejelentHiba("Profilkép sikeresen fellet töltve", false);
                 $eleresiUtvonal = "UPDATE 
                                         `felhasznalok` 
@@ -155,7 +165,7 @@
 
                 
                 adatokValtoztatasa($eleresiUtvonal);
-                
+                $_SESSION["profilkep"] = $feltoltendoFajl;
                 
             } 
             else 

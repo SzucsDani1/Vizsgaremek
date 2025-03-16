@@ -1,15 +1,13 @@
+let profilkep;
+
+
 function alapProfilkep(kep){
 
     const profilePicture = document.getElementById('profilePicture');
        
       
-        profilePicture.innerHTML = `<img src="${kep}" alt="Profilkép">`;
-            
-        
-       
-    
-        
-    
+    profilePicture.innerHTML = `<img src="${kep}" alt="Profilkép">`;
+
 }
 
 function ujprofilKep(){
@@ -32,11 +30,19 @@ function ujprofilKep(){
    
     
     removeButton.addEventListener('click', function() {
-        profilePicture.innerHTML = 'Nincs profilkép';
+        if(profilkep != ""){
+            profilePicture.innerHTML = `<img src="${profilkep}" alt="Profilkép">`
+        }
+        else{
+            profilePicture.innerHTML = 'Nincs profilkép';
+        }    
         fileInput.value = "";
         removeButton.style.display = 'none';
         mentesButton.style.display = 'none';
+        
     });
+
+
     
 }
 
@@ -79,8 +85,20 @@ function lekerCookie(name) {
     return null; // Return null if cookie is not found
 }
 
-function adatokMegjelenitese(adatok){
-    let profilkep = lekerCookie("profilkep")
+async function adatokMegjelenitese(adatok){
+
+    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot.php')  // Fetch the PHP script
+                    .then(response => response.text())  // Get the response as text
+                    .then(userPicturePath => {
+                    if (userPicturePath) {
+                        profilkep = userPicturePath;
+                    } else {
+                        profilkep = ""; // Default image if no picture is set
+                    }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+
+    console.log(profilkep)
     if(profilkep != ""){
         alapProfilkep(profilkep)
     }
