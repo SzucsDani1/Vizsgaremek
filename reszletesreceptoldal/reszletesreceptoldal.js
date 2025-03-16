@@ -1,3 +1,4 @@
+let kivalasztottCsillag = 0;
 
 async function hozzaszolasElkuld(){
   try {
@@ -171,8 +172,10 @@ async function ertekelesFelhasznaloLeker(){
 
 async function ertekelesElkuld(){
     try {
-      const kivalasztottErtek = document.querySelector('.star.filled:last-child').getAttribute('data-value');
-  
+      const csillagok = document.querySelectorAll('#csillagErtekel');
+      csillagLekerFelhasznalotol(csillagok)
+      console.log("aaaaa"+kivalasztottCsillag)
+      /*
       console.log(kivalasztottErtek)
       let receptId = 1; 
       let felhasznalo_id = 14; 
@@ -197,7 +200,7 @@ async function ertekelesElkuld(){
       } else {
         console.error("Hiba történt:", valasz);
         // Hibakezelés, például hibaüzenet kiírása
-      }
+      }*/
   
     } catch (error) {
       console.error("Hálózati vagy szerverhiba történt:", error);
@@ -348,6 +351,7 @@ function csillagLekerFelhasznalotol(csillagok){
         csillag.addEventListener('click', function() {
         ertekelesSzama = csillag.getAttribute('data-value');
         frissitCsillagok(ertekelesSzama, csillagok, false);
+        kivalasztottCsillag = ertekelesSzama;
     });
     }
 }
@@ -365,6 +369,6 @@ document.addEventListener("DOMContentLoaded", function(){
     //ertekelesMegjelenit();
     ertekelesFelhasznaloLeker();
   });
-  document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld());
+  document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 
 

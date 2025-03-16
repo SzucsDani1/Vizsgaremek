@@ -36,7 +36,7 @@
                     header("bad request", true, 400);
                 }
            }
-           
+
            else{
             echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
             header('bad request', true, 400);
@@ -217,13 +217,13 @@
             }
             break;
             
-            case "ertekelesfelhasznaloleker":
-                if($_SERVER["REQUEST_METHOD"] == "POST"){
+            case "ertekeleselkuld":
+                if($_SERVER["REQUEST_METHOD"] == "PUT"){
                     if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["ertekeles"])){
                         $recept_id = $bodyAdatok["recept_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
                         $ertekeles = $bodyAdatok["ertekeles"];
-                        $recept = adatokLekerdezese("INSERT INTO `ertekeles`( `felhasznalo_id`, `recept_id`, `ertek`) VALUES (5,1,1);");
+                        $recept = adatokLekerdezese("INSERT INTO `ertekeles`( `felhasznalo_id`, `recept_id`, `ertek`) VALUES ({$felhasznalo_id},{$recept_id},{$ertekeles});");
                         if(is_array($recept) && !empty($recept)){
                             echo json_encode($recept, JSON_UNESCAPED_UNICODE);
                         }
