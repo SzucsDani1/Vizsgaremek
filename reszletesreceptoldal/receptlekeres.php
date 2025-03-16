@@ -36,6 +36,7 @@
                     header("bad request", true, 400);
                 }
            }
+           
            else{
             echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
             header('bad request', true, 400);
