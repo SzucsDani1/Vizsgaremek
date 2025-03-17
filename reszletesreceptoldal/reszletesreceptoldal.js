@@ -30,13 +30,6 @@ async function hozzaszolasElkuld(){
         uzenet.innerHTML = valasz.valasz;
         uzenet.classList = "alert alert-primary my-3 text-center w-80";
 
-        let btnBezar = document.createElement("input");
-        btnBezar.type = "button";
-        btnBezar.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
-        btnBezar.setAttribute("data-bs-dismiss", "alert");
-        btnBezar.setAttribute("aria-label", "Close");
-
-        uzenet.appendChild(btnBezar)
         document.getElementById("hozzaszolas").value = "";
         hozzaszolasLeker();
     }
@@ -51,7 +44,6 @@ async function hozzaszolasElkuld(){
         btnBezar.setAttribute("data-bs-dismiss", "alert");
         btnBezar.setAttribute("aria-label", "Close");
 
-        uzenet.appendChild(btnBezar)
     }
 
   } catch (error) {
@@ -174,8 +166,7 @@ async function ertekelesElkuld(){
     try {
       const csillagok = document.querySelectorAll('#csillagErtekel');
       csillagLekerFelhasznalotol(csillagok)
-      console.log("aaaaa"+kivalasztottCsillag)
-      /*
+      
       console.log(kivalasztottErtek)
       let receptId = 1; 
       let felhasznalo_id = 14; 
@@ -188,7 +179,7 @@ async function ertekelesElkuld(){
         body : JSON.stringify({
           "recept_id" : receptId,
           "felhasznalo_id" : felhasznalo_id,
-          "ertekeles" : kivalasztottErtek
+          "ertekeles" : kivalasztottCsillag
         })
       });
   
@@ -200,7 +191,7 @@ async function ertekelesElkuld(){
       } else {
         console.error("Hiba történt:", valasz);
         // Hibakezelés, például hibaüzenet kiírása
-      }*/
+      }
   
     } catch (error) {
       console.error("Hálózati vagy szerverhiba történt:", error);
