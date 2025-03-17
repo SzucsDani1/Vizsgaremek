@@ -54,13 +54,13 @@ switch (end($url)) {
             $melyikMezo = $adatPost["melyikMezo"];
             $mezoAdat = $adatPost["mezoAdat"];
             $felhasznaloId = $adatPost["felhasznaloId"]; 
-
+            
             if (!empty($melyikMezo) || !empty($mezoAdat) || !empty($felhasznaloId)) {
                 if($melyikMezo == "jelszo"){
                     $mezoAdat = password_hash($mezoAdat, PASSWORD_DEFAULT);
                 }
-                $hajokSQL = "UPDATE `felhasznalok` SET `$melyikMezo` = '$mezoAdat' WHERE `felhasznalok`.`id` = $felhasznaloId";
-                $hajok = adatokValtoztatasa($hajokSQL);
+                $ujadatSQL = "UPDATE `felhasznalok` SET `$melyikMezo` = '$mezoAdat' WHERE `felhasznalok`.`id` = $felhasznaloId";
+                $adat = adatokValtoztatasa($ujadatSQL);
                 if (!is_array($hajok)) {
                     echo json_encode("Sikeres modosítás!");
                 }

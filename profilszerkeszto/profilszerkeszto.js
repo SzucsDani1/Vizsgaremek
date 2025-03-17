@@ -1,11 +1,10 @@
-let profilkep;
-
-
+var profilkep;
+var felhasznaloId;
+let alapEmail
 function alapProfilkep(kep){
 
     const profilePicture = document.getElementById('profilePicture');
-       
-      
+  
     profilePicture.innerHTML = `<img src="${kep}" alt="Profilkép">`;
 
 }
@@ -47,18 +46,7 @@ function ujprofilKep(){
 }
 
 async function adatokLeker() { 
-    let felhasznaloId
 
-    await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
-    .then(response => response.text())  // Get the response as text
-    .then(id => {
-    if (id) {
-        felhasznaloId = id;
-    } 
-    })
-    .catch(error => console.error('Error fetching session data:', error));
-    
-    
     let sqlKod ={ 
         "sqlKod" :  "SELECT `felhasznalok`.`felhnev`, `felhasznalok`.`letrehozas`, `felhasznalok`.`email` FROM `felhasznalok` WHERE `felhasznalok`.`id` =" + felhasznaloId + ";"
     }
@@ -85,30 +73,9 @@ async function adatokLeker() {
     }
 }
 
-function lekerCookie(name) {
 
-    let cookies = document.cookie.split("; ");
-    for (let cookie of cookies) {
-        let [cookieName, cookieValue] = cookie.split("=");
-        if (cookieName === name) {
-            return decodeURIComponent(cookieValue); // Decode in case of special characters
-        }
-    }
-    return null; // Return null if cookie is not found
-}
 
 async function adatokMegjelenitese(adatok){
-
-    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
-                    .then(response => response.text())  // Get the response as text
-                    .then(userPicturePath => {
-                    if (userPicturePath) {
-                        profilkep = userPicturePath;
-                    } else {
-                        profilkep = ""; // Default image if no picture is set
-                    }
-    })
-    .catch(error => console.error('Error fetching session data:', error));
 
     console.log(profilkep)
     if(profilkep != ""){
@@ -117,6 +84,7 @@ async function adatokMegjelenitese(adatok){
     let regdatum = document.getElementById("regisztracioDatuma")
     let felhasznaloNev = document.getElementById("felhasznalonev")
     let emailCim = document.getElementById("email")
+    alapEmail = emailCim
     console.log(adatok[0])
     regdatum.value = adatok[0]["letrehozas"]
     felhasznaloNev.value = adatok[0]["felhnev"]
@@ -193,6 +161,7 @@ function gombNyomas(melyikGomb){
 async function modositAlapinf() {
     let emailCim = document.getElementById("email").value
     let jelszo = document.getElementById("jelszo").value
+
     const stringUrese  = str => !str.replace(/\s/g, '').length
 
     //! Írd ide hogy csekolja azt is, hogy van e felhasználó Id!!!
@@ -203,16 +172,31 @@ async function modositAlapinf() {
 
     let sqlOszlop
     let sqlOszlopAdat
-    let felhasznaloId
-    if(stringUrese(emailCim) == false){
+    let mindkett = []
+    if(stringUrese(emailCim) == false && stringUrese(jelszo) == true && emailCim != alapEmail){
         sqlOszlop = "email"
         sqlOszlopAdat = emailCim
     }
-    else{
+    else if(stringUrese(emailCim) == true && stringUrese(jelszo) == false){
         sqlOszlop  = "jelszo"
         sqlOszlopAdat = jelszo
     }
-    felhasznaloId = 5
+    else if(stringUrese(jelszo) == false){
+        sqlOszlop = "mindketto"
+        mindkett[0] = emailCim
+        mindkett[1] = jelszo
+    }
+    else{
+        return;
+    }
+
+    let sqlOszlopAdatElkuld
+    if(mindkett.length != 0){
+        sqlOszlopAdatElkuld = mindkett
+    }
+    else{
+        sqlOszlopAdatElkuld = sqlOszlopAdat
+    }
 
     try {
         
@@ -223,11 +207,12 @@ async function modositAlapinf() {
             },
             body : JSON.stringify({
                 "melyikMezo" : sqlOszlop,
-                "mezoAdat" : sqlOszlopAdat,
+                "mezoAdat" : sqlOszlopAdatElkuld,
                 "felhasznaloId" : felhasznaloId
+                
              })
         });
-
+        console.log(await lekeres)
         if(lekeres.ok){
             // oldal újratölt
             location.reload(true)
@@ -241,6 +226,33 @@ async function modositAlapinf() {
     }
 }
 
-window.addEventListener("load", adatokLeker)
+
+async function fontosAdatokleker(){
+    await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
+    .then(response => response.text())  // Get the response as text
+    .then(id => {
+    if (id) {
+        felhasznaloId = id;
+    } 
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+
+    
+    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
+                    .then(response => response.text())  // Get the response as text
+                    .then(userPicturePath => {
+                    if (userPicturePath) {
+                        profilkep = userPicturePath;
+                    } else {
+                        profilkep = ""; // Default image if no picture is set
+                    }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+
+    adatokLeker()
+}
+
+window.addEventListener("load", fontosAdatokleker)
+
 
 document.getElementById('fileInput').addEventListener("change", ujprofilKep)
