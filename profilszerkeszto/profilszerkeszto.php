@@ -124,7 +124,7 @@
                                     bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
                                 }
                     }
-
+                            //! Rakd át külőn fájlba !!!
                             function bejelentHiba($uzenet, $hibae){
                                 if(!empty($uzenet) && $hibae == true){
                                 echo "
