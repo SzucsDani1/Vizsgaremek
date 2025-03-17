@@ -127,14 +127,6 @@ async function kereses(){
             keresesiTalalat.classList = "alert alert-danger text-center mx-auto my-3";
             keresesiTalalat.role = "alert";
             keresesiTalalat.style.width = "80%";
-
-            let input = document.createElement("input");
-            input.type = "button";
-            input.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
-            input.setAttribute("data-bs-dismiss", "alert");
-            input.setAttribute("aria-label", "Close");;
-
-            keresesiTalalat.appendChild(input);
         }
     } catch (error) {
         console.log(error);
