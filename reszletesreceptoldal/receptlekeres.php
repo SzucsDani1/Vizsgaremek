@@ -149,8 +149,72 @@
         }
         break;
 
-        case "hozzaszolasfeltoltes":
+        case "ertekelt":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                    $recept_id = $bodyAdatok["recept_id"];
+                    $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                    $leker = adatokLekerdezese("SELECT * FROM ertekeles WHERE ertekeles.recept_id = {$recept_id} AND ertekeles.felhasznalo_id = {$felhasznalo_id};");
+                    if(is_array($leker)){
+                        echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
+        case "hozzavalokleker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["recept_id"])){
+                    $recept_id = $bodyAdatok["recept_id"];
+                    $leker = adatokLekerdezese("SELECT * FROM hozzavalok WHERE hozzavalok.recept_id = {$recept_id};");
+                    if(is_array($leker)){
+                        echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
+        case "kategorialeker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["recept_id"])){
+                    $recept_id = $bodyAdatok["recept_id"];
+                    $leker = adatokLekerdezese("SELECT * FROM `hozzavalok` WHERE hozzavalok.recept_id = {$recept_id} GROUP BY hozzavalok.kategoria;");
+                    if(is_array($leker)){
+                        echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
+        case "hozzaszolasfeltoltes":
+            if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 if(!empty($bodyAdatok["hozzaszolas"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["receptek_id"])){
                     $hozzaszolas = $bodyAdatok["hozzaszolas"];
                     $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
@@ -223,12 +287,14 @@
                         $recept_id = $bodyAdatok["recept_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
                         $ertekeles = $bodyAdatok["ertekeles"];
-                        $recept = adatokLekerdezese("INSERT INTO `ertekeles`( `felhasznalo_id`, `recept_id`, `ertek`) VALUES ({$felhasznalo_id},{$recept_id},{$ertekeles});");
-                        if(is_array($recept) && !empty($recept)){
-                            echo json_encode($recept, JSON_UNESCAPED_UNICODE);
+                        $recept = adatokValtoztatasa("INSERT INTO `ertekeles`( `felhasznalo_id`, `recept_id`, `ertek`) VALUES ({$felhasznalo_id},{$recept_id},{$ertekeles});");
+                        if($recept == "Sikeres művelet!"){
+                            header("CREATED", true, 201);
+                            echo json_encode(["valasz" => "Értékelés elküldve!"], JSON_UNESCAPED_UNICODE);
+                            
                         }
                         else{
-                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                            echo json_encode(["valasz" => "Sikertelen feltöltés!"], JSON_UNESCAPED_UNICODE);
                             header("bad request", true, 400);
                         }
                     }

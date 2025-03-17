@@ -85,6 +85,26 @@
           </tr>
         </tbody>
       </table>
+
+      <!--Hozzávalók-->
+      <div id="hozzavalokMegjelenit"></div>
+      <!--<table class="table table-warning table-hover w-75 mx-auto mt-3 text-center">
+        <thead>
+          <tr class="border-top-0 border-bottom-0">
+            <th scope="col">Idő</th>
+            <th scope="col">Költség</th>
+            <th scope="col">Nehézség</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-top-0 border-bottom-0">
+            <td id="receptIdeje"></td>
+            <td id="receptKoltseg"></td>
+            <td id="receptNehezseg"></td>
+          </tr>
+        </tbody>
+      </table>-->
+
       
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
@@ -104,8 +124,7 @@
           </div>
           <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100">
         </div>
-        <div class="mx-auto my-3 w-50">
-          
+        <div id="csillagUzenet">
         </div>
       </div>
       

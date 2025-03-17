@@ -1,5 +1,5 @@
 let kivalasztottCsillag = 0;
-
+let kategoriak = [];
 async function hozzaszolasElkuld(){
   try {
     let hozzaszolas = document.getElementById("hozzaszolas").value;
@@ -13,7 +13,7 @@ async function hozzaszolasElkuld(){
     }
 
     let kuldes = await fetch("./hozzaszolasfeltoltes", {
-      method : "POST",
+      method : "PUT",
       headers : {
         "Content-Type" : "application/json"
       },
@@ -134,11 +134,11 @@ async function ertekelesLeker(){
     }
 }
 
-async function ertekelesFelhasznaloLeker(){
+async function ertekeltE(){
     try {
         let receptId = 1;
-        let felhasznalo_id = 14;
-        let leker = await fetch("./ertekelesfelhasznaloleker",{
+        let felhasznalo_id = 5;
+        let leker = await fetch("./ertekelt",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -146,20 +146,81 @@ async function ertekelesFelhasznaloLeker(){
             body : JSON.stringify({
                 "recept_id" : receptId,
                 "felhasznalo_id" : felhasznalo_id
-
             })
         });
 
         let valasz = await leker.json();
-        if(valasz.valasz == "Nincs találat!"){
-            return;
+        const csillagok = document.querySelectorAll('#csillagErtekel');
+        document.getElementById("btnErtekelesKuld").hidden = false;
+        if(valasz.valasz == "Nincs találat"){
+          //Módosíthat
+          frissitCsillagok(0, csillagok, true);
+          return true;
         }
         else{
-            
+          //Nem módosíthat
+          document.getElementById("btnErtekelesKuld").hidden = true;
+          frissitCsillagok(valasz[0].ertek, csillagok, false);
+          return false;
         }
     } catch (error) {
         console.log(error);
     }
+}
+
+async function hozzavalokLeker(){
+  try {
+    let receptId = 1;
+    let leker = await fetch("./hozzavalokleker",{
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "recept_id" : receptId
+        })
+    });
+    
+    let hozzavalok = await leker.json();
+
+    if(leker.ok){
+      console.log(hozzavalok);
+        hozzavalokMegjelenit(hozzavalok);
+    }
+    else{
+        console.log(hozzavalok.valasz);
+    }
+} catch (error) {
+    console.log(error);
+}
+}
+
+async function hozzavalokKategoriaLeker(){
+  try {
+    let receptId = 1;
+    let leker = await fetch("./kategorialeker",{
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "recept_id" : receptId
+        })
+    });
+    
+    let eredmeny = await leker.json();
+
+    if(leker.ok){
+      for(elem of eredmeny){
+        kategoriak.push(elem.kategoria);
+      }
+    }
+    else{
+        console.log(eredmeny.valasz);
+    }
+} catch (error) {
+    console.log(error);
+}
 }
 
 async function ertekelesElkuld(){
@@ -167,9 +228,8 @@ async function ertekelesElkuld(){
       const csillagok = document.querySelectorAll('#csillagErtekel');
       csillagLekerFelhasznalotol(csillagok)
       
-      console.log(kivalasztottErtek)
       let receptId = 1; 
-      let felhasznalo_id = 14; 
+      let felhasznalo_id = 5; 
   
       let kuldes = await fetch("./ertekeleselkuld",{
         method : "PUT",
@@ -184,13 +244,16 @@ async function ertekelesElkuld(){
       });
   
       let valasz = await kuldes.json();
-  
+      let uzenet = document.getElementById("csillagUzenet");
       if(kuldes.ok){
-        console.log("Értékelés sikeresen elküldve:", valasz);
-        // Itt frissítheted a felületet, például kiírhatod az üzenetet
+        uzenet.innerHTML = valasz.valasz;
+        uzenet.classList = "col-12 col-md-12 col-sm-12 mx-auto my-3 text-center alert alert-primary";
+        uzenet.role = "alert";
+        ertekeltE();
       } else {
-        console.error("Hiba történt:", valasz);
-        // Hibakezelés, például hibaüzenet kiírása
+        uzenet.innerHTML = valasz.valasz;
+        uzenet.classList = "col-12 col-md-12 col-sm-12 mx-auto my-3 text-center alert alert-danger";
+        uzenet.role = "alert";
       }
   
     } catch (error) {
@@ -199,6 +262,83 @@ async function ertekelesElkuld(){
   }
   
 
+
+function hozzavalokMegjelenit(hozzavalok){
+  let hozzavalokKiir = document.getElementById("hozzavalokMegjelenit");
+  for(let kategoria of kategoriak){
+    let szamlalo = 1;
+    console.log("aaa"+kategoria);
+    let div = document.createElement("div");
+    div.classList = "filter-box border p-3 bg-light rounded my-3 mx-auto";
+
+    let h1 = document.createElement("h1");
+    h1.classList = "display-6";
+    h1.innerHTML = kategoria;
+
+    let table = document.createElement("table");
+    table.classList = "table table-warning table-hover w-75 mx-auto mt-3 text-center";
+
+    let thead = document.createElement("thead");
+
+    let tr = document.createElement("tr");
+
+    let thSorszam = document.createElement("th")
+    let thHozzavaloNev = document.createElement("th")
+    let thMennyiseg = document.createElement("th")
+    let thBevasarloGomb = document.createElement("th")
+
+    thSorszam.innerHTML = szamlalo;
+    thHozzavaloNev.innerHTML = "Hozzávaló neve";
+    thMennyiseg.innerHTML = "Mennyiség";
+
+
+    hozzavalokKiir.appendChild(div);
+    div.appendChild(h1);
+    div.appendChild(table);
+    table.appendChild(thead);
+    thead.appendChild(tr);
+    tr.appendChild(thSorszam);
+    tr.appendChild(thHozzavaloNev);
+    tr.appendChild(thMennyiseg);
+    tr.appendChild(thBevasarloGomb);
+
+
+    let tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+    for(let hozzavalo of hozzavalok){
+      if(hozzavalo.kategoria == kategoria){
+        let tbodyTR = document.createElement("tr");
+
+        let tdSorszam = document.createElement("td");
+        let tdHozzavaloNev = document.createElement("td");
+        let tdMennyiseg = document.createElement("td");
+        let tdBevasarloGomb = document.createElement("td");
+
+        let btnBevasarlo = document.createElement("input");
+        btnBevasarlo.type = "button";
+        btnBevasarlo.classList = "btn btn-warning";
+        btnBevasarlo.value = "Kosárhoz";
+        btnBevasarlo.id = hozzavalo.hozzavalo;
+
+        tdSorszam.innerHTML = szamlalo;
+        tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
+        tdMennyiseg.innerHTML = hozzavalo.mennyiseg + " " + hozzavalo.mertek_egyseg;
+
+        tbody.appendChild(tbodyTR);
+        tbodyTR.appendChild(tdSorszam);
+        tbodyTR.appendChild(tdHozzavaloNev);
+        tbodyTR.appendChild(tdMennyiseg);
+        tbodyTR.appendChild(tdBevasarloGomb);
+        tdBevasarloGomb.appendChild(btnBevasarlo);
+
+
+        szamlalo++;
+      }
+    }
+
+  }
+}
+
 function receptMegjelenit(receptek){
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
@@ -206,8 +346,6 @@ function receptMegjelenit(receptek){
     document.getElementById("receptIdeje").innerHTML = receptek[0].ido +" perc";
     document.getElementById("receptKoltseg").innerHTML = receptek[0].ar;
     document.getElementById("receptNehezseg").innerHTML = receptek[0].nehezseg;
-
-
 }
 
 function getCookie(cname) {
@@ -323,7 +461,9 @@ function csillagErtekeloFelhasznalotol() {
 */
 function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
     if(felhasznaloModosit == true){
+
         ertekelesSzama = csillagLekerFelhasznalotol(csillagok);
+
     }
     console.log(ertekelesSzama)
     for (const csillag of csillagok) {
@@ -347,18 +487,31 @@ function csillagLekerFelhasznalotol(csillagok){
     }
 }
 
+
+async function hozzavalokFuggvenyHivas() {
+  try {
+      await hozzavalokKategoriaLeker();
+      await hozzavalokLeker();
+  } catch (error) {
+      console.log(error);
+  }
+}
+
+window.addEventListener("load",  hozzavalokFuggvenyHivas);
+
+
+
   //document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
-document.addEventListener("DOMContentLoaded", function(){
-    const csillagok = document.querySelectorAll('#csillagErtekel');
-    frissitCsillagok(0, csillagok, true);
-})
+window.addEventListener("load", ertekeltE)
   document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
   window.addEventListener("load", function(){
     hozzaszolasLeker();
     receptLeker();
     ertekelesLeker();
     //ertekelesMegjelenit();
-    ertekelesFelhasznaloLeker();
+    ertekeltE();
+    /*hozzavalokLeker();
+    hozzavalokKategoriaLeker()*/
   });
   document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 
