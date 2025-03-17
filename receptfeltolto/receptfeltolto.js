@@ -21,12 +21,11 @@ async function receptFeltoltes(){
         // sikeres feltöltés esetén
     }
 }
-document.getElementById("receptFeltoltes").addEventListener("click", receptFeltoltes);
 
-function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat) {
+function receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat) {
     document.getElementById("figyelmezteto_uzenet").hidden = true;
     
-    if (inputMennyiseg.value === "" || inputMertekegyseg.value === "" || inputNev.value === "") {
+    if (hozzavaloMennyiseg.value === "" || hozzavaloMertekegyseg.value === "" || hozzavaloNeve.value === "") {
         document.getElementById("figyelmezteto_uzenet").innerHTML = "Kérem töltsön ki minden mezőt!";
         document.getElementById("figyelmezteto_uzenet").hidden = false;
         return;
@@ -81,15 +80,15 @@ function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat
     tdSzamlalo.innerHTML = sorSzamlal;
     
     const tdHozzvaloNeve = document.createElement("td");
-    tdHozzvaloNeve.innerHTML = inputNev.value;
+    tdHozzvaloNeve.innerHTML = hozzavaloNeve.value;
     
     const tdHozzvaloMennyiseg = document.createElement("td");
-    tdHozzvaloMennyiseg.innerHTML = inputMennyiseg.value;
+    tdHozzvaloMennyiseg.innerHTML = hozzavaloMennyiseg.value;
     
     const tdHozzvaloMertekegyseg = document.createElement("td");
-    tdHozzvaloMertekegyseg.innerHTML = inputMertekegyseg.value;
+    tdHozzvaloMertekegyseg.innerHTML = hozzavaloMertekegyseg.value;
     
-    // Törlés gomb cella
+    // Törlés gomb
     const tdTorles = document.createElement("td");
     const tdTorlesGomb = document.createElement("button");
     tdTorlesGomb.type = "button";
@@ -117,9 +116,9 @@ function receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat
     sorSzamlal++;
     table.dataset.sorSzamlal = sorSzamlal;
     
-    inputNev.value = "";
-    inputMennyiseg.value = "";
-    inputMertekegyseg.value = "";
+    hozzavaloNeve.value = "";
+    hozzavaloMennyiseg.value = "";
+    hozzavaloMertekegyseg.value = "";
 }
 
 function cellaUjraSzamlal(table) {
@@ -240,10 +239,10 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const formNev = document.createElement("form");
     formNev.classList = "form-floating";
     
-    const inputNev = document.createElement("input");
-    inputNev.type = "text";
-    inputNev.classList = "form-control";
-    inputNev.placeholder = "Hozzávaló";
+    const hozzavaloNeve = document.createElement("input");
+    hozzavaloNeve.type = "text";
+    hozzavaloNeve.classList = "form-control";
+    hozzavaloNeve.placeholder = "Hozzávaló";
     const labelNev = document.createElement("label");
     labelNev.innerHTML = "Hozzávaló neve";
 
@@ -253,10 +252,10 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const formMennyiseg = document.createElement("form");
     formMennyiseg.classList = "form-floating";
 
-    const inputMennyiseg = document.createElement("input");
-    inputMennyiseg.type = "text";
-    inputMennyiseg.classList = "form-control";
-    inputMennyiseg.placeholder = "Hozzávaló mennyiség";
+    const hozzavaloMennyiseg = document.createElement("input");
+    hozzavaloMennyiseg.type = "text";
+    hozzavaloMennyiseg.classList = "form-control";
+    hozzavaloMennyiseg.placeholder = "Hozzávaló mennyiség";
 
     const labelMennyiseg = document.createElement("label");
     labelMennyiseg.innerHTML = "Hozzávaló mennyiség";
@@ -267,10 +266,10 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     const formMertekegyseg = document.createElement("form");
     formMertekegyseg.classList = "form-floating";
 
-    const inputMertekegyseg = document.createElement("input");
-    inputMertekegyseg.type = "text";
-    inputMertekegyseg.classList = "form-control";
-    inputMertekegyseg.placeholder = "Hozzávaló mértékegység";
+    const hozzavaloMertekegyseg = document.createElement("input");
+    hozzavaloMertekegyseg.type = "text";
+    hozzavaloMertekegyseg.classList = "form-control";
+    hozzavaloMertekegyseg.placeholder = "Hozzávaló mértékegység";
 
     const labelMertekegyseg = document.createElement("label");
     labelMertekegyseg.innerHTML = "Hozzávaló mértékegysége";
@@ -285,23 +284,23 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
 
     divRow.appendChild(divColNev);
     divColNev.appendChild(formNev);
-    formNev.appendChild(inputNev);
+    formNev.appendChild(hozzavaloNeve);
     formNev.appendChild(labelNev);
 
     divRow.appendChild(divColMennyiseg);
     divColMennyiseg.appendChild(formMennyiseg);
-    formMennyiseg.appendChild(inputMennyiseg);
+    formMennyiseg.appendChild(hozzavaloMennyiseg);
     formMennyiseg.appendChild(labelMennyiseg);
 
     divRow.appendChild(divColMertekegyseg);
     divColMertekegyseg.appendChild(formMertekegyseg);
-    formMertekegyseg.appendChild(inputMertekegyseg);
+    formMertekegyseg.appendChild(hozzavaloMertekegyseg);
     formMertekegyseg.appendChild(labelMertekegyseg);
 
     divRow.appendChild(btnHozzaad);
 
     btnHozzaad.addEventListener("click", function () {
-        receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg, divTablazat);
+        receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat);
     });
 }
 
@@ -581,35 +580,6 @@ function arFigyel() {
 }
 
 
-function kaloriaFigyel() {
-    const range = document.getElementById("kaloriaInput");
-    let kaloriaKiir = document.getElementById("kaloriaKiir");
-
-    range.addEventListener("input", frissitKaloria);
-    range.addEventListener("mousedown", function() { 
-        frissitKaloria(); 
-        range.addEventListener("mousemove", frissitKaloria); 
-    });
-    range.addEventListener("mouseup", function() { 
-        range.removeEventListener("mousemove", frissitKaloria); 
-    });
-
-    function frissitKaloria() {
-        if (range.value == 0) {
-            kaloriaKiir.innerHTML = "Mind";
-        } else if (range.value == 1) {
-            kaloriaKiir.innerHTML = "200 kcal alatt";
-        }else if (range.value == 2) {
-            kaloriaKiir.innerHTML = "200-400 kcal";
-        } else if (range.value == 3) {
-            kaloriaKiir.innerHTML = "400-600 kcal";
-        }
-        else {
-            kaloriaKiir.innerHTML = "600 kcal felett";
-        }
-    }
-}
-
 function nehezsegFigyel() {
     const range = document.getElementById("nehezsegInput");
     let nehezsegKiir = document.getElementById("nehezsegKiir");
@@ -709,62 +679,100 @@ function adagFigyel() {
 
 
 function mindenKiVanEToltve() {
-    // Figyelmeztető üzenetek tárolása
-    let hibaUzenetek = [];
-    
-    // Recept név ellenőrzése
-    const receptNev = document.getElementById("receptNev").value;
-    if (!receptNev || receptNev.trim() === "") {
-        hibaUzenetek.push("A recept nevét kötelező megadni!");
-    }
-    
-    // Hozzávalók ellenőrzése
-    const hozzavaloNevek = document.querySelectorAll(".hozzavalo_nev");
-    const hozzavaloMennyisegek = document.querySelectorAll(".hozzavalo_mennyiseg");
-    const hozzavaloMertekegysegek = document.querySelectorAll(".hozzavalo_mertekegyseg");
-    
-    // Hozzávaló nevek ellenőrzése for...of ciklussal
-    let index = 0;
-    for (const input of hozzavaloNevek) {
-        if (!input.value || input.value.trim() === "") {
-            hibaUzenetek.push(`A hozzávaló neve a(z) ${index + 1}. sorban hiányzik!`);
-        }
-        index++;
-    }
-    
-    // Hozzávaló mennyiségek ellenőrzése for...of ciklussal
-    index = 0;
-    for (const input of hozzavaloMennyisegek) {
-        if (!input.value || input.value.trim() === "") {
-            hibaUzenetek.push(`A hozzávaló mennyisége a(z) ${index + 1}. sorban hiányzik!`);
-        }
-        index++;
-    }
-    
-    // Hozzávaló mértékegységek ellenőrzése for...of ciklussal
-    index = 0;
-    for (const input of hozzavaloMertekegysegek) {
-        if (!input.value || input.value.trim() === "") {
-            hibaUzenetek.push(`A hozzávaló mértékegysége a(z) ${index + 1}. sorban hiányzik!`);
-        }
-        index++;
-    }
+    let hibaUzenetKiir = document.getElementById("hibaUzenet");
+    hibaUzenetKiir.innerHTML = "";
 
-    // Étrend kiválasztás ellenőrzése
-    if (kivalasztottEtrendek.size === 0) {
-        hibaUzenetek.push("Kérjük, válassz ki legalább egy étrendet!");
-    }
-    
-    // Egyéb mezők ellenőrzése (opcionális)
-    // Itt további mezők ellenőrzése következhet...
-    
-    // Figyelmeztetés megjelenítése hiba esetén
-    if (hibaUzenetek.length > 0) {
-        alert(hibaUzenetek.join("\n"));
-        return false; // Hibás állapot visszatérése
-    }
+    let divFigyelmeztet = document.createElement("div");
+    divFigyelmeztet.classList = "alert alert-danger";
+    divFigyelmeztet.role = "alert";
+    divFigyelmeztet.id = "kategoriaFigyelmeztet" + kategoriaSzamlalo;
 
-    return true; // Minden rendben
+    hibaUzenetKiir.appendChild(divFigyelmeztet);
+     // Recept név ellenőrzése
+     let receptNev = document.getElementById("receptNev").value;
+     if (!receptNev || receptNev.trim() === "") {
+         divFigyelmeztet.innerHTML ="Kérem adja meg a recept nevét!";
+         return false;
+     }
+     
+    //Hozzávalók ellenőrzése
+    let table_hozzavalok = document.getElementById("table_hozzavalok");
+    let hozzavaloKategoriak = document.getElementById("hozzavaloKategoriak");
+    let vanHozzavalo = false;
+    
+    if (table_hozzavalok && table_hozzavalok.hidden === false && table_hozzavalok.querySelector("tbody") && table_hozzavalok.querySelector("tbody").children.length > 0) {
+        vanHozzavalo = true;
+    }
+    
+    if (hozzavaloKategoriak) {
+        let tables = hozzavaloKategoriak.querySelectorAll("table");
+        for (let table of tables) {
+            if (table && table.querySelector("tbody") && table.querySelector("tbody").children.length > 0) {
+                vanHozzavalo = true;
+                break;
+            }
+        }
+    }
+    
+    if (!vanHozzavalo) {
+        divFigyelmeztet.innerHTML ="Kérem, adjon hozzá legalább egy hozzávalót!";
+        return false;
+    }
+     
+     if (kivalasztottEtrendek.size === 0) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon ki legalább egy étrendet!";
+         return false;
+     }
+     
+     let etelfajtaKereso = document.getElementById("etelfajtaSearch");
+     if (!etelfajtaKereso.value) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon ételfajtát!";
+         return false;
+     }
+     
+     let konyhaKereso = document.getElementById("konyhaSearch");
+     if (!konyhaKereso.value) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon konyhát!";
+         return false;
+     }
+     
+     let napszakRadio = document.getElementById("napszak")
+     if (!napszakRadio.value) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon napszakot!";
+         return false;
+     }
+     
+     let nehezsegInput = document.getElementById("nehezsegInput");
+     if (nehezsegInput.value == 0) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon nehézségi szintet!";
+         return false;
+     }
+     
+     let arInput = document.getElementById("arInput");
+     if (arInput.value == 0) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon árkategóriát!";
+         return false;
+     }
+     
+     let kaloriaInput = document.getElementById("kaloriaInput");
+     if (kaloriaInput.value == "") {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon kalóriát!";
+         return false;
+     }
+     
+     let idoInput = document.getElementById("idoInput");
+     if (idoInput.value == 0) {
+         divFigyelmeztet.innerHTML ="Kérem, válasszon elkészítési időt!";
+         return false;
+     }
+     
+     let receptLeiras = document.getElementById("receptLeiras");
+     if (!receptLeiras.value || receptLeiras.value.trim() === "") {
+         divFigyelmeztet.innerHTML ="Kérem, írja le a recept leírását!";
+         return false;
+     }
+
+    return true; 
 }
 
 
@@ -773,8 +781,7 @@ function mindenKiVanEToltve() {
 function ujReceptKep(){
     const fileInput = document.getElementById('fileInput');
     const receptPicture = document.getElementById('receptPicture');
-    const removeButton = document.getElementById('removeButton');
-    const mentesButton = document.getElementById("receptMentesButton")
+
     
     const file = this.files[0];
     if (file) {
@@ -784,8 +791,7 @@ function ujReceptKep(){
             
         }
         reader.readAsDataURL(file);
-        mentesButton.style.display = 'block';
-        removeButton.style.display = 'block';
+       
     }
    
     
@@ -797,8 +803,7 @@ function ujReceptKep(){
             receptPicture.innerHTML = 'Nincs profilkép';
         }    
         fileInput.value = "";
-        removeButton.style.display = 'none';
-        mentesButton.style.display = 'none';
+       
         
     });
 
@@ -809,14 +814,15 @@ function ujReceptKep(){
 
   
 document.getElementById("btn_hozzaad").addEventListener("click", function () {
-    const inputNev = document.getElementById("hozzavalo_neve");
-    const inputMennyiseg = document.getElementById("hozzavalo_mennyiseg");
-    const inputMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
-    receptFeltolto(inputNev, inputMertekegyseg, inputMennyiseg);
+    const hozzavaloNeve = document.getElementById("hozzavalo_neve");
+    const hozzavaloMennyiseg = document.getElementById("hozzavalo_mennyiseg");
+    const hozzavaloMertekegyseg = document.getElementById("hozzavalo_mertekegyseg");
+    receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg);
 });
 
 document.getElementById("hozzaadKategoriaGomb").addEventListener("click", kategoriaHozzaadasa);
-
+document.getElementById("btnReceptFeltoltes").addEventListener("click", mindenKiVanEToltve);
+document.getElementById('fileInput').addEventListener("change", ujReceptKep)
 
 document.addEventListener("DOMContentLoaded",function(){
     beallitEtrendet();
@@ -829,8 +835,5 @@ window.addEventListener("load", function(){
     alapanyagLista();
     nehezsegFigyel();
     arFigyel();
-    kaloriaFigyel();
     adagFigyel();
 })
-document.getElementById("receptFeltoltes").addEventListener("click", mindenKiVanEToltve());
-document.getElementById('fileInput').addEventListener("change", ujReceptKep)

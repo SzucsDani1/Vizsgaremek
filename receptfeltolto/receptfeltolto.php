@@ -191,16 +191,6 @@
         </div>
       </div>
 
-      <!--KALÓRIA FELVITELE-->
-      <div class="row">
-        <div class="filter-box border p-3 bg-light rounded my-3">
-        <div class="my-3">
-          <label class="form-label">Kalória</label>
-          <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
-          <div id="kaloriaKiir" class="form-text">Mind</div>
-        </div>
-        </div>
-      </div>
 
       <!--ADAG FELVITELE -->
       <div class="row">
@@ -219,8 +209,8 @@
           <label class="mb-1">Idő (perc)</label> 
             <div class="col-12 col-lg-12 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
-                    <input type="number" class="form-control" id="ido">
-                    <label for="ido" class="form-label">Idő</label>
+                    <input type="number" class="form-control" id="idoInput">
+                    <label for="idoInput" class="form-label">Idő</label>
                 </form>
             </div>
         </div>
@@ -232,8 +222,8 @@
         <div class="mb-3">
           <label class="mb-1">Kalória (kcal)</label>
           <form class="form-floating">
-            <input type="number" class="form-control" id="kaloria">
-            <label for="kaloria" class="form-label">Kalória</label>
+            <input type="number" class="form-control" id="kaloriaInput">
+            <label for="kaloriaInput" class="form-label">Kalória</label>
           </form>
         </div>
       </div>          
@@ -346,8 +336,11 @@
                             
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12 col-sm-12">
-          <input type="button" value="Recept feltöltése" class="btn btn-warning w-100 m-2" id="receptFeltoltes">
+          <input type="button" value="Recept feltöltése" class="btn btn-warning m-2 col-12 col-lg-12 col-md-12 col-sm-12" id="btnReceptFeltoltes">
         </div>
+      </div>
+      <div class="row" id="hibaUzenet">
+
       </div>
 </div>
 
