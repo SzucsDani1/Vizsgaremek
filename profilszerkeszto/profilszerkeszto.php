@@ -65,40 +65,118 @@
           <div class="col-12 col-lg-6 order-lg-1 text-center">
                 <div class="profile-container">
                 
-                    <div id="profilePicture" class="profile-picture">Nincs profilkép</div>
+                    <div id="profilePicture" class="profile-picture ">Nincs profilkép</div>
                     <div >
-                        <form method="POST" enctype="multipart/form-data" >
+                        <form method="POST" enctype="multipart/form-data" class="my-3">
                             <input type="file" id="fileInput" name="image" class="form-control mt-2" accept="image/*">
-                            <button id="profilkepMentesButton" type="submit" class="btn btn-success w-100" style="display: none;">Mentés</button>
+                            <button id="profilkepMentesButton" type="submit" class="btn btn-success w-100 my-3" style="display: none;">Mentés</button>
                         </form>
-                        <button id="removeButton" class="btn btn-danger w-100 mt-2" style="display: none; ">Mégsem</button>
+                        <button id="removeButton" class="btn btn-danger w-100 mt-2 my-3" style="display: none; ">Mégsem</button>
+                        <?php
+                            include "./adatbazisInterakciok/adatbazisFeltolt.php";
+                            
+                            
+
+
+                            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+                                    $felhasznalonev = $_COOKIE["felhasznalonev"];
+                                    $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
+                                    
+                                    if(!file_exists($feltoltesiUtvonal)){
+                                        mkdir($feltoltesiUtvonal,0777, true);
+                                    }
+
+                                    // fájl formátum
+                                    $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+                                    // fájl neve
+                                    $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
+
+                                    // fájl az elérési utvonalal
+                                    $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
+
+
+                                    // Vizsgálja, hogy kép e
+                                    $check = getimagesize($_FILES['image']['tmp_name']);
+
+                                if ($check !== false) {
+                                
+
+                                    // * feltöltöt file a kijelolt mappába rakása
+                                    if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
+                                        
+                                        bejelentHiba("Profilkép sikeresen fellet töltve", false);
+                                        $eleresiUtvonal = "UPDATE 
+                                                                `felhasznalok` 
+                                                            SET 
+                                                                `profilkep` = '". $feltoltendoFajl ."' 
+                                                            WHERE 
+                                                                `felhasznalok`.`felhnev` 
+                                                            LIKE 
+                                                            '". $felhasznalonev."';";
+
+                                        
+                                        adatokValtoztatasa($eleresiUtvonal);
+                                        $_SESSION["profilkep"] = $feltoltendoFajl;
+                                        
+                                    } 
+                                    else 
+                                    {
+                                        bejelentHiba("Hiba történt a kép feltöltése közben.", true);
+                                    }
+                                } 
+                                else 
+                                {
+                                    bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
+                                }
+                    }
+
+                            function bejelentHiba($uzenet, $hibae){
+                                if(!empty($uzenet) && $hibae == true){
+                                echo "
+                                    <div class='alert alert-danger text-center' role='alert'>
+                                        $uzenet
+                                    </div>
+                                    ";
+                                }
+                                else{
+                                    echo "
+                                    <div class='alert alert-success text-center' role='alert'>
+                                        $uzenet
+                                    </div>
+                                    ";
+                                }
+                            }
+
+
+                ?>
                     </div>
                 </div>
                
           </div>
-            <div class="col-12 col-lg-6 order-lg-2 form-section">
-                <div class="filter-box border p-3 bg-light rounded">
+            <div class="col-12 col-lg-6 order-lg-2 form-section ">
+                <div class="filter-box border p-3 bg-light rounded my-3">
                     <label class="mb-1">Regisztráció dátuma</label>
                     <form class="form-floating">
                         <input type="text" class="form-control" id="regisztracioDatuma" disabled>
                         <label for="regisztracioDatuma" class="form-label">Dátum</label>
                     </form>
                 </div>
-                <div class="filter-box border p-3 bg-light rounded">
+                <div class="filter-box border p-3 bg-light rounded my-3">
                     <label class="mb-1">Felhasználónév</label>
                     <form class="form-floating">
                         <input type="text" class="form-control" id="felhasznalonev" disabled>
                         <label for="felhasznalonev" class="form-label">Felhasználónév</label>
                     </form>
                 </div>
-                <div class="filter-box border p-3 bg-light rounded">
+                <div class="filter-box border p-3 bg-light rounded my-3">
                     <label class="mb-1">Jelszó</label>
                     <form class="form-floating">
                         <input value="placeholder" type="password" class="form-control" id="jelszo"  disabled>
                         <label for="jelszo" class="form-label">Jelszó</label>
                     </form>
                 </div>
-                <div class="filter-box border p-3 bg-light rounded">
+                <div class="filter-box border p-3 bg-light rounded my-3">
                     <label class="mb-1">E-mail cím</label>
                     <form class="form-floating">
                         <input type="email" class="form-control" id="email" disabled>
@@ -120,81 +198,3 @@
 </html>
 
 
-<?php
-    include "./adatbazisInterakciok/adatbazisFeltolt.php";
-    
-    
-
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-            $felhasznalonev = $_COOKIE["felhasznalonev"];
-            $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
-            
-            if(!file_exists($feltoltesiUtvonal)){
-                mkdir($feltoltesiUtvonal,0777, true);
-            }
-
-            // fájl formátum
-            $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-
-            // fájl neve
-            $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
-
-            // fájl az elérési utvonalal
-            $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
-
-
-            // Vizsgálja, hogy kép e
-            $check = getimagesize($_FILES['image']['tmp_name']);
-
-        if ($check !== false) {
-           
-
-            // * feltöltöt file a kijelolt mappába rakása
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
-                
-                bejelentHiba("Profilkép sikeresen fellet töltve", false);
-                $eleresiUtvonal = "UPDATE 
-                                        `felhasznalok` 
-                                    SET 
-                                        `profilkep` = '". $feltoltendoFajl ."' 
-                                    WHERE 
-                                        `felhasznalok`.`felhnev` 
-                                    LIKE 
-                                    '". $felhasznalonev."';";
-
-                
-                adatokValtoztatasa($eleresiUtvonal);
-                $_SESSION["profilkep"] = $feltoltendoFajl;
-                
-            } 
-            else 
-            {
-                bejelentHiba("Hiba történt a kép feltöltése közben.", true);
-            }
-        } 
-        else 
-        {
-             bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
-        }
-    }
-
-    function bejelentHiba($uzenet, $hibae){
-        if(!empty($uzenet) && $hibae == true){
-        echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                $uzenet
-            </div>
-            ";
-        }
-        else{
-            echo "
-            <div class='alert alert-success text-center' role='alert'>
-                $uzenet
-            </div>
-            ";
-        }
-    }
-
-
-?>
