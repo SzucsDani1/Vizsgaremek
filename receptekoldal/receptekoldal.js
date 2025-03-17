@@ -252,14 +252,9 @@ function nincsTalalatKeresesre(error)
         div.innerHTML = "Nincs találat";
     }
     
-    let btnBezar = document.createElement("input");
-    btnBezar.type = "button";
-    btnBezar.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
-    btnBezar.setAttribute("data-bs-dismiss", "alert");
-    btnBezar.setAttribute("aria-label", "Close");
+    
 
     document.getElementById("kartyak").appendChild(div);
-    div.appendChild(btnBezar)
 }
 
 
