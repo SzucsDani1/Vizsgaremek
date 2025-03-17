@@ -412,53 +412,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
         }
     }
 }
-/*
-// Frissíti a csillagok megjelenítését az adott értékelés alapján
-function ertekelesMegjelenit(ertekeles) {
-    const csillagok = document.querySelectorAll('#csillagMegjelen');
-    for (const csillag of csillagok) {
-        if (csillag.getAttribute('data-value') <= ertekeles) {
-        csillag.classList.add('filled');
-        csillag.innerHTML = '&#9733;'; // kitöltött csillag
-        } else {
-        csillag.classList.remove('filled');
-        csillag.innerHTML = '&#9734;'; // üres csillag
-        }
-    }
-}
-  
-  
-// Inicializálás az oldal betöltésekor
 
-
-
-function csillagErtekeloFelhasznalotol() {
-    const csillagok = document.querySelectorAll('#csillagErtekel');
-  
-    // Frissíti a csillagok megjelenítését az adott értékelés alapján
-    function frissitCsillagok(ertekelesSzama) {
-      for (const csillag of csillagok) {
-        if (csillag.getAttribute('data-value') <= ertekelesSzama) {
-          csillag.classList.add('filled');
-          csillag.innerHTML = '&#9733;'; // kitöltött csillag
-        } else {
-          csillag.classList.remove('filled');
-          csillag.innerHTML = '&#9734;'; // üres csillag
-        }
-      }
-    }
-  
-    for (const csillag of csillagok) {
-        csillag.addEventListener('click', function() {
-        ertekelesSzama = csillag.getAttribute('data-value');
-        frissitCsillagok(ertekelesSzama);
-        console.log(ertekelesSzama);
-        
-    });
-      
-    }
-}
-*/
 function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
     if(felhasznaloModosit == true){
 
@@ -508,10 +462,7 @@ window.addEventListener("load", ertekeltE)
     hozzaszolasLeker();
     receptLeker();
     ertekelesLeker();
-    //ertekelesMegjelenit();
     ertekeltE();
-    /*hozzavalokLeker();
-    hozzavalokKategoriaLeker()*/
   });
   document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 
