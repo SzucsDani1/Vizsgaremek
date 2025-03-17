@@ -1,4 +1,8 @@
-<?php include "./adatbazisInterakciok/adatbazisInterakciok.php" ?>
+<?php 
+    require_once "./adatbazisInterakciok/sessionConfig.php";
+    include "./adatbazisInterakciok/adatbazisInterakciok.php" ;
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,21 +88,23 @@
                             $lekertJelszo = $lekerdez[0]["jelszo"];
                             if(password_verify($jelszo, $lekertJelszo)){
                                 
-                                $cookie_value = $lekerdez[0]["id"];
-                                setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 1honap 2nap
+                                $felhasznaloId_value = $lekerdez[0]["id"];
+                                $_SESSION["bejelentkezetFelhasznaloId"] = $felhasznaloId_value;
                                 
                                 $felhasznalonev_value = $lekerdez[0]["felhnev"];
-                                setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
+                                $_SESSION["felhasznalonev"] = $felhasznalonev_value;
+
                                 
                                 $felhasznalojoga_value = $lekerdez[0]["jognev"];
-                                setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
+                                $_SESSION["jogosultsagNev"] = $felhasznalojoga_value;
                                 
                                 
                                 $profilkep_value = $lekerdez[0]["profilkep"];
                                 if(empty($profilkep_value)){
                                     $profilkep_value = "";
                                 }
-                                setcookie("profilkep", $profilkep_value, time() + (86400 * 30), "/");
+                                $_SESSION["profilkep"] = $profilkep_value;
+
 
                             }
                             else{

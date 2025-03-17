@@ -1,6 +1,17 @@
-function bejelenzkezesVizsg(){
+
+async function bejelenzkezesVizsg(){
+    let felhasznaloId
+    await fetch('./adatbazisInterakciok/sessionGetFelhasznaloId.php')  // Fetch the PHP script
+          .then(response => response.text())  // Get the response as text
+          .then(id => {
+        if (id) {
+          felhasznaloId = id;
+        }
+    })
+    .catch(error => console.error('Error fetching session data:', error));
     
-    let felhasznaloId = cookieLekeres("bejelentkezetFelhasznaloId")
+ 
+
     let oldalTeljesElerese = window.location.pathname
 
     let megnyitottOldal = oldalTeljesElerese.substring(oldalTeljesElerese.lastIndexOf('/') + 1)
