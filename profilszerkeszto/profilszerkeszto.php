@@ -1,5 +1,8 @@
 <?php
-     require_once "./adatbazisInterakciok/sessionConfig.php";
+    require_once "./adatbazisInterakciok/sessionConfig.php";
+    include "./adatbazisInterakciok/adatbazisFeltolt.php";
+    include "./adatbazisInterakciok/hibakKiirat.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,13 +70,11 @@
                         </form>
                         <button id="removeButton" class="btn btn-danger w-100 mt-2 my-3" style="display: none; ">Mégsem</button>
                         <?php
-                            include "./adatbazisInterakciok/adatbazisFeltolt.php";
-                            
-                            
 
 
                             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-                                    $felhasznalonev = $_COOKIE["felhasznalonev"];
+                                    $felhasznalonev = $_SESSION["felhasznalonev"];
+                              
                                     $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
                                     
                                     if(!file_exists($feltoltesiUtvonal)){
@@ -124,25 +125,6 @@
                                     bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
                                 }
                     }
-                            //! Rakd át külőn fájlba !!!
-                            function bejelentHiba($uzenet, $hibae){
-                                if(!empty($uzenet) && $hibae == true){
-                                echo "
-                                    <div class='alert alert-danger text-center' role='alert'>
-                                        $uzenet
-                                    </div>
-                                    ";
-                                }
-                                else{
-                                    echo "
-                                    <div class='alert alert-success text-center' role='alert'>
-                                        $uzenet
-                                    </div>
-                                    ";
-                                }
-                            }
-
-
                 ?>
                     </div>
                 </div>

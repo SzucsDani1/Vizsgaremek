@@ -46,13 +46,25 @@ function ujprofilKep(){
     
 }
 
-async function adatokLeker() {
-    let felhasznaloId = lekerCookie("bejelentkezetFelhasznaloId")
+async function adatokLeker() { 
+    let felhasznaloId
+
+    await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
+    .then(response => response.text())  // Get the response as text
+    .then(id => {
+    if (id) {
+        felhasznaloId = id;
+    } 
+    })
+    .catch(error => console.error('Error fetching session data:', error));
+    
+    
     let sqlKod ={ 
         "sqlKod" :  "SELECT `felhasznalok`.`felhnev`, `felhasznalok`.`letrehozas`, `felhasznalok`.`email` FROM `felhasznalok` WHERE `felhasznalok`.`id` =" + felhasznaloId + ";"
     }
 
     try {
+
         let lekeres = await fetch("./adatbazisInterakciok/adatbazisLeker.php",{
             method: "POST",
             headers: {
@@ -87,7 +99,7 @@ function lekerCookie(name) {
 
 async function adatokMegjelenitese(adatok){
 
-    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot.php')  // Fetch the PHP script
+    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
                     .then(response => response.text())  // Get the response as text
                     .then(userPicturePath => {
                     if (userPicturePath) {

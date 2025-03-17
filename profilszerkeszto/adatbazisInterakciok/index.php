@@ -1,6 +1,6 @@
 <?php
-
 include './adatbazisInterakciok.php';
+
 
 $teljesUrl = $_SERVER["REQUEST_URI"];
 $url= explode("/",$teljesUrl);
@@ -9,11 +9,37 @@ $adatok = trim(file_get_contents("php://input"));
 $adatPost = json_decode($adatok,true);
 
 switch (end($url)) {
-    case '': {
+
+    case 'sessionProfilkepValtozot': {
         if ($metodus === 'GET') {
-            $tipusokSQL = "SELECT DISTINCT tipus FROM `hajok`;";
-            $tipusok = adatokLekerese($tipusokSQL);
-            echo json_encode($tipusok, JSON_UNESCAPED_UNICODE);
+            session_start();
+
+            // Check if the session variable 'userpicture' is set
+            if (isset($_SESSION['profilkep'])) {
+                echo $_SESSION['profilkep']; // Output the session value (user's picture path)
+            }   
+            else {
+                echo 'No picture set'; // Fallback if no picture is set
+            }
+        }
+        else {
+            echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+            header('Method Not Allowed', true, 405);
+        }
+        break;
+    }
+
+    case 'sessionLekerFelhasznaloId': {
+        if ($metodus === 'GET') {
+            session_start();
+
+            // Check if the session variable 'userpicture' is set
+            if (isset($_SESSION['bejelentkezetFelhasznaloId'])) {
+                echo $_SESSION['bejelentkezetFelhasznaloId']; // Output the session value (user's picture path)
+            }   
+            else {
+                echo 'No id'; // Fallback if no picture is set
+            }
         }
         else {
             echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
@@ -59,6 +85,8 @@ switch (end($url)) {
         echo '';
         break;
 }
+
+
 
 
 ?>
