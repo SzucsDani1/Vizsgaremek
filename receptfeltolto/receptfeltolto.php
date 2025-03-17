@@ -123,13 +123,30 @@
         </div>
     </div>
 
+    <!--NAPSZAK FELTÖLTÉSE-->
+    <div class="row">
+      <div class="filter-box border p-3 bg-light rounded my-3">
+        <div class="mb-3">
+          <label>Napszak</label>
+          <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="napszak">
+            <option value="" data-tokens=""></option>
+            <option value="Reggeli" data-tokens="Reggeli">Reggeli</option>
+            <option value="Tízorai" data-tokens="Tízorai">Tízórai</option>
+            <option value="Ebéd" data-tokens="Ebéd">Ebéd</option>
+            <option value="Uzsonna" data-tokens="Uzsonna">Uzsonna</option>
+            <option value="Vacsora" data-tokens="Vacsora">Vacsora</option>
+          </select>
+        </div>
+      </div>          
+    </div>
+
     <!--ÉTREND SZŰRÉSE-->
     <div class="row">
       <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="mb-3">
           <label class="mb-1">Étrend</label>
           <form class="form-floating">
-            <input type="text" class="form-control" id="etrendSearch" placeholder="Keresés az étrendek között...">
+            <input type="text" class="form-control" id="etrendSearch">
             <label for="etrendSearch" class="form-label">Étrend keresése</label>
           </form>
         </div>
@@ -152,79 +169,75 @@
       </div>          
     </div>
 
-     <!--ALAPANYAGOK SZŰRÉSE-->
-     <div class="row">
-        <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="mb-3">
-            <label class="mb-1">Alapanyagok</label>
-            <form class="form-floating">
-              <input type="text" class="form-control" id="alapanyagSearch" placeholder="Keresés az alapanyagok között...">
-              <label for="AlapanyagSearch" class="form-label">Alapanyagok keresése</label>
-            </form>
-          </div>
-          <div class="dropdown" id="alapanyagDropdown">
-            <div class="dropdown-menu" id="alapanyagLista"></div>
-          </div>
-          <div class="mt-3" id="kivalasztottAlapanyagok"></div>
-        </div>
-     </div>
-
      <!--NEHÉZSÉG FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="mb-3">
-            <label class="form-label">Nehézségi szint</label>
-            <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
-            <div id="nehezsegKiir" class="form-text">Mind</div>
-          </div>
+        <div class="my-3">
+          <label class="form-label">Nehézségi szint</label>
+          <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
+          <div id="nehezsegKiir" class="form-text">Mind</div>
+        </div>
         </div>
       </div>
       
       <!--ÁR FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="mb-3">
-            <label class="form-label">Ár</label>
-            <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
-            <div id="arKiir" class="form-text">Mind</div>
-          </div>
+        <div class="my-3">
+          <label class="form-label">Ár</label>
+          <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
+          <div id="arKiir" class="form-text">Mind</div>
+        </div>
         </div>
       </div>
 
       <!--KALÓRIA FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="mb-3">
-            <label class="form-label">Kalória</label>
-            <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
-            <div id="kaloriaKiir" class="form-text">Mind</div>
-          </div>
+        <div class="my-3">
+          <label class="form-label">Kalória</label>
+          <input type="range" class="form-range" id="kaloriaInput" value="0" min="0" max="4" step="1">
+          <div id="kaloriaKiir" class="form-text">Mind</div>
+        </div>
         </div>
       </div>
 
       <!--ADAG FELVITELE -->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="mb-3">
-            <label class="form-label">Adag</label>
-            <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
-            <div id="adagKiir" class="form-text">1 adag</div>
-          </div>
+        <div class="my-3">
+          <label class="form-label">Adag</label>
+          <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
+          <div id="adagKiir" class="form-text">1 adag</div>
+        </div>
         </div>
       </div>
 
       <!--IDŐ FELVITELE-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <label class="mb-1">Idő</label> 
+          <label class="mb-1">Idő (perc)</label> 
             <div class="col-12 col-lg-12 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
-                    <input type="text" class="form-control" id="ido" placeholder="Idő beállítása">
-                    <label for="ido">Idő</label>
+                    <input type="number" class="form-control" id="ido">
+                    <label for="ido" class="form-label">Idő</label>
                 </form>
             </div>
         </div>
       </div>
+
+      <!--KALÓRIA FELVITELE-->
+      <div class="row">
+      <div class="filter-box border p-3 bg-light rounded my-3">
+        <div class="mb-3">
+          <label class="mb-1">Kalória (kcal)</label>
+          <form class="form-floating">
+            <input type="number" class="form-control" id="kaloria">
+            <label for="kaloria" class="form-label">Kalória</label>
+          </form>
+        </div>
+      </div>          
+    </div>
 
       <!--RECEPT LEÍRÁSA-->
       <div class="row">
@@ -240,20 +253,97 @@
       <!--KÉPFELTÖLTÉS-->
       <div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
-          <div class="col-12">
-            <label class="mb-1">Kép feltöltés</label>
-            <div class="form-group">
-              <label for="kepFeltoltInput" class="btn btn-primary w-100">
-                Fájlok kiválasztása
-              </label>
-              <input type="file" class="d-none" id="kepFeltoltInput" multiple accept="image/*">
-            </div>
-            <div class="row" id="kepMegjelenit">
-            </div>
-          </div>
+        <div class="recept-container">
+                
+                <div id="receptPicture" class="recept-picture ">Nincs kép</div>
+                <div >
+                    <form method="POST" enctype="multipart/form-data" class="my-3">
+                        <input type="file" id="fileInput" name="image" class="form-control mt-2" accept="image/*">
+                        <button id="receptMentesButton" type="submit" class="btn btn-success w-100 my-3" style="display: none;">Mentés</button>
+                    </form>
+                    <button id="removeButton" class="btn btn-danger w-100 mt-2 my-3" style="display: none; ">Mégsem</button>
+                    <?php
+                        include "./adatbazisInterakciok/adatbazisFeltolt.php";
+                                    
+                                    
+        
+                        //TODO (felhasznalonev helyett recept id)
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+                                $felhasznalonev = $_COOKIE["felhasznalonev"];
+                                $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
+                                
+                                if(!file_exists($feltoltesiUtvonal)){
+                                    mkdir($feltoltesiUtvonal,0777, true);
+                                }
+        
+                                // fájl formátum
+                                $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        
+                                // fájl neve
+                                $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
+        
+                                // fájl az elérési utvonalal
+                                $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
+        
+        
+                                // Vizsgálja, hogy kép e
+                                $check = getimagesize($_FILES['image']['tmp_name']);           
+        
+                                if ($check !== false) {
+                                        
+                                  // * feltöltöt file a kijelolt mappába rakása
+                                  if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
+                                                  
+                                    bejelentHiba("Profilkép sikeresen fellet töltve", false);
+                                    $eleresiUtvonal = "UPDATE 
+                                                            `receptek` 
+                                                        SET 
+                                                            `kepek` = '". $feltoltendoFajl ."' 
+                                                        WHERE 
+                                                            `receptek`.`felhnev` 
+                                                        LIKE 
+                                                        '". $felhasznalonev."';";
+        
+                                    
+                                    adatokValtoztatasa($eleresiUtvonal);
+                                    $_SESSION["profilkep"] = $feltoltendoFajl;
+                                    
+                                } 
+                                else 
+                                {
+                                    bejelentHiba("Hiba történt a kép feltöltése közben.", true);
+                                }
+                            } 
+                          else 
+                          {
+                              bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
+                          }
+                        }
+                           //! Rakd át külőn fájlba !!!
+                           function bejelentHiba($uzenet, $hibae){
+                            if(!empty($uzenet) && $hibae == true){
+                            echo "
+                                <div class='alert alert-danger text-center' role='alert'>
+                                    $uzenet
+                                </div>
+                                ";
+                            }
+                            else{
+                                echo "
+                                <div class='alert alert-success text-center' role='alert'>
+                                    $uzenet
+                                </div>
+                                ";
+                            }
+                        }
+        
+        
+              ?>
+                </div>   
+              </div>        
         </div>
-      </div>
-
+      </div>      
+                            
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12 col-sm-12">
           <input type="button" value="Recept feltöltése" class="btn btn-warning w-100 m-2" id="receptFeltoltes">
@@ -262,7 +352,6 @@
 </div>
 
     <!--END ŰRLAP ELEMEK-->
-
 
 
 
