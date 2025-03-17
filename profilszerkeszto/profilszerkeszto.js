@@ -181,27 +181,48 @@ function gombNyomas(melyikGomb){
 async function modositAlapinf() {
     let emailCim = document.getElementById("email").value
     let jelszo = document.getElementById("jelszo").value
-    
-    if(empty(jelszo) && empty(emailCim)){
+    const stringUrese  = str => !str.replace(/\s/g, '').length
+
+    //! Írd ide hogy csekolja azt is, hogy van e felhasználó Id!!!
+    if(stringUrese(emailCim) == true && stringUrese(jelszo) == true){
         alert("Kérem változtason meg adatot!")
         return
     }
-    
+
+    let sqlOszlop
+    let sqlOszlopAdat
+    let felhasznaloId
+    if(stringUrese(emailCim) == false){
+        sqlOszlop = "email"
+        sqlOszlopAdat = emailCim
+    }
+    else{
+        sqlOszlop  = "jelszo"
+        sqlOszlopAdat = jelszo
+    }
+    felhasznaloId = 5
+
     try {
         
-        let lekeres = await fetch("./adatbazisInterakciok/adatbazisFeltolt.php",{
+        let lekeres = await fetch("./adatbazisInterakciok/modositAlapadatok",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body : JSON.stringify(sqlKod)
+            body : JSON.stringify({
+                "melyikMezo" : sqlOszlop,
+                "mezoAdat" : sqlOszlopAdat,
+                "felhasznaloId" : felhasznaloId
+             })
         });
 
         if(lekeres.ok){
             // oldal újratölt
+            location.reload(true)
         }
         else{
-            console.log("Nem érkeztek adatok!")
+            let valasz = await lekeres.json();
+            console.log(valasz["valasz"])
         }
     } catch (error) {
         console.log(error)
