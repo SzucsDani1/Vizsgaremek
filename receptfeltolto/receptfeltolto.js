@@ -708,9 +708,65 @@ function adagFigyel() {
 }
 
 
-function mindenKiVanEToltve(){
+function mindenKiVanEToltve() {
+    // Figyelmeztető üzenetek tárolása
+    let hibaUzenetek = [];
     
+    // Recept név ellenőrzése
+    const receptNev = document.getElementById("receptNev").value;
+    if (!receptNev || receptNev.trim() === "") {
+        hibaUzenetek.push("A recept nevét kötelező megadni!");
+    }
+    
+    // Hozzávalók ellenőrzése
+    const hozzavaloNevek = document.querySelectorAll(".hozzavalo_nev");
+    const hozzavaloMennyisegek = document.querySelectorAll(".hozzavalo_mennyiseg");
+    const hozzavaloMertekegysegek = document.querySelectorAll(".hozzavalo_mertekegyseg");
+    
+    // Hozzávaló nevek ellenőrzése for...of ciklussal
+    let index = 0;
+    for (const input of hozzavaloNevek) {
+        if (!input.value || input.value.trim() === "") {
+            hibaUzenetek.push(`A hozzávaló neve a(z) ${index + 1}. sorban hiányzik!`);
+        }
+        index++;
+    }
+    
+    // Hozzávaló mennyiségek ellenőrzése for...of ciklussal
+    index = 0;
+    for (const input of hozzavaloMennyisegek) {
+        if (!input.value || input.value.trim() === "") {
+            hibaUzenetek.push(`A hozzávaló mennyisége a(z) ${index + 1}. sorban hiányzik!`);
+        }
+        index++;
+    }
+    
+    // Hozzávaló mértékegységek ellenőrzése for...of ciklussal
+    index = 0;
+    for (const input of hozzavaloMertekegysegek) {
+        if (!input.value || input.value.trim() === "") {
+            hibaUzenetek.push(`A hozzávaló mértékegysége a(z) ${index + 1}. sorban hiányzik!`);
+        }
+        index++;
+    }
+
+    // Étrend kiválasztás ellenőrzése
+    if (kivalasztottEtrendek.size === 0) {
+        hibaUzenetek.push("Kérjük, válassz ki legalább egy étrendet!");
+    }
+    
+    // Egyéb mezők ellenőrzése (opcionális)
+    // Itt további mezők ellenőrzése következhet...
+    
+    // Figyelmeztetés megjelenítése hiba esetén
+    if (hibaUzenetek.length > 0) {
+        alert(hibaUzenetek.join("\n"));
+        return false; // Hibás állapot visszatérése
+    }
+
+    return true; // Minden rendben
 }
+
 
 
 
