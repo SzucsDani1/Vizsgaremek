@@ -160,6 +160,9 @@ async function ertekeltE(){
         else{
           //Nem módosíthat
           document.getElementById("btnErtekelesKuld").hidden = true;
+          document.getElementById("ertekeltSzoveg").innerHTML = "Megadott értékelés:";
+          document.getElementById("ertekeltSzoveg").classList = "d-flex justify-content-center text-body-secondary";
+          document.getElementById("divErtekelFelhasznalo").classList = "filter-box border p-3 bg-light rounded my-3 mx-auto"
           frissitCsillagok(valasz[0].ertek, csillagok, false);
           return false;
         }
@@ -185,7 +188,7 @@ async function hozzavalokLeker(){
 
     if(leker.ok){
       console.log(hozzavalok);
-        hozzavalokMegjelenit(hozzavalok);
+        hozzavalokTablazatGeneral(hozzavalok);
     }
     else{
         console.log(hozzavalok.valasz);
@@ -244,11 +247,24 @@ async function ertekelesElkuld(){
       });
   
       let valasz = await kuldes.json();
-      let uzenet = document.getElementById("csillagUzenet");
       if(kuldes.ok){
-        uzenet.innerHTML = valasz.valasz;
-        uzenet.classList = "col-12 col-md-12 col-sm-12 mx-auto my-3 text-center alert alert-primary";
-        uzenet.role = "alert";
+        let progress = document.getElementById('progressBar');
+        let alertBox = document.getElementById('egyeniAlert');
+        let duration = 5000; // 5 seconds
+        let step = 100; // update every 100ms
+        let width = 100;
+        progress.hidden = false;
+        alertBox.hidden = false;
+        alertBox.innerHTML = valasz.valasz;
+        let interval = setInterval(() => {
+            width -= (100 / (duration / step));
+            progress.style.width = width + '%';
+            if (width <= 0) {
+                clearInterval(interval);
+                alertBox.remove();
+                progress.remove();
+            }
+        }, step);
         ertekeltE();
       } else {
         uzenet.innerHTML = valasz.valasz;
@@ -263,7 +279,7 @@ async function ertekelesElkuld(){
   
 
 
-function hozzavalokMegjelenit(hozzavalok){
+function hozzavalokTablazatGeneral(hozzavalok){
   let hozzavalokKiir = document.getElementById("hozzavalokMegjelenit");
   for(let kategoria of kategoriak){
     let szamlalo = 1;
@@ -287,7 +303,7 @@ function hozzavalokMegjelenit(hozzavalok){
     let thMennyiseg = document.createElement("th")
     let thBevasarloGomb = document.createElement("th")
 
-    thSorszam.innerHTML = szamlalo;
+    thSorszam.innerHTML = "#";
     thHozzavaloNev.innerHTML = "Hozzávaló neve";
     thMennyiseg.innerHTML = "Mennyiség";
 

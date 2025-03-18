@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="reszletesreceptoldal.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body>
+<body class="hatter">
      <!--START NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -88,31 +88,16 @@
 
       <!--Hozzávalók-->
       <div id="hozzavalokMegjelenit"></div>
-      <!--<table class="table table-warning table-hover w-75 mx-auto mt-3 text-center">
-        <thead>
-          <tr class="border-top-0 border-bottom-0">
-            <th scope="col">Idő</th>
-            <th scope="col">Költség</th>
-            <th scope="col">Nehézség</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-top-0 border-bottom-0">
-            <td id="receptIdeje"></td>
-            <td id="receptKoltseg"></td>
-            <td id="receptNehezseg"></td>
-          </tr>
-        </tbody>
-      </table>-->
 
-      
+      <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
       <!--Csillagos értékelés a felhasználótól-->
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="filter-box border p-3 bg-light rounded my-3 mx-auto">
+          <div class="filter-box border p-3 rounded my-3 mx-auto" id="divErtekelFelhasznalo">
             <h1 class="display-6 text-center">Értékelés</h1>
+            <label id="ertekeltSzoveg"></label>
             <div id="ertekelesFelhasznalotol" class="text-center">
               <span class="star" id="csillagErtekel" data-value="1">&#9734;</span>
               <span class="star" id="csillagErtekel" data-value="2">&#9734;</span>
@@ -124,8 +109,8 @@
           </div>
           <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100">
         </div>
-        <div id="csillagUzenet">
-        </div>
+        <div id='egyeniAlert' class='alert alert-success text-center' role='alert' hidden></div>
+        <div id='progressBar' style='height: 5px; background: green; width: 100%;' hidden></div>
       </div>
       
       
