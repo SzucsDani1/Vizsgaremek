@@ -164,6 +164,11 @@ async function ertekeltE(){
           document.getElementById("ertekeltSzoveg").classList = "d-flex justify-content-center text-body-secondary";
           document.getElementById("divErtekelFelhasznalo").classList = "filter-box border p-3 bg-light rounded my-3 mx-auto"
           frissitCsillagok(valasz[0].ertek, csillagok, false);
+
+          for (const csillag of csillagok) {
+            csillag.setAttribute('disabled', 'true');
+            csillag.style.pointerEvents = 'none';
+          }
           return false;
         }
     } catch (error) {
@@ -251,7 +256,7 @@ async function ertekelesElkuld(){
         let progress = document.getElementById('progressBar');
         let alertBox = document.getElementById('egyeniAlert');
         let duration = 5000; // 5 seconds
-        let step = 100; // update every 100ms
+        let step = 5; // update every 100ms
         let width = 100;
         progress.hidden = false;
         alertBox.hidden = false;
@@ -435,7 +440,6 @@ function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
         ertekelesSzama = csillagLekerFelhasznalotol(csillagok);
 
     }
-    console.log(ertekelesSzama)
     for (const csillag of csillagok) {
       if (csillag.getAttribute('data-value') <= ertekelesSzama) {
         csillag.classList.add('filled');
@@ -450,9 +454,10 @@ function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
 function csillagLekerFelhasznalotol(csillagok){
     for (const csillag of csillagok) {
         csillag.addEventListener('click', function() {
-        ertekelesSzama = csillag.getAttribute('data-value');
-        frissitCsillagok(ertekelesSzama, csillagok, false);
-        kivalasztottCsillag = ertekelesSzama;
+          ertekelesSzama = csillag.getAttribute('data-value');
+          frissitCsillagok(ertekelesSzama, csillagok, false);
+          kivalasztottCsillag = ertekelesSzama;
+          return;
     });
     }
 }

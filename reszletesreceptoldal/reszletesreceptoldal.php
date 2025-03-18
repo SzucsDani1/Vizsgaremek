@@ -107,7 +107,7 @@
             </div>
             
           </div>
-          <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100">
+          <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100 mb-5">
         </div>
         <div id='egyeniAlert' class='alert alert-success text-center' role='alert' hidden></div>
         <div id='progressBar' style='height: 5px; background: green; width: 100%;' hidden></div>
@@ -125,14 +125,14 @@
       </div>
 
       <!--Küldés gomb-->
-      <input type="button" value="Küldés" class="btn btn-primary w-100 my-4" id="btnHozzaszolasKuldes">
+        <input type="button" value="Küldés" class="btn btn-primary col-12 mb-5 mt-3" id="btnHozzaszolasKuldes">
 
 
       <!--Hozzászólás elküldésének sikeressége-->
       <div id="hozzaszolasUzenet"></div>
 
       <div id="divHozzaszolasok" class="filter-box border p-3 bg-light rounded">
-        <h1 id="cimHozzaszolas" class="display-6 mb-4">Hozzászólások</h1>
+        <h1 id="cimHozzaszolas" class="display-6 my-4">Hozzászólások</h1>
         <ul class="list-group list-group-flush"  id="hozzaszolasok"></ul>
       </div>
     </div>

@@ -45,3 +45,7 @@
     color: gold;
   }
 
+  #btnHozzaszolasKuldes {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
