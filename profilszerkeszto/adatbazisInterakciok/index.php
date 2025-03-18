@@ -59,9 +59,17 @@ switch (end($url)) {
                 if($melyikMezo == "jelszo"){
                     $mezoAdat = password_hash($mezoAdat, PASSWORD_DEFAULT);
                 }
-                $ujadatSQL = "UPDATE `felhasznalok` SET `$melyikMezo` = '$mezoAdat' WHERE `felhasznalok`.`id` = $felhasznaloId";
+        
+                if($melyikMezo != "mindketto"){
+                    $ujadatSQL = "UPDATE `felhasznalok` SET `$melyikMezo` = '$mezoAdat' WHERE `felhasznalok`.`id` = $felhasznaloId";
+                }   
+                else{
+                    $email = $mezoAdat[0];
+                    $jelszo = password_hash($mezoAdat[1], PASSWORD_DEFAULT);
+                    $ujadatSQL = "UPDATE `felhasznalok` SET `jelszo` = '$jelszo', `email` = '$email' WHERE `felhasznalok`.`id` = $felhasznaloId";
+                }
                 $adat = adatokValtoztatasa($ujadatSQL);
-                if (!is_array($hajok)) {
+                if (!is_array($adat)) {
                     echo json_encode("Sikeres modosítás!");
                 }
                 else {
