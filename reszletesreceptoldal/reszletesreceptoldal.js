@@ -152,7 +152,8 @@ async function ertekeltE(){
         let valasz = await leker.json();
         const csillagok = document.querySelectorAll('#csillagErtekel');
         document.getElementById("btnErtekelesKuld").hidden = false;
-        if(valasz.valasz == "Nincs találat"){
+        console.log("VÁLASZA: "+valasz);
+        if(valasz == "Nincs találat!"){
           //Módosíthat
           frissitCsillagok(0, csillagok, true);
           return true;
@@ -454,7 +455,6 @@ function csillagLekerFelhasznalotol(csillagok){
           ertekelesSzama = csillag.getAttribute('data-value');
           frissitCsillagok(ertekelesSzama, csillagok, false);
           kivalasztottCsillag = ertekelesSzama;
-          return;
     });
     }
 }
@@ -474,13 +474,13 @@ async function alertMegjelenit(uzenet, hibae, helye){
       })
     })
 
+    alertKiir = await leker.json();
+    console.log("ALERT: "+alertKiir)
     if(leker.ok){
-      alertKiir = await leker.json();
       helye.innerHTML = alertKiir;
     }
     else{
-      alertKiir = await leker.json();
-      console.
+      console.log(alertKiir.valasz);
     }
   } catch (error) {
     console.log(error);

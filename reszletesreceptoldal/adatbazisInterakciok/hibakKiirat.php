@@ -1,7 +1,7 @@
 <?php 
     function bejelentHiba($uzenet, $hibae){
         if(!empty($uzenet) && $hibae == true){
-        echo "
+        return "
             <div id='egyeniAlert' class='alert alert-danger text-center' role='alert'>
                 $uzenet
             </div>
@@ -25,7 +25,7 @@
             ";
         }
         else if(!empty($uzenet) && $hibae == false ){
-            echo "
+            return "
             <div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
                 $uzenet
             </div>
@@ -49,7 +49,7 @@
             ";
         }
         else{
-            echo "
+            return "
             <div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
                 Nem kapott üzenet/hibae értéket a php!
             </div>
