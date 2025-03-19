@@ -1,9 +1,8 @@
 <?php 
     function bejelentHiba($uzenet, $hibae){
         if(!empty($uzenet) && $hibae == true){
-        return "
-            <div id='egyeniAlert' class='alert alert-danger text-center' role='alert'>
-                $uzenet
+        $alertHTML = "<div id='egyeniAlert' class='alert alert-danger text-center' role='alert'>
+                {$uzenet}
             </div>
             <div id='progressBar' style=' height: 5px; background: red; width: 100%;'></div>
 
@@ -23,11 +22,13 @@
                 }, step);
             </script>
             ";
+            $alertHTML = mb_convert_encoding($alertHTML, 'UTF-8', 'auto');
+            $eredmeny = json_encode($alertHTML);
+            echo $eredmeny;
         }
         else if(!empty($uzenet) && $hibae == false ){
-            return "
-            <div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
-                $uzenet
+            $alertHTML ="<div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
+                {$uzenet}
             </div>
             <div id='progressBar' style='height: 5px; background: green; width: 100%;'></div>
 
@@ -47,10 +48,12 @@
                 }, step);
             </script>
             ";
+            $alertHTML = mb_convert_encoding($alertHTML, 'UTF-8', 'auto');
+            $eredmeny = json_encode($alertHTML);
+            echo $eredmeny;
         }
         else{
-            return "
-            <div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
+            $alertHTML ="<div id='egyeniAlert' class='alert alert-success text-center' role='alert'>
                 Nem kapott üzenet/hibae értéket a php!
             </div>
             <div id='progressBar' style='height: 5px; background: red; width: 100%;'></div>
@@ -71,6 +74,10 @@
                 }, step);
             </script>
             ";
+
+            $alertHTML = mb_convert_encoding($alertHTML, 'UTF-8', 'auto');
+            $eredmeny = json_encode($alertHTML);
+            echo $eredmeny;
         }
     }
 

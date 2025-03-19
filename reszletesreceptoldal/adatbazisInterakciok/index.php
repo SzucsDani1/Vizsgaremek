@@ -220,14 +220,10 @@
                     $uzenet = $bodyAdatok["uzenet"];
                     $hibae = $bodyAdatok["hibae"];
                     $leker = bejelentHiba($uzenet, $hibae);
-                    if(is_array($leker)){
-                        echo json_encode($leker, JSON_UNESCAPED_UNICODE);
-                    }
-                    else{
-                        header("bad request", true, 400);
-                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
-                        
-                    }
+
+                    echo $leker;
+                    
+                    
                 }
            }
            else{
@@ -279,10 +275,10 @@
                         receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_neve, etrend.id,
                         receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek,
                         receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt,
-                        receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev,
+                        receptek.konyha_id, receptek.elkeszites, konyha.neve AS konyha_nev,felhasznalok.felhnev,
                         etelfajta.neve AS etelfajta_nev
                         FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id
-                        INNER JOIN etelfajta ON etelfajta.id=receptek.etelfajta_id
+                        INNER JOIN etelfajta ON etelfajta.id=receptek.etelfajta_id INNER JOIN konyha ON konyha.id = receptek.konyha_id
                         INNER JOIN receptetrend ON receptetrend.recept_id = receptek.id
                         INNER JOIN etrend ON etrend.id=receptetrend.etrend_id WHERE receptek.id = {$recept_id}
                         ");

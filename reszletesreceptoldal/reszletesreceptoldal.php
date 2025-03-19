@@ -89,6 +89,15 @@
       <!--Hozzávalók-->
       <div id="hozzavalokMegjelenit"></div>
 
+      <!--Recept infó-->
+      <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="filter-box border p-3 rounded my-3 mx-auto">
+            <div class="list-group" id="receptInfo"></div>
+          </div>
+        </div>
+      </div>
+
       <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 

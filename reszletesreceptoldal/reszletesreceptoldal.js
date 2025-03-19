@@ -98,6 +98,7 @@ async function receptLeker(){
             let receptek = await leker.json();
             console.log(receptek);
             receptMegjelenit(receptek);
+            receptInfoList(receptek);
         }
         else{
             let receptek = await leker.json();
@@ -152,7 +153,6 @@ async function ertekeltE(){
         let valasz = await leker.json();
         const csillagok = document.querySelectorAll('#csillagErtekel');
         document.getElementById("btnErtekelesKuld").hidden = false;
-        console.log("VÁLASZA: "+valasz);
         if(valasz == "Nincs találat!"){
           //Módosíthat
           frissitCsillagok(0, csillagok, true);
@@ -160,7 +160,6 @@ async function ertekeltE(){
         }
         else{
           //Nem módosíthat
-          console.log("Eddig");
           ertekelesLeker();
           document.getElementById("btnErtekelesKuld").hidden = true;
           document.getElementById("ertekeltSzoveg").innerHTML = "Megadott értékelés:";
@@ -357,6 +356,14 @@ function hozzavalokTablazatGeneral(hozzavalok){
   }
 }
 
+function receptInfoList(receptek){
+  let divReceptInfo = document.getElementById("receptInfo");
+
+  for(let recept of receptek){
+    let a
+  }
+}
+
 function receptMegjelenit(receptek){
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
@@ -475,7 +482,7 @@ async function alertMegjelenit(uzenet, hibae, helye){
     })
 
     alertKiir = await leker.json();
-    console.log("ALERT: "+alertKiir)
+    console.log("ALERT: "+alertKiir[0]);
     if(leker.ok){
       helye.innerHTML = alertKiir;
     }
