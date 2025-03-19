@@ -109,8 +109,7 @@
           </div>
           <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100 mb-5">
         </div>
-        <div id='egyeniAlert' class='alert alert-success text-center' role='alert' hidden></div>
-        <div id='progressBar' style='height: 5px; background: green; width: 100%;' hidden></div>
+        <div id="ertekelesAlert"></div>
       </div>
       
       

@@ -12,7 +12,7 @@ async function hozzaszolasElkuld(){
       return;
     }
 
-    let kuldes = await fetch("./hozzaszolasfeltoltes", {
+    let kuldes = await fetch("./adatbazisInterakciok/hozzaszolasfeltoltes", {
       method : "PUT",
       headers : {
         "Content-Type" : "application/json"
@@ -52,7 +52,7 @@ async function hozzaszolasElkuld(){
 }
 
 async function hozzaszolasLeker(){
-    let lekerHozzaszolas = await fetch("./hozzaszolasleker", {
+    let lekerHozzaszolas = await fetch("./adatbazisInterakciok/hozzaszolasleker", {
         method : "POST",
         headers : {
         "Content-Type" : "application/json"
@@ -62,7 +62,7 @@ async function hozzaszolasLeker(){
         })
     });
 
-    let lekerNev = await fetch("./nevleker", {
+    let lekerNev = await fetch("./adatbazisInterakciok/nevleker", {
         method : "POST",
         headers : {
         "Content-Type" : "application/json"
@@ -84,7 +84,7 @@ async function hozzaszolasLeker(){
 async function receptLeker(){
     try {
         let receptId = 1;
-        let leker = await fetch("./receptleker",{
+        let leker = await fetch("./adatbazisInterakciok/receptleker",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -111,7 +111,7 @@ async function receptLeker(){
 async function ertekelesLeker(){
     try {
         let receptId = 1;
-        let leker = await fetch("./ertekeles",{
+        let leker = await fetch("./adatbazisInterakciok/ertekeles",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -138,7 +138,7 @@ async function ertekeltE(){
     try {
         let receptId = 1;
         let felhasznalo_id = 5;
-        let leker = await fetch("./ertekelt",{
+        let leker = await fetch("./adatbazisInterakciok/ertekelt",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -159,12 +159,16 @@ async function ertekeltE(){
         }
         else{
           //Nem módosíthat
+          console.log("Eddig");
+          ertekelesLeker();
           document.getElementById("btnErtekelesKuld").hidden = true;
           document.getElementById("ertekeltSzoveg").innerHTML = "Megadott értékelés:";
           document.getElementById("ertekeltSzoveg").classList = "d-flex justify-content-center text-body-secondary";
-          document.getElementById("divErtekelFelhasznalo").classList = "filter-box border p-3 bg-light rounded my-3 mx-auto"
+          document.getElementById("divErtekelFelhasznalo").classList = "filter-box border p-3 bg-light rounded my-3 mx-auto";
+          
           frissitCsillagok(valasz[0].ertek, csillagok, false);
 
+          
           for (const csillag of csillagok) {
             csillag.setAttribute('disabled', 'true');
             csillag.style.pointerEvents = 'none';
@@ -179,7 +183,7 @@ async function ertekeltE(){
 async function hozzavalokLeker(){
   try {
     let receptId = 1;
-    let leker = await fetch("./hozzavalokleker",{
+    let leker = await fetch("./adatbazisInterakciok/hozzavalokleker",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -206,7 +210,7 @@ async function hozzavalokLeker(){
 async function hozzavalokKategoriaLeker(){
   try {
     let receptId = 1;
-    let leker = await fetch("./kategorialeker",{
+    let leker = await fetch("./adatbazisInterakciok/kategorialeker",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -232,63 +236,55 @@ async function hozzavalokKategoriaLeker(){
 }
 
 async function ertekelesElkuld(){
-    try {
-      const csillagok = document.querySelectorAll('#csillagErtekel');
-      csillagLekerFelhasznalotol(csillagok)
+  try {
+    const csillagok = document.querySelectorAll('#csillagErtekel');
+    csillagLekerFelhasznalotol(csillagok)
+    
+    let receptId = 1; 
+    let felhasznalo_id = 5; 
+
+    let kuldes = await fetch("./adatbazisInterakciok/ertekeleselkuld",{
+      method : "PUT",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+        "recept_id" : receptId,
+        "felhasznalo_id" : felhasznalo_id,
+        "ertekeles" : kivalasztottCsillag
+      })
+    });
+
+    let valasz = await kuldes.json();
+    let ertekelesAlert = document.getElementById("ertekelesAlert");
+    if(kuldes.ok){
       
-      let receptId = 1; 
-      let felhasznalo_id = 5; 
-  
-      let kuldes = await fetch("./ertekeleselkuld",{
-        method : "PUT",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-          "recept_id" : receptId,
-          "felhasznalo_id" : felhasznalo_id,
-          "ertekeles" : kivalasztottCsillag
-        })
-      });
-  
-      let valasz = await kuldes.json();
-      if(kuldes.ok){
-        let progress = document.getElementById('progressBar');
-        let alertBox = document.getElementById('egyeniAlert');
-        let duration = 5000; // 5 seconds
-        let step = 5; // update every 100ms
-        let width = 100;
-        progress.hidden = false;
-        alertBox.hidden = false;
-        alertBox.innerHTML = valasz.valasz;
-        let interval = setInterval(() => {
-            width -= (100 / (duration / step));
-            progress.style.width = width + '%';
-            if (width <= 0) {
-                clearInterval(interval);
-                alertBox.remove();
-                progress.remove();
-            }
-        }, step);
-        ertekeltE();
-      } else {
-        uzenet.innerHTML = valasz.valasz;
-        uzenet.classList = "col-12 col-md-12 col-sm-12 mx-auto my-3 text-center alert alert-danger";
-        uzenet.role = "alert";
-      }
-  
-    } catch (error) {
-      console.error("Hálózati vagy szerverhiba történt:", error);
+      alertMegjelenit(valasz.valasz, false, ertekelesAlert);
+      ertekeltE();
+    } else {
+      alertMegjelenit(valasz.valasz, true, ertekelesAlert);
     }
+
+  } catch (error) {
+    console.error("Hálózati vagy szerverhiba történt:", error);
   }
+}
   
+async function hozzavalokFuggvenyHivas() {
+  try {
+      await hozzavalokKategoriaLeker();
+      await hozzavalokLeker();
+  } catch (error) {
+      console.log(error);
+  }
+}
+
 
 
 function hozzavalokTablazatGeneral(hozzavalok){
   let hozzavalokKiir = document.getElementById("hozzavalokMegjelenit");
   for(let kategoria of kategoriak){
     let szamlalo = 1;
-    console.log("aaa"+kategoria);
     let div = document.createElement("div");
     div.classList = "filter-box border p-3 bg-light rounded my-3 mx-auto";
 
@@ -387,52 +383,53 @@ function getCookie(cname) {
 
 
 function hozzaszolasGeneral(hozzaszolasok, nevek){
-    let ul = document.getElementById("hozzaszolasok");
-    let felhasznalo_id = 1;
-    //let felhasznalo_id = getCookie("bejelentkezettFelhasznaloId");
-    ul.innerHTML = "";
-
-    for(let hozzaszolas of hozzaszolasok){
-        for(let nev of nevek){
-        if(hozzaszolas.receptek_id == 1){
-            let li  = document.createElement("li");
-            let divFejlec = document.createElement("div");
-            let divTartalom = document.createElement("div");
-            let img = document.createElement("img");
-            let spanFelh  = document.createElement("span");
-            let spanIdo = document.createElement("span");
-
-            img.src = "./kepek/profile.jpg";
-            img.alt = "Profil";
-            img.classList = "rounded-circle me-2"; 
-            img.style.width = "40px";
-            img.style.height = "40px";
-
-            spanFelh.innerHTML = "<b>" + nev.felhnev + "</b>";
-
-            spanIdo.innerHTML = hozzaszolas.feltoltes_ideje;
-            spanIdo.classList = "text-body-secondary ms-4";
-
-
-            if(hozzaszolas.felhasznalo_id == felhasznalo_id){
-            li.classList = "list-group-item list-group-item-primary my-2";
-            }
-            else{
-            li.classList = "list-group-item my-2";
-            }
-            divFejlec.classList = "mb-2 text-secondary";
-            divTartalom.innerHTML = hozzaszolas.hozzaszolas;
-
-            ul.appendChild(li);
-            li.appendChild(divFejlec);
-            divFejlec.appendChild(img);
-            divFejlec.appendChild(spanFelh);
-            divFejlec.appendChild(spanIdo);
-            li.appendChild(divTartalom);
-        }
-        }
-    }
+  let ul = document.getElementById("hozzaszolasok");
+  let felhasznalo_id = 1;
+  //let felhasznalo_id = getCookie("bejelentkezettFelhasznaloId");
+  ul.innerHTML = "";
+  
+  for(let hozzaszolas of hozzaszolasok){
+      for(let nev of nevek){
+          if(hozzaszolas.receptek_id == 1){
+              let li = document.createElement("li");
+              let divFejlec = document.createElement("div");
+              let divTartalom = document.createElement("div");
+              let img = document.createElement("img");
+              let spanFelh = document.createElement("span");
+              let spanIdo = document.createElement("span");
+              
+              img.src = "./kepek/profile.jpg";
+              img.alt = "Profil";
+              img.classList = "rounded-circle me-2";
+              img.style.width = "40px";
+              img.style.height = "40px";
+              spanFelh.innerHTML = "" + nev.felhnev + "";
+              spanIdo.innerHTML = hozzaszolas.feltoltes_ideje;
+              spanIdo.classList = "text-body-secondary ms-4";
+              
+              if(hozzaszolas.felhasznalo_id == felhasznalo_id){
+                  li.classList = "list-group-item list-group-item-primary my-2";
+              }
+              else{
+                  li.classList = "list-group-item my-2";
+              }
+              
+              divFejlec.classList = "mb-2 text-secondary";
+              
+              // Sortörések kezelése
+              divTartalom.innerHTML = hozzaszolas.hozzaszolas.replace(/\n/g, '<br>');
+              
+              ul.appendChild(li);
+              li.appendChild(divFejlec);
+              divFejlec.appendChild(img);
+              divFejlec.appendChild(spanFelh);
+              divFejlec.appendChild(spanIdo);
+              li.appendChild(divTartalom);
+          }
+      }
+  }
 }
+
 
 function frissitCsillagok(ertekelesSzama, csillagok, felhasznaloModosit) {
     if(felhasznaloModosit == true){
@@ -463,14 +460,34 @@ function csillagLekerFelhasznalotol(csillagok){
 }
 
 
-async function hozzavalokFuggvenyHivas() {
+
+async function alertMegjelenit(uzenet, hibae, helye){
   try {
-      await hozzavalokKategoriaLeker();
-      await hozzavalokLeker();
+    let leker = await fetch("./adatbazisInterakciok/hibakiirat", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+        "uzenet" : uzenet,
+        "hibae" : hibae
+      })
+    })
+
+    if(leker.ok){
+      alertKiir = await leker.json();
+      helye.innerHTML = alertKiir;
+    }
+    else{
+      alertKiir = await leker.json();
+      console.
+    }
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
 }
+
+
 
 window.addEventListener("load",  hozzavalokFuggvenyHivas);
 
