@@ -11,7 +11,7 @@
                 let progress = document.getElementById('progressBar');
                 let alertBox = document.getElementById('egyeniAlert');
                 let duration = 5000; // 5 seconds
-                let step = 100; // update every 100ms
+                let step = 10; // update every 100ms
                 let width = 100;
                 let interval = setInterval(() => {
                     width -= (100 / (duration / step));
@@ -35,7 +35,7 @@
                 let progress = document.getElementById('progressBar');
                 let alertBox = document.getElementById('egyeniAlert');
                 let duration = 5000; // 5 seconds
-                let step = 100; // update every 100ms
+                let step = 10; // update every 100ms
                 let width = 100;
                 let interval = setInterval(() => {
                     width -= (100 / (duration / step));
