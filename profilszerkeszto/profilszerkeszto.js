@@ -1,6 +1,8 @@
 var profilkep;
 var felhasznaloId;
 let alapEmail
+
+//már van profilkép és azt tölti be
 function alapProfilkep(kep){
 
     const profilePicture = document.getElementById('profilePicture');
@@ -9,6 +11,7 @@ function alapProfilkep(kep){
 
 }
 
+//uj profilkép feltöltése
 function ujprofilKep(){
     const fileInput = document.getElementById('fileInput');
     const profilePicture = document.getElementById('profilePicture');
@@ -41,24 +44,17 @@ function ujprofilKep(){
         
     });
 
-
-    
 }
 
+//lekeri a megjelenítendő adatokat
 async function adatokLeker() { 
-
-    let sqlKod ={ 
-        "sqlKod" :  "SELECT `felhasznalok`.`felhnev`, `felhasznalok`.`letrehozas`, `felhasznalok`.`email` FROM `felhasznalok` WHERE `felhasznalok`.`id` =" + felhasznaloId + ";"
-    }
-
     try {
-
-        let lekeres = await fetch("./adatbazisInterakciok/adatbazisLeker.php",{
+        let lekeres = await fetch("./adatbazisInterakciok/LekerAlapAdat",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body : JSON.stringify(sqlKod)
+            body : JSON.stringify({"felhasznaloId" : felhasznaloId})
         });
 
         if(lekeres.ok){
@@ -74,7 +70,7 @@ async function adatokLeker() {
 }
 
 
-
+//megjelenití a felhasználó adatait
 async function adatokMegjelenitese(adatok){
 
     console.log(profilkep)
@@ -91,6 +87,7 @@ async function adatokMegjelenitese(adatok){
     emailCim.value = adatok[0]["email"]
 }
 
+//feloldja a modosítható mezőket
 function modositasFelold(){
     let emailCimMod = document.getElementById("email")
     let jelszoMod = document.getElementById("jelszo")
@@ -102,6 +99,7 @@ function modositasFelold(){
     gombokValtoztat(true)
 }
 
+//alaphelyzete az oldal mezőinek
 function modositasAlap(){
    
     let emailCim = document.getElementById("email")
@@ -114,6 +112,7 @@ function modositasAlap(){
     adatokLeker()
 }
 
+//adatok modosítás gombjai
 function gombokValtoztat(alapot){
     let gombokHelye =   document.getElementById("gombokHelye")
     gombokHelye.innerHTML = ""
@@ -148,6 +147,7 @@ function gombokValtoztat(alapot){
     }
 }
 
+//mentés vagy mégsem lett megnyomva
 function gombNyomas(melyikGomb){
     
     if(melyikGomb == "megse"){
@@ -158,13 +158,14 @@ function gombNyomas(melyikGomb){
     }
 }
 
+// adatok modosítása
 async function modositAlapinf() {
     let emailCim = document.getElementById("email").value
     let jelszo = document.getElementById("jelszo").value
 
     const stringUrese  = str => !str.replace(/\s/g, '').length
 
-    //! Írd ide hogy csekolja azt is, hogy van e felhasználó Id!!!
+   
     if(stringUrese(emailCim) == true && stringUrese(jelszo) == true){
         alert("Kérem változtason meg adatot!")
         return
@@ -226,7 +227,7 @@ async function modositAlapinf() {
     }
 }
 
-
+// lekéri a session-ből a kellő adatokat
 async function fontosAdatokleker(){
     await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
     .then(response => response.text())  // Get the response as text
