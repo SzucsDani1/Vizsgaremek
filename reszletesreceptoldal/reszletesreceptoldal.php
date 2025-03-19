@@ -86,18 +86,37 @@
         </tbody>
       </table>
 
+      <div class="text-center mt-5">
+        <input type="button" value="-" class="btn btn-warning btn-lg mb-4" id="adagKivon">
+        <span class="display-6 mx-3" id="adagKiir">Adag: </span>
+        <input type="button" value="+" class="btn btn-warning btn-lg mb-4" id="adagHozzaad">
+      </div>
+      
       <!--Hozzávalók-->
       <div id="hozzavalokMegjelenit"></div>
+
+      <div id='hozzavalokAlert' role='alert' hidden></div>
+      <div id='hozzavalokProgressBar' hidden style=' height: 5px; width: 100%;'></div>
 
       <!--Recept infó-->
       <div class="row">
         <div class="col-12 col-lg-12 col-md-12 col-sm-12">
-          <div class="filter-box border p-3 rounded my-3 mx-auto">
-            <div class="list-group" id="receptInfo"></div>
+          <div class="filter-box border p-3 bg-light rounded my-3 mx-auto">
+            <h1 class="display-6 my-3 text-center">Recept infó</h1>
+            <ul class="list-group text-center" id="receptInfo"></ul>
           </div>
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+          <div class="filter-box border p-5 bg-light rounded my-3 mx-auto">
+            <h1 class="display-4 text-center">Recept leírás</h1>
+            <hr class="border border-secondary border-1 opacity-20 w-50 mx-auto">
+            <h1 class="display-6 my-3 text-center message-containter" id="receptLeiras"></h1>
+          </div>
+        </div>
+      </div>
       <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
@@ -118,7 +137,8 @@
           </div>
           <input type="button" value="Küldés" id="btnErtekelesKuld" class="btn btn-warning w-100 mb-5">
         </div>
-        <div id="ertekelesAlert"></div>
+        <div id='ertekelesAlert' role='alert' hidden></div>
+        <div id='ertekelesProgressBar' hidden style=' height: 5px; width: 100%;'></div>
       </div>
       
       

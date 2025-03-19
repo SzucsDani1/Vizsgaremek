@@ -333,6 +333,36 @@
             }
             break;
 
+            case "bevasarlolistahozzaad":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["hozzavalo_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $hozzavalo_id = $bodyAdatok["hozzavalo_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+
+                        $recept = adatokValtoztatasa("INSERT INTO `bevasarlolista`( `felhasznalo_id`, `hozzavalok_id`) VALUES ({$felhasznalo_id},{$hozzavalo_id})");
+                        if($recept == "Sikeres művelet!"){
+                            header("CREATED", true, 201);
+                            echo json_encode(["valasz" => "Sikeres rögzítés"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen feltöltés!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
         
             default:
             echo "Hiba";

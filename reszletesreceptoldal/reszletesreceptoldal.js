@@ -1,5 +1,8 @@
 let kivalasztottCsillag = 0;
 let kategoriak = [];
+let adag = 1;
+let receptek = [];
+let hozzavalok = [];
 async function hozzaszolasElkuld(){
   try {
     let hozzaszolas = document.getElementById("hozzaszolas").value;
@@ -95,14 +98,17 @@ async function receptLeker(){
         });
         
         if(leker.ok){
-            let receptek = await leker.json();
+            let receptekLista = await leker.json();
+            for(let recept of receptekLista){
+              receptek.push(recept);
+            }
             console.log(receptek);
-            receptMegjelenit(receptek);
-            receptInfoList(receptek);
+            receptMegjelenit();
+            receptInfoList();
         }
         else{
-            let receptek = await leker.json();
-            console.log(receptek.valasz);
+            let receptekLista = await leker.json();
+            console.log(receptekLista.valasz);
         }
     } catch (error) {
         console.log(error);
@@ -127,8 +133,8 @@ async function ertekelesLeker(){
             frissitCsillagok(ertekeles[0].ertekeles, csillagok, false);
         }
         else{
-            let receptek = await leker.json();
-            console.log(receptek.valasz);
+            let receptekLista = await leker.json();
+            console.log(receptekLista.valasz);
         }
     } catch (error) {
         console.log(error);
@@ -193,14 +199,17 @@ async function hozzavalokLeker(){
         })
     });
     
-    let hozzavalok = await leker.json();
+    let hozzavalokLista = await leker.json();
 
     if(leker.ok){
       console.log(hozzavalok);
-        hozzavalokTablazatGeneral(hozzavalok);
+      for(let hozzavalo of hozzavalokLista){
+        hozzavalok.push(hozzavalo);
+      }
+      hozzavalokTablazatGeneral();
     }
     else{
-        console.log(hozzavalok.valasz);
+        console.log(hozzavalokLista.valasz);
     }
 } catch (error) {
     console.log(error);
@@ -257,12 +266,14 @@ async function ertekelesElkuld(){
 
     let valasz = await kuldes.json();
     let ertekelesAlert = document.getElementById("ertekelesAlert");
+    let ertekelesProgressBar = document.getElementById("ertekelesProgressBar");
+
     if(kuldes.ok){
       
-      alertMegjelenit(valasz.valasz, false, ertekelesAlert);
+      alertMegjelenit(valasz.valasz, false, ertekelesAlert, ertekelesProgressBar);
       ertekeltE();
     } else {
-      alertMegjelenit(valasz.valasz, true, ertekelesAlert);
+      alertMegjelenit(valasz.valasz, true, ertekelesAlert, ertekelesProgressBar);
     }
 
   } catch (error) {
@@ -281,8 +292,9 @@ async function hozzavalokFuggvenyHivas() {
 
 
 
-function hozzavalokTablazatGeneral(hozzavalok){
+function hozzavalokTablazatGeneral(){
   let hozzavalokKiir = document.getElementById("hozzavalokMegjelenit");
+  hozzavalokKiir.innerHTML = "";
   for(let kategoria of kategoriak){
     let szamlalo = 1;
     let div = document.createElement("div");
@@ -335,11 +347,14 @@ function hozzavalokTablazatGeneral(hozzavalok){
         btnBevasarlo.type = "button";
         btnBevasarlo.classList = "btn btn-warning";
         btnBevasarlo.value = "Kosárhoz";
-        btnBevasarlo.id = hozzavalo.hozzavalo;
+        btnBevasarlo.id = hozzavalo.id;
+        btnBevasarlo.addEventListener("click", function() {
+          bevasarloListaHozzaad(hozzavalo.id);
+      });
 
         tdSorszam.innerHTML = szamlalo;
         tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
-        tdMennyiseg.innerHTML = hozzavalo.mennyiseg + " " + hozzavalo.mertek_egyseg;
+        tdMennyiseg.innerHTML = hozzavalo.mennyiseg * adag + " " + hozzavalo.mertek_egyseg;
 
         tbody.appendChild(tbodyTR);
         tbodyTR.appendChild(tdSorszam);
@@ -356,21 +371,72 @@ function hozzavalokTablazatGeneral(hozzavalok){
   }
 }
 
-function receptInfoList(receptek){
-  let divReceptInfo = document.getElementById("receptInfo");
+async function bevasarloListaHozzaad(hozzavalo_id){
+  try {
+    let felhasznalo_id = 5;
+    let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
+      method : "POST",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "hozzavalo_id" : hozzavalo_id,
+          "felhasznalo_id" : felhasznalo_id
+      })
+  })
 
-  for(let recept of receptek){
-    let a
+  let valasz = await feltolt.json();
+  let hozzavalokAlert = document.getElementById("hozzavalokAlert");
+  let hozzavalokProgressBar = document.getElementById("hozzavalokProgressBar");
+  if(feltolt.ok){
+    console.log(valasz.valasz);
+    alertMegjelenit(valasz.valasz, false, hozzavalokAlert, hozzavalokProgressBar);
+  }
+  else{
+    alertMegjelenit(valasz.valasz, true, hozzavalokAlert, hozzavalokProgressBar);
+
+  }
+  } catch (error) {
+    console.log(error);
   }
 }
 
-function receptMegjelenit(receptek){
+function receptInfoList(){
+  let ulReceptInfo = document.getElementById("receptInfo");
+  ulReceptInfo.innerHTML = "";
+  for(let recept of receptek){
+    let liEtrend= document.createElement("li");
+    liEtrend.classList = "list-group-item";
+    liEtrend.innerHTML = "<b>Étrend </b>- "+recept.etrend_neve;
+
+    let liKaloria= document.createElement("li");
+    liKaloria.classList = "list-group-item";
+    liKaloria.innerHTML = "<b>Kalória </b>- "+recept.kaloria * adag+" kcal";
+
+    let liKonyha= document.createElement("li");
+    liKonyha.classList = "list-group-item";
+    liKonyha.innerHTML = "<b>Konyha </b>- "+recept.konyha_nev;
+
+    let liNapszak= document.createElement("li");
+    liNapszak.classList = "list-group-item";
+    liNapszak.innerHTML = "<b>Napszak </b>- "+recept.napszak;
+
+    ulReceptInfo.appendChild(liEtrend);
+    ulReceptInfo.appendChild(liKaloria);
+    ulReceptInfo.appendChild(liKonyha);
+    ulReceptInfo.appendChild(liNapszak);
+  }
+}
+
+function receptMegjelenit(){
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
 
     document.getElementById("receptIdeje").innerHTML = receptek[0].ido +" perc";
     document.getElementById("receptKoltseg").innerHTML = receptek[0].ar;
     document.getElementById("receptNehezseg").innerHTML = receptek[0].nehezseg;
+
+    document.getElementById("receptLeiras").innerHTML = receptek[0].elkeszites;
 }
 
 function getCookie(cname) {
@@ -466,32 +532,53 @@ function csillagLekerFelhasznalotol(csillagok){
     }
 }
 
+function adagFigyel(){
+  document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
+  document.getElementById("adagKivon").addEventListener("click", function(){
+    if(adag > 1){
+      adag = adag - 1;
+      document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
+      hozzavalokTablazatGeneral();
+      receptInfoList();
+    }
+  })
 
+  document.getElementById("adagHozzaad").addEventListener("click", function(){
+    if(adag < 10){
+      adag = adag + 1;
+      document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
+      hozzavalokTablazatGeneral();
+      receptInfoList();
+    }
+  })
+}
 
-async function alertMegjelenit(uzenet, hibae, helye){
-  try {
-    let leker = await fetch("./adatbazisInterakciok/hibakiirat", {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify({
-        "uzenet" : uzenet,
-        "hibae" : hibae
-      })
-    })
+function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
-    alertKiir = await leker.json();
-    console.log("ALERT: "+alertKiir[0]);
-    if(leker.ok){
-      helye.innerHTML = alertKiir;
+    let duration = 5000; // 5 seconds
+    let step = 5; // update every 100ms
+    let width = 100;
+    progress.hidden = false;
+    alertBox.hidden = false;
+    if(hibae == true){
+      progress.style.background = "red";
+      alertBox.classList = "alert alert-danger text-center";
     }
     else{
-      console.log(alertKiir.valasz);
+      progress.style.background = "green";
+      alertBox.classList = "alert alert-success text-center";
     }
-  } catch (error) {
-    console.log(error);
-  }
+    alertBox.innerHTML = uzenet;
+    let interval = setInterval(() => {
+        width -= (100 / (duration / step));
+        progress.style.width = width + '%';
+        if (width <= 0) {
+            clearInterval(interval);
+            alertBox.hidden = true;
+            progress.hidden = true;
+        }
+    }, step);
+  
 }
 
 
@@ -508,6 +595,7 @@ window.addEventListener("load", ertekeltE)
     receptLeker();
     ertekelesLeker();
     ertekeltE();
+    adagFigyel();
   });
   document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 
