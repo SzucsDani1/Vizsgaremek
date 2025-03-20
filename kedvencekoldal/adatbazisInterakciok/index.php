@@ -450,12 +450,12 @@
                     if(!empty($bodyAdatok["receptek_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
                         $receptek_id = $bodyAdatok["receptek_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                        $leker = adatokLekerese("SELECT * FROM `kedvenceklista` WHERE kedvenceklista.felhasznalo_id = {$felhasznalo_id} AND kedvenceklista.recept_id = {$receptek_id};");
+                        $leker = adatokLekerese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN kedvenceklista ON kedvenceklista.recept_id = receptek.id WHERE kedvenceklista.recept_id = {$receptek_id} AND kedvenceklista.felhasznalo_id ={$felhasznalo_id};");
                         if(is_array($leker)){
                             echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                         }
                         else{
-                            echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
                             header("bad request", true, 400);
                             
                         }
@@ -470,10 +470,6 @@
             default:
             echo "Hiba";
     }
-
-
-
-    //SELECT receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN kedvenceklista ON kedvenceklista.recept_id = receptek.id WHERE receptek.id = 1;
 
     
 

@@ -126,8 +126,7 @@ async function kedvencRecept(){
 
 async function kedvencReceptLeker(){
   try {
-    let checkbox = document.getElementById("kedvencRecept");
-    let label = document.getElementById("kedvencReceptFelirat");
+    let divContainer = document.getElementById("kedvencReceptekKartyak");
     let leker = await fetch("./adatbazisInterakciok/kedvencreceptleker",{
         method : "POST",
         headers : {
@@ -140,16 +139,14 @@ async function kedvencReceptLeker(){
     });
     
     let eredmeny = await leker.json();
-    if(eredmeny == "Nincs találat!"){
-      //Még nincs bejelölve a kedvenc receptekhez
-      checkbox.checked = false;
-      console.log(eredmeny.valasz);
-      label.innerHTML = "Hozzáadás kedvencekhez";
+    console.log(eredmeny);
+    if(leker.ok){
+      receptekBetoltes(eredmeny, divContainer);
     }
     else{
-      //Már be van jelölve a kedvenc receptekhez
-      checkbox.checked = true;
-      label.innerHTML = "Törlés kedvenc receptekből";
+      divContainer.classList = "alert alert-danger text-center";
+      divContainer.role = "alert";
+      divContainer.innerHTML = "Nincs kedvenc recept!";
       
     }
 } catch (error) {
@@ -219,6 +216,7 @@ async function bevasarloListaLeker(){
 
 function receptekBetoltes(receptek, divContainer){
   divContainer.innerHTML = "";  
+  console.log("aaaa")
 
   let divRow = document.createElement("div");
   divRow.classList = "row";
@@ -315,13 +313,12 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
 
 
-document.getElementById("kedvencRecept").addEventListener("change", kedvencRecept);
 async function segedFuggvenyInditashoz() {
 
     kedvencReceptLeker();
-    await bevasarloListaLeker();
+    //await bevasarloListaLeker();
 }
 
-window.addEventListener("load", segedFuggvenyInditashoz);
+//window.addEventListener("load", segedFuggvenyInditashoz);
 
  
