@@ -3,6 +3,10 @@ let kategoriak = [];
 let adag = 1;
 let receptek = [];
 let hozzavalok = [];
+let felhasznalo_id = 5;
+let receptek_id = 1;
+
+
 async function hozzaszolasElkuld(){
   try {
     let hozzaszolas = document.getElementById("hozzaszolas").value;
@@ -21,9 +25,9 @@ async function hozzaszolasElkuld(){
         "Content-Type" : "application/json"
       },
       body : JSON.stringify({
-        "felhasznalo_id" : 5,
+        "felhasznalo_id" : felhasznalo_id,
         "hozzaszolas" : hozzaszolas,
-        "receptek_id" : 1
+        "receptek_id" : receptek_id
       })
     })
 
@@ -71,7 +75,7 @@ async function hozzaszolasLeker(){
         "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-        "felhasznalo_id" : 5
+        "felhasznalo_id" : felhasznalo_id
         })
     });
 
@@ -86,14 +90,13 @@ async function hozzaszolasLeker(){
 
 async function receptLeker(){
     try {
-        let receptId = 1;
         let leker = await fetch("./adatbazisInterakciok/receptleker",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({
-                "recept_id" : receptId
+                "recept_id" : receptek_id
             })
         });
         
@@ -117,14 +120,13 @@ async function receptLeker(){
 
 async function ertekelesLeker(){
     try {
-        let receptId = 1;
         let leker = await fetch("./adatbazisInterakciok/ertekeles",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({
-                "receptek_id" : receptId
+                "receptek_id" : receptek_id
             })
         });
         if(leker.ok){
@@ -144,14 +146,13 @@ async function ertekelesLeker(){
 async function ertekeltE(){
     try {
         let receptId = 1;
-        let felhasznalo_id = 5;
         let leker = await fetch("./adatbazisInterakciok/ertekelt",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({
-                "recept_id" : receptId,
+                "recept_id" : receptek_id,
                 "felhasznalo_id" : felhasznalo_id
             })
         });
@@ -188,14 +189,13 @@ async function ertekeltE(){
 
 async function hozzavalokLeker(){
   try {
-    let receptId = 1;
     let leker = await fetch("./adatbazisInterakciok/hozzavalokleker",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            "recept_id" : receptId
+            "recept_id" : receptek_id
         })
     });
     
@@ -218,14 +218,13 @@ async function hozzavalokLeker(){
 
 async function hozzavalokKategoriaLeker(){
   try {
-    let receptId = 1;
     let leker = await fetch("./adatbazisInterakciok/kategorialeker",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            "recept_id" : receptId
+            "recept_id" : receptek_id
         })
     });
     
@@ -249,8 +248,6 @@ async function ertekelesElkuld(){
     const csillagok = document.querySelectorAll('#csillagErtekel');
     csillagLekerFelhasznalotol(csillagok)
     
-    let receptId = 1; 
-    let felhasznalo_id = 5; 
 
     let kuldes = await fetch("./adatbazisInterakciok/ertekeleselkuld",{
       method : "PUT",
@@ -258,7 +255,7 @@ async function ertekelesElkuld(){
         "Content-Type" : "application/json"
       },
       body : JSON.stringify({
-        "recept_id" : receptId,
+        "recept_id" : receptek_id,
         "felhasznalo_id" : felhasznalo_id,
         "ertekeles" : kivalasztottCsillag
       })
@@ -347,9 +344,9 @@ function hozzavalokTablazatGeneral(){
         btnBevasarlo.type = "button";
         btnBevasarlo.classList = "btn btn-warning";
         btnBevasarlo.value = "Kosárhoz";
-        btnBevasarlo.id = hozzavalo.id;
+        btnBevasarlo.id = "btn"+hozzavalo.hozzavalo;
         btnBevasarlo.addEventListener("click", function() {
-          bevasarloListaHozzaad(hozzavalo.id);
+          bevasarloListaHozzaad(hozzavalo.id, btnBevasarlo);
       });
 
         tdSorszam.innerHTML = szamlalo;
@@ -371,9 +368,8 @@ function hozzavalokTablazatGeneral(){
   }
 }
 
-async function bevasarloListaHozzaad(hozzavalo_id){
+async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
   try {
-    let felhasznalo_id = 5;
     let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
       method : "POST",
       headers : {
@@ -390,6 +386,7 @@ async function bevasarloListaHozzaad(hozzavalo_id){
   let hozzavalokProgressBar = document.getElementById("hozzavalokProgressBar");
   if(feltolt.ok){
     console.log(valasz.valasz);
+    btnBevasarlo.disabled = true;
     alertMegjelenit(valasz.valasz, false, hozzavalokAlert, hozzavalokProgressBar);
   }
   else{
@@ -398,6 +395,42 @@ async function bevasarloListaHozzaad(hozzavalo_id){
   }
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function bevasarloListaLeker(){
+  try {
+    let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistaleker",{
+      method : "POST",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "felhasznalo_id" : felhasznalo_id
+      })
+  })
+
+  let valasz = await feltolt.json();
+  if(feltolt.ok){
+    //console.log(valasz[0].hozzavalo);
+    hozzavalokBevasarloListaban(valasz);
+    //console.log(valasz.valasz);
+    
+  }
+  else{
+    console.log(valasz.valasz);
+
+  }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function hozzavalokBevasarloListaban(bevasarloLista){
+  //console.log("aa"+bevasarloLista);
+  for(let hozzavalo of bevasarloLista){
+    console.log(hozzavalo.hozzavalo)
+    document.getElementById("btn"+hozzavalo.hozzavalo).disabled = true;
   }
 }
 
@@ -458,7 +491,6 @@ function getCookie(cname) {
 
 function hozzaszolasGeneral(hozzaszolasok, nevek){
   let ul = document.getElementById("hozzaszolasok");
-  let felhasznalo_id = 1;
   //let felhasznalo_id = getCookie("bejelentkezettFelhasznaloId");
   ul.innerHTML = "";
   
@@ -581,11 +613,12 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
   
 }
 
+async function segit(){
+  await bevasarloListaLeker();
 
+}
 
 window.addEventListener("load",  hozzavalokFuggvenyHivas);
-
-
 
   //document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
 window.addEventListener("load", ertekeltE)
@@ -596,6 +629,7 @@ window.addEventListener("load", ertekeltE)
     ertekelesLeker();
     ertekeltE();
     adagFigyel();
+    segit();
   });
   document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 

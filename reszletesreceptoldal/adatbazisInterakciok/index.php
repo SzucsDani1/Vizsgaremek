@@ -214,7 +214,30 @@
         }
         break;
 
-        case "hibakiirat":
+        //SELECT DISTINCT bevasarlolista.hozzavalok_id FROM bevasarlolista WHERE bevasarlolista.hozzavalok_id = 1 AND bevasarlolista.felhasznalo_id = 5;
+
+        case "bevasarlolistaleker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["felhasznalo_id"])){
+                    $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                    $leker = adatokLekerese("SELECT DISTINCT bevasarlolista.hozzavalok_id, hozzavalok.hozzavalo FROM bevasarlolista INNER JOIN hozzavalok ON hozzavalok.id=bevasarlolista.hozzavalok_id WHERE bevasarlolista.felhasznalo_id = {$felhasznalo_id};");
+                    if(is_array($leker)){
+                        echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
+        /*case "hibakiirat":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(!empty($bodyAdatok["uzenet"]) && !empty($bodyAdatok["hibae"])){
                     $uzenet = $bodyAdatok["uzenet"];
@@ -230,7 +253,7 @@
             echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
             header('bad request', true, 400);
         }
-        break;
+        break;*/
 
         case "hozzaszolasfeltoltes":
             if($_SERVER["REQUEST_METHOD"] == "PUT"){
