@@ -357,7 +357,7 @@
             break;
 
             case "bevasarlolistahozzaad":
-                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if($_SERVER["REQUEST_METHOD"] == "PUT"){
                     if(!empty($bodyAdatok["hozzavalo_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
                         $hozzavalo_id = $bodyAdatok["hozzavalo_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
@@ -386,6 +386,87 @@
             }
             break;
 
+            case "kedvencrecepthozzaad":
+                if($_SERVER["REQUEST_METHOD"] == "PUT"){
+                    if(!empty($bodyAdatok["receptek_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $receptek_id = $bodyAdatok["receptek_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+
+                        $kedvencRecept = adatokValtoztatasa("INSERT INTO `kedvenceklista`(`felhasznalo_id`, `recept_id`) VALUES ({$felhasznalo_id},$receptek_id);");
+                        if($kedvencRecept == "Sikeres művelet!"){
+                            header("CREATED", true, 201);
+                            echo json_encode(["valasz" => "Sikeres rögzítés"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen feltöltés!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
+            case "kedvencrecepttorol":
+                if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                    if(!empty($bodyAdatok["receptek_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $receptek_id = $bodyAdatok["receptek_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+
+                        $kedvencRecept = adatokValtoztatasa("DELETE FROM `kedvenceklista` WHERE kedvenceklista.felhasznalo_id = {$felhasznalo_id} AND kedvenceklista.recept_id = {$receptek_id}");
+                        if($kedvencRecept == "Sikeres művelet!"){
+                            header("NO CONTENT", true, 204);
+                            echo json_encode(["valasz" => "Sikeres törlés"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen törlés!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
+            case "kedvencreceptleker":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["receptek_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $receptek_id = $bodyAdatok["receptek_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                        $leker = adatokLekerese("SELECT * FROM `kedvenceklista` WHERE kedvenceklista.felhasznalo_id = {$felhasznalo_id} AND kedvenceklista.recept_id = {$receptek_id};");
+                        if(is_array($leker)){
+                            echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                            
+                        }
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+            }
+            break;
         
             default:
             echo "Hiba";

@@ -279,6 +279,93 @@ async function hozzavalokFuggvenyHivas() {
   }
 }
 
+async function kedvencRecept(){
+  try {
+    let checkbox = document.getElementById("kedvencRecept");
+    let label = document.getElementById("kedvencReceptFelirat");
+    if(checkbox.checked == true){
+      //Hozzáad
+      let hozzaad = await fetch("./adatbazisInterakciok/kedvencrecepthozzaad",{
+        method : "PUT",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "receptek_id" : receptek_id,
+            "felhasznalo_id" :felhasznalo_id
+        })
+      })
+      let valasz = await hozzaad.json();
+      if(hozzaad.ok){
+        //Feltöltve
+        console.log(valasz.valasz);
+        label.innerHTML = "Törlés kedvenc receptekből";
+      }
+      else{
+        alert(valasz.valasz);
+      }
+
+    }
+    else{
+      //Töröl
+      let torol = await fetch("./adatbazisInterakciok/kedvencrecepttorol",{
+        method : "DELETE",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "receptek_id" : receptek_id,
+            "felhasznalo_id" :felhasznalo_id
+        })
+      })
+      
+      if(torol.ok){
+        console.log("Sikeres törlés!");
+        label.innerHTML = "Hozzáadás kedvencekhez";
+      }
+      else{
+        alert(valasz.valasz);
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+async function kedvencReceptLeker(){
+  try {
+    let checkbox = document.getElementById("kedvencRecept");
+    let label = document.getElementById("kedvencReceptFelirat");
+    let leker = await fetch("./adatbazisInterakciok/kedvencreceptleker",{
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "receptek_id" : receptek_id,
+            "felhasznalo_id" : felhasznalo_id
+        })
+    });
+    
+    let eredmeny = await leker.json();
+    if(eredmeny == "Nincs találat!"){
+      //Még nincs bejelölve a kedvenc receptekhez
+      checkbox.checked = false;
+      console.log(eredmeny.valasz);
+      label.innerHTML = "Hozzáadás kedvencekhez";
+    }
+    else{
+      //Már be van jelölve a kedvenc receptekhez
+      checkbox.checked = true;
+      label.innerHTML = "Törlés kedvenc receptekből";
+      
+    }
+} catch (error) {
+    console.log(error);
+}
+}
+
 
 
 function hozzavalokTablazatGeneral(){
@@ -292,6 +379,9 @@ function hozzavalokTablazatGeneral(){
     let h1 = document.createElement("h1");
     h1.classList = "display-6";
     h1.innerHTML = kategoria;
+
+    let divResponsive = document.createElement("div");
+    divResponsive.classList = "table-responsive";
 
     let table = document.createElement("table");
     table.classList = "table table-warning table-hover w-75 mx-auto mt-3 text-center";
@@ -312,7 +402,8 @@ function hozzavalokTablazatGeneral(){
 
     hozzavalokKiir.appendChild(div);
     div.appendChild(h1);
-    div.appendChild(table);
+    div.appendChild(divResponsive);
+    divResponsive.appendChild(table);
     table.appendChild(thead);
     thead.appendChild(tr);
     tr.appendChild(thSorszam);
@@ -358,12 +449,13 @@ function hozzavalokTablazatGeneral(){
     }
 
   }
+  bevasarloListaLeker();
 }
 
 async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
   try {
     let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
-      method : "POST",
+      method : "PUT",
       headers : {
           "Content-Type" : "application/json"
       },
@@ -378,7 +470,7 @@ async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
   let hozzavalokProgressBar = document.getElementById("hozzavalokProgressBar");
   if(feltolt.ok){
     console.log(valasz.valasz);
-    btnBevasarlo.disabled = true;
+    bevasarloListaLeker();
     alertMegjelenit(valasz.valasz, false, hozzavalokAlert, hozzavalokProgressBar);
   }
   else{
@@ -614,9 +706,11 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
 
 document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
+document.getElementById("kedvencRecept").addEventListener("change", kedvencRecept);
 async function segedFuggvenyInditashoz() {
 
     await hozzaszolasLeker();
+    kedvencReceptLeker();
     receptLeker();
     ertekelesLeker();
     await ertekeltE();
