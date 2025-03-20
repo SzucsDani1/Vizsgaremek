@@ -5,17 +5,18 @@ let receptek = [];
 let hozzavalok = [];
 let felhasznalo_id = 5;
 let receptek_id = 1;
+let alertSzamlalo = 0;
 
 
 async function hozzaszolasElkuld(){
   try {
     let hozzaszolas = document.getElementById("hozzaszolas").value;
-    let uzenet = document.getElementById("hozzaszolasUzenet");
+    let uzenet = document.getElementById("hozzaszolasAlert");
+    let progressBar = document.getElementById("hozzaszolasProgressBar");
     uzenet.innerHTML = "";
 
     if(hozzaszolas == ""){
-      uzenet.innerHTML = "Kérem írjon hozzászólást!";
-      uzenet.classList = "alert alert-danger my-3 text-center w-80";
+      alertMegjelenit("Kérem, ne hagyja üresen a mezőt!", true, uzenet, progressBar);
       return;
     }
 
@@ -34,22 +35,13 @@ async function hozzaszolasElkuld(){
     let valasz = await kuldes.json();
     console.log(valasz)
     if(kuldes.ok){
-        uzenet.innerHTML = valasz.valasz;
-        uzenet.classList = "alert alert-primary my-3 text-center w-80";
-
+        alertMegjelenit(valasz.valasz, false, uzenet, progressBar);
         document.getElementById("hozzaszolas").value = "";
         hozzaszolasLeker();
     }
 
     else{
-        uzenet.innerHTML = valasz.valasz;
-        uzenet.classList = "alert alert-danger my-3 text-center w-80";
-
-        let btnBezar = document.createElement("input");
-        btnBezar.type = "button";
-        btnBezar.classList = "btn-close position-absolute top-50 end-0 translate-middle-y me-3";
-        btnBezar.setAttribute("data-bs-dismiss", "alert");
-        btnBezar.setAttribute("aria-label", "Close");
+      alertMegjelenit(valasz.valasz, false, uzenet, progressBar);
 
     }
 
@@ -509,7 +501,7 @@ function hozzaszolasGeneral(hozzaszolasok, nevek){
               img.classList = "rounded-circle me-2";
               img.style.width = "40px";
               img.style.height = "40px";
-              spanFelh.innerHTML = "" + nev.felhnev + "";
+              spanFelh.innerHTML = "" + hozzaszolas.felhasznalonev + "";
               spanIdo.innerHTML = hozzaszolas.feltoltes_ideje;
               spanIdo.classList = "text-body-secondary ms-4";
               
@@ -592,6 +584,7 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
     let width = 100;
     progress.hidden = false;
     alertBox.hidden = false;
+    alertSzamlalo++;
     if(hibae == true){
       progress.style.background = "red";
       alertBox.classList = "alert alert-danger text-center";
@@ -601,6 +594,9 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
       alertBox.classList = "alert alert-success text-center";
     }
     alertBox.innerHTML = uzenet;
+    if(alertSzamlalo > 1){
+      return;
+    }
     let interval = setInterval(() => {
         width -= (100 / (duration / step));
         progress.style.width = width + '%';
@@ -608,29 +604,35 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
             clearInterval(interval);
             alertBox.hidden = true;
             progress.hidden = true;
+            alertSzamlalo = 0;
         }
     }, step);
   
 }
 
-async function segit(){
-  await bevasarloListaLeker();
 
-}
 
-window.addEventListener("load",  hozzavalokFuggvenyHivas);
 
-  //document.addEventListener('DOMContentLoaded', csillagErtekeloFelhasznalotol);
-window.addEventListener("load", ertekeltE)
-  document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
-  window.addEventListener("load", function(){
-    hozzaszolasLeker();
+document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
+async function segedFuggvenyInditashoz() {
+
+    await hozzaszolasLeker();
     receptLeker();
     ertekelesLeker();
-    ertekeltE();
-    adagFigyel();
-    segit();
-  });
+    await ertekeltE();
+    adagFigyel(); 
+    await hozzavalokFuggvenyHivas(); 
+    await bevasarloListaLeker();
+}
+
+window.addEventListener("load", segedFuggvenyInditashoz);
+
+
+
+
+
   document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
 
+  //document.addEventListener('DOMContentLoaded', BevasarloListaLekerSegedFuggveny());
 
+ 

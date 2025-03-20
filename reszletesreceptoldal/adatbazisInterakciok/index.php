@@ -115,7 +115,7 @@
         case "hozzaszolasleker":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $receptek_id = $bodyAdatok["receptek_id"];
-                $leker = adatokLekerese("SELECT * FROM `hozzaszolasok` WHERE receptek_id = {$receptek_id} ORDER BY hozzaszolasok.id DESC;");
+                $leker = adatokLekerese("SELECT hozzaszolasok.id, hozzaszolasok.felhasznalo_id, hozzaszolasok.hozzaszolas, hozzaszolasok.receptek_id, hozzaszolasok.feltoltes_ideje, felhasznalok.profilkep,felhasznalok.felhnev AS felhasznalonev FROM `hozzaszolasok` INNER JOIN felhasznalok ON felhasznalok.id = hozzaszolasok.felhasznalo_id WHERE receptek_id = {$receptek_id} ORDER BY hozzaszolasok.id DESC;");
                 if(is_array($leker)){
                     echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                 }

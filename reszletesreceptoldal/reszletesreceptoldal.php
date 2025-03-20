@@ -157,7 +157,8 @@
 
 
       <!--Hozzászólás elküldésének sikeressége-->
-      <div id="hozzaszolasUzenet"></div>
+      <div id='hozzaszolasAlert' role='alert' hidden></div>
+      <div id='hozzaszolasProgressBar' class="mb-3" hidden style=' height: 5px; width: 100%;'></div>
 
       <div id="divHozzaszolasok" class="filter-box border p-3 bg-light rounded">
         <h1 id="cimHozzaszolas" class="display-6 my-4">Hozzászólások</h1>
