@@ -1,54 +1,11 @@
-let kivalasztottCsillag = 0;
 let kategoriak = [];
-let adag = 1;
 let receptek = [];
 let hozzavalok = [];
 let felhasznalo_id = 5;
 let receptek_id = 1;
-let alertSzamlalo = 0;
 
 
-async function hozzaszolasElkuld(){
-  try {
-    let hozzaszolas = document.getElementById("hozzaszolas").value;
-    let uzenet = document.getElementById("hozzaszolasAlert");
-    let progressBar = document.getElementById("hozzaszolasProgressBar");
-    uzenet.innerHTML = "";
 
-    if(hozzaszolas == ""){
-      alertMegjelenit("Kérem, ne hagyja üresen a mezőt!", true, uzenet, progressBar);
-      return;
-    }
-
-    let kuldes = await fetch("./adatbazisInterakciok/hozzaszolasfeltoltes", {
-      method : "PUT",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify({
-        "felhasznalo_id" : felhasznalo_id,
-        "hozzaszolas" : hozzaszolas,
-        "receptek_id" : receptek_id
-      })
-    })
-
-    let valasz = await kuldes.json();
-    console.log(valasz)
-    if(kuldes.ok){
-        alertMegjelenit(valasz.valasz, false, uzenet, progressBar);
-        document.getElementById("hozzaszolas").value = "";
-        hozzaszolasLeker();
-    }
-
-    else{
-      alertMegjelenit(valasz.valasz, false, uzenet, progressBar);
-
-    }
-
-  } catch (error) {
-        console.log(error)
-  }
-}
 
 async function hozzaszolasLeker(){
     let lekerHozzaszolas = await fetch("./adatbazisInterakciok/hozzaszolasleker", {
