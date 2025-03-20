@@ -30,29 +30,11 @@
      width: 100%; 
  }
 
- .carousel-item img {
-    max-height: 400px;
-    object-fit: cover;
+legend {
+    padding: 5px 10px;
+    background-color: rgb(255, 124, 124);
+ }
+
+#fieldset {
+    width: 80%;
 }
-
- .star {
-    font-size: 2rem;
-    cursor: pointer;
-    color: gray;
-    transition: color 0.2s;
-  }
-  .star.filled {
-    color: gold;
-  }
-
-  #btnHozzaszolasKuldes {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-}
-
-#receptLeiras {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-  

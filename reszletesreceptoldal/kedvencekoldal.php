@@ -46,7 +46,19 @@
         </div>
       </nav>
     <!--END NAVBAR-->
+  <div class="container">
 
+    <div>
+      <fieldset id="fieldset" class="mx-auto filter-box border p-3 bg-light rounded my-3">
+        <legend class="text-center my-4">Kedvenc receptek</legend>
+        <div id="kedvencReceptekKartyak">
+
+        </div>
+      </fieldset>
+    </div>
+
+
+  </div>
     
     
 

@@ -3,7 +3,6 @@
 //RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
 
     include "./adatbazisInterakciok.php";
-    include "./hibakKiirat.php";
     $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
     $url = explode("?", end($teljesURL));
 
@@ -472,6 +471,9 @@
             echo "Hiba";
     }
 
+
+
+    //SELECT receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN kedvenceklista ON kedvenceklista.recept_id = receptek.id WHERE receptek.id = 1;
 
     
 
