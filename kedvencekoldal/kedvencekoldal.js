@@ -121,19 +121,20 @@ async function bevasarloListaLeker(){
         "Content-Type" : "application/json"
     },
     body : JSON.stringify({
-        "felhasznalo_id" : felhasznalo_id
+        "felhasznalok_id" : felhasznalo_id
     })
   })
   let valaszReceptek = await lekerReceptNev.json();
   let valaszHozzavalok = await lekerHozzavalok.json();
-  if(lekerHozzavalok.ok && valaszReceptek.ok){
+  if(lekerHozzavalok.ok && lekerHozzavalok.ok){
     //console.log(valasz[0].hozzavalo);
+    console.log(valaszReceptek);
     accordionGeneral(valaszHozzavalok, valaszReceptek,divAccordion);
     //console.log(valasz.valasz);
     
   }
   else{
-    console.log(valasz.valasz);
+    console.log(valaszReceptek.valasz+"; "+ valaszHozzavalok.valasz);
 
   }
   } catch (error) {
@@ -144,43 +145,57 @@ async function bevasarloListaLeker(){
 function accordionGeneral(hozzavalok, receptek,divAccordion){
 
   for(let recept of receptek){
+    let divAccordionItem = document.createElement("div");
+    divAccordionItem.classList = "accordion-item";
+    
+    let h2AccordionHeader = document.createElement("h2");
+    h2AccordionHeader.classList = "accordion-header";
+    //Heading id megadása
+    h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve+"-"+recept.id;
+  
+    let btnLenyit = document.createElement("button");
+    btnLenyit.classList = "accordion-button";
+    btnLenyit.type = "button";
+    btnLenyit.setAttribute("data-bs-toggle", "collapse");
+    //ID megadása
+    btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve+"-"+recept.id);
+    btnLenyit.setAttribute("aria-expanded", "true");
+    btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve+"-"+recept.id);
+    btnLenyit.innerHTML = recept.neve;
+  
+    let divPanelLenyitva = document.createElement("div");
+    divPanelLenyitva.id = "panelLenyitva-"+recept.neve+"-"+recept.id;
+    divPanelLenyitva.classList = "ccordion-collapse collapse show";
+    divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve+"-"+recept.id);
+  
+    let divAccordionBody = document.createElement("div");
+    divAccordionBody.classList = "accordion-body";
+
+    let ul = document.createElement("ul");
     for(let hozzavalo of hozzavalok){
-      let divAccordionItem = document.createElement("div");
-      divAccordionItem.classList = "accordion-item";
-  
-      let h2AccordionHeader = document.createElement("h2");
-      h2AccordionHeader.classList = "accordion-header";
-      //Heading id megadása
-      h2AccordionHeader.id = "panelLenyitvaHeading-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
-  
-      let btnLenyit = document.createElement("button");
-      btnLenyit.classList = "accordion-button";
-      btnLenyit.classList = "button";
-      btnLenyit.setAttribute("data-bs-toggle", "collapse");
-      //ID megadása
-      btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
-      btnLenyit.setAttribute("aria-expanded", "true");
-      btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
-      btnLenyit.innerHTML = hozzavalo.hozzavalo;
-  
-      let divPanelLenyitva = document.createElement("div");
-      divPanelLenyitva.id = "panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
-      divPanelLenyitva.classList = "ccordion-collapse collapse show";
-      divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
-  
-      let divAccordionBody = document.createElement("div");
-      divAccordionBody.classList = "accordion-body";
-  
-      let ul = document.createElement("ul");
+      
       ul.classList = "list-group";
   
-      let liMennyiseg = document.createElement("li");
-      liMennyiseg.classList = "list-group-item";
-      liMennyiseg.innerHTML = hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg;
-  
-  
+      let li = document.createElement("li");
+      li.classList = "list-group-item";
+      li.innerHTML = "Neve: "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg+" - "+hozzavalo.kategoria;
+      
+      ul.appendChild(li);
     }
+    divAccordion.appendChild(divAccordionItem);
+
+    divAccordionItem.appendChild(h2AccordionHeader);
+    divAccordionItem.appendChild(divPanelLenyitva);
+
+    divPanelLenyitva.appendChild(divAccordionBody);
+
+    divAccordionBody.appendChild(ul);
+
+    divPanelLenyitva.appendChild
+    h2AccordionHeader.appendChild(btnLenyit);
+
   }
+  
 }
 
 
