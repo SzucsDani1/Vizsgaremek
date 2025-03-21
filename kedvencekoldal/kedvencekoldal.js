@@ -171,16 +171,36 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
     let divAccordionBody = document.createElement("div");
     divAccordionBody.classList = "accordion-body";
 
-    let ul = document.createElement("ul");
+    let divListGroup = document.createElement("ul");
+    divListGroup.classList = "list-group";
     for(let hozzavalo of hozzavalok){
-      
-      ul.classList = "list-group";
-  
-      let li = document.createElement("li");
+      let divListGroupItem = document.createElement("div");
+      divListGroupItem.classList = "list-group-item";
+
+      let divTartalom = document.createElement("div");
+      divTartalom.classList = "d-flex w-100 justify-content-between";
+
+      let pHozzavalo = document.createElement("p");
+      pHozzavalo.innerHTML = "Neve: "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg+" - "+hozzavalo.kategoria;
+
+      let btnTorles = document.createElement("input");
+      btnTorles.type = "button";
+      btnTorles.value = "Törlés";
+      btnTorles.classList = "btn btn-danger";
+      btnTorles.id = hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+
+      divListGroup.appendChild(divListGroupItem);
+
+      divListGroupItem.appendChild(divTartalom);
+
+      divTartalom.appendChild(pHozzavalo);
+      divTartalom.appendChild(btnTorles);
+
+      /*let li = document.createElement("li");
       li.classList = "list-group-item";
       li.innerHTML = "Neve: "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg+" - "+hozzavalo.kategoria;
       
-      ul.appendChild(li);
+      divListGroup.appendChild(li);*/
     }
     divAccordion.appendChild(divAccordionItem);
 
@@ -189,7 +209,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
     divPanelLenyitva.appendChild(divAccordionBody);
 
-    divAccordionBody.appendChild(ul);
+    divAccordionBody.appendChild(divListGroup);
 
     divPanelLenyitva.appendChild
     h2AccordionHeader.appendChild(btnLenyit);
