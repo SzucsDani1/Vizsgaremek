@@ -1,7 +1,7 @@
 let kategoriak = [];
-let receptek = [];
-let hozzavalok = [];
-let felhasznalo_id = 5;
+//let receptek = [];
+//let hozzavalok = [];
+let felhasznalo_id = 6;
 let receptek_id = 1;
 
 
@@ -105,7 +105,7 @@ async function kedvencReceptLeker(){
 async function bevasarloListaLeker(){
   try {
     let divAccordion = document.getElementById("accordionHozzavalok");
-    let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistaleker",{
+    let lekerHozzavalok = await fetch("./adatbazisInterakciok/bevasarlolistahozzavalokleker",{
       method : "POST",
       headers : {
           "Content-Type" : "application/json"
@@ -115,10 +115,20 @@ async function bevasarloListaLeker(){
       })
   })
 
-  let valasz = await feltolt.json();
-  if(feltolt.ok){
+  let lekerReceptNev = await fetch("./adatbazisInterakciok/receptnevlekerbevasarlolistabol",{
+    method : "POST",
+    headers : {
+        "Content-Type" : "application/json"
+    },
+    body : JSON.stringify({
+        "felhasznalo_id" : felhasznalo_id
+    })
+  })
+  let valaszReceptek = await lekerReceptNev.json();
+  let valaszHozzavalok = await lekerHozzavalok.json();
+  if(lekerHozzavalok.ok && valaszReceptek.ok){
     //console.log(valasz[0].hozzavalo);
-    accordionGeneral(valasz, divAccordion);
+    accordionGeneral(valaszHozzavalok, valaszReceptek,divAccordion);
     //console.log(valasz.valasz);
     
   }
@@ -131,9 +141,46 @@ async function bevasarloListaLeker(){
   }
 }
 
-function accordionGeneral(hozzavalok, divAccordion){
+function accordionGeneral(hozzavalok, receptek,divAccordion){
 
-  /*for(let hozzavalo of hozzavalok){}*/
+  for(let recept of receptek){
+    for(let hozzavalo of hozzavalok){
+      let divAccordionItem = document.createElement("div");
+      divAccordionItem.classList = "accordion-item";
+  
+      let h2AccordionHeader = document.createElement("h2");
+      h2AccordionHeader.classList = "accordion-header";
+      //Heading id megadása
+      h2AccordionHeader.id = "panelLenyitvaHeading-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+  
+      let btnLenyit = document.createElement("button");
+      btnLenyit.classList = "accordion-button";
+      btnLenyit.classList = "button";
+      btnLenyit.setAttribute("data-bs-toggle", "collapse");
+      //ID megadása
+      btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
+      btnLenyit.setAttribute("aria-expanded", "true");
+      btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
+      btnLenyit.innerHTML = hozzavalo.hozzavalo;
+  
+      let divPanelLenyitva = document.createElement("div");
+      divPanelLenyitva.id = "panelLenyitva-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+      divPanelLenyitva.classList = "ccordion-collapse collapse show";
+      divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id);
+  
+      let divAccordionBody = document.createElement("div");
+      divAccordionBody.classList = "accordion-body";
+  
+      let ul = document.createElement("ul");
+      ul.classList = "list-group";
+  
+      let liMennyiseg = document.createElement("li");
+      liMennyiseg.classList = "list-group-item";
+      liMennyiseg.innerHTML = hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg;
+  
+  
+    }
+  }
 }
 
 
@@ -272,7 +319,10 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
 
 
-window.addEventListener("load", kedvencReceptLeker)
+window.addEventListener("load", function(){
+  kedvencReceptLeker();
+  bevasarloListaLeker();
+})
 //window.addEventListener("load", segedFuggvenyInditashoz);
 
  
