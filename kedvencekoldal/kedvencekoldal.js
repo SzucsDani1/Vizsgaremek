@@ -70,60 +70,6 @@ async function receptLeker(){
 */
 
 
-/*async function kedvencRecept(){
-  try {
-    let checkbox = document.getElementById("kedvencRecept");
-    let label = document.getElementById("kedvencReceptFelirat");
-    if(checkbox.checked == true){
-      //Hozzáad
-      let hozzaad = await fetch("./adatbazisInterakciok/kedvencrecepthozzaad",{
-        method : "PUT",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-            "receptek_id" : receptek_id,
-            "felhasznalo_id" :felhasznalo_id
-        })
-      })
-      let valasz = await hozzaad.json();
-      if(hozzaad.ok){
-        //Feltöltve
-        console.log(valasz.valasz);
-        label.innerHTML = "Törlés kedvenc receptekből";
-      }
-      else{
-        alert(valasz.valasz);
-      }
-
-    }
-    else{
-      //Töröl
-      let torol = await fetch("./adatbazisInterakciok/kedvencrecepttorol",{
-        method : "DELETE",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-            "receptek_id" : receptek_id,
-            "felhasznalo_id" :felhasznalo_id
-        })
-      })
-      
-      if(torol.ok){
-        console.log("Sikeres törlés!");
-        label.innerHTML = "Hozzáadás kedvencekhez";
-      }
-      else{
-        alert(valasz.valasz);
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-*/
-
 async function kedvencReceptLeker(){
   try {
     let divContainer = document.getElementById("kedvencReceptekKartyak");
@@ -156,38 +102,9 @@ async function kedvencReceptLeker(){
 
 
 
-/*async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
+async function bevasarloListaLeker(){
   try {
-    let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
-      method : "PUT",
-      headers : {
-          "Content-Type" : "application/json"
-      },
-      body : JSON.stringify({
-          "hozzavalo_id" : hozzavalo_id,
-          "felhasznalo_id" : felhasznalo_id
-      })
-  })
-
-  let valasz = await feltolt.json();
-  let hozzavalokAlert = document.getElementById("hozzavalokAlert");
-  let hozzavalokProgressBar = document.getElementById("hozzavalokProgressBar");
-  if(feltolt.ok){
-    console.log(valasz.valasz);
-    bevasarloListaLeker();
-    alertMegjelenit(valasz.valasz, false, hozzavalokAlert, hozzavalokProgressBar);
-  }
-  else{
-    alertMegjelenit(valasz.valasz, true, hozzavalokAlert, hozzavalokProgressBar);
-
-  }
-  } catch (error) {
-    console.log(error);
-  }
-}*/
-
-/*async function bevasarloListaLeker(){
-  try {
+    let divAccordion = document.getElementById("accordionHozzavalok");
     let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistaleker",{
       method : "POST",
       headers : {
@@ -201,7 +118,7 @@ async function kedvencReceptLeker(){
   let valasz = await feltolt.json();
   if(feltolt.ok){
     //console.log(valasz[0].hozzavalo);
-    hozzavalokBevasarloListaban(valasz);
+    accordionGeneral(valasz, divAccordion);
     //console.log(valasz.valasz);
     
   }
@@ -212,7 +129,12 @@ async function kedvencReceptLeker(){
   } catch (error) {
     console.log(error);
   }
-}*/
+}
+
+function accordionGeneral(hozzavalok, divAccordion){
+  
+}
+
 
 function receptekBetoltes(receptek, divContainer){
   divContainer.innerHTML = "";  
