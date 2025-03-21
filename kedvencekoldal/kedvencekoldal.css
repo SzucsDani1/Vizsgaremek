@@ -32,7 +32,7 @@
 
 legend {
     padding: 5px 10px;
-    background-color: rgb(219, 219, 219);
+    background-color: rgb(241, 0, 0);
  }
 
 #fieldset {
@@ -50,10 +50,10 @@ legend {
 
   }
 
-
+/*Accordion kattintás utáni szín*/
   .accordion {
-    --bs-accordion-btn-focus-border-color: #ffc107 !important; /* warning szín */
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.5) !important; /* halvány sárga fókusz */
+   /* --bs-accordion-btn-focus-border-color: #ffc107 !important; /* warning szín */
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(207, 79, 4, 0.5) !important; /* halvány sárga fókusz */
   }
   
 
