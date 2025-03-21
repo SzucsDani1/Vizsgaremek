@@ -88,6 +88,25 @@ switch (end($url)) {
         }
         break;
     }    
+    case 'receptekNemElf': {
+        if ($metodus === 'GET') {
+            $sql = "SELECT * FROM `receptek` WHERE `receptek`.`elfogadot` = 0;";
+            $adat = adatokLekerese($sql);
+
+            if (is_array($adat)) {
+                echo json_encode($adat, JSON_UNESCAPED_UNICODE);
+            }
+            else {
+                echo json_encode(['valasz' => 'Sikertelen modosítás!'], JSON_UNESCAPED_UNICODE);
+                header('BAD REQUEST', true, 400);
+            } 
+        }
+        else {
+            echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+            header('Method Not Allowed', true, 405);
+        }
+        break;
+    }    
     
     default:
         echo '';
