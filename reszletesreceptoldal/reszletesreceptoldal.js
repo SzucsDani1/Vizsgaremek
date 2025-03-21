@@ -461,7 +461,8 @@ async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
       },
       body : JSON.stringify({
           "hozzavalo_id" : hozzavalo_id,
-          "felhasznalo_id" : felhasznalo_id
+          "felhasznalo_id" : felhasznalo_id,
+          "adag" : adag
       })
   })
 

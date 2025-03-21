@@ -358,11 +358,12 @@
 
             case "bevasarlolistahozzaad":
                 if($_SERVER["REQUEST_METHOD"] == "PUT"){
-                    if(!empty($bodyAdatok["hozzavalo_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                    if(!empty($bodyAdatok["hozzavalo_id"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["adag"])){
                         $hozzavalo_id = $bodyAdatok["hozzavalo_id"];
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                        $adag = $bodyAdatok["adag"];
 
-                        $recept = adatokValtoztatasa("INSERT INTO `bevasarlolista`( `felhasznalo_id`, `hozzavalok_id`) VALUES ({$felhasznalo_id},{$hozzavalo_id})");
+                        $recept = adatokValtoztatasa("INSERT INTO `bevasarlolista`( `felhasznalo_id`, `hozzavalok_id`, `adag`) VALUES ({$felhasznalo_id},{$hozzavalo_id},{$adag})");
                         if($recept == "Sikeres művelet!"){
                             header("CREATED", true, 201);
                             echo json_encode(["valasz" => "Sikeres rögzítés"], JSON_UNESCAPED_UNICODE);
