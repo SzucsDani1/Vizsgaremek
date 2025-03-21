@@ -132,7 +132,8 @@ async function bevasarloListaLeker(){
 }
 
 function accordionGeneral(hozzavalok, divAccordion){
-  
+
+  /*for(let hozzavalo of hozzavalok){}*/
 }
 
 

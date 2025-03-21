@@ -38,3 +38,23 @@ legend {
 #fieldset {
     width: 80%;
 }
+
+/*Accordion háttér szín*/
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    --bs-accordion-active-bg: #f8f9fa !important; /* light szín háttér */
+    --bs-accordion-active-color: #212529 !important; /* sötét szövegszín a jó kontrasztért */
+    /*--bs-accordion-btn-focus-box-shadow: none !important;
+    --bs-accordion-border-color: #f8f9fa !important;*/
+
+  }
+
+
+  .accordion {
+    --bs-accordion-btn-focus-border-color: #ffc107 !important; /* warning szín */
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.5) !important; /* halvány sárga fókusz */
+  }
+  
+
+  
