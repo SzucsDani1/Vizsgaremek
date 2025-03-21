@@ -38,7 +38,7 @@ async function receptLeker(){
 }
 
 
-async function hozzavalokLeker(){
+/*async function hozzavalokLeker(){
   try {
     let leker = await fetch("./adatbazisInterakciok/hozzavalokleker",{
         method : "POST",
@@ -67,10 +67,10 @@ async function hozzavalokLeker(){
 }
 }
 
+*/
 
 
-
-async function kedvencRecept(){
+/*async function kedvencRecept(){
   try {
     let checkbox = document.getElementById("kedvencRecept");
     let label = document.getElementById("kedvencReceptFelirat");
@@ -122,7 +122,7 @@ async function kedvencRecept(){
     console.log(error);
   }
 }
-
+*/
 
 async function kedvencReceptLeker(){
   try {
@@ -133,22 +133,22 @@ async function kedvencReceptLeker(){
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            "receptek_id" : receptek_id,
             "felhasznalo_id" : felhasznalo_id
         })
     });
     
     let eredmeny = await leker.json();
-    console.log(eredmeny);
-    if(leker.ok){
-      receptekBetoltes(eredmeny, divContainer);
-    }
-    else{
+    console.log("Eredmény:" +eredmeny);
+    if(eredmeny == "Nincs találat!"){
       divContainer.classList = "alert alert-danger text-center";
       divContainer.role = "alert";
       divContainer.innerHTML = "Nincs kedvenc recept!";
       
     }
+    else if(leker.ok){
+      receptekBetoltes(eredmeny, divContainer);
+    }
+    
 } catch (error) {
     console.log(error);
 }
@@ -156,7 +156,7 @@ async function kedvencReceptLeker(){
 
 
 
-async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
+/*async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
   try {
     let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
       method : "PUT",
@@ -184,9 +184,9 @@ async function bevasarloListaHozzaad(hozzavalo_id, btnBevasarlo){
   } catch (error) {
     console.log(error);
   }
-}
+}*/
 
-async function bevasarloListaLeker(){
+/*async function bevasarloListaLeker(){
   try {
     let feltolt = await fetch("./adatbazisInterakciok/bevasarlolistaleker",{
       method : "POST",
@@ -212,11 +212,10 @@ async function bevasarloListaLeker(){
   } catch (error) {
     console.log(error);
   }
-}
+}*/
 
 function receptekBetoltes(receptek, divContainer){
   divContainer.innerHTML = "";  
-  console.log("aaaa")
 
   let divRow = document.createElement("div");
   divRow.classList = "row";
@@ -228,12 +227,12 @@ function receptekBetoltes(receptek, divContainer){
 
   for(let recept of receptek){
       let divCard = document.createElement("div");
-      divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
+      divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
       divCard.style = "width: 18rem;";
       divCard.id = recept.neve;
 
       let img = document.createElement("img");
-      img.src = recept.kep;
+      img.src = recept.kepek;
       img.classList = "card-img-top";
       img.alt = recept.neve;
       img.width = 250;
@@ -248,18 +247,29 @@ function receptekBetoltes(receptek, divContainer){
 
       let pJellemzok = document.createElement("p");
       pJellemzok.classList = "text-body-secondary fw-light";
-      pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
+      pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc";
 
       let br = document.createElement("br");
 
       let inputButton = document.createElement("input");
       inputButton.type = "button";
-      inputButton.classList = "btn btn-danger";
+      inputButton.classList = "btn btn-warning";
       inputButton.value = "Részletek";
 
       let pFeltolto = document.createElement("p");
       pFeltolto.classList = "text-body-secondary fw-light mt-2";
       pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
+
+      let btnTorles = document.createElement("input");
+      btnTorles.type = "button";
+      btnTorles.id = "btn"+recept.neve;
+      btnTorles.value = "Törlés";
+      btnTorles.classList = "btn btn-danger w-100";
+      
+      btnTorles.addEventListener("click", function() {
+        console.log("ID: "+recept.id);
+        kedvencReceptTorles(recept.id)
+      });
 
       divRow.appendChild(divCard);
 
@@ -271,9 +281,36 @@ function receptekBetoltes(receptek, divContainer){
       divCardBody.appendChild(br);
       divCardBody.appendChild(inputButton);
       divCardBody.appendChild(pFeltolto);
+      divCardBody.appendChild(btnTorles);
 
   }
 
+}
+
+async function kedvencReceptTorles(id){
+  try {
+    let torol = await fetch("./adatbazisInterakciok/kedvencrecepttorol",{
+      method : "DELETE",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "receptek_id" : id,
+          "felhasznalo_id" :felhasznalo_id
+      })
+    })
+    
+    if(torol.ok){
+      console.log("Sikeres törlés!");
+      kedvencReceptLeker();
+    }
+    else{
+      let valasz = await torol.json();
+      alert(valasz.valasz);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
@@ -312,13 +349,7 @@ function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
 
 
-
-async function segedFuggvenyInditashoz() {
-
-    kedvencReceptLeker();
-    //await bevasarloListaLeker();
-}
-
+window.addEventListener("load", kedvencReceptLeker)
 //window.addEventListener("load", segedFuggvenyInditashoz);
 
  
