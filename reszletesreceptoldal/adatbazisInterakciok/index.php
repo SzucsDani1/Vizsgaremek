@@ -131,24 +131,6 @@
         }
         break;
 
-        case "nevleker":
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                $leker = adatokLekerese("SELECT felhasznalok.felhnev, felhasznalok.id, felhasznalok.profilkep FROM felhasznalok WHERE felhasznalok.id = {$felhasznalo_id};");
-                if(is_array($leker)){
-                    echo json_encode($leker, JSON_UNESCAPED_UNICODE);
-                }
-                else{
-                    header("bad request", true, 400);
-                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
-                    
-                }
-           }
-           else{
-            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
-            header('bad request', true, 400);
-        }
-        break;
 
         case "ertekelt":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -371,6 +353,36 @@
                         }
                         else{
                             echo json_encode(["valasz" => "Sikertelen feltöltés!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
+            case "bevasarlolistatorol":
+                if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                    if(!empty($bodyAdatok["hozzavalok_id"]) && !empty($bodyAdatok["felhasznalo_id"])){
+                        $hozzavalok_id = $bodyAdatok["hozzavalok_id"];
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+
+                        $kedvencRecept = adatokValtoztatasa("DELETE FROM `bevasarlolista` WHERE bevasarlolista.felhasznalo_id = {$felhasznalo_id} AND bevasarlolista.hozzavalok_id ={$hozzavalok_id}");
+                        if($kedvencRecept == "Sikeres művelet!"){
+                            header("NO CONTENT", true, 204);
+                            echo json_encode(["valasz" => "Sikeres törlés"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen törlés!"], JSON_UNESCAPED_UNICODE);
                             header("bad request", true, 400);
                         }
                     }
