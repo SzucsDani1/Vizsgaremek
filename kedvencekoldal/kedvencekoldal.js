@@ -1,42 +1,5 @@
 let kategoriak = [];
-//let receptek = [];
-//let hozzavalok = [];
 let felhasznalo_id = 6;
-//let receptek_id = 1;
-
-
-
-
-/*async function receptLeker(){
-    try {
-        let leker = await fetch("./adatbazisInterakciok/receptleker",{
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json"
-            },
-            body : JSON.stringify({
-                "recept_id" : receptek_id
-            })
-        });
-        
-        if(leker.ok){
-            let receptekLista = await leker.json();
-            for(let recept of receptekLista){
-              receptek.push(recept);
-            }
-            console.log(receptek);
-            receptMegjelenit();
-            receptInfoList();
-        }
-        else{
-            let receptekLista = await leker.json();
-            console.log(receptekLista.valasz);
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
-*/
 
 
 async function kedvencReceptLeker(){
