@@ -134,7 +134,7 @@
         case "nevleker":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                $leker = adatokLekerese("SELECT felhasznalok.felhnev, felhasznalok.id FROM felhasznalok WHERE felhasznalok.id = {$felhasznalo_id};");
+                $leker = adatokLekerese("SELECT felhasznalok.felhnev, felhasznalok.id, felhasznalok.profilkep FROM felhasznalok WHERE felhasznalok.id = {$felhasznalo_id};");
                 if(is_array($leker)){
                     echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                 }

@@ -44,6 +44,7 @@
       </nav>
     <!--END NAVBAR-->
 
+    <!--Kedvenc recepthez adás/törlés gomb-->
     <div class="sticky-sm-top">
       <input type="checkbox" class="btn-check" id="kedvencRecept">
       <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat">Hozzáadás kedvencekhez</label>
