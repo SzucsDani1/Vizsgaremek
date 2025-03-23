@@ -2,12 +2,12 @@ let kategoriak = [];
 //let receptek = [];
 //let hozzavalok = [];
 let felhasznalo_id = 6;
-let receptek_id = 1;
+//let receptek_id = 1;
 
 
 
 
-async function receptLeker(){
+/*async function receptLeker(){
     try {
         let leker = await fetch("./adatbazisInterakciok/receptleker",{
             method : "POST",
@@ -36,37 +36,6 @@ async function receptLeker(){
         console.log(error);
     }
 }
-
-
-/*async function hozzavalokLeker(){
-  try {
-    let leker = await fetch("./adatbazisInterakciok/hozzavalokleker",{
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-            "recept_id" : receptek_id
-        })
-    });
-    
-    let hozzavalokLista = await leker.json();
-
-    if(leker.ok){
-      console.log(hozzavalok);
-      for(let hozzavalo of hozzavalokLista){
-        hozzavalok.push(hozzavalo);
-      }
-      hozzavalokTablazatGeneral();
-    }
-    else{
-        console.log(hozzavalokLista.valasz);
-    }
-} catch (error) {
-    console.log(error);
-}
-}
-
 */
 
 
@@ -86,7 +55,7 @@ async function kedvencReceptLeker(){
     let eredmeny = await leker.json();
     console.log("Eredmény:" +eredmeny);
     if(eredmeny == "Nincs találat!"){
-      divContainer.classList = "alert alert-danger text-center";
+      divContainer.classList = "alert alert-warning text-center";
       divContainer.role = "alert";
       divContainer.innerHTML = "Nincs kedvenc recept!";
       
@@ -126,16 +95,19 @@ async function bevasarloListaLeker(){
   })
   let valaszReceptek = await lekerReceptNev.json();
   let valaszHozzavalok = await lekerHozzavalok.json();
-  if(lekerHozzavalok.ok && lekerHozzavalok.ok){
-    //console.log(valasz[0].hozzavalo);
-    console.log(valaszReceptek);
-    accordionGeneral(valaszHozzavalok, valaszReceptek,divAccordion);
-    //console.log(valasz.valasz);
+  if(valaszHozzavalok == "Nincs találat!" || valaszReceptek == "Nincs találat!"){
+    divAccordion.classList = "alert alert-warning text-center";
+    divAccordion.role = "alert";
+    divAccordion.innerHTML = "Nincs a bevásárlólistában hozzávaló!";
     
+  }
+  else if (lekerHozzavalok.ok && lekerReceptNev.ok){
+    accordionGeneral(valaszHozzavalok, valaszReceptek,divAccordion);
+    console.log(valaszReceptek);
+
   }
   else{
     console.log(valaszReceptek.valasz+"; "+ valaszHozzavalok.valasz);
-
   }
   } catch (error) {
     console.log(error);
@@ -143,7 +115,7 @@ async function bevasarloListaLeker(){
 }
 
 function accordionGeneral(hozzavalok, receptek,divAccordion){
-
+  divAccordion.innerHTML = "";
   for(let recept of receptek){
     let divAccordionItem = document.createElement("div");
     divAccordionItem.classList = "accordion-item";
@@ -174,33 +146,34 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
     let divListGroup = document.createElement("ul");
     divListGroup.classList = "list-group";
     for(let hozzavalo of hozzavalok){
-      let divListGroupItem = document.createElement("div");
-      divListGroupItem.classList = "list-group-item";
+      if(recept.id == hozzavalo.recept_id){
+        let divListGroupItem = document.createElement("div");
+        divListGroupItem.classList = "list-group-item";
 
-      let divTartalom = document.createElement("div");
-      divTartalom.classList = "d-flex w-100 justify-content-between";
+        let divTartalom = document.createElement("div");
+        divTartalom.classList = "d-flex w-100 justify-content-between";
 
-      let pHozzavalo = document.createElement("p");
-      pHozzavalo.innerHTML = "Neve: "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg+" - "+hozzavalo.kategoria;
+        let pHozzavalo = document.createElement("p");
+        pHozzavalo.innerHTML = "<b>Kategória:</b> "+hozzavalo.kategoria+" - <b>Neve:</b> "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg;
 
-      let btnTorles = document.createElement("input");
-      btnTorles.type = "button";
-      btnTorles.value = "Törlés";
-      btnTorles.classList = "btn btn-danger";
-      btnTorles.id = hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+        let btnTorles = document.createElement("input");
+        btnTorles.type = "button";
+        btnTorles.value = "Törlés";
+        btnTorles.classList = "btn btn-danger";
+        btnTorles.id = hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+        //Törlés eseménykezelő
+        btnTorles.addEventListener("click", function(){
+          hozzavaloTorolAccordionbol(hozzavalo.hozzavalok_id);
+          console.log("Hozzávaló: "+hozzavalo.hozzavalok_id)
+        })
 
-      divListGroup.appendChild(divListGroupItem);
+        divListGroup.appendChild(divListGroupItem);
 
-      divListGroupItem.appendChild(divTartalom);
+        divListGroupItem.appendChild(divTartalom);
 
-      divTartalom.appendChild(pHozzavalo);
-      divTartalom.appendChild(btnTorles);
-
-      /*let li = document.createElement("li");
-      li.classList = "list-group-item";
-      li.innerHTML = "Neve: "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg+" - "+hozzavalo.kategoria;
-      
-      divListGroup.appendChild(li);*/
+        divTartalom.appendChild(pHozzavalo);
+        divTartalom.appendChild(btnTorles);
+      }
     }
     divAccordion.appendChild(divAccordionItem);
 
@@ -216,6 +189,31 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
   }
   
+}
+
+async function hozzavaloTorolAccordionbol(hozzavalok_id){
+  try {
+    let torol = await fetch("./adatbazisInterakciok/bevasarlolistatorol",{
+      method : "DELETE",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "hozzavalok_id" : hozzavalok_id,
+          "felhasznalo_id" :felhasznalo_id
+      })
+    })
+
+    if(torol.ok){
+      bevasarloListaLeker();
+    }
+    else{
+      let valasz = await torol.json();
+      console.log(valasz.valasz);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 
