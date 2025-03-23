@@ -286,7 +286,7 @@ async function kedvencRecept(){
   try {
     let checkbox = document.getElementById("kedvencRecept");
     let label = document.getElementById("kedvencReceptFelirat");
-    if(checkbox.checked == true){
+    if(checkbox.checked == false){
       //Hozzáad
       let hozzaad = await fetch("./adatbazisInterakciok/kedvencrecepthozzaad",{
         method : "PUT",
@@ -354,13 +354,13 @@ async function kedvencReceptLeker(){
     let eredmeny = await leker.json();
     if(eredmeny == "Nincs találat!"){
       //Még nincs bejelölve a kedvenc receptekhez
-      checkbox.checked = false;
+      checkbox.checked = true;
       console.log(eredmeny.valasz);
       label.innerHTML = "Hozzáadás kedvencekhez";
     }
     else{
       //Már be van jelölve a kedvenc receptekhez
-      checkbox.checked = true;
+      checkbox.checked = false;
       label.innerHTML = "Törlés kedvenc receptekből";
       
     }
@@ -435,11 +435,12 @@ function hozzavalokTablazatGeneral(){
         btnBevasarlo.type = "checkbox";
         btnBevasarlo.classList = "btn-check";
         btnBevasarlo.id = "btn"+hozzavalo.hozzavalo;
+        btnBevasarlo.checked = true;
 
         //Hozzá van-e adva a bevásárlólistához
         for(let item of bevasarloLista){
           if(item.hozzavalok_id == hozzavalo.id){
-            btnBevasarlo.checked = true;
+            btnBevasarlo.checked = false;
             label.innerHTML = "Törlés a korsárból";
             break;
           }
@@ -473,7 +474,7 @@ function hozzavalokTablazatGeneral(){
 
 async function bevasaloListaTorlesHozzaadas(hozzavalo_id, label, btnBevasarlo){
   try {
-    if(btnBevasarlo.checked == true){
+    if(btnBevasarlo.checked == false){
       //Hozzáad
       let hozzaad = await fetch("./adatbazisInterakciok/bevasarlolistahozzaad",{
         method : "PUT",
