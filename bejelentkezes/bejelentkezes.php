@@ -8,131 +8,123 @@
     <link rel="stylesheet" href="bejelentkezes.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
-<body>
-    <h1 style="text-align: center;">Bejelentkezés</h1>
-
-    <!--START CAROUSEL-->
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="kepek/etel4.jpg" class="d-block w-100" alt="Bolognai">
-                <div class="carousel-caption d-sm-block">
-                    <h1>Finom falatok</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--END CAROUSEL-->
+<body id="body">
+    <img src="logo/FinomFalatokLogoSzeles.png" class="rounded mx-auto d-block img-fluid mt-1" id="logo" alt="...">
 
 
     <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
     <div class="container">
-        <form method="post">
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+        <fieldset id="fieldset" class="mx-auto filter-box border pb-4 bg-light rounded my-3">
+            <div class="px-4 row">
+                <legend class="text-center my-5 display-6">Bejelentkezés</legend>
+
+            </div>    
+            <form method="post">
+            <div class="row my-5 mx-2">
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
                     <!-- FELHASZNÁLÓVÉV -->
-                    <input type="text" name="Bejfelhasznalonev" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
+                    <input type="text" name="Bejfelhasznalonev" class="form-control " placeholder="Felhasználónév" aria-label="Recept">
                 </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <div class="row my-5 mx-2">
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
                     <!-- JELSZÓ -->
-                    <input type="password" name="Bejjelszo" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
+                    <input type="password" name="Bejjelszo" class="form-control " placeholder="Jelszó" aria-label="Recept">
                 </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 inputMezo" />
+            <div class="row my-5 mx-2">
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                    <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 " />
                 </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             </div>
             </form>
-    </div>
+        
     <!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
 
 <!-- START BEJELENTKEZÉS -->
-    <div>
-        <?php 
-            if(isset($_POST["bejelentkezes"])){
-                $felhasznalonev = $_POST["Bejfelhasznalonev"];
-                $jelszo = $_POST["Bejjelszo"];
-                if(!empty($felhasznalonev) && !empty($jelszo)){
-                    try {
-                        $muvelet = "SELECT 
-                                        `felhasznalok`.`id`, 
-                                        `felhasznalok`.`felhnev`, 
-                                        `felhasznalok`.`jelszo`, 
-                                        `felhasznalojog`.`jognev`,
-                                        `felhasznalok`.`profilkep` 
-                                    FROM 
-                                        `felhasznalok`
-                                    INNER JOIN 
-                                        `felhasznalojog` 
-                                        ON `felhasznalok`.`joga_id` = `felhasznalojog`.`id`
-                                    WHERE 
-                                        `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
-                        
-                        $lekerdez = adatokLekerdezese($muvelet);
+            <div>
+                <?php 
+                    if(isset($_POST["bejelentkezes"])){
+                        $felhasznalonev = $_POST["Bejfelhasznalonev"];
+                        $jelszo = $_POST["Bejjelszo"];
+                        if(!empty($felhasznalonev) && !empty($jelszo)){
+                            try {
+                                $muvelet = "SELECT 
+                                                `felhasznalok`.`id`, 
+                                                `felhasznalok`.`felhnev`, 
+                                                `felhasznalok`.`jelszo`, 
+                                                `felhasznalojog`.`jognev`,
+                                                `felhasznalok`.`profilkep` 
+                                            FROM 
+                                                `felhasznalok`
+                                            INNER JOIN 
+                                                `felhasznalojog` 
+                                                ON `felhasznalok`.`joga_id` = `felhasznalojog`.`id`
+                                            WHERE 
+                                                `felhasznalok`.`felhnev` = '". $felhasznalonev ."';";
+                                
+                                $lekerdez = adatokLekerdezese($muvelet);
 
-                        if(is_array($lekerdez)){
-                            $lekertJelszo = $lekerdez[0]["jelszo"];
-                            if(password_verify($jelszo, $lekertJelszo)){
-                                
-                                $cookie_value = $lekerdez[0]["id"];
-                                setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 1honap 2nap
-                                
-                                $felhasznalonev_value = $lekerdez[0]["felhnev"];
-                                setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
-                                
-                                $felhasznalojoga_value = $lekerdez[0]["jognev"];
-                                setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
-                                
-                                
-                                $profilkep_value = $lekerdez[0]["profilkep"];
-                                if(empty($profilkep_value)){
-                                    $profilkep_value = "../feltoltotKepek/profilKepek/alapkep.png";
+                                if(is_array($lekerdez)){
+                                    $lekertJelszo = $lekerdez[0]["jelszo"];
+                                    if(password_verify($jelszo, $lekertJelszo)){
+                                        
+                                        $cookie_value = $lekerdez[0]["id"];
+                                        setcookie("bejelentkezetFelhasznaloId", $cookie_value, time() + (86400 * 30), "/"); // 1honap 2nap
+                                        
+                                        $felhasznalonev_value = $lekerdez[0]["felhnev"];
+                                        setcookie("felhasznalonev", $felhasznalonev_value, time() + (86400 * 30), "/");
+                                        
+                                        $felhasznalojoga_value = $lekerdez[0]["jognev"];
+                                        setcookie("jogosultsagNev", $felhasznalojoga_value, time() + (86400 * 30), "/");
+                                        
+                                        
+                                        $profilkep_value = $lekerdez[0]["profilkep"];
+                                        if(empty($profilkep_value)){
+                                            $profilkep_value = "../feltoltotKepek/profilKepek/alapkep.png";
+                                        }
+                                        setcookie("profilkep", $profilkep_value, time() + (86400 * 30), "/");
+
+                                    }
+                                    else{
+                                        bejelentHiba("Sikertelen bejelentkezés!");     
+
+                                    }
                                 }
-                                setcookie("profilkep", $profilkep_value, time() + (86400 * 30), "/");
-
+                                else{
+                                    bejelentHiba("Sikertelen bejelentkezés!");     
+                                }
+                                
                             }
-                            else{
-                                bejelentHiba("Sikertelen bejelentkezés!");     
-
+                            catch(Exception $e) {
+                                echo 'Message: ' .$e->getMessage();
                             }
                         }
                         else{
-                            bejelentHiba("Sikertelen bejelentkezés!");     
+                            bejelentHiba("Kérem minden adatott adjon meg!");     
                         }
-                        
                     }
-                    catch(Exception $e) {
-                        echo 'Message: ' .$e->getMessage();
-                    }
-                }
-                else{
-                    bejelentHiba("Kérem minden adatott adjon meg!");     
-                }
-            }
-            ?>
-    </div>
+                    ?>
+            </div>
+        
     <!-- END BEJELENTKEZÉS -->
 
 
-    <!--START FELUGRÓ ABLAK GOMBJA-->
-    <div class="container inputMezo">
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                <button type="button" class="btn btn-outline-primary btn-md w-100" data-toggle="modal" data-target="#felugro" data-whatever="@mdo">Regisztráció</button>
+            <!--START FELUGRÓ ABLAK GOMBJA-->
+            <div class="row my-5 mx-2">
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                    <button type="button" class="btn btn-outline-primary btn-md w-100" data-toggle="modal" data-target="#felugro" data-whatever="@mdo">Regisztráció</button>
+                </div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             </div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-        </div>
+        </fieldset>
     </div>
     <!--END FELUGRÓ ABLAK GOMBJA-->
 
