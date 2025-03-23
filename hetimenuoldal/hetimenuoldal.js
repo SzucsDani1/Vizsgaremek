@@ -5,7 +5,7 @@ async function receptek(){
         let leker = await fetch("./receptek");
         if(leker.ok){
             let receptek = await leker.json();
-            kartyaBetoltes(receptek);
+            receptekBetoltes(receptek);
         }
         else{
             console.log(leker.status);
@@ -27,76 +27,78 @@ async function napLeker(){
     }
 }
 
-function kartyaBetoltes(receptek){
-    let napszakok = new Set();
-    for(let i of receptek){
-        napszakok.add(i.napszak);
-    }
-    for(let napszak of napszakok){
-        let divContainer = document.getElementById(napszak);
-        divContainer.innerHTML = "";  
-
-        let divRow = document.createElement("div");
-        divRow.classList = "row";
-        
-        divContainer.innerHTML = "";
-
-        divContainer.appendChild(divRow);
-
-
-        //Kártya generálás
+function receptekBetoltes(receptek, divContainer){
+    divContainer.innerHTML = "";  
+  
+    let divRow = document.createElement("div");
+    divRow.classList = "row";
+    
+    divContainer.innerHTML = "";
+  
+    divContainer.appendChild(divRow);
+  
+  
+    for(let recept of receptek){
         let divCard = document.createElement("div");
-        divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
+        divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
-        divCard.id = receptek[index].neve;
-
-        //Kép generálása
+        divCard.id = recept.neve;
+  
         let img = document.createElement("img");
-        img.src = receptek[index].kepek;
+        img.src = recept.kepek;
         img.classList = "card-img-top";
-        img.alt = receptek[index].neve;
-        img.width = 250
-        img.height = 200
-
-        //Body rész generálása
+        img.alt = recept.neve;
+        img.width = 250;
+        img.height = 200;
+  
         let divCardBody = document.createElement("div");
         divCardBody.classList = "card-body";
-
+  
         let h5 = document.createElement("h5");
         h5.classList = "card-title";
-        h5.innerHTML = receptek[0].neve;
-
+        h5.innerHTML = recept.neve;
+  
         let pJellemzok = document.createElement("p");
         pJellemzok.classList = "text-body-secondary fw-light";
-        pJellemzok.innerHTML = receptek[index].kaloria+" kcal | "+ receptek[index].nehezseg + " | " + receptek[index].ido + " perc | " + receptek[index].adag;
-
-        //TODO
-        /*let pCardText = document.createElement("card-text");
-        pCardText.innerHTML = receptek.leiras;*/
-
+        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc";
+  
         let br = document.createElement("br");
-
-        //Gomb generálása
+  
         let inputButton = document.createElement("input");
         inputButton.type = "button";
-        inputButton.classList = "btn btn-danger";
+        inputButton.classList = "btn btn-warning";
         inputButton.value = "Részletek";
-
+  
+        let pFeltolto = document.createElement("p");
+        pFeltolto.classList = "text-body-secondary fw-light mt-2";
+        pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
+  
+        let btnTorles = document.createElement("input");
+        btnTorles.type = "button";
+        btnTorles.id = "btn"+recept.neve;
+        btnTorles.value = "Törlés";
+        btnTorles.classList = "btn btn-danger w-100";
+        
+        btnTorles.addEventListener("click", function() {
+          console.log("ID: "+recept.id);
+          kedvencReceptTorles(recept.id)
+        });
+  
         divRow.appendChild(divCard);
-
+  
         divCard.appendChild(img);
         divCard.appendChild(divCardBody);
-
+  
         divCardBody.appendChild(pJellemzok);
         divCardBody.appendChild(h5);
-        //divCardBody.appendChild(pCardText);
         divCardBody.appendChild(br);
         divCardBody.appendChild(inputButton);
-
-        index++;
+        divCardBody.appendChild(pFeltolto);
+        divCardBody.appendChild(btnTorles);
+  
     }
-
-}
+  
+  }
 
 
 window.addEventListener("load", receptek)
