@@ -1,11 +1,13 @@
 let index = 0;
-
+const napok = ['hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat', 'vasárnap'];
+const napszakok = ["reggeli","tizorai","ebed", "uzsonna", "vacsora"];
 async function receptek(){
     try {
-        let leker = await fetch("./receptek");
+        let megjelenit = document.getElementById("hetimenuMegjelenit");
+        let leker = await fetch("./adatbazisInterakciok/hetimenuleker");
         if(leker.ok){
             let receptek = await leker.json();
-            receptekBetoltes(receptek);
+            receptekBetoltes(receptek, megjelenit);
         }
         else{
             console.log(leker.status);
@@ -16,16 +18,6 @@ async function receptek(){
     
 }
 
-async function napLeker(){
-    try {
-        let leker = await fetch("randomhetimenu.php");
-        if(leker.ok){
-
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 function receptekBetoltes(receptek, divContainer){
     divContainer.innerHTML = "";  
@@ -37,8 +29,12 @@ function receptekBetoltes(receptek, divContainer){
   
     divContainer.appendChild(divRow);
   
-  
+    let napszakSzamlalo = 0;
+    let napSzamlalo = 0;
     for(let recept of receptek){
+        if(recept.napszak == napszakok[napszakSzamlalo]){
+            let kiir = document.getElementById(napszakok[napszakSzamlalo]+"Megjelenites");
+        }
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
         divCard.style = "width: 18rem;";
@@ -95,7 +91,9 @@ function receptekBetoltes(receptek, divContainer){
         divCardBody.appendChild(inputButton);
         divCardBody.appendChild(pFeltolto);
         divCardBody.appendChild(btnTorles);
-  
+        
+        napszakSzamlalo++;
+        napSzamlalo++;
     }
   
   }

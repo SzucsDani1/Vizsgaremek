@@ -47,46 +47,54 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
-                <input type="radio" class="btn-check" id="btnHetfo" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnHetfo" name="hetNapjai" value="0" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnHetfo">Hétfő</label>
             </div>
             <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
-                <input type="radio" class="btn-check" id="btnKedd" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnKedd" name="hetNapjai" value="1" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnKedd">Kedd</label>
             </div>
             <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
-                <input type="radio" class="btn-check" id="btnSzerda" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnSzerda" name="hetNapjai" value="2" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnSzerda">Szerda</label>
             </div>
             <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
-                <input type="radio" class="btn-check" id="btnCsutortok" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnCsutortok" name="hetNapjai" value="3" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnCsutortok">Csütörtök</label>
             </div>
             <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto my-2">
-                <input type="radio" class="btn-check" id="btnPentek" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnPentek" name="hetNapjai" value="4" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnPentek">Péntek</label>
             </div>
             <div class="mx-auto col-lg-3 col-md-3 col-sm-6 my-2 col-12">
-                <input type="radio" class="btn-check" id="btnSzombat" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnSzombat" name="hetNapjai" value="5" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnSzombat">Szombat</label>
             </div>
             <div class=" mx-auto col-lg-3 col-md-3 col-sm-6 my-2 col-12">
-                <input type="radio" class="btn-check" id="btnVasarnap" name="hetNapjai" autocomplete="off">
+                <input type="radio" class="btn-check" id="btnVasarnap" name="hetNapjai" value="6" autocomplete="off">
                 <label class="btn btn-outline-primary w-100" for="btnVasarnap">Vasárnap</label>
             </div>
         </div>
         <div class="row filter-box border p-3 bg-light rounded">
-          <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto">
+          <div class="col-12 col-lg-3 col-md-4 col-sm-6 mx-auto">
             <h3>Reggeli</h3>
-            <div id="reggeli"></div>
+            <div id="reggeliMegjelenites"></div>
           </div>
-          <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto">
+          <div class="col-12 col-lg-3 col-md-4 col-sm-6 mx-auto">
+            <h3>Tízórai</h3>
+            <div id="tizoraiMegjelenites"></div>
+          </div>
+          <div class="col-12 col-lg-3 col-md-4 col-sm-6 mx-auto">
             <h3>Ebéd</h3>
-            <div id="ebéd"></div>
+            <div id="ebedMegjelenites"></div>
           </div>
-          <div class="col-12 col-lg-3 col-md-3 col-sm-6 mx-auto">
+          <div class="col-12 col-lg-3 col-md-4 col-sm-6 mx-auto">
+            <h3>Uzsonna</h3>
+            <div id="uzsonnaMegjelenites"></div>
+          </div>
+          <div class="col-12 col-lg-3 col-md-4 col-sm-6 mx-auto">
             <h3>Vacsora</h3>
-            <div id="vacsora"></div>
+            <div id="vacsoraMegjelenites"></div>
           </div>
         </div>
     </div>
