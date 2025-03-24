@@ -54,7 +54,7 @@
         <div class="row d-flex justify-content-center">
           <div class="col-md-6 col-sm-12 d-flex justify-content-center my-5">
             <div class="card" style="width: 18rem;">
-              <img id="kepek" src="..." class="card-img-top" alt="Szűcs Dániel">
+              <img id="kepek" src="./kepek/Dani.jpg" class="card-img-top" alt="Szűcs Dániel">
               <div class="card-body">
                 <h5 class="card-title">Szűcs Dániel</h5>
                 <p class="card-text">Szűcs Dániel vagyok, 19 éves szoftverfejlesztő és tesztelő. Kedvenc programnyelveim: javascript, php.
@@ -66,7 +66,7 @@
 
           <div class="col-md-6 col-sm-12 d-flex justify-content-center my-5">
             <div class="card" style="width: 18rem;">
-                <img id="kepek" src="./kepek/Balazs.JPG" class="card-img-top" alt="Tóth Balázs">
+                <img id="kepek" src="./kepek/Balazs.jpg" class="card-img-top" alt="Tóth Balázs">
                 <div class="card-body">
                   <h5 class="card-title">Tóth Balázs</h5>
                   <p class="card-text">Tóth Balázs vagyok, 20 éves szoftverfejlesztő és tesztelő. Kedvenc programnyelveim: php, javascript, c#.
@@ -92,13 +92,13 @@
       <footer class="footer">
         <p>Elérhetőségek: 
           <br>
-          <a href="mailto:">dani</a>
+          <a href="mailto:szucsdaniel1@gmail.com">szucsdaniel1@gmail.com</a>
           <br>
           <a href="mailto:toth.balazs050313@gmail.com">toth.balazs050313@gmail.com</a>
-      </p>
+        </p>
         
         <!-- <p>&copy; 2024 Your Company. All rights reserved.</p> -->
-    </footer>
+      </footer>
     
       
     <script src="rolunk.js"></script>
