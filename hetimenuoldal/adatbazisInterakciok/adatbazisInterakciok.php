@@ -1,52 +1,49 @@
 <?php
+
+//SQL function lekérdezésekhez:
+function adatokLekerdezese($muvelet) {
+    $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
+    if ($db->connect_errno == 0 ) {
+        $eredmeny = $db->query($muvelet);
+        if ($db->errno == 0) {
+            if ($eredmeny->num_rows != 0) {
+                return $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+            }
+            else {
+                return 'Nincs találat!';
+            }
+        }
+        return $db->error;
+    }
+    else {
+        return $db->connect_error;
+    }
+}
+
+
+//SQL function módosításhoz:
+function adatokValtoztatasa($muvelet) {
     
-    function adatokValtoztatasa($muvelet) {
-        $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
-
-        if ($db->connect_errno == 0 ) {
-            $db->query($muvelet);
-            if ($db->errno == 0) {
-                if ($db->affected_rows > 0) {
-                    return 'Sikeres művelet!';
-                }
-                else if ($db->affected_rows == 0) {
-                    return 'Sikertelen művelet!';
-                }
-                else {
-                    return $db->error;
-                }
+    $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
+    if ($db->connect_errno == 0 ) {
+        $db->query($muvelet);
+        if ($db->errno == 0) {
+            if ($db->affected_rows > 0) {
+                return 'Sikeres művelet!';
             }
-            return $db->error;
-        }
-        else {
-            return $db->connect_error;
-        }
-    }
-   
-
-    function adatokLekerese($muvelet){
-        $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
-
-        if($db->connect_errno == 0) {
-            $eredmeny = $db->query($muvelet);
-            if ($db->errno == 0) {
-                if ($eredmeny->num_rows != 0) {
-                    $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
-                    echo json_encode($adatok);
-                    exit; 
-                }
-                else {
-                    echo json_encode('Nincs találat!');
-                    exit;
-                }
+            else if ($db->affected_rows == 0) {
+                return 'Sikertelen művelet!';
             }
-            echo json_encode($db->error);
-            exit;
+            else {
+                return $db->error;
+            }
         }
-        else {
-            echo json_encode($db->connect_error);
-            exit;
-        }
+        return $db->error;
     }
+    else {
+        return $db->connect_error;
+    }
+}
+
 
 ?>
