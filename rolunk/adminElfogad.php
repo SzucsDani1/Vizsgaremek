@@ -58,13 +58,13 @@
       <footer class="footer">
         <p>Elérhetőségek: 
           <br>
-          <a href="mailto:">dani</a>
+          <a href="mailto:szucsdaniel1@gmail.com">szucsdaniel1@gmail.com</a>
           <br>
           <a href="mailto:toth.balazs050313@gmail.com">toth.balazs050313@gmail.com</a>
-      </p>
+        </p>
         
         <!-- <p>&copy; 2024 Your Company. All rights reserved.</p> -->
-    </footer>
+      </footer>
     
       
     <script src="./adminElfogad.js"></script>
