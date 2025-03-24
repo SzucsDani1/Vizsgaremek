@@ -30,7 +30,7 @@ function receptekBetoltes(receptek){
     hetimenuKiir.appendChild(divRow);*/
   
 
-    //FÉLKÉSZ A KÓD -> appenchildok még nem jók!!!
+    //FÉLKÉSZ A KÓD -> appenchildok még nem jók!!! + adatbázisos php kód megnézése, mert rosszul van a függvénynév!!
     let napSzamlalo = 0;
     let kivalasztottNap = document.querySelector('input[name="hetNapjai"]:checked').value;
     for(let napszak of napszakok){
