@@ -9,10 +9,11 @@ async function elfogadandoReceptLeker() {
 
         if(leker.ok){
             let adatok = await leker.json()
+            console.log(adatok)
             kartyaGeneral(adatok)
         }
         else{
-            console.log(leker)
+            console.log("asd")
         }
     } catch (error) {
         console.log(error)
@@ -20,12 +21,13 @@ async function elfogadandoReceptLeker() {
 }
 
 function kartyaGeneral(receptek){
+
     let kiirat = document.getElementById("receptek")
     console.log(receptek)
 
     let sor = document.createElement("div")
     sor.classList.add("row")
-
+    if(receptek != "Nincs találat!"){
     for(let recept of receptek){
         let divCard = document.createElement("div");
         divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
@@ -88,10 +90,48 @@ function kartyaGeneral(receptek){
         sor.appendChild(divCard);
     }
   
-    kiirat.appendChild(sor)
+        kiirat.appendChild(sor)
+    }
+    else{
+        alertMegjelenit("Nincsen elfogadásra váró recept!", false)
+    }
+}
+
+function alertMegjelenit(uzenet, hibae){
+    let kiirat = document.getElementById("receptek")
+    let alert = document.createElement("div")
+
+    if(hibae == true){
+      alert.classList = "alert alert-danger text-center";
+    }
+    else{
+      alert.classList = "alert alert-success text-center";
+    }
+    alert.innerHTML = uzenet;
+   
+    kiirat.appendChild(alert)
+}
+
+
+function elfogadandoRecept(id){
 
 }
 
 
+function modositasJavas(){
+    document.getElementById("opciokDiv").style.visibility = "hidden";
+    /*
+    <div class="input-group my-3 ">
+                <textarea  placeholder="Módosítási javaslat" class="form-control " aria-label="With textarea"></textarea>
+            </div>
 
-window.addEventListener("load", elfogadandoReceptLeker)
+            <div class="d-flex justify-content-center gap-2 flex-wrap ">
+                <button type="button" class="btn btn-success  col-12">Javaslat küldése</button>
+                <button type="button" class="btn btn-danger  col-12">Mégse</button>
+            </div>
+    */ 
+}
+
+//window.addEventListener("load", elfogadandoReceptLeker)
+
+document.getElementById("modositasJavButton").addEventListener("click", modositasJavas)
