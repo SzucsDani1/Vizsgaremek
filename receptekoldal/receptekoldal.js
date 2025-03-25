@@ -1,8 +1,9 @@
+import {receptekBetoltes} from "./kartyageneralas.js"
+
 let kategoriak = new Set();
 let alapanyagok = new Set();
 let konyhak = new Set();
 let etrendek = new Set();
-let osszesReceptek = new Set();
 
 
 async function filterReceptek() {
@@ -107,7 +108,7 @@ async function filterReceptek() {
             }
         }
         
-        const response = await fetch("./szuresreceptek", {
+        const response = await fetch("./adatbazisInterakciok/szuresreceptek", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -117,7 +118,8 @@ async function filterReceptek() {
         
         if (response.ok) {
             const receptek = await response.json();
-            kartyaBetoltes(receptek);
+            let divContainer = document.getElementById("kartyak");
+            receptekBetoltes(receptek, divContainer);
         } else {
             nincsTalalatKeresesre();
         }
@@ -129,10 +131,11 @@ async function filterReceptek() {
 
 async function osszesRecept(){
     try{
-        let eredmeny = await fetch("./osszesrecept");
+        let eredmeny = await fetch("./adatbazisInterakciok/osszesrecept");
         if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            kartyaBetoltes(lista);      
+            const lista = await eredmeny.json();
+            let divContainer = document.getElementById("kartyak");        
+            receptekBetoltes(lista, divContainer);      
         }
         else{
             const lista = await eredmeny.json();      
@@ -148,7 +151,7 @@ async function osszesRecept(){
 
 async function konyhaListaLeker(){
     try{
-        let eredmeny = await fetch("./konyha");
+        let eredmeny = await fetch("./adatbazisInterakciok/konyha");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const konyha of lista){
@@ -167,7 +170,7 @@ async function konyhaListaLeker(){
 
 async function etrendListaLeker(){
     try{
-        let eredmeny = await fetch("./etrend");
+        let eredmeny = await fetch("./adatbazisInterakciok/etrend");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const etrend of lista){
@@ -185,7 +188,7 @@ async function etrendListaLeker(){
 
 async function kategoriakListaLeker(){
     try{
-        let eredmeny = await fetch("./etelfajta");
+        let eredmeny = await fetch("./adatbazisInterakciok/etelfajta");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const kategoria of lista){
@@ -203,7 +206,7 @@ async function kategoriakListaLeker(){
 
 async function alapanyagListaLeker(){
     try{
-        let eredmeny = await fetch("./alapanyag");
+        let eredmeny = await fetch("./adatbazisInterakciok/alapanyag");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const alapanyag of lista){
@@ -258,81 +261,6 @@ function nincsTalalatKeresesre(error)
 }
 
 
-function kartyaBetoltes(receptek){
-    let divContainer = document.getElementById("kartyak");
-    divContainer.innerHTML = "";  
-
-    let fieldset = document.createElement("fieldset");
-    fieldset.classList = "mx-auto filter-box border p-3 bg-light rounded my-3";
-
-    
-
-
-    let divRow = document.createElement("div");
-    divRow.classList = "row";
-    
-    divContainer.innerHTML = "";
-
-    divContainer.appendChild(divRow);
-    divContainer.appendChild(fieldset)
-
-    if (receptek.length === 0) {
-        divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
-        let p = document.createElement("p");
-        p.classList = "text-center text-muted";
-        p.innerHTML = "Nincs találat";
-        return;
-    }
-
-    for(let recept of receptek){
-        let divCard = document.createElement("div");
-        divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
-        divCard.style = "width: 18rem;";
-        divCard.id = recept.neve;
-
-        let img = document.createElement("img");
-        img.src = recept.kepek;
-        img.classList = "card-img-top";
-        img.alt = recept.neve;
-        img.width = 250;
-        img.height = 200;
-
-        let divCardBody = document.createElement("div");
-        divCardBody.classList = "card-body";
-
-        let h5 = document.createElement("h5");
-        h5.classList = "card-title";
-        h5.innerHTML = recept.neve;
-
-        let pJellemzok = document.createElement("p");
-        pJellemzok.classList = "text-body-secondary fw-light";
-        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
-
-        let br = document.createElement("br");
-
-        let inputButton = document.createElement("input");
-        inputButton.type = "button";
-        inputButton.classList = "btn btn-danger";
-        inputButton.value = "Részletek";
-
-        let pFeltolto = document.createElement("p");
-        pFeltolto.classList = "text-body-secondary fw-light mt-2";
-        pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
-
-        fieldset.appendChild(divCard);
-
-        divCard.appendChild(img);
-        divCard.appendChild(divCardBody);
-
-        divCardBody.appendChild(pJellemzok);
-        divCardBody.appendChild(h5);
-        divCardBody.appendChild(br);
-        divCardBody.appendChild(inputButton);
-        divCardBody.appendChild(pFeltolto);
-
-    }
-
-}
 
 function arFigyel() {
     const range = document.getElementById("arInput");

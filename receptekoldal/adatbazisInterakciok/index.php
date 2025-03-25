@@ -2,7 +2,7 @@
 //RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
 //RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
 
-    include "./sql_fuggvenyek.php";
+    include "./adatbazisInterakciok.php";
     $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
     $url = explode("?", end($teljesURL));
 
@@ -11,7 +11,7 @@
     switch (mb_strtolower($url[0])){
         case "etelfajta":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $etelfajta = adatokLekerdezese("SELECT etelfajta.neve FROM etelfajta;");
+                $etelfajta = adatokLekerese("SELECT etelfajta.neve FROM etelfajta;");
                 if(is_array($etelfajta) && !empty($etelfajta)){
                     echo json_encode($etelfajta, JSON_UNESCAPED_UNICODE);
                 }
@@ -27,7 +27,7 @@
         break;
         case "alapanyag":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $alapanyag = adatokLekerdezese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
+                $alapanyag = adatokLekerese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
                 if(is_array($alapanyag) && !empty($alapanyag)){
                     echo json_encode($alapanyag, JSON_UNESCAPED_UNICODE);
                 }
@@ -44,7 +44,7 @@
 
         case "konyha":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $konyha = adatokLekerdezese("SELECT konyha.neve FROM konyha");
+                $konyha = adatokLekerese("SELECT konyha.neve FROM konyha");
                 if(is_array($konyha) && !empty($konyha)){
                     echo json_encode($konyha, JSON_UNESCAPED_UNICODE);
                 }
@@ -61,7 +61,7 @@
 
         case "etrend":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $etrend = adatokLekerdezese("SELECT etrend.neve FROM `etrend`;");
+                $etrend = adatokLekerese("SELECT etrend.neve FROM `etrend`;");
                 if(is_array($etrend) && !empty($etrend)){
                     echo json_encode($etrend, JSON_UNESCAPED_UNICODE);
                 }
@@ -78,7 +78,7 @@
 
         case "osszesrecept":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $osszesrecept = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_nev, etrend.id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, AVG(ertekeles.ertek) FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id GROUP BY receptek.id ORDER BY receptek.neve;");
+                $osszesrecept = adatokLekerese("SELECT receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_nev, etrend.id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, AVG(ertekeles.ertek) FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id GROUP BY receptek.id ORDER BY receptek.neve;");
                 if(is_array($osszesrecept) && !empty($osszesrecept)){
                     echo json_encode($osszesrecept, JSON_UNESCAPED_UNICODE);
                 }
@@ -105,7 +105,7 @@
                     $kategoriakAzonositoTomb = [];
                     foreach ($bodyAdatok["kategoriak"] as $kivalasztottKategoria) {
                         $kategoriaNev = trim($kivalasztottKategoria);
-                        $eredmenySor = adatokLekerdezese("SELECT id FROM etelfajta WHERE LOWER(neve) = LOWER('$kategoriaNev')");
+                        $eredmenySor = adatokLekerese("SELECT id FROM etelfajta WHERE LOWER(neve) = LOWER('$kategoriaNev')");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $kategoriakAzonositoTomb[] = $eredmenySor[0]['id'];
                         }
@@ -145,7 +145,7 @@
                     $etrendAzonositoTomb = [];
                     foreach ($bodyAdatok["etrend"] as $kivalasztottEtrend) {
                         $etrendNev = trim($kivalasztottEtrend);
-                        $eredmenySor = adatokLekerdezese("SELECT id FROM etrend WHERE LOWER(neve) = LOWER('$etrendNev')");
+                        $eredmenySor = adatokLekerese("SELECT id FROM etrend WHERE LOWER(neve) = LOWER('$etrendNev')");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $etrendAzonositoTomb[] = $eredmenySor[0]['id'];
                         }
@@ -167,7 +167,7 @@
                     $konyhaAzonositoTomb = [];
                     foreach ($bodyAdatok["konyha"] as $kivalasztottKonyha) {
                         $konyhaNev = trim(strtolower($kivalasztottKonyha));
-                        $eredmenySor = adatokLekerdezese("SELECT id FROM konyha WHERE neve = '$konyhaNev'");
+                        $eredmenySor = adatokLekerese("SELECT id FROM konyha WHERE neve = '$konyhaNev'");
                         if (is_array($eredmenySor) && !empty($eredmenySor)) {
                             $konyhaAzonositoTomb[] = $eredmenySor[0]['id'];
                         }
@@ -262,7 +262,7 @@
                 
                 $sql .= " ORDER BY receptek.neve ASC";
                 
-                $receptLista = adatokLekerdezese($sql);
+                $receptLista = adatokLekerese($sql);
                 foreach ($receptLista as $recept) {
                     $formattedReceptek[] = [
                         'id' => $recept['id'],

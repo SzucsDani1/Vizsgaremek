@@ -1,0 +1,67 @@
+export function receptekBetoltes(receptek, divContainer){
+    divContainer.innerHTML = "";  
+
+    let divRow = document.createElement("div");
+    divRow.classList = "row";
+    
+    divContainer.innerHTML = "";
+
+    divContainer.appendChild(divRow);
+
+    if (receptek.length === 0) {
+        divContainer.innerHTML = "<p class='text-center text-muted'>Nincs találat.</p>";
+        let p = document.createElement("p");
+        p.classList = "text-center text-muted";
+        p.innerHTML = "Nincs találat";
+        return;
+    }
+
+    for(let recept of receptek){
+        let divCard = document.createElement("div");
+        divCard.classList = "card col-12 col-lg-3 col-md-6 col-sm-12 p-2 mx-auto my-3"; 
+        divCard.style = "width: 18rem;";
+        divCard.id = recept.neve;
+
+        let img = document.createElement("img");
+        img.src = recept.kep;
+        img.classList = "card-img-top";
+        img.alt = recept.neve;
+        img.width = 250;
+        img.height = 200;
+
+        let divCardBody = document.createElement("div");
+        divCardBody.classList = "card-body";
+
+        let h5 = document.createElement("h5");
+        h5.classList = "card-title";
+        h5.innerHTML = recept.neve;
+
+        let pJellemzok = document.createElement("p");
+        pJellemzok.classList = "text-body-secondary fw-light";
+        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
+
+        let br = document.createElement("br");
+
+        let inputButton = document.createElement("input");
+        inputButton.type = "button";
+        inputButton.classList = "btn btn-danger";
+        inputButton.value = "Részletek";
+
+        let pFeltolto = document.createElement("p");
+        pFeltolto.classList = "text-body-secondary fw-light mt-2";
+        pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
+
+        divRow.appendChild(divCard);
+
+        divCard.appendChild(img);
+        divCard.appendChild(divCardBody);
+
+        divCardBody.appendChild(pJellemzok);
+        divCardBody.appendChild(h5);
+        divCardBody.appendChild(br);
+        divCardBody.appendChild(inputButton);
+        divCardBody.appendChild(pFeltolto);
+
+    }
+
+}
