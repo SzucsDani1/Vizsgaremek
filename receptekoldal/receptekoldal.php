@@ -143,19 +143,19 @@
                     <!-- Napszak szűrő -->
                     <div class="btn-group d-flex flex-wrap" role="group">
                       <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off" value="Reggeli">
-                      <label class="btn btn-outline-danger flex-fill" for="napszakReggeli">Reggeli</label>
+                      <label class="btn btn-outline-primary flex-fill" for="napszakReggeli">Reggeli</label>
 
                       <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off" value="Tízórai">
-                      <label class="btn btn-outline-danger flex-fill" for="napszakTizorai">Tízórai</label>
+                      <label class="btn btn-outline-primary flex-fill" for="napszakTizorai">Tízórai</label>
 
                       <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off" value="Ebéd">
-                      <label class="btn btn-outline-danger flex-fill" for="napszakEbed">Ebéd</label>
+                      <label class="btn btn-outline-primary flex-fill" for="napszakEbed">Ebéd</label>
 
                       <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off" value="Uzsonna">
-                      <label class="btn btn-outline-danger flex-fill" for="napszakUzsonna">Uzsonna</label>
+                      <label class="btn btn-outline-primary flex-fill" for="napszakUzsonna">Uzsonna</label>
 
                       <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off" value="Vacsora">
-                      <label class="btn btn-outline-danger flex-fill" for="napszakVacsora">Vacsora</label>
+                      <label class="btn btn-outline-primary flex-fill" for="napszakVacsora">Vacsora</label>
                     </div>
 
                     <!-- Ár szint szűrő -->
@@ -192,27 +192,19 @@
                       <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
                       <div id="nehezsegKiir" class="form-text">Mind</div>
                     </div>
-
-                    <!-- Konyha szűrő -->
-                    <div class="btn-group d-flex flex-wrap" role="group" id="konyhaDiv">
-                    </div>
-
                     
-                    <!-- Checkbox szűrő -->
-                    <div class="dropdown">
-                    </div>
-
-                    
-
                     <!-- Szűrés gomb -->
                     <button class="btn btn-warning w-100 my-2" id="btnNullazas">Szűrők lenullázása</button>
-                    <button class="btn btn-danger w-100 my-2" id="btnSzures">Szűrés</button>
+                    <button class="btn btn-primary w-100 my-2" id="btnSzures">Szűrés</button>
                 </div>
             </div>
             <!--Káryák-->
             <div class="col-lg-8 col-md-7 col-sm-12">
-                <h2 class="display-6">Receptek listája</h2>
-            <div id="kartyak"></div>
+              <fieldset id="fieldset" class="mx-auto filter-box border p-3 bg-light rounded my-3">
+                <legend id="legend" class="display-6 text-center">Receptek listája</legend>
+                <div id="kartyak"></div>
+              </fieldset>
+              
             </div>
         </div>
     </div>

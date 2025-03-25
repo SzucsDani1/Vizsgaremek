@@ -85,6 +85,7 @@
     color: #fff;
     background-color: #007bff;
 }
+
 .btn-close {
     background: none;
     border: none;
@@ -92,6 +93,10 @@
     cursor: pointer;
 }
 body {
-  background-color: rgb(233, 0, 159);
+  background-color: rgb(255, 196, 118);
+}
+
+#legend {
+  background-color: rgb(255, 179, 107);
 }
 

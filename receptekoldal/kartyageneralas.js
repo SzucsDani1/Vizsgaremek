@@ -44,7 +44,7 @@ export function receptekBetoltes(receptek, divContainer){
 
         let inputButton = document.createElement("input");
         inputButton.type = "button";
-        inputButton.classList = "btn btn-danger";
+        inputButton.classList = "btn btn-warning";
         inputButton.value = "Részletek";
 
         let pFeltolto = document.createElement("p");

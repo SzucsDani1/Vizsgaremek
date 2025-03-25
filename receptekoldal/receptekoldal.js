@@ -468,7 +468,7 @@ function letrehozListaElemet(szuroAdat, szuroTipus) {
     checkbox.id = "checkbox-" + szuroTipus + "-" + szuroAdat;
     
     let label = document.createElement("label");
-    label.classList.add("btn", "btn-outline-danger");
+    label.classList.add("btn", "btn-outline-primary");
     label.setAttribute("for", "checkbox-" + szuroTipus + "-" + szuroAdat);
     label.textContent = szuroAdat;
     
@@ -606,7 +606,7 @@ function checkboxHozzaadSzureshez(szuroAdat, szuroTipus) {
         }
         
         let div = document.createElement("div");
-        div.classList.add("kivalasztott-div", "badge", "bg-danger", "me-2", "mb-2");
+        div.classList.add("kivalasztott-div", "badge", "bg-primary", "me-2", "mb-2");
         div.id = kivalasztottId;
         div.textContent = szuroAdat;
         
