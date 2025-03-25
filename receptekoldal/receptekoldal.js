@@ -129,26 +129,6 @@ async function filterReceptek() {
     }
 }
 
-async function osszesRecept(){
-    try{
-        let eredmeny = await fetch("./adatbazisInterakciok/osszesrecept");
-        if(eredmeny.ok){
-            const lista = await eredmeny.json();
-            let divContainer = document.getElementById("kartyak");        
-            receptekBetoltes(lista, divContainer);      
-        }
-        else{
-            const lista = await eredmeny.json();      
-            console.log(lista);
-            console.log(eredmeny.status);
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-
 async function konyhaListaLeker(){
     try{
         let eredmeny = await fetch("./adatbazisInterakciok/konyha");
@@ -739,7 +719,7 @@ window.addEventListener("load", function() {
     konyhaListaLeker();
     alapanyagListaLeker();
     kategoriakListaLeker();
-    osszesRecept();
+    filterReceptek();
 });
 document.getElementById("btnSzures").addEventListener("click", filterReceptek);
 document.getElementById("btnNullazas").addEventListener("click", szurokLenullazasa);
