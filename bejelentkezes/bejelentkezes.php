@@ -29,7 +29,6 @@
     
     <!--END CAROUSEL -->
 
-
     <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
     <div class="container">
         <form method="post">
