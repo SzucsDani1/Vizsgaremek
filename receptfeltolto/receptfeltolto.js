@@ -7,7 +7,7 @@ let alapanyagok = new Set();
 let kivalasztottEtrendek = new Set();
 
 async function receptFeltoltes(){
-    let eredmeny = await fetch("./receptFeltolt", {
+    let eredmeny = await fetch("./adatbazisInterakciok/receptFeltolt", {
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -306,7 +306,7 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
 
 async function etelfajtakLista(){
     try{
-        let eredmeny = await fetch("./etelfajta");
+        let eredmeny = await fetch("./adatbazisInterakciok/etelfajta");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const etelfajta of lista){
@@ -326,7 +326,7 @@ async function etelfajtakLista(){
 
 async function etrendLista(){
     try{
-        let eredmeny = await fetch("./etrend");
+        let eredmeny = await fetch("./adatbazisInterakciok/etrend");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const etrend of lista){
@@ -344,7 +344,7 @@ async function etrendLista(){
 
 async function konyhaLista(){
     try{
-        let eredmeny = await fetch("./konyha");
+        let eredmeny = await fetch("./adatbazisInterakciok/konyha");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const konyha of lista){
@@ -364,7 +364,7 @@ async function konyhaLista(){
 
 async function alapanyagLista(){
     try{
-        let eredmeny = await fetch("./alapanyag");
+        let eredmeny = await fetch("./adatbazisInterakciok/alapanyag");
         if(eredmeny.ok){
             const lista = await eredmeny.json();        
             for(const alapanyag of lista){

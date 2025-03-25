@@ -131,7 +131,7 @@
           <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="napszak">
             <option value="" data-tokens=""></option>
             <option value="Reggeli" data-tokens="Reggeli">Reggeli</option>
-            <option value="Tízorai" data-tokens="Tízorai">Tízórai</option>
+            <option value="Tízorai" data-tokens="Tízórai">Tízórai</option>
             <option value="Ebéd" data-tokens="Ebéd">Ebéd</option>
             <option value="Uzsonna" data-tokens="Uzsonna">Uzsonna</option>
             <option value="Vacsora" data-tokens="Vacsora">Vacsora</option>
@@ -352,6 +352,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="receptfeltolto.js"></script>
+<script type="module" src="receptfeltolto.js"></script>
 </body>
 </html>
