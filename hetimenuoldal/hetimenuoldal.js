@@ -24,11 +24,23 @@ async function receptek(){
     
 }
 
+async function hetNapjaLeker(){
+    try {
+        let leker = await fetch("./adatbazisInterakciok/hetnapja");
+        let nap = await leker.json();
+        if(leker.ok){
+            console.log(nap.valasz)
+            document.getElementById("btn"+nap.valasz).checked = true;
+        }
+        else{
+            console.log(nap.valasz);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 function receptekBetoltes(receptek){
-  
-
-    //FÉLKÉSZ A KÓD -> appenchildok még nem jók!!! 
     let napSzamlalo = 0;
     let kivalasztottNap = document.querySelector('input[name="hetNapjai"]:checked')?.value;
     if (!kivalasztottNap || !receptek[kivalasztottNap]) {
@@ -38,6 +50,7 @@ function receptekBetoltes(receptek){
     for(let napszak of napszakok){
         if(receptek[kivalasztottNap].napszak == napszak){
             let hetimenuKiir = document.getElementById(napszak+"Megjelenites");
+            hetimenuKiir.innerHTML = "";
 
             let divCard = document.createElement("div");
             divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
@@ -92,39 +105,7 @@ function receptekBetoltes(receptek){
   }
 
 
-window.addEventListener("load", receptek)
-
-
-
-
-
-
-
-
-/*
-document.addEventListener("DOMContentLoaded", async function () {
-    try {
-        let response = await fetch("random.php"); // A PHP script hívása
-        if (!response.ok) throw new Error("Hálózati hiba!");
-
-        let menu = await response.json();
-        const days = ["hetfo", "kedd", "szerda", "csutortok", "pentek", "szombat", "vasarnap"];
-        const meals = ["reggeli", "ebéd", "vacsora"];
-        
-        days.forEach(day => {
-            document.getElementById(`btn${capitalize(day)}`).addEventListener("click", () => {
-                meals.forEach(meal => {
-                    let mealData = menu[day][meal];
-                    let mealDiv = document.getElementById(meal);
-                    mealDiv.innerHTML = `<h4>${mealData.neve}</h4><img src='${mealData.kepek}' alt='${mealData.neve}' width='200'><p>${mealData.kaloria} kcal</p>`;
-                });
-            });
-        });
-    } catch (error) {
-        console.error("Hiba történt: ", error);
-    }
-});
-
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}*/
+window.addEventListener("load", function(){
+    receptek();
+    hetNapjaLeker();
+})
