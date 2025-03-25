@@ -1,4 +1,34 @@
-import { etrendListajanakGeneralasa } from './receptfeltolto.js';
+let etrendek = new Set();
+let kivalasztottEtrendek = new Set();
+
+
+export async function etrendLista(){
+    try{
+        let eredmeny = await fetch("./adatbazisInterakciok/etrend");
+        if(eredmeny.ok){
+            const lista = await eredmeny.json();        
+            for(const etrend of lista){
+                etrendek.add(etrend.neve);
+            }
+        }
+        else{
+            console.log(eredmeny.status);
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+function etrendListajanakGeneralasa() {
+    let etrendLista = document.getElementById("etrendLista");
+    etrendLista.innerHTML = "";
+    
+    for (let etrend of etrendek) {
+        let elem = letrehozListaElemet(etrend, "etrend");
+        etrendLista.appendChild(elem);
+    }
+}
 
 
 export function letrehozListaElemet(szuroAdat, szuroTipus) {
@@ -190,9 +220,9 @@ function eltavolitKivalasztottSzurot(szuroAdat, szuroTipus) {
 }
 
 export function beallitSzurok() {
-    szuroBeallit("kategoriak");
-    szuroBeallit("alapanyag");
-    szuroBeallit("alapanyagNelkul");
+    //szuroBeallit("kategoriak");
+   // szuroBeallit("alapanyag");
+    //szuroBeallit("alapanyagNelkul");
     szuroBeallit("etrend");
-    szuroBeallit("konyha");
+    //szuroBeallit("konyha");
 }
