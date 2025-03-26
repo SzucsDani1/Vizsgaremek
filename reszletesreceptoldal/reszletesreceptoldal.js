@@ -11,6 +11,25 @@ const receptek_id = 1;
 let bevasarloLista = [];
 
 
+
+async function felhasznaloIdLeker() {
+  try {
+    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    if (response.ok) {
+      felhasznalo_id = await response.text();
+      console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
+    } else {
+      console.error('Hiba a felhasználó ID lekérése során');
+    }
+  } catch (error) {
+    console.error('Hiba történt:', error);
+  }
+}
+
+// Hívja meg a függvényt a fájl betöltésekor
+window.addEventListener("load",felhasznaloIdLeker);
+
+
 async function hozzaszolasElkuld(){
   try {
     let hozzaszolas = document.getElementById("hozzaszolas").value;
