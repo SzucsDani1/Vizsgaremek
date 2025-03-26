@@ -1,7 +1,7 @@
 
 async function bejelenzkezesVizsg(){
     let felhasznaloId
-    await fetch('./adatbazisInterakciok/sessionGetFelhasznaloId.php')  // Fetch the PHP script
+    await fetch('./backendBejelentkezes/sessionGetFelhasznaloId.php')  // Fetch the PHP script
           .then(response => response.text())  // Get the response as text
           .then(id => {
         if (id) {

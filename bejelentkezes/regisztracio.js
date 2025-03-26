@@ -7,7 +7,7 @@ async function regisztracio(){
     if(jelszo.trim().length != 0 && jelszoBiztos.trim().length != 0  && felhasznalonev.trim().length != 0 && email.trim().length != 0 && jelszo == jelszoBiztos){
       
         try {
-            let kuldes = await fetch("./adatbazisInterakciok/regisztracio.php", {
+            let kuldes = await fetch("./backendBejelentkezes/regisztracio.php", {
                 method: "POST",
                 headers : {
                     'Content-Type': 'application/json',
