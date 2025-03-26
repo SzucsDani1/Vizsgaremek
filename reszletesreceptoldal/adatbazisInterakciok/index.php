@@ -219,24 +219,6 @@
         }
         break;
 
-        /*case "hibakiirat":
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                if(!empty($bodyAdatok["uzenet"]) && !empty($bodyAdatok["hibae"])){
-                    $uzenet = $bodyAdatok["uzenet"];
-                    $hibae = $bodyAdatok["hibae"];
-                    $leker = bejelentHiba($uzenet, $hibae);
-
-                    echo $leker;
-                    
-                    
-                }
-           }
-           else{
-            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
-            header('bad request', true, 400);
-        }
-        break;*/
-
         case "hozzaszolasfeltoltes":
             if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 if(!empty($bodyAdatok["hozzaszolas"]) && !empty($bodyAdatok["felhasznalo_id"]) && !empty($bodyAdatok["receptek_id"])){
