@@ -1,3 +1,6 @@
+import {alertMegjelenit} from "./alertmegjelenit.js"
+
+
 let kivalasztottCsillag = 0;
 let kategoriak = [];
 let adag = 1;
@@ -5,7 +8,6 @@ let receptek = [];
 let hozzavalok = [];
 const felhasznalo_id = 6;
 const receptek_id = 1;
-let alertSzamlalo = 0;
 let bevasarloLista = [];
 
 
@@ -234,7 +236,7 @@ async function hozzavalokKategoriaLeker(){
     let eredmeny = await leker.json();
 
     if(leker.ok){
-      for(elem of eredmeny){
+      for(let elem of eredmeny){
         kategoriak.push(elem.kategoria);
       }
     }
@@ -657,38 +659,7 @@ function adagFigyel(){
   })
 }
 
-function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
-    let duration = 5000; // 5 seconds
-    let step = 5; // update every 100ms
-    let width = 100;
-    progress.hidden = false;
-    alertBox.hidden = false;
-    alertSzamlalo++;
-    if(hibae == true){
-      progress.style.background = "red";
-      alertBox.classList = "alert alert-danger text-center";
-    }
-    else{
-      progress.style.background = "green";
-      alertBox.classList = "alert alert-success text-center";
-    }
-    alertBox.innerHTML = uzenet;
-    if(alertSzamlalo > 1){
-      return;
-    }
-    let interval = setInterval(() => {
-        width -= (100 / (duration / step));
-        progress.style.width = width + '%';
-        if (width <= 0) {
-            clearInterval(interval);
-            alertBox.hidden = true;
-            progress.hidden = true;
-            alertSzamlalo = 0;
-        }
-    }, step);
-  
-}
 
 async function hozzavalokFuggvenyHivas() {
   try {
