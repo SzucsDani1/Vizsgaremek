@@ -2,7 +2,7 @@ import {receptekBetoltes} from "./kartyageneralas.js"
 
 async function receptekLeker(){
     try {
-        let leker = await fetch("./adatbazisInterakciok/legujabbreceptek");
+        let leker = await fetch("../adatbazisInterakciok/legujabbreceptek");
 
         if(leker.ok){
             let legujabbReceptek = await leker.json();
@@ -22,7 +22,7 @@ async function receptekLeker(){
 
 async function ajanlottReceptekLeker(){
     try {
-        let leker = await fetch("./adatbazisInterakciok/ajanlottreceptek");
+        let leker = await fetch("../adatbazisInterakciok/ajanlottreceptek");
 
         if(leker.ok){
             let ajanlottReceptek = await leker.json();
@@ -44,10 +44,12 @@ async function ajanlottReceptekLeker(){
 async function kereses(){
     try {
         let keresesiSzoveg = document.getElementById("text_kereses").value.trim().toLowerCase(); 
-
+        if(keresesiSzoveg == ""){
+            return;
+        }
         let keresesiTalalat = document.getElementById("keresesiTalalat");
 
-        let leker = await fetch("./adatbazisInterakciok/keresesrecept",{
+        let leker = await fetch("../adatbazisInterakciok/keresesrecept",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"

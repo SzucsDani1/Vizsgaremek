@@ -1,6 +1,6 @@
 <?php 
-    require_once "./adatbazisInterakciok/sessionConfig.php";
-    include "./adatbazisInterakciok/adatbazisInterakciok.php" ;
+    require_once "./backendBejelentkezes/sessionConfig.php";
+    include "../adatbazisInterakciok/adatbazisInterakciok.php" ;
     
 ?>
 <!DOCTYPE html>
@@ -53,12 +53,12 @@
 
     <!--START FELUGRÓ ABLAK GOMBJA-->
     <div class="row my-5 mx-2">
-                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
-                    <button type="button" class="btn btn-outline-primary btn-md w-100" data-toggle="modal" data-target="#felugro" data-whatever="@mdo">Regisztráció</button>
-                </div>
-                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
-            </div>
+        <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+        <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+            <button type="button" class="btn btn-outline-primary btn-md w-100" data-bs-toggle="modal" data-bs-target="#felugro">Regisztráció</button>
+        </div>
+        <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+    </div>
         
     <!--END FELUGRÓ ABLAK GOMBJA-->
 
@@ -196,10 +196,13 @@
 
     <!--START JS MEGHÍVÁSOK-->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
     <script src="./regisztracio.js"></script>
     <script src="./bejeletkezesVizsgalasa/bejelentkezesVizsgalat.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
 
      <!--END JS MEGHÍVÁSOK-->
 </body>
