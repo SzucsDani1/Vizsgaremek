@@ -39,6 +39,9 @@ export function receptekBetoltes(receptek, divContainer){
         inputButton.type = "button";
         inputButton.classList = "btn btn-danger";
         inputButton.value = "Részletek";
+        inputButton.addEventListener("click", function(){
+            window.location.href = "reszletesreceptoldal.php?recept_id=" + recept.id;
+        })
 
         let pFeltolto = document.createElement("p");
         pFeltolto.classList = "text-body-secondary fw-light mt-2";
