@@ -499,7 +499,6 @@ async function bevasaloListaTorlesHozzaadas(hozzavalo_id, label, btnBevasarlo){
 
     }
     else{
-      console.log("HOzzávalóid: "+hozzavalo_id);
       //Töröl
       let torol = await fetch("./adatbazisInterakciok/bevasarlolistatorol",{
         method : "DELETE",
@@ -578,7 +577,7 @@ function hozzaszolasGeneral(hozzaszolasok){
       let spanFelh = document.createElement("span");
       let spanIdo = document.createElement("span");
       
-      img.src = "./kepek/profile.jpg";
+      img.src = "./kepek/profile.jpg";//PROFILKÉP!!
       img.alt = "Profil";
       img.classList = "rounded-circle me-2";
       img.style.width = "40px";
