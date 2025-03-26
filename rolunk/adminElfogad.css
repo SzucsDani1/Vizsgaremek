@@ -67,3 +67,9 @@ html{
     text-decoration: underline;
 }
 
+
+#receptLeiras {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }

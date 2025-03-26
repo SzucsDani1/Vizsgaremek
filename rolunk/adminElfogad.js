@@ -65,12 +65,11 @@ function kartyaGeneral(receptek){
         btnTorles.value = "Részletek";
         btnTorles.classList = "btn btn-secondary w-100";
         
-        /*
+        
         btnTorles.addEventListener("click", function() {
-          console.log("ID: "+recept.id);
-            receptBetolt(recept.id);
+          window.location.href = `segitseg.php?recept_id=${recept.id}`;
         });
-        */
+        
 
         
         
@@ -113,25 +112,14 @@ function alertMegjelenit(uzenet, hibae){
 }
 
 
-function elfogadandoRecept(id){
 
-}
+window.addEventListener("load" , elfogadandoReceptLeker)
 
 
-function modositasJavas(){
-    document.getElementById("opciokDiv").style.visibility = "hidden";
-    /*
-    <div class="input-group my-3 ">
-                <textarea  placeholder="Módosítási javaslat" class="form-control " aria-label="With textarea"></textarea>
-            </div>
 
-            <div class="d-flex justify-content-center gap-2 flex-wrap ">
-                <button type="button" class="btn btn-success  col-12">Javaslat küldése</button>
-                <button type="button" class="btn btn-danger  col-12">Mégse</button>
-            </div>
-    */ 
-}
 
-//window.addEventListener("load", elfogadandoReceptLeker)
 
-document.getElementById("modositasJavButton").addEventListener("click", modositasJavas)
+
+
+
+
