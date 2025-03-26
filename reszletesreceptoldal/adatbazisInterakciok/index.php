@@ -1,7 +1,4 @@
 <?php
-//RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
-//RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
-
     include "./adatbazisInterakciok.php";
     include "./hibakKiirat.php";
     $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
@@ -196,7 +193,6 @@
         }
         break;
 
-        //SELECT DISTINCT bevasarlolista.hozzavalok_id FROM bevasarlolista WHERE bevasarlolista.hozzavalok_id = 1 AND bevasarlolista.felhasznalo_id = 5;
 
         case "bevasarlolistaleker":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
