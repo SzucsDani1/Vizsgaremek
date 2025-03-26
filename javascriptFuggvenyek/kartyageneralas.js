@@ -40,7 +40,7 @@ export function receptekBetoltes(receptek, divContainer){
         inputButton.classList = "btn btn-danger";
         inputButton.value = "Részletek";
         inputButton.addEventListener("click", function(){
-            window.location.href = "reszletesreceptoldal.php?recept_id=" + recept.id;
+            window.location.href = "../reszletesreceptoldal/reszletesreceptoldal.php?receptek_id=" + recept.id;
         })
 
         let pFeltolto = document.createElement("p");
