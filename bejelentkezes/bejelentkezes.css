@@ -6,10 +6,22 @@
     object-position: center;
 }
 
-.inputMezo {
-    margin-top: 75px;
+legend {
+    padding: 5px 10px;
+    background-color: rgb(255, 195, 104);
+ }
+
+#fieldset {
+    width: 80%;
 }
 
+#body{
+    background-color: rgb(253, 222, 197);
+}
+
+#logo{
+    max-width: 70% !important;
+}
 
 
 

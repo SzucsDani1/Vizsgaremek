@@ -12,53 +12,55 @@
     <link rel="stylesheet" href="bejelentkezes.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
-<body>
-    <h1 style="text-align: center;">Bejelentkezés</h1>
-
-    <!--START CAROUSEL-->
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="kepek/etel4.jpg" class="d-block w-100" alt="Bolognai">
-                <div class="carousel-caption d-sm-block">
-                    <h1>Finom falatok</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--END CAROUSEL -->
+<body id="body">
+<img src="logo/FinomFalatokLogoSzeles.png" class="rounded mx-auto d-block img-fluid mt-1" id="logo" alt="...">
 
 
-    <!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
-    <div class="container">
+<!--START FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
+<div class="container">
+    <fieldset id="fieldset" class="mx-auto filter-box border pb-4 bg-light rounded my-3">
+        <div class="px-4 row">
+            <legend class="text-center my-5 display-6">Bejelentkezés</legend>
+
+        </div>    
         <form method="post">
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <!-- FELHASZNÁLÓVÉV -->
-                    <input type="text" name="Bejfelhasznalonev" class="form-control inputMezo" placeholder="Felhasználónév" aria-label="Recept">
-                </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+        <div class="row my-5 mx-2">
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                <!-- FELHASZNÁLÓVÉV -->
+                <input type="text" name="Bejfelhasznalonev" class="form-control " placeholder="Felhasználónév" aria-label="Recept">
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <!-- JELSZÓ -->
-                    <input type="password" name="Bejjelszo" class="form-control inputMezo" placeholder="Jelszó" aria-label="Recept">
-                </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+        </div>
+        <div class="row my-5 mx-2">
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                <!-- JELSZÓ -->
+                <input type="password" name="Bejjelszo" class="form-control " placeholder="Jelszó" aria-label="Recept">
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                    <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 inputMezo" />
-                </div>
-                <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+        </div>
+        <div class="row my-5 mx-2">
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 " />
             </div>
-            </form>
-    </div>
-    <!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
+            <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+        </div>
+        </form>
+    
+<!--END FELHASZNÁLÓNÉV ÉS JELSZÓ MEZŐK-->
+
+    <!--START FELUGRÓ ABLAK GOMBJA-->
+    <div class="row my-5 mx-2">
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12">
+                    <button type="button" class="btn btn-outline-primary btn-md w-100" data-toggle="modal" data-target="#felugro" data-whatever="@mdo">Regisztráció</button>
+                </div>
+                <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
+            </div>
+        
+    <!--END FELUGRÓ ABLAK GOMBJA-->
 
 <!-- START BEJELENTKEZÉS -->
     <div>
@@ -122,25 +124,17 @@
                     }
                 }
                 else{
-                    bejelentHiba("Kérem minden adatott adjon meg!");     
+                    bejelentHiba("Kérem minden adatot adjon meg!");     
                 }
             }
             ?>
     </div>
     <!-- END BEJELENTKEZÉS -->
 
-
-    <!--START FELUGRÓ ABLAK GOMBJA-->
-    <div class="container inputMezo">
-        <div class="row">
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-                <button type="button" class="btn btn-outline-primary btn-md w-100" data-toggle="modal" data-target="#felugro" data-whatever="@mdo">Regisztráció</button>
-            </div>
-            <div class="col-12 col-lg-4 col-md-4 col-sm-12"></div>
-        </div>
+    </fieldset>
     </div>
-    <!--END FELUGRÓ ABLAK GOMBJA-->
+
+
 
 
     <!--START FELUGRÓ ABLAK-->
@@ -190,7 +184,7 @@
         function bejelentHiba($uzenet){
             if(!empty($uzenet)){
             echo "
-                <div class='alert alert-danger text-center' role='alert'>
+                <div class='alert alert-danger text-center w-50 mx-auto' role='alert'>
                     $uzenet
                 </div>
                 ";
