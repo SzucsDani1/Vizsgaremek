@@ -5,7 +5,7 @@ async function bejelenzkezesVizsg(){
           .then(response => response.text())  // Get the response as text
           .then(id => {
         if (id) {
-          felhasznaloId = id;//itt id van 0 helyett
+          felhasznaloId = 0;//itt id van 0 helyett
         }
     })
     .catch(error => console.error('Error fetching session data:', error));
