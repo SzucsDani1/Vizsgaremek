@@ -1,5 +1,5 @@
 import {alertMegjelenit} from "../javascriptFuggvenyek/alertmegjelenit.js";
-
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
 
 let kivalasztottCsillag = 0;
 let kategoriak = [];
@@ -27,8 +27,19 @@ async function felhasznaloIdLeker() {
   }
 }
 
-// Hívja meg a függvényt a fájl betöltésekor
-window.addEventListener("load",felhasznaloIdLeker);
+
+async function kijelentkezesLeker(){
+    try {
+        console.log("aaaa")
+        let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+        if(leker.ok){
+            kijelentkezes();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 async function hozzaszolasElkuld(){
@@ -700,6 +711,7 @@ document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzas
 document.getElementById("kedvencRecept").addEventListener("change", kedvencRecept);
 async function segedFuggvenyInditashoz() {
 
+  felhasznaloIdLeker();
     await hozzaszolasLeker();
     kedvencReceptLeker();
     receptLeker();
@@ -712,5 +724,5 @@ async function segedFuggvenyInditashoz() {
 window.addEventListener("load", segedFuggvenyInditashoz);
 
 document.getElementById("btnErtekelesKuld").addEventListener("click", ertekelesElkuld);
-
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
  
