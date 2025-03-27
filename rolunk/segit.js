@@ -1,11 +1,12 @@
+import { alertMegjelenit } from "./alertmegjelenit.js";
 
 let kategoriak = [];
 let adag = 1;
 let receptek = [];
 let hozzavalok = [];
-let felhasznalo_id = 1;
+let felhasznalo_id = 5;
 const urlErtekek = new URLSearchParams(window.location.search);
-let receptek_id = urlErtekek.get("recept_id");
+let recept_id = urlErtekek.get("recept_id");
 
 
 
@@ -31,14 +32,14 @@ window.addEventListener("load",felhasznaloIdLeker);
 
 async function receptLeker(){
     try {
-        console.log(receptek_id)
+        console.log(recept_id)
         let leker = await fetch("./adatbazisInterakciok/receptleker",{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({
-                "recept_id" : receptek_id
+                "recept_id" : recept_id
             })
         });
         
@@ -69,7 +70,7 @@ async function hozzavalokKategoriaLeker(){
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            "recept_id" : receptek_id
+            "recept_id" : recept_id
         })
     });
     
@@ -96,14 +97,15 @@ async function receptElfogad(){
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            "recept_id" : receptek_id
+            "recept_id" : recept_id
         })
     });
     
 
     let eredmeny = await leker.json()
     if(leker.ok){
-      window.location.href = "adminElfogad.php"
+      visszalep()
+
 
     }
     else{
@@ -270,7 +272,7 @@ async function hozzavalokLeker(){
               "Content-Type" : "application/json"
           },
           body : JSON.stringify({
-              "recept_id" : receptek_id
+              "recept_id" : recept_id
           })
       });
  
@@ -289,6 +291,41 @@ async function hozzavalokLeker(){
   } catch (error) {
       console.log(error);
   }
+  }
+
+async function javaslatKuldes(){
+    let szoveg = document.getElementById("javaslat").value
+    if(szoveg != ""){
+      try {
+      
+        let leker = await fetch("./adatbazisInterakciok/javaslatFeltolt",{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                "recept_id" : recept_id,
+                "javaslat" : szoveg
+            })
+        });
+  
+    
+        if(leker.ok){
+          visszalep()
+        }
+        else{
+            console.log(leker);
+        }
+      } catch (error) {
+          console.log(error);
+      }
+
+    }
+    else{
+      let alertBox = document.getElementById("javaslatAlert")
+      
+      alertMegjelenit("Kérem adjon meg javaslatot!", true, alertBox);
+    }
   }
 
 
@@ -326,8 +363,14 @@ function modositasJavasMegse(){
    
 }
 
+function visszalep(){
+     window.location.href = "adminElfogad.php"
+}
+
 
 
 document.getElementById("modositasJavButton").addEventListener("click", modositasJavas)
 document.getElementById("javaslatMegse").addEventListener("click", modositasJavasMegse)
 document.getElementById("elfogadRec").addEventListener("click", receptElfogad)
+document.getElementById("opcioMegse").addEventListener("click", visszalep)
+document.getElementById("javaslatKuld").addEventListener("click", javaslatKuldes)

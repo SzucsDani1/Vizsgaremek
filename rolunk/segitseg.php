@@ -122,10 +122,10 @@
         <!-- END RECEPT -->
 
         <!-- START OPCIÓK -->
-        <form id="opciokDiv" class="d-flex justify-content-center gap-2 row">
+        <form id="opciokDiv" class="d-flex justify-content-center gap-2 row mx-3">
             <button id="elfogadRec" type="button" class="btn btn-success col-md-3 col-sm-12">Elfogadás</button>
             <button id="modositasJavButton" type="button" class="btn btn-warning col-md-3 col-sm-12">Módosítási javaslat írása</button>
-            <button type="button" class="btn btn-danger col-md-3 col-sm-12">Törlés</button>
+            <button id="opcioMegse" type="button" class="btn btn-danger col-md-3 col-sm-12">Mégse</button>
         </form>
         <!-- END OPCIÓK -->
 
@@ -135,16 +135,21 @@
         <div id="javaslatHelye" class="container my-3 " style="visibility: hidden;">
           <div  >
               <div class="input-group my-3">
-                  <textarea  placeholder="Módosítási javaslat" class="form-control " id="javaslat"></textarea>
+                  <textarea  id="javaslat" placeholder="Módosítási javaslat" class="form-control"></textarea>
               </div>
 
-              <div class="d-flex justify-content-center gap-2 flex-wrap ">
-                  <button type="button" class="btn btn-success  col-12">Javaslat küldése</button>
+              <div class="d-flex justify-content-center gap-2 flex-wrap mb-3">
+                  <button id="javaslatKuld" type="button" class="btn btn-success  col-12">Javaslat küldése</button>
                   <button id="javaslatMegse" type="button" class="btn btn-danger  col-12">Mégse</button>
               </div>
           </div>
+            <div id="javaslatAlert" role="alert"   hidden ></div>
+
         </div>
+
+      
         <!-- END JAVASLAT -->
+
     <footer class="footer">
         <p>Elérhetőségek: 
           <br>
@@ -157,7 +162,7 @@
       </footer>
     
       
-    <script src="./segit.js"></script>
+    <script  type="module" src="./segit.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
