@@ -1,0 +1,60 @@
+/*.hatter {
+    background-color: rgb(253, 222, 197);
+}*/
+
+.navbar-nav{
+    margin: auto;
+ }
+ .nav-link{
+     margin-left: 10px;
+     margin-right: 10px;
+ }
+ 
+ .navbar-nav .nav-link {
+     position: relative;
+ }
+ 
+ .navbar-nav .nav-link::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 0;
+     height: 2px;
+     background-color: #ff5722; 
+     transition: width 0.3s; 
+ 
+ }
+ 
+ .navbar-nav .nav-link:hover::after {
+     width: 100%; 
+ }
+
+legend {
+    padding: 5px 10px;
+    background-color: rgb(241, 0, 0);
+ }
+
+#fieldset {
+    width: 80%;
+}
+
+/*Accordion háttér szín*/
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+    --bs-accordion-active-bg: #f8f9fa !important; /* light szín háttér */
+    --bs-accordion-active-color: #212529 !important; /* sötét szövegszín a jó kontrasztért */
+    /*--bs-accordion-btn-focus-box-shadow: none !important;
+    --bs-accordion-border-color: #f8f9fa !important;*/
+
+  }
+
+/*Accordion kattintás utáni szín*/
+  .accordion {
+   /* --bs-accordion-btn-focus-border-color: #ffc107 !important; /* warning szín */
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(207, 79, 4, 0.5) !important; /* halvány sárga fókusz */
+  }
+  
+
+  
