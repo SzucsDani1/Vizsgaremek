@@ -1,4 +1,4 @@
-export function receptekBetoltes(receptek, divContainer){
+export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhasznalo_id){
     divContainer.innerHTML = "";  
 
     let divRow = document.createElement("div");
@@ -35,6 +35,40 @@ export function receptekBetoltes(receptek, divContainer){
 
         let br = document.createElement("br");
 
+        if(kedvencOldalE == true){
+            let btnTorles = document.createElement("input");
+            btnTorles.type = "button";
+            btnTorles.id = "btn"+recept.neve;
+            btnTorles.value = "Törlés";
+            btnTorles.classList = "btn btn-danger w-100";
+            
+            btnTorles.addEventListener("click", async function() {
+                try {
+                    let torol = await fetch("../adatbazisInterakciok/kedvencrecepttorol",{
+                      method : "DELETE",
+                      headers : {
+                          "Content-Type" : "application/json"
+                      },
+                      body : JSON.stringify({
+                          "receptek_id" : recept.id,
+                          "felhasznalo_id" :felhasznalo_id
+                      })
+                    })
+                    
+                    if(torol.ok){
+                      console.log("Sikeres törlés!");
+                      kedvencReceptLeker();
+                    }
+                    else{
+                      let valasz = await torol.json();
+                      alert(valasz.valasz);
+                    }
+                  } catch (error) {
+                    console.log(error);
+                  }
+            });
+        }
+        
         let inputButton = document.createElement("input");
         inputButton.type = "button";
         inputButton.classList = "btn btn-danger";
@@ -56,6 +90,7 @@ export function receptekBetoltes(receptek, divContainer){
         divCardBody.appendChild(h5);
         divCardBody.appendChild(br);
         divCardBody.appendChild(inputButton);
+        divCardBody.appendChild(btnTorles);
         divCardBody.appendChild(pFeltolto);
 
     }

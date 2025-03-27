@@ -33,7 +33,7 @@
                 <a class="nav-link" href="#">Gyerek menü</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Kedvencek</a>
+              <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Profil</a>

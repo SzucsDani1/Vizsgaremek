@@ -1,11 +1,43 @@
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
+import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
+
+
 let kategoriak = [];
-let felhasznalo_id = 6;
+let felhasznalo_id;
+
+async function felhasznaloIdLeker() {
+  try {
+    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    if (response.ok) {
+      felhasznalo_id = await response.text();
+      console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
+    } else {
+      console.error('Hiba a felhasználó ID lekérése során');
+    }
+  } catch (error) {
+    console.error('Hiba történt:', error);
+  }
+}
+
+
+
+async function kijelentkezesLeker(){
+    try {
+        console.log("aaaa")
+        let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+        if(leker.ok){
+            kijelentkezes();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 async function kedvencReceptLeker(){
   try {
     let divContainer = document.getElementById("kedvencReceptekKartyak");
-    let leker = await fetch("./adatbazisInterakciok/kedvencreceptleker",{
+    let leker = await fetch("../adatbazisInterakciok/kedvencreceptleker",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -16,15 +48,15 @@ async function kedvencReceptLeker(){
     });
     
     let eredmeny = await leker.json();
-    console.log("Eredmény:" +eredmeny);
-    if(eredmeny == "Nincs találat!"){
+    console.log("Eredmény:" +eredmeny.valasz);
+    if(eredmeny.valasz == "Nincs találat!"){
       divContainer.classList = "alert alert-warning text-center";
       divContainer.role = "alert";
       divContainer.innerHTML = "Nincs kedvenc recept!";
       
     }
     else if(leker.ok){
-      receptekBetoltes(eredmeny, divContainer);
+      receptekBetoltes(eredmeny, divContainer, true, felhasznalo_id);
     }
     
 } catch (error) {
@@ -37,7 +69,7 @@ async function kedvencReceptLeker(){
 async function bevasarloListaLeker(){
   try {
     let divAccordion = document.getElementById("accordionHozzavalok");
-    let lekerHozzavalok = await fetch("./adatbazisInterakciok/bevasarlolistahozzavalokleker",{
+    let lekerHozzavalok = await fetch("../adatbazisInterakciok/bevasarlolistahozzavalokleker",{
       method : "POST",
       headers : {
           "Content-Type" : "application/json"
@@ -47,7 +79,7 @@ async function bevasarloListaLeker(){
       })
   })
 
-  let lekerReceptNev = await fetch("./adatbazisInterakciok/receptnevlekerbevasarlolistabol",{
+  let lekerReceptNev = await fetch("../adatbazisInterakciok/receptnevlekerbevasarlolistabol",{
     method : "POST",
     headers : {
         "Content-Type" : "application/json"
@@ -156,7 +188,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
 async function hozzavaloTorolAccordionbol(hozzavalok_id){
   try {
-    let torol = await fetch("./adatbazisInterakciok/bevasarlolistatorol",{
+    let torol = await fetch("../adatbazisInterakciok/bevasarlolistatorol",{
       method : "DELETE",
       headers : {
           "Content-Type" : "application/json"
@@ -180,82 +212,9 @@ async function hozzavaloTorolAccordionbol(hozzavalok_id){
 }
 
 
-function receptekBetoltes(receptek, divContainer){
-  divContainer.innerHTML = "";  
-
-  let divRow = document.createElement("div");
-  divRow.classList = "row";
-  
-  divContainer.innerHTML = "";
-
-  divContainer.appendChild(divRow);
-
-
-  for(let recept of receptek){
-      let divCard = document.createElement("div");
-      divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
-      divCard.style = "width: 18rem;";
-      divCard.id = recept.neve;
-
-      let img = document.createElement("img");
-      img.src = recept.kepek;
-      img.classList = "card-img-top";
-      img.alt = recept.neve;
-      img.width = 250;
-      img.height = 200;
-
-      let divCardBody = document.createElement("div");
-      divCardBody.classList = "card-body";
-
-      let h5 = document.createElement("h5");
-      h5.classList = "card-title";
-      h5.innerHTML = recept.neve;
-
-      let pJellemzok = document.createElement("p");
-      pJellemzok.classList = "text-body-secondary fw-light";
-      pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc";
-
-      let br = document.createElement("br");
-
-      let inputButton = document.createElement("input");
-      inputButton.type = "button";
-      inputButton.classList = "btn btn-warning";
-      inputButton.value = "Részletek";
-
-      let pFeltolto = document.createElement("p");
-      pFeltolto.classList = "text-body-secondary fw-light mt-2";
-      pFeltolto.innerHTML = recept.felhnev + "\t|\t"+ recept.mikor_feltolt;
-
-      let btnTorles = document.createElement("input");
-      btnTorles.type = "button";
-      btnTorles.id = "btn"+recept.neve;
-      btnTorles.value = "Törlés";
-      btnTorles.classList = "btn btn-danger w-100";
-      
-      btnTorles.addEventListener("click", function() {
-        console.log("ID: "+recept.id);
-        kedvencReceptTorles(recept.id)
-      });
-
-      divRow.appendChild(divCard);
-
-      divCard.appendChild(img);
-      divCard.appendChild(divCardBody);
-
-      divCardBody.appendChild(pJellemzok);
-      divCardBody.appendChild(h5);
-      divCardBody.appendChild(br);
-      divCardBody.appendChild(inputButton);
-      divCardBody.appendChild(pFeltolto);
-      divCardBody.appendChild(btnTorles);
-
-  }
-
-}
-
 async function kedvencReceptTorles(id){
   try {
-    let torol = await fetch("./adatbazisInterakciok/kedvencrecepttorol",{
+    let torol = await fetch("../adatbazisInterakciok/kedvencrecepttorol",{
       method : "DELETE",
       headers : {
           "Content-Type" : "application/json"
@@ -280,45 +239,11 @@ async function kedvencReceptTorles(id){
 }
 
 
-function alertMegjelenit(uzenet, hibae, alertBox, progress){
-
-    let duration = 5000; // 5 seconds
-    let step = 5; // update every 100ms
-    let width = 100;
-    progress.hidden = false;
-    alertBox.hidden = false;
-    alertSzamlalo++;
-    if(hibae == true){
-      progress.style.background = "red";
-      alertBox.classList = "alert alert-danger text-center";
-    }
-    else{
-      progress.style.background = "green";
-      alertBox.classList = "alert alert-success text-center";
-    }
-    alertBox.innerHTML = uzenet;
-    if(alertSzamlalo > 1){
-      return;
-    }
-    let interval = setInterval(() => {
-        width -= (100 / (duration / step));
-        progress.style.width = width + '%';
-        if (width <= 0) {
-            clearInterval(interval);
-            alertBox.hidden = true;
-            progress.hidden = true;
-            alertSzamlalo = 0;
-        }
-    }, step);
-  
+async function indulas(){
+  await felhasznaloIdLeker();
+  await kedvencReceptLeker();
+  await bevasarloListaLeker();
 }
-
-
-
-window.addEventListener("load", function(){
-  kedvencReceptLeker();
-  bevasarloListaLeker();
-})
-//window.addEventListener("load", segedFuggvenyInditashoz);
-
+window.addEventListener("load", indulas())
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
  

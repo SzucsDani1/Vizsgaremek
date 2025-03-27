@@ -450,7 +450,7 @@
                     if(!empty($bodyAdatok["felhasznalo_id"])){
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
                         $leker = adatokLekerdezese("SELECT kedvenceklista.id as kedvenceklista_id, kedvenceklista.felhasznalo_id as kedvenceklista_felhasznalo_id, kedvenceklista.recept_id as kedvenceklista_recept_id,receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN kedvenceklista ON kedvenceklista.recept_id = receptek.id WHERE kedvenceklista.felhasznalo_id ={$felhasznalo_id};");
-                        if(is_array($leker)){
+                        if(is_array($leker) && !empty($leker)){
                             echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                         }
                         else{
@@ -477,7 +477,7 @@
                         }
                         else{
                             header("bad request", true, 400);
-                            echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
                             
                         }
                     }
@@ -516,12 +516,11 @@
             break;
 
 
-
-
-
         default:
             echo "Hiba";
     }
 
 
 ?>
+
+
