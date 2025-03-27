@@ -1,7 +1,6 @@
-
-async function bejelenzkezesVizsg(){
+async function kijelentkezes(){
     let felhasznaloId
-    await fetch('./backendBejelentkezes/sessionGetFelhasznaloId.php')  // Fetch the PHP script
+    await fetch("../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php")  // Fetch the PHP script
           .then(response => response.text())  // Get the response as text
           .then(id => {
         if (id) {
@@ -20,12 +19,4 @@ async function bejelenzkezesVizsg(){
            window.open("bejelentkezes.php", "_self");
         }
     }
-    else{
-        if (megnyitottOldal == "bejelentkezes.php") {
-            window.open("../fooldal/fooldal.php", "_self");
-        }
-    }
 }
-//? felhasznalonev
-
-window.addEventListener("load",bejelenzkezesVizsg); 

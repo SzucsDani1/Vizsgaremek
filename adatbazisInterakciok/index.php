@@ -26,6 +26,31 @@
         }
         break;
 
+        case "kijelentkezes":
+            if($_SERVER["REQUEST_METHOD"] == "GET"){
+                require_once '../bejelentkezes/backendBejelentkezes/sessionConfig.php';
+
+                // Töröljük az összes session változót
+                $_SESSION = array();
+
+                // Ha van session cookie, azt is töröljük
+                if (ini_get("session.use_cookies")) {
+                    $params = session_get_cookie_params();
+                    setcookie(session_name(), '', time() - 42000,
+                        $params["path"], $params["domain"],
+                        $params["secure"], $params["httponly"]
+                    );
+                }
+
+                // Megszüntetjük a session-t
+                session_destroy();
+            }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
         case "ajanlottreceptek":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $ajanlottReceptek = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, etrend.neve AS etrend_nev, etrend.id AS etrend_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, AVG(ertekeles.ertek) FROM receptek INNER JOIN ertekeles ON ertekeles.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.etrend_id = receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id GROUP BY receptek.id ORDER BY ertekeles.ertek;");
