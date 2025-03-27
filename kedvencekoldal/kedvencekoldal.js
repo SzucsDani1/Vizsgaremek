@@ -90,7 +90,7 @@ async function bevasarloListaLeker(){
   })
   let valaszReceptek = await lekerReceptNev.json();
   let valaszHozzavalok = await lekerHozzavalok.json();
-  if(valaszHozzavalok == "Nincs találat!" || valaszReceptek == "Nincs találat!"){
+  if(valaszHozzavalok.valasz == "Nincs találat!" || valaszReceptek.valasz == "Nincs találat!"){
     divAccordion.classList = "alert alert-warning text-center";
     divAccordion.role = "alert";
     divAccordion.innerHTML = "Nincs a bevásárlólistában hozzávaló!";
