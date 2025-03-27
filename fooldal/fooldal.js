@@ -1,4 +1,5 @@
 import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
 
 
 let felhasznalo_id;
@@ -17,10 +18,19 @@ async function felhasznaloIdLeker() {
   }
 }
 
-// Hívja meg a függvényt a fájl betöltésekor
-window.addEventListener("load",felhasznaloIdLeker);
 
 
+async function kijelentkezesLeker(){
+    try {
+        console.log("aaaa")
+        let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+        if(leker.ok){
+            kijelentkezes();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 async function receptekLeker(){
@@ -99,5 +109,9 @@ async function kereses(){
 
 
 document.getElementById("button_kereses").addEventListener("click", kereses)
-window.addEventListener("load", receptekLeker)
-window.addEventListener("load", ajanlottReceptekLeker)
+window.addEventListener("load", function(){
+    felhasznaloIdLeker();
+    receptekLeker();
+    ajanlottReceptekLeker();
+})
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);

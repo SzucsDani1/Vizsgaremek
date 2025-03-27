@@ -15,7 +15,7 @@ async function bejelenzkezesVizsg(){
     let oldalTeljesElerese = window.location.pathname
 
     let megnyitottOldal = oldalTeljesElerese.substring(oldalTeljesElerese.lastIndexOf('/') + 1)
-    if(felhasznaloId == ""){ //van e bejelentkezet felhasználó
+    if(felhasznaloId == "" || felhasznaloId == "Kijelentkezve"){ //van e bejelentkezet felhasználó
         if (megnyitottOldal != "bejelentkezes.php") {
            window.open("bejelentkezes.php", "_self");
         }

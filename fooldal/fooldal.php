@@ -42,6 +42,7 @@
                 <a class="nav-link" href="#">Profil</a>
               </li>
             </ul>
+            <input type="button" value="Kijelentkezés" class="btn btn-outline-danger" id="btnKijelentkezes">
           </div>
         </div>
       </nav>

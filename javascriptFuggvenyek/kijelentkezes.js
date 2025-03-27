@@ -1,4 +1,4 @@
-async function kijelentkezes(){
+export async function kijelentkezes(){
     let felhasznaloId
     await fetch("../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php")  // Fetch the PHP script
           .then(response => response.text())  // Get the response as text
@@ -14,9 +14,9 @@ async function kijelentkezes(){
     let oldalTeljesElerese = window.location.pathname
 
     let megnyitottOldal = oldalTeljesElerese.substring(oldalTeljesElerese.lastIndexOf('/') + 1)
-    if(felhasznaloId == ""){ //van e bejelentkezet felhasználó
+    /*if(felhasznaloId == ""){ //van e bejelentkezet felhasználó*/
         if (megnyitottOldal != "bejelentkezes.php") {
-           window.open("bejelentkezes.php", "_self");
+           window.open("../bejelentkezes/bejelentkezes.php", "_self");
         }
-    }
+   /* }*/
 }
