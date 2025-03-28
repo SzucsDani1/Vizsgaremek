@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Kategória hozzáadása</button>
+    <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Hozzávalók hozzáadása</button>
 
     <div id="hozzavaloKategoriak"></div>
 
