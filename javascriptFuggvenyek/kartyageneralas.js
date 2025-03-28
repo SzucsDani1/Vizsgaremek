@@ -34,9 +34,9 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
         pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
 
         let br = document.createElement("br");
-
+        let btnTorles = kedvencOldalE == true ? document.createElement("input") : "";
         if(kedvencOldalE == true){
-            let btnTorles = document.createElement("input");
+            
             btnTorles.type = "button";
             btnTorles.id = "btn"+recept.neve;
             btnTorles.value = "Törlés";
@@ -57,7 +57,9 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
                     
                     if(torol.ok){
                       console.log("Sikeres törlés!");
-                      kedvencReceptLeker();
+                      //kedvencReceptLeker();
+                      //receptekBetoltes(receptek, divContainer, true, felhasznalo_id);
+                      window.location.reload()
                     }
                     else{
                       let valasz = await torol.json();
