@@ -40,7 +40,7 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
             btnTorles.type = "button";
             btnTorles.id = "btn"+recept.neve;
             btnTorles.value = "Törlés";
-            btnTorles.classList = "btn btn-danger w-100";
+            btnTorles.classList = "btn btn-danger w-100 mt-2";
             
             btnTorles.addEventListener("click", async function() {
                 try {
