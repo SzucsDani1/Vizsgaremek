@@ -75,6 +75,49 @@
             header('bad request', true, 400);
         }
         break;
+
+        case "receptFeltolt":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                $receptNev = $bodyAdatok[""];
+                $etelfajta = $bodyAdatok[""];
+                $napszak = $bodyAdatok[""];
+
+                $etrend = $bodyAdatok[""];
+                $konyhak = $bodyAdatok[""];
+                $nehezseg = $bodyAdatok[""];
+
+                $ar = $bodyAdatok[""];
+                $adag = $bodyAdatok[""];
+                $ido = $bodyAdatok[""];
+
+                $kaloria = $bodyAdatok[""];
+                $receptLeiras = $bodyAdatok[""];
+                $kep = $bodyAdatok[""];
+
+                $felhsznaloId = $bodyAdatok["felhsznaloId"];
+                $gyerekmenu = $bodyAdatok[""];
+                
+                if(!empty($receptNev) && !empty($etelfajta) && !empty($napszak) && !empty($etrend) 
+                && !empty($konyhak) && !empty($nehezseg) && !empty($ar)
+                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($kep) 
+                ){
+                    $sql = "INSERT INTO `receptek` (`id`, `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id`, `kaloria`, `kepek`, `nehezseg`, `ido`, `adag`, `ar`, `mikor_feltolt`
+                    , `konyha_id`, `elkeszites`, `elfogadot`, `gyerekmenu`) 
+                    VALUES (NULL, '$receptNev', '$felhsznaloId', '$napszak', '$etelfajta', '$kaloria', '$kep', '$nehezseg', '$ido', '$adag', '$ar', current_timestamp(), '$konyha',
+                     '$receptLeiras', '0', '$gyerekmenu') ";
+                }   
+                else{
+                    echo json_encode(["valasz" => "Nincs minden adat kitöltve!"], JSON_UNESCAPED_UNICODE);
+                    header("bad request", true, 400);
+                }
+
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+        }
+        break;
+
         default:
             echo "Hiba";
     }
