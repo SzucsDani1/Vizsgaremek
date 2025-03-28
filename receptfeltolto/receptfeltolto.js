@@ -567,14 +567,12 @@ function arFigyel() {
 
     function frissitAr() {
         if (range.value == 0) {
-            arKiir.innerHTML = "Mind";
+            arKiir.innerHTML = "OLCSÓ";
         } else if (range.value == 1) {
-            arKiir.innerHTML = "Olcsó";
-        } else if (range.value == 2) {
-            arKiir.innerHTML = "Átlagos";
+            arKiir.innerHTML = "ÁTLAGOS";
         }
          else {
-            arKiir.innerHTML = "Drága";
+            arKiir.innerHTML = "DRÁGA";
         }
     }
 }
@@ -595,13 +593,11 @@ function nehezsegFigyel() {
 
     function frissitNehezseg() {
         if (range.value == 0) {
-            nehezsegKiir.innerHTML = "Mind";
-        } else if (range.value == 1) {
-            nehezsegKiir.innerHTML = "Könnyű";
-        }else if (range.value == 2) {
-            nehezsegKiir.innerHTML = "Közepes";
+            nehezsegKiir.innerHTML = "KÖNNYÜ";
+        }else if (range.value == 1) {
+            nehezsegKiir.innerHTML = "KÖZEPES";
         } else {
-            nehezsegKiir.innerHTML = "Nehéz";
+            nehezsegKiir.innerHTML = "NEHÉZ";
         }
     }
 }
@@ -837,3 +833,10 @@ window.addEventListener("load", function(){
     arFigyel();
     adagFigyel();
 })
+
+
+
+
+
+
+

@@ -117,7 +117,7 @@
             <div class="mb-3">
               <label>Ételfajták</label>
               <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="etelfajtaSearch">
-                <option value="" data-tokens=""></option>
+                
               </select>
             </div>
         </div>
@@ -129,12 +129,11 @@
         <div class="mb-3">
           <label>Napszak</label>
           <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="napszak">
-            <option value="" data-tokens=""></option>
-            <option value="Reggeli" data-tokens="Reggeli">Reggeli</option>
-            <option value="Tízorai" data-tokens="Tízórai">Tízórai</option>
-            <option value="Ebéd" data-tokens="Ebéd">Ebéd</option>
-            <option value="Uzsonna" data-tokens="Uzsonna">Uzsonna</option>
-            <option value="Vacsora" data-tokens="Vacsora">Vacsora</option>
+            <option value="REGGELI" data-tokens="Reggeli">REGGELI</option>
+            <option value="TÍZÓRAI" data-tokens="Tízórai">TÍZÓRAI</option>
+            <option value="EBÉD" data-tokens="Ebéd">EBÉD</option>
+            <option value="UZSONNNA" data-tokens="Uzsonna">UZSONNNA</option>
+            <option value="VACSORA" data-tokens="Vacsora">VACSORA</option>
           </select>
         </div>
       </div>          
@@ -163,7 +162,7 @@
         <div class="mb-3">
           <label>Konyhák</label>
           <select class="selectpicker form-select w-100" data-live-search="true" data-dropup-auto="false" id="konyhaSearch">
-            <option value="" data-tokens=""></option>
+           
           </select>
         </div>
       </div>          
@@ -174,8 +173,8 @@
         <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="my-3">
           <label class="form-label">Nehézségi szint</label>
-          <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="3" step="1">
-          <div id="nehezsegKiir" class="form-text">Mind</div>
+          <input type="range" class="form-range" id="nehezsegInput" value="0" min="0" max="2" step="1">
+          <div id="nehezsegKiir" class="form-text">KÖNNYÜ</div>
         </div>
         </div>
       </div>
@@ -185,8 +184,8 @@
         <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="my-3">
           <label class="form-label">Ár</label>
-          <input type="range" class="form-range" id="arInput" value="0" min="0" max="3" step="1">
-          <div id="arKiir" class="form-text">Mind</div>
+          <input type="range" class="form-range" id="arInput" value="0" min="0" max="2" step="1">
+          <div id="arKiir" class="form-text">OLCSÓ</div>
         </div>
         </div>
       </div>
