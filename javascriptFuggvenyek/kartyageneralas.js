@@ -31,7 +31,7 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
 
         let pJellemzok = document.createElement("p");
         pJellemzok.classList = "text-body-secondary fw-light";
-        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc | " + recept.adag + " adag";
+        pJellemzok.innerHTML = recept.kaloria+" kcal | "+ recept.nehezseg + " | " + recept.ido + " perc";
 
         let br = document.createElement("br");
         let btnTorles = kedvencOldalE == true ? document.createElement("input") : "";
@@ -92,7 +92,9 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
         divCardBody.appendChild(h5);
         divCardBody.appendChild(br);
         divCardBody.appendChild(inputButton);
-        divCardBody.appendChild(btnTorles);
+        if(kedvencOldalE == true){
+          divCardBody.appendChild(btnTorles);
+        }
         divCardBody.appendChild(pFeltolto);
 
     }

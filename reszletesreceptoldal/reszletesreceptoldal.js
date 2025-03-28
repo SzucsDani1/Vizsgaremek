@@ -85,20 +85,28 @@ async function hozzaszolasElkuld(){
 }
 
 async function hozzaszolasLeker(){
+  let hozzaszolasKiir = document.getElementById("hozzaszolasok");
+  hozzaszolasKiir.innerHTML = "";
     let lekerHozzaszolas = await fetch("../adatbazisInterakciok/hozzaszolasleker", {
         method : "POST",
         headers : {
         "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-        "receptek_id" : 1
+        "receptek_id" : receptek_id
         })
     });
 
-
+    let hozzaszolasok = await lekerHozzaszolas.json();
     if(lekerHozzaszolas.ok){
-        let hozzaszolasok = await lekerHozzaszolas.json();
+        
         hozzaszolasGeneral(hozzaszolasok)
+    }
+    else{
+      hozzaszolasKiir.innerHTML = hozzaszolasok.valasz;
+      hozzaszolasKiir.classList = "alert alert-warning text-center mx-auto my-1";
+      hozzaszolasKiir.role = "alert";
+      hozzaszolasKiir.style.width = "80%";
     }
 }
 
@@ -379,7 +387,7 @@ async function kedvencReceptLeker(){
   try {
     let checkbox = document.getElementById("kedvencRecept");
     let label = document.getElementById("kedvencReceptFelirat");
-    let leker = await fetch("../adatbazisInterakciok/kedvencreceptleker",{
+    let leker = await fetch("../adatbazisInterakciok/kedvencreceptlekerreceptnel",{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
