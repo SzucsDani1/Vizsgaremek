@@ -1,18 +1,19 @@
 let index = 0;
 const napok = ['hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat', 'vasárnap'];
-const napszakok = ["reggeli","tizorai","ebed", "uzsonna", "vacsora"];
+const napszakok = ["reggeli","tízórai","ebéd", "uzsonna", "vacsora"];
 async function receptek(){
     try {
         let leker = await fetch("./adatbazisInterakciok/hetimenuleker");
         if(leker.ok){
             let receptek = await leker.json();
             let kiiratasok = document.getElementsByName("hetNapjai");
-            receptekBetoltes(receptek);
+            //receptekBetoltes(receptek);
             for (let kiirat of kiiratasok) {
                 kiirat.addEventListener("change", function() {
                     receptekBetoltes(receptek);
                 });
             }
+            receptekBetoltes(receptek);
             
         }
         else{
@@ -40,69 +41,85 @@ async function hetNapjaLeker(){
     }
 }
 
-function receptekBetoltes(receptek){
-    let napSzamlalo = 0;
-    let kivalasztottNap = document.querySelector('input[name="hetNapjai"]:checked')?.value;
-    if (!kivalasztottNap || !receptek[kivalasztottNap]) {
-        console.log("Hiba: "+kivalasztottNap);
-        return;
-    }
-    for(let napszak of napszakok){
-        if(receptek[kivalasztottNap].napszak == napszak){
-            let hetimenuKiir = document.getElementById(napszak+"Megjelenites");
-            hetimenuKiir.innerHTML = "";
 
-            let divCard = document.createElement("div");
-            divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3"; 
-            divCard.style = "width: 18rem;";
-            divCard.id = receptek[kivalasztottNap].neve;
+
+  function receptekBetoltes(receptek) {
+    const kivalasztottNap = document.querySelector('input[name="hetNapjai"]:checked')?.value;
     
+    const napszakok = ["reggeli", "tízórai", "ebéd", "uzsonna", "vacsora"];
+    
+    for (let napszak of napszakok) {
+        let receptMegjelenit = document.getElementById(napszak + "Megjelenites");
+        if (receptMegjelenit) {
+            receptMegjelenit.innerHTML = "";
+        }
+    }
+    
+    let receptekNapszakja = {};
+    for (let napszak of napszakok) {
+        receptekNapszakja[napszak.toUpperCase()] = [];
+    }
+    
+    for (let recept of receptek) {
+        if (receptekNapszakja.hasOwnProperty(recept.napszak)) {
+            receptekNapszakja[recept.napszak].push(recept);
+        }
+    }
+    
+    for (let napszak of napszakok) {
+        let kivalasztottReceptek = receptekNapszakja[napszak.toUpperCase()];
+        if (kivalasztottReceptek.length > kivalasztottNap) {
+            let kivalasztottRecept = kivalasztottReceptek[kivalasztottNap];
+            let receptMegjelenit = document.getElementById(napszak + "Megjelenites");
+            
+            let divCard = document.createElement("div");
+            divCard.classList = "card col-12 col-lg-3 p-2 col-md-6 col-sm-12 mx-auto my-3";
+            divCard.style = "width: 18rem;";
+            divCard.id = kivalasztottRecept.neve;
+            
             let img = document.createElement("img");
-            img.src = ""//receptek[kivalasztottNap].kepek;
+            img.src = kivalasztottRecept.kepek || "";
             img.classList = "card-img-top";
-            img.alt = receptek[kivalasztottNap].neve;
+            img.alt = kivalasztottRecept.neve;
             img.width = 250;
             img.height = 200;
-    
+            
             let divCardBody = document.createElement("div");
             divCardBody.classList = "card-body";
-    
+            
             let h5 = document.createElement("h5");
             h5.classList = "card-title";
-            h5.innerHTML = receptek[kivalasztottNap].neve;
-    
+            h5.innerHTML = kivalasztottRecept.neve;
+            
             let pJellemzok = document.createElement("p");
             pJellemzok.classList = "text-body-secondary fw-light";
-            pJellemzok.innerHTML = receptek[kivalasztottNap].kaloria+" kcal | "+ receptek[kivalasztottNap].nehezseg + " | " + receptek[kivalasztottNap].ido + " perc";
-    
+            pJellemzok.innerHTML = kivalasztottRecept.kaloria + " kcal | " + kivalasztottRecept.nehezseg + " | " + kivalasztottRecept.ido + " perc";
+            
             let br = document.createElement("br");
-    
+            
             let inputButton = document.createElement("input");
             inputButton.type = "button";
             inputButton.classList = "btn btn-warning";
             inputButton.value = "Részletek";
-    
+            
             let pFeltolto = document.createElement("p");
             pFeltolto.classList = "text-body-secondary fw-light mt-2";
-            pFeltolto.innerHTML = receptek[kivalasztottNap].felhnev + "\t|\t"+ receptek[kivalasztottNap].mikor_feltolt;
-    
-    
-            hetimenuKiir.appendChild(divCard);
-    
-            divCard.appendChild(img);
-            divCard.appendChild(divCardBody);
-    
-            divCardBody.appendChild(pJellemzok);
+            pFeltolto.innerHTML = kivalasztottRecept.felhnev + "\t|\t" + kivalasztottRecept.mikor_feltolt;
+            
             divCardBody.appendChild(h5);
+            divCardBody.appendChild(pJellemzok);
             divCardBody.appendChild(br);
             divCardBody.appendChild(inputButton);
             divCardBody.appendChild(pFeltolto);
-
-            napSzamlalo++;
+            
+            divCard.appendChild(img);
+            divCard.appendChild(divCardBody);
+            
+            receptMegjelenit.appendChild(divCard);
         }
     }
-  
-  }
+}
+
 
 
 window.addEventListener("load", function(){

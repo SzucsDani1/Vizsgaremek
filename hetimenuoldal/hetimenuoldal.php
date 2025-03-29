@@ -88,11 +88,11 @@
         </div>
         <div class="col-12 col-lg-4 col-md-4 col-sm-6 mx-auto">
           <h3>Tízórai</h3>
-          <div id="tizoraiMegjelenites" class="row"></div>
+          <div id="tízóraiMegjelenites" class="row"></div>
         </div>
         <div class="col-12 col-lg-4 col-md-4 col-sm-6 mx-auto">
           <h3>Ebéd</h3>
-          <div id="ebedMegjelenites" class="row"></div>
+          <div id="ebédMegjelenites" class="row"></div>
         </div>
         <div class="col-12 col-lg-4 col-md-4 col-sm-6 mx-auto">
           <h3>Uzsonna</h3>
