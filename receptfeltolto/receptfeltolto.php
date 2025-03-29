@@ -1,3 +1,8 @@
+<?php
+    require_once "./adatbazisInterakciok/sessionConfig.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +67,7 @@
           </form>
       </div>
 
-      <!-- Checkbox -->
+      <!-- GYEREK Checkbox -->
       <div class="col-auto d-flex align-items-center">
           <input type="checkbox" class="form-check-input me-2" id="gyerekmenuE">
           <label for="gyerekmenuE" class="form-check-label">Gyerekeknek megfelelő recept?</label>
@@ -203,7 +208,7 @@
         <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="my-3">
           <label class="form-label">Adag</label>
-          <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
+          <input type="range" class="form-range" id="adagInput" value="1" min="1" max="10" step="1">
           <div id="adagKiir" class="form-text">1 adag</div>
         </div>
         </div>

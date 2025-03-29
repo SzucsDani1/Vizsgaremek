@@ -9,6 +9,24 @@
     $bodyAdatok = json_decode(file_get_contents("php://input"), true);
 
     switch (mb_strtolower($url[0])){
+        case 'sessionLekerFelhasznaloId': {
+            if ($metodus === 'GET') {
+                session_start();
+    
+                // Check if the session variable 'userpicture' is set
+                if (isset($_SESSION['bejelentkezetFelhasznaloId'])) {
+                    echo $_SESSION['bejelentkezetFelhasznaloId']; // Output the session value (user's picture path)
+                }   
+                else {
+                    echo 'No id'; // Fallback if no picture is set
+                }
+            }
+            else {
+                echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                header('Method Not Allowed', true, 405);
+            }
+            break;
+        }
         case "etelfajta":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $etelfajta = adatokLekerese("SELECT * FROM etelfajta ORDER BY etelfajta.neve;");
@@ -78,28 +96,30 @@
 
         case "receptFeltolt":
             if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $receptNev = $bodyAdatok[""];
-                $etelfajta = $bodyAdatok[""];
-                $napszak = $bodyAdatok[""];
+                $receptNev = $bodyAdatok["receptNev"];
+                $gyereke = $bodyAdatok["gyereke"];
+                $hozzavalok = $bodyAdatok["hozzavalok"];
+                $etelfajta = $bodyAdatok["etelfajta"];
+                $napszak = $bodyAdatok["napszak"];
 
-                $etrend = $bodyAdatok[""];
-                $konyhak = $bodyAdatok[""];
-                $nehezseg = $bodyAdatok[""];
+                $etrend = $bodyAdatok["etrendek"];
+                $konyhak = $bodyAdatok["konyha"];
+                $nehezseg = $bodyAdatok["nehezseg"];
 
-                $ar = $bodyAdatok[""];
-                $adag = $bodyAdatok[""];
-                $ido = $bodyAdatok[""];
+                $ar = $bodyAdatok["ar"];
+                $adag = $bodyAdatok["adag"];
+                $ido = $bodyAdatok["ido"];
 
-                $kaloria = $bodyAdatok[""];
-                $receptLeiras = $bodyAdatok[""];
+                $kaloria = $bodyAdatok["kaloria"];
+                $receptLeiras = $bodyAdatok["leiras"];
                 $kep = $bodyAdatok[""];
 
-                $felhsznaloId = $bodyAdatok["felhsznaloId"];
-                $gyerekmenu = $bodyAdatok[""];
+                $felhsznaloId = $bodyAdatok["felhasznaloId"];
+                
                 
                 if(!empty($receptNev) && !empty($etelfajta) && !empty($napszak) && !empty($etrend) 
                 && !empty($konyhak) && !empty($nehezseg) && !empty($ar)
-                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($kep) 
+                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($kep) && !empty($felhsznaloId) && !empty($hozzavalok) && !empty($gyereke) 
                 ){
                     $sql = "INSERT INTO `receptek` (`id`, `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id`, `kaloria`, `kepek`, `nehezseg`, `ido`, `adag`, `ar`, `mikor_feltolt`
                     , `konyha_id`, `elkeszites`, `elfogadot`, `gyerekmenu`) 
