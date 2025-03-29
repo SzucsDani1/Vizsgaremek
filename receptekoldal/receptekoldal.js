@@ -1,9 +1,25 @@
 import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
 
 let kategoriak = new Set();
 let alapanyagok = new Set();
 let konyhak = new Set();
 let etrendek = new Set();
+
+
+
+async function kijelentkezesLeker(){
+    try {
+        console.log("aaaa")
+        let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+        if(leker.ok){
+            kijelentkezes();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 async function filterReceptek() {
@@ -665,3 +681,4 @@ window.addEventListener("load", function() {
 });
 document.getElementById("btnSzures").addEventListener("click", filterReceptek);
 document.getElementById("btnNullazas").addEventListener("click", szurokLenullazasa);
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);

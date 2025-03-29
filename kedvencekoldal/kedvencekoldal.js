@@ -1,5 +1,5 @@
-import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
-import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js";
 
 
 let kategoriak = [];

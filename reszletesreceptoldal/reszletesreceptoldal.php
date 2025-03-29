@@ -18,7 +18,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Receptek</a>
+                <a class="nav-link" href="../receptekoldal/receptekoldal.php">Receptek</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>

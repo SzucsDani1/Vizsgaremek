@@ -9,22 +9,19 @@
 </head>
 <body style="background-color: rgb(253, 222, 197);">
     <!--START NAVBAR-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg" style="background-color: rgb(253, 222, 197);">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Logo helye</a>
+          <a class="navbar-brand" href="../fooldal/fooldal.php"><img src="../bejelentkezes/logo/FinomFalatokLogoSzeles.png" alt="logo" title="logo" height="49px" width="130px"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Főoldal</a>
+                <a class="nav-link" href="./receptekoldal.php">Receptek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Receptek</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Heti menü</a>
+                <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Recept feltöltés</a>
@@ -36,9 +33,13 @@
                 <a class="nav-link" href="#">Gyerek menü</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link active" href="#">Kedvencek</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="#">Profil</a>
               </li>
             </ul>
+            <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
           </div>
         </div>
       </nav>
