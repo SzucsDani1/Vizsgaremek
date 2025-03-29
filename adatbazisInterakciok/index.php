@@ -537,6 +537,75 @@
             break;
 
 
+
+
+
+
+            //Hetimenü oldal
+
+            case "hetimenuleker":
+                if($_SERVER["REQUEST_METHOD"] == "GET"){
+                    $hetimenuk = adatokLekerdezese("SELECT receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, hetimenu.id,felhasznalok.felhnev, etrend.neve AS etrend_nev, etrend.id FROM receptek INNER JOIN hetimenu ON hetimenu.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptetrend.recept_id= receptek.id INNER JOIN etrend ON etrend.id=receptetrend.etrend_id ORDER BY hetimenu.id;");
+                    if(is_array($hetimenuk) && !empty($hetimenuk)){
+                        echo json_encode($hetimenuk, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        header("bad request", true, 400);
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+            }
+            break;
+
+        
+            case "hetnapja":
+                if($_SERVER["REQUEST_METHOD"] == "GET"){
+                    $nap = adatokLekerdezese("SELECT WEEKDAY(CURRENT_DATE()) as nap;");
+                    if(is_array($nap) && !empty($nap)){
+                        switch ($nap[0]["nap"]) {
+                            case 0:
+                                echo json_encode(["valasz"=>"Hetfo"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 1:
+                                echo json_encode(["valasz"=>"Kedd"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 2:
+                                echo json_encode(["valasz"=>"Szerda"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 3:
+                                echo json_encode(["valasz"=>"Csutortok"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 4:
+                                echo json_encode(["valasz"=>"Pentek"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 5:
+                                echo json_encode(["valasz"=>"Szombat"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            case 6:
+                                echo json_encode(["valasz"=>"Vasarnap"], JSON_UNESCAPED_UNICODE);
+                                break;
+                            default:
+                                echo json_encode(["valasz"=>"Hiba"], JSON_UNESCAPED_UNICODE);
+                                header("bad request", true, 400);
+                            
+                        }
+                        
+                    }
+                    else{
+                        echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                        header("bad request", true, 400);
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+            }
+            break;
+
+
         default:
             echo "Hiba";
     }

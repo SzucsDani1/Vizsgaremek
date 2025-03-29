@@ -21,7 +21,7 @@
                 <a class="nav-link" href="#">Receptek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Heti menü</a>
+              <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Recept feltöltés</a>
