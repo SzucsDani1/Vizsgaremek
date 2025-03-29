@@ -75,7 +75,7 @@
           <div class="input-group">
             <input type="text" class="form-control" id="text_kereses" placeholder="Keresés" aria-label="Recept">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" id="button_kereses" type="button">Keresés</button>
+              <button class="btn btn-primary" id="button_kereses" type="button">Keresés</button>
             </div>
           </div>
         </div>
