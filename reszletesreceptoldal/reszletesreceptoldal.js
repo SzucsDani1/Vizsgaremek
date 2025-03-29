@@ -615,7 +615,7 @@ function hozzaszolasGeneral(hozzaszolasok){
   ul.innerHTML = "";
   
   for(let hozzaszolas of hozzaszolasok){
-    if(hozzaszolas.receptek_id == 1){
+    if(hozzaszolas.receptek_id == receptek_id){
       let li = document.createElement("li");
       let divFejlec = document.createElement("div");
       let divTartalom = document.createElement("div");
