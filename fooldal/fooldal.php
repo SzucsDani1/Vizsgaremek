@@ -84,7 +84,7 @@
           <!--START LEGÚJABB RECEPTEK KÁRTYÁK-->
         <div>
           <fieldset id="fieldset" class="mx-auto filter-box border p-3 bg-light rounded my-3">
-            <legend class="text-center my-4">Legújabb Receptek</legend>
+            <legend class="text-center my-4 display-6">Legújabb Receptek</legend>
             <div id="legujabbReceptekKartyak"></div>
           </fieldset>
         </div>
@@ -94,7 +94,7 @@
         <!--START AJÁNLOTT RECEPTEK-->
         <div>
           <fieldset id="fieldset" class="mx-auto filter-box border p-3 bg-light rounded my-3">
-            <legend class="text-center my-4">Ajánlott receptek</legend>
+            <legend class="text-center my-4 display-6">Ajánlott receptek</legend>
             <div id="ajanlottReceptekKartyak"></div>
           </fieldset>
         </div>

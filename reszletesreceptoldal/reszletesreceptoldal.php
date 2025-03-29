@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="reszletesreceptoldal.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body class="hatter">
+<body id="body">
      <!--START NAVBAR-->
      <nav class="navbar navbar-expand-lg" style="background-color: rgb(253, 222, 197);">
         <div class="container-fluid">

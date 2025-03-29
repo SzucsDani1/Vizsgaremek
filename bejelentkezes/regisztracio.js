@@ -1,8 +1,14 @@
+import {alertMegjelenit} from "../javascriptFuggvenyek/alertmegjelenit.js";
+
+
 async function regisztracio(){
     let jelszo=document.getElementById("Regpassword").value;
     let jelszoBiztos =document.getElementById("RegpasswordMegint").value;
     let felhasznalonev = document.getElementById("Regfelhasznalonev").value;
     let email = document.getElementById("Regemail").value;
+
+    let alertBox = document.getElementById("regisztracioAlert");
+    let progressBar = document.getElementById("regisztracioProgressBar");
 
     if(jelszo.trim().length != 0 && jelszoBiztos.trim().length != 0  && felhasznalonev.trim().length != 0 && email.trim().length != 0 && jelszo == jelszoBiztos){
       
@@ -29,7 +35,8 @@ async function regisztracio(){
         }
     }
     else{
-        alert("Kérem minden adatott helyesen töltsön ki!");
+        //alert("Kérem minden adatott helyesen töltsön ki!");
+        alertMegjelenit("Kérem minden adatott helyesen töltsön ki!", true, alertBox, progressBar);
     }
 
 }

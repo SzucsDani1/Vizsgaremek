@@ -14,9 +14,9 @@ const receptek_id = urlParams.get('receptek_id');
 
 async function felhasznaloIdLeker() {
   try {
-    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
-    if (response.ok) {
-      felhasznalo_id = await response.text();
+    const leker = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    if (leker.ok) {
+      felhasznalo_id = await leker.text();
       console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
       console.log("recept id: "+ receptek_id);
     } else {

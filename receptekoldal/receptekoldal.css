@@ -92,11 +92,13 @@
     color: #fff;
     cursor: pointer;
 }
-body {
-  background-color: rgb(255, 196, 118);
+
+#body {
+  background-color: rgb(252, 244, 237);
+}
+legend {
+  padding: 5px 10px;
+  background-color: rgb(233, 233, 233);
 }
 
-#legend {
-  background-color: rgb(255, 179, 107);
-}
 

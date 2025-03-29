@@ -167,13 +167,15 @@
                         <input type="email" class="form-control" id ="Regemail" >
                         </div>                        
                     
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
-                    <button type="button" class="btn btn-primary" id = "regisztral">Regisztráció</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+                        <button type="button" class="btn btn-primary" id = "regisztral">Regisztráció</button>
+                    </div>
+                    <div id='regisztracioAlert' role='alert' hidden></div>
+                    <div id='regisztracioProgressBar' hidden style=' height: 5px; width: 100%;' class="mb-2"></div>
                 </form>
-          
+
         </div>
     </div>
     </div>
@@ -196,7 +198,7 @@
 
     <!--START JS MEGHÍVÁSOK-->
 
-    <script src="./regisztracio.js"></script>
+    <script type="module" src="./regisztracio.js"></script>
     <script src="./bejeletkezesVizsgalasa/bejelentkezesVizsgalat.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

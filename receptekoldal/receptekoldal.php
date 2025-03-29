@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="receptekoldal.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body style="background-color: rgb(253, 222, 197);">
+<body id="body">
     <!--START NAVBAR-->
     <nav class="navbar navbar-expand-lg" style="background-color: rgb(253, 222, 197);">
         <div class="container-fluid">
@@ -18,7 +18,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="./receptekoldal.php">Receptek</a>
+                <a class="nav-link active" href="./receptekoldal.php">Receptek</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
@@ -33,7 +33,7 @@
                 <a class="nav-link" href="#">Gyerek menü</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Kedvencek</a>
+                <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Profil</a>
