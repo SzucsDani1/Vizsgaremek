@@ -72,9 +72,6 @@ async function filterReceptek() {
             else if (kaloriaValue === 4) kaloria = 601;
         }
         
-        // Adag
-        const adagInput = document.getElementById("adagInput");
-        const adag = adagInput && adagInput.value !== "0" ? parseInt(adagInput.value) : null;
         
         // Get difficulty level
         const nehezsegInput = document.getElementById("nehezsegInput");
@@ -97,7 +94,6 @@ async function filterReceptek() {
             napszak,
             ar,
             kaloria,
-            adag,
             nehezseg
         };
 
@@ -116,16 +112,17 @@ async function filterReceptek() {
             body: JSON.stringify(body)
         });
         
-        if (response.ok) {
-            const receptek = await response.json();
+        const receptek = await response.json();
+        if (receptek == "Nincs találat!") {
+            nincsTalalatKeresesre(receptek);
+        }
+        else if (response.ok) {
+            
             let divContainer = document.getElementById("kartyak");
             receptekBetoltes(receptek, divContainer);
-        } else {
-            nincsTalalatKeresesre();
-        }
+        } 
     } catch (error) {
         console.log(error);
-        nincsTalalatKeresesre(error)
     }
 }
 
@@ -224,18 +221,10 @@ function nincsTalalatKeresesre(error)
 {
     document.getElementById("kartyak").innerHTML = "";
     let div = document.createElement("div");
-    if(error.length != null){
-        div.classList = "alert alert-warning text-center mx-auto my-3";
-        div.role = "alert";
-        div.innerHTML = error;
-    }
-    else{
-        div.classList = "alert alert-warning text-center mx-auto my-3";
-        div.role = "alert";
-        div.innerHTML = "Nincs találat";
-    }
-    
-    
+
+    div.classList = "alert alert-warning text-center mx-auto mt-3";
+    div.role = "alert";
+    div.innerHTML = error;
 
     document.getElementById("kartyak").appendChild(div);
 }
@@ -348,50 +337,6 @@ function idoFigyel() {
             idoKiir.innerHTML = "Átlagosan";
         } else {
             idoKiir.innerHTML = "Hosszan";
-        }
-    }
-}
-
-
-function adagFigyel() {
-    const range = document.getElementById("adagInput");
-    let adagKiir = document.getElementById("adagKiir");
-
-    range.addEventListener("input", frissitAdag);
-    range.addEventListener("mousedown", function() { 
-        frissitAdag(); 
-        range.addEventListener("mousemove", frissitAdag); 
-    });
-    range.addEventListener("mouseup", function() { 
-        range.removeEventListener("mousemove", frissitAdag); 
-    });
-
-    function frissitAdag() {
-        if (range.value == 0) {
-            adagKiir.innerHTML = "1 adag";
-        } else if (range.value == 1) {
-            adagKiir.innerHTML = "2 adag";
-        }else if (range.value == 2) {
-            adagKiir.innerHTML = "3 adag";
-        } else if (range.value == 3) {
-            adagKiir.innerHTML = "4 adag";
-        }
-        else if (range.value == 4) {
-            adagKiir.innerHTML = "5 adag";
-        }
-        else if (range.value == 5) {
-            adagKiir.innerHTML = "6 adag";
-        }else if (range.value == 6) {
-            adagKiir.innerHTML = "7 adag";
-        }
-        else if (range.value == 7) {
-            adagKiir.innerHTML = "8 adag";
-        }
-        else if (range.value == 8) {
-            adagKiir.innerHTML = "9 adag";
-        }
-        else {
-            adagKiir.innerHTML = "10 adag";
         }
     }
 }
@@ -686,8 +631,6 @@ function szurokLenullazasa() {
     document.getElementById("kaloriaInput").value = 0;
     document.getElementById("kaloriaKiir").innerHTML = "Mind";
 
-    document.getElementById("adagInput").value = 0;
-    document.getElementById("adagKiir").innerHTML = "1 adag";
 
     document.getElementById("nehezsegInput").value = 0;
     document.getElementById("nehezsegKiir").innerHTML = "Mind";
@@ -713,7 +656,6 @@ window.addEventListener("load", function() {
     arFigyel();
     idoFigyel();
     kaloriaFigyel();
-    adagFigyel();
     nehezsegFigyel();
     etrendListaLeker();
     konyhaListaLeker();

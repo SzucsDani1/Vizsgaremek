@@ -47,6 +47,7 @@
 
 
      <!--START CAROUSEL-->
+     <!--
      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -60,9 +61,11 @@
         </div>
       </div>
     </div>
-
+    -->
     <!--END CAROUSEL-->
 
+
+    <h1 class="display-2 text-center my-5">Receptek szűrése</h1>
 
     <!--START KERESÉS-->
     <div class="container my-4">
@@ -85,7 +88,7 @@
         <div class="row">
             <!-- Szűrőpanel-->
             <div class="col-lg-4 col-md-5 col-sm-12">
-                <div class="filter-box border p-3 bg-light rounded">
+                <div class="filter-box border p-2 bg-light rounded">
                     <h4 class="display-6">Szűrés</h4>
                     <hr>
 
@@ -179,12 +182,6 @@
                         <div id="kaloriaKiir" class="form-text">Mind</div>
                     </div>
 
-                    <!-- Adag szint szűrő -->
-                    <div class="my-3">
-                        <label class="form-label">Adag</label>
-                        <input type="range" class="form-range" id="adagInput" value="0" min="0" max="9" step="1">
-                        <div id="adagKiir" class="form-text">1 adag</div>
-                    </div>
 
                     <!-- Nehézségi szint szűrő -->
                     <div class="my-3">
