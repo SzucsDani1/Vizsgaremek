@@ -53,13 +53,20 @@
 
     <!--RECEPT NEVE-->
     <div class="container">
-    <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <form class="form-floating">
-                <input type="text" class="form-control" id="receptNev" placeholder="Név">
-                <label for="recept_nev">Recept neve</label>
-            </form>
-        </div>
+     
+    <div class="row  align-items-center g-3">
+      <div class="col-sm-12 col-md-6">
+          <form class="form-floating">
+              <input type="text" class="form-control" id="receptNev" placeholder="Név">
+              <label for="receptNev">Recept neve</label>
+          </form>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="col-auto d-flex align-items-center">
+          <input type="checkbox" class="form-check-input me-2" id="gyerekmenuE">
+          <label for="gyerekmenuE" class="form-check-label">Gyerekeknek megfelelő recept?</label>
+      </div>
     </div>
 
     <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Hozzávalók hozzáadása</button>

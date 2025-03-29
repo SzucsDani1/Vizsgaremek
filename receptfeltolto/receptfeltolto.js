@@ -6,21 +6,7 @@ let alapanyagok = new Set();
 
 let kivalasztottEtrendek = new Set();
 
-async function receptFeltoltes(){
-    let eredmeny = await fetch("./adatbazisInterakciok/receptFeltolt", {
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-            "neve" : document.getElementById("receptNev").value,
 
-        })
-    });
-    if(eredmeny.ok){
-        // sikeres feltöltés esetén
-    }
-}
 
 function receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat) {
     document.getElementById("figyelmezteto_uzenet").hidden = true;
@@ -683,92 +669,104 @@ function mindenKiVanEToltve() {
     divFigyelmeztet.role = "alert";
     divFigyelmeztet.id = "kategoriaFigyelmeztet" + kategoriaSzamlalo;
 
+    // Recept név ellenőrzése
+    let receptNev = document.getElementById("receptNev").value;
+
     hibaUzenetKiir.appendChild(divFigyelmeztet);
-     // Recept név ellenőrzése
-     let receptNev = document.getElementById("receptNev").value;
      if (!receptNev || receptNev.trim() === "") {
          divFigyelmeztet.innerHTML ="Kérem adja meg a recept nevét!";
-         return false;
+         return ;
      }
      
     //Hozzávalók ellenőrzése
     let table_hozzavalok = document.getElementById("table_hozzavalok");
     let hozzavaloKategoriak = document.getElementById("hozzavaloKategoriak");
     let vanHozzavalo = false;
-    
+   
     if (table_hozzavalok && table_hozzavalok.hidden === false && table_hozzavalok.querySelector("tbody") && table_hozzavalok.querySelector("tbody").children.length > 0) {
         vanHozzavalo = true;
     }
     
+    let tables
+
     if (hozzavaloKategoriak) {
-        let tables = hozzavaloKategoriak.querySelectorAll("table");
+        tables = hozzavaloKategoriak.querySelectorAll("table");
         for (let table of tables) {
+            
             if (table && table.querySelector("tbody") && table.querySelector("tbody").children.length > 0) {
                 vanHozzavalo = true;
-                break;
+                //console.log(table)
+                //break;
             }
         }
     }
     
+    kuldHozzavalok = []
+    for (const element of object) {
+        feltotendo = "{'kategoria' : '"+ element[""] +"', 'hozzavNev' : '' , 'hozzavMenny' : '' , 'hozzavMertek' : ''}"    
+        kuldHozzavalok.push(feltotendo)
+    }
+
+
     if (!vanHozzavalo) {
         divFigyelmeztet.innerHTML ="Kérem, adjon hozzá legalább egy hozzávalót!";
-        return false;
+        return ;
     }
      
      if (kivalasztottEtrendek.size === 0) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon ki legalább egy étrendet!";
-         return false;
+         return ;
      }
      
      let etelfajtaKereso = document.getElementById("etelfajtaSearch");
      if (!etelfajtaKereso.value) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon ételfajtát!";
-         return false;
+         return ;
      }
      
      let konyhaKereso = document.getElementById("konyhaSearch");
      if (!konyhaKereso.value) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon konyhát!";
-         return false;
+         return ;
      }
      
      let napszakRadio = document.getElementById("napszak")
      if (!napszakRadio.value) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon napszakot!";
-         return false;
+         return ;
      }
      
      let nehezsegInput = document.getElementById("nehezsegInput");
      if (nehezsegInput.value == 0) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon nehézségi szintet!";
-         return false;
+         return ;
      }
      
      let arInput = document.getElementById("arInput");
      if (arInput.value == 0) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon árkategóriát!";
-         return false;
+         return ;
      }
      
      let kaloriaInput = document.getElementById("kaloriaInput");
      if (kaloriaInput.value == "") {
          divFigyelmeztet.innerHTML ="Kérem, válasszon kalóriát!";
-         return false;
+         return ;
      }
      
      let idoInput = document.getElementById("idoInput");
      if (idoInput.value == 0) {
          divFigyelmeztet.innerHTML ="Kérem, válasszon elkészítési időt!";
-         return false;
+         return ;
      }
      
      let receptLeiras = document.getElementById("receptLeiras");
      if (!receptLeiras.value || receptLeiras.value.trim() === "") {
          divFigyelmeztet.innerHTML ="Kérem, írja le a recept leírását!";
-         return false;
+         return ;
      }
 
-    return true; 
+    //receptFeltoltes(receptNev, );
 }
 
 
@@ -840,3 +838,18 @@ window.addEventListener("load", function(){
 
 
 
+async function receptFeltoltes(){
+    let eredmeny = await fetch("./adatbazisInterakciok/receptFeltolt", {
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "neve" : document.getElementById("receptNev").value,
+
+        })
+    });
+    if(eredmeny.ok){
+        // sikeres feltöltés esetén
+    }
+}
