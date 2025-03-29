@@ -1,0 +1,102 @@
+.navbar-nav{
+    margin: auto;
+ }
+ .nav-link{
+     margin-left: 10px;
+     margin-right: 10px;
+ }
+ 
+ .navbar-nav .nav-link {
+     position: relative;
+ }
+ 
+ .navbar-nav .nav-link::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 0;
+     height: 2px;
+     background-color: #ff5722; 
+     transition: width 0.3s; 
+ 
+ }
+ 
+ .navbar-nav .nav-link:hover::after {
+     width: 100%; 
+ }
+
+ .carousel-item img {
+    max-height: 500px; 
+    width: 100%; 
+    object-fit: cover;
+    object-position: center;
+}
+
+.filter-box {
+    overflow-y: auto;
+  }
+  
+  .filter-box h4 {
+    font-size: 1.5rem;
+  }
+  
+  .filter-box .form-check {
+    margin-bottom: 10px;
+  }
+  
+  .filter-box hr {
+    margin: 1rem 0;
+  }
+
+
+/*Kategóriák keresés*/
+  #kategoriakSearch {
+    margin-bottom: 10px;
+  }
+  .dropdown-menu {
+    display: none; /* Kezdetben rejtve van, majd JavaScript megjeleníti */
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .dropdown-item {
+    cursor: pointer;
+  }
+  .kijelolt {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  #kivalasztottKategoriak .btn-check + .btn {
+    margin-right: 5px;
+  }
+
+  #kivalasztottKategoriak {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.kivalasztott-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    background-color: #007bff;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+body {
+  background-color: rgb(255, 196, 118);
+}
+
+#legend {
+  background-color: rgb(255, 179, 107);
+}
+
