@@ -85,8 +85,10 @@ async function hozzaszolasElkuld(){
 }
 
 async function hozzaszolasLeker(){
-  let hozzaszolasKiir = document.getElementById("hozzaszolasok");
+  let hozzaszolasKiir = document.getElementById("hozzaszolasok");  
   hozzaszolasKiir.innerHTML = "";
+  hozzaszolasKiir.classList = "";
+  hozzaszolasKiir.role = "";
     let lekerHozzaszolas = await fetch("../adatbazisInterakciok/hozzaszolasleker", {
         method : "POST",
         headers : {
@@ -719,11 +721,11 @@ document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzas
 document.getElementById("kedvencRecept").addEventListener("change", kedvencRecept);
 async function segedFuggvenyInditashoz() {
 
-  felhasznaloIdLeker();
+    await felhasznaloIdLeker();
     await hozzaszolasLeker();
-    kedvencReceptLeker();
-    receptLeker();
-    ertekelesLeker();
+    await kedvencReceptLeker();
+    await receptLeker();
+    await ertekelesLeker();
     await ertekeltE();
     adagFigyel(); 
     await hozzavalokFuggvenyHivas(); 
