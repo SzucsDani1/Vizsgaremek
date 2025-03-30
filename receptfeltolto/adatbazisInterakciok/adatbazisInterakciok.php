@@ -7,7 +7,7 @@
             $db->query($muvelet);
             if ($db->errno == 0) {
                 if ($db->affected_rows > 0) {
-                    return 'Sikeres művelet!';
+                    return $db->insert_id;
                 }
                 else if ($db->affected_rows == 0) {
                     return 'Sikertelen művelet!';

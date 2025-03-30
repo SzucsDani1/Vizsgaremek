@@ -1,14 +1,15 @@
 <?php
-//RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
-//RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
+
 
     include "./adatbazisInterakciok.php";
-    $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
-    $url = explode("?", end($teljesURL));
+    $teljesUrl = $_SERVER["REQUEST_URI"];
+    $url= explode("/",$teljesUrl);
+
+    $metodus = $_SERVER['REQUEST_METHOD'];
 
     $bodyAdatok = json_decode(file_get_contents("php://input"), true);
 
-    switch (mb_strtolower($url[0])){
+    switch (end($url)){
         case 'sessionLekerFelhasznaloId': {
             if ($metodus === 'GET') {
                 session_start();
@@ -28,7 +29,7 @@
             break;
         }
         case "etelfajta":
-            if($_SERVER["REQUEST_METHOD"] == "GET"){
+            if($metodus== "GET"){
                 $etelfajta = adatokLekerese("SELECT * FROM etelfajta ORDER BY etelfajta.neve;");
                 if(is_array($etelfajta) && !empty($etelfajta)){
                     echo json_encode($etelfajta, JSON_UNESCAPED_UNICODE);
@@ -44,7 +45,7 @@
         }
         break;
         case "alapanyag":
-            if($_SERVER["REQUEST_METHOD"] == "GET"){
+            if($metodus == "GET"){
                 $alapanyag = adatokLekerese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
                 if(is_array($alapanyag) && !empty($alapanyag)){
                     echo json_encode($alapanyag, JSON_UNESCAPED_UNICODE);
@@ -61,7 +62,7 @@
         break;
 
         case "konyha":
-            if($_SERVER["REQUEST_METHOD"] == "GET"){
+            if($metodus == "GET"){
                 $konyha = adatokLekerese("SELECT * FROM konyha ORDER BY konyha.neve");
                 if(is_array($konyha) && !empty($konyha)){
                     echo json_encode($konyha, JSON_UNESCAPED_UNICODE);
@@ -78,7 +79,7 @@
         break;
 
         case "etrend":
-            if($_SERVER["REQUEST_METHOD"] == "GET"){
+            if($metodus == "GET"){
                 $etrend = adatokLekerese("SELECT etrend.neve FROM `etrend`;");
                 if(is_array($etrend) && !empty($etrend)){
                     echo json_encode($etrend, JSON_UNESCAPED_UNICODE);
@@ -94,10 +95,17 @@
         }
         break;
 
-        case "receptFeltolt":
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
+        case "feltoltRecept":
+          
+            if($metodus == "POST"){
                 $receptNev = $bodyAdatok["receptNev"];
                 $gyereke = $bodyAdatok["gyereke"];
+                if($gyereke == true){
+                    $gyereke = 1;
+                }
+                else{
+                    $gyereke = 0;
+                }
                 $hozzavalok = $bodyAdatok["hozzavalok"];
                 $etelfajta = $bodyAdatok["etelfajta"];
                 $napszak = $bodyAdatok["napszak"];
@@ -112,19 +120,51 @@
 
                 $kaloria = $bodyAdatok["kaloria"];
                 $receptLeiras = $bodyAdatok["leiras"];
-                $kep = $bodyAdatok[""];
+                $kep = $bodyAdatok["kep"];
 
                 $felhsznaloId = $bodyAdatok["felhasznaloId"];
                 
                 
                 if(!empty($receptNev) && !empty($etelfajta) && !empty($napszak) && !empty($etrend) 
                 && !empty($konyhak) && !empty($nehezseg) && !empty($ar)
-                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($kep) && !empty($felhsznaloId) && !empty($hozzavalok) && !empty($gyereke) 
+                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($kep) && !empty($felhsznaloId) && !empty($hozzavalok) && isset($gyereke) 
                 ){
-                    $sql = "INSERT INTO `receptek` (`id`, `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id`, `kaloria`, `kepek`, `nehezseg`, `ido`, `adag`, `ar`, `mikor_feltolt`
+                    //feltolt a recept és visszakapjuk az új recept id-t
+                    $sql = "INSERT INTO `receptek` ( `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id`, `kaloria`, `kepek`, `nehezseg`, `ido`, `adag`, `ar`, `mikor_feltolt`
                     , `konyha_id`, `elkeszites`, `elfogadot`, `gyerekmenu`) 
-                    VALUES (NULL, '$receptNev', '$felhsznaloId', '$napszak', '$etelfajta', '$kaloria', '$kep', '$nehezseg', '$ido', '$adag', '$ar', current_timestamp(), '$konyha',
-                     '$receptLeiras', '0', '$gyerekmenu') ";
+                    VALUES ( '$receptNev', '$felhsznaloId', '$napszak', '$etelfajta', '$kaloria', '$kep', '$nehezseg', '$ido', '$adag', '$ar', current_timestamp(), '$konyhak',
+                     '$receptLeiras', '0', '$gyereke') ";
+                     //echo $sql;
+                    $id = adatokValtoztatasa($sql);
+                    
+                    //hozzavalok
+                    foreach ($hozzavalok as $adat) {
+                        $hozaval = $adat["hozzavNev"];
+                        $mennyiseg  = $adat["hozzavMenny"];
+                        $mertekEgyseg  = $adat["hozzavMertek"];
+                        $kategoria   = $adat["kategoria"];
+                        $hozav = "INSERT INTO `hozzavalok` ( `recept_id`, `hozzavalo`, `mennyiseg`, `mertek_egyseg`, `kategoria`)
+                                    VALUES ('$id', '$hozaval', '$mennyiseg', '$mertekEgyseg', '$kategoria')";
+
+                        adatokValtoztatasa($hozav);
+                    }
+                    //recepetrend   
+                    foreach ($etrend as $adat) {
+                        
+
+                       $etrid = adatokLekerese("SELECT etrend.id FROM etrend where etrend.neve LIKE '$adat';");
+                       //echo($adat);
+                       $seg = isset($etrid[0]["id"]) ? $etrid[0]["id"] : $etrid["id"];
+
+                        $etr = "INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')";
+                        var_dump($etr);
+                       // $seg = $etrid[0]["id"];
+                        $etr = "INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')";
+                        var_dump("INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')");
+                        
+                        adatokValtoztatasa($etr);
+                    }
+
                 }   
                 else{
                     echo json_encode(["valasz" => "Nincs minden adat kitöltve!"], JSON_UNESCAPED_UNICODE);

@@ -4,7 +4,7 @@ let etrendek = new Set();
 let konyhak = new Set();
 let alapanyagok = new Set();
 
-let kivalasztottEtrendek = new Set();
+const kivalasztottEtrendek = new Set();
 
 let felhasznaloId;
 
@@ -743,13 +743,15 @@ function mindenKiVanEToltve() {
       
         
     }
-    console.log(kuldHozzavalok)
+    
 
     //etelfajta
     let etelfajtaKereso = document.getElementById("etelfajtaSearch").value;
     
     //napszak
     let napszak = document.getElementById("napszak").value;
+    
+    console.log(kivalasztottEtrendek)
 
     //etrend
     if (kivalasztottEtrendek.size === 0) {
@@ -788,9 +790,8 @@ function mindenKiVanEToltve() {
         return ;
     }
 
-
    
-    receptFeltoltes(receptNev, gyerekek,kuldHozzavalok,etelfajtaKereso, napszak, kivalasztottEtrendek, konyhaKereso, nehezseg, ar, adag, ido, kaloriaInput.value,receptLeiras.value);
+    receptFeltoltes(receptNev, gyerekek,kuldHozzavalok,etelfajtaKereso, napszak, Array.from(kivalasztottEtrendek), konyhaKereso, nehezseg, ar, adag, ido, kaloriaInput.value,receptLeiras.value);
 }
 
 
@@ -862,7 +863,8 @@ window.addEventListener("load", function(){
 
 async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak, etrendek, konyha, nehezseg, ar, adag, ido, kaloria,leiras)
 {
-    let eredmeny = await fetch("./adatbazisInterakciok/receptFeltolt", {
+    console.log(etelfajta)
+    let eredmeny = await fetch("./adatbazisInterakciok/feltoltRecept", {
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -881,17 +883,19 @@ async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak,
             "ido" : ido,
             "kaloria" : kaloria,
             "leiras" : leiras,
-            "felhasznaloId" : felhasznaloId
+            "felhasznaloId" : felhasznaloId,
+            "kep" : "ideiglenes"
            
         })
     });
     if(eredmeny.ok){
         // sikeres feltöltés esetén
+        console.log("Sieke")
     }
 }
 
 async function felhasznaloIdLeker() {
-    await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
+   /* await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
     .then(response => response.text())  // Get the response as text
     .then(id => {
     if (id) {
@@ -900,5 +904,6 @@ async function felhasznaloIdLeker() {
     })
     .catch(error => console.error('Error fetching session data:', error));
 
-     console.log(felhasznaloId)
+     console.log(felhasznaloId)*/
+     felhasznaloId = 5
 }
