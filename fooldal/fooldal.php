@@ -1,3 +1,6 @@
+<?php
+    require_once "../adatbazisInterakciok/sessionConfig.php";
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -5,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Főoldal</title>
     <link rel="stylesheet" href="fooldal.css">
+    <link rel="stylesheet" href="../footer.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body id="body">
@@ -27,7 +32,7 @@
                 <a class="nav-link" href="#">Recept feltöltés</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Rólunk</a>
+                <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Gyerek menü</a>
@@ -102,6 +107,19 @@
       </div>
       
 
+
+      <!--FOOTER KEZDET-->
+      <footer class="footer">
+        <p>Elérhetőségek: 
+          <br>
+          <a href="mailto:szucsdaniel1@gmail.com">szucsdaniel1@gmail.com</a>
+          <br>
+          <a href="mailto:toth.balazs050313@gmail.com">toth.balazs050313@gmail.com</a>
+        </p>
+        
+        <!-- <p>&copy; 2024 Your Company. All rights reserved.</p> -->
+      </footer>
+      <!--FOOTER VEGE-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
