@@ -1,4 +1,4 @@
-import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+//import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 var profilkep;
 var felhasznaloId;
@@ -203,7 +203,7 @@ async function modositAlapinf() {
 
     try {
         
-        let lekeres = await fetch("./adatbazisInterakciok/modositAlapadatok",{
+        let lekeres = await fetch("../adatbazisInterakciok/modositAlapadatok",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -239,7 +239,7 @@ async function fontosAdatokleker(){
     } 
     })
     .catch(error => console.error('Error fetching session data:', error));
-
+    console.log(felhasznaloId)
    
     await fetch('../adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
                     .then(response => response.text())  // Get the response as text
@@ -256,7 +256,7 @@ async function fontosAdatokleker(){
 }
 
 window.addEventListener("load", fontosAdatokleker)
-window.addEventListener("load", jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl")))
+//window.addEventListener("load", jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl")))
 
 
 document.getElementById('fileInput').addEventListener("change", ujprofilKep)

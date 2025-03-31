@@ -1,12 +1,12 @@
 
 async function bejelenzkezesVizsg(){
     let felhasznaloId
-    await fetch('./backendBejelentkezes/sessionGetFelhasznaloId.php')  // Fetch the PHP script
-          .then(response => response.text())  // Get the response as text
-          .then(id => {
-        if (id) {
-          felhasznaloId = id;//itt id van 0 helyett
-        }
+    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
+    .then(response => response.text())  // Get the response as text
+    .then(id => {
+    if (id) {
+        felhasznaloId = id;
+    } 
     })
     .catch(error => console.error('Error fetching session data:', error));
     
@@ -29,3 +29,4 @@ async function bejelenzkezesVizsg(){
 //? felhasznalonev
 
 window.addEventListener("load",bejelenzkezesVizsg); 
+
