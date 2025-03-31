@@ -1,8 +1,8 @@
 import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
 import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 
-let kategoriak = [];
 let felhasznalo_id;
 
 async function felhasznaloIdLeker() {
@@ -212,37 +212,11 @@ async function hozzavaloTorolAccordionbol(hozzavalok_id){
 }
 
 
-async function kedvencReceptTorles(id){
-  try {
-    let torol = await fetch("../adatbazisInterakciok/kedvencrecepttorol",{
-      method : "DELETE",
-      headers : {
-          "Content-Type" : "application/json"
-      },
-      body : JSON.stringify({
-          "receptek_id" : id,
-          "felhasznalo_id" :felhasznalo_id
-      })
-    })
-    
-    if(torol.ok){
-      console.log("Sikeres törlés!");
-      kedvencReceptLeker();
-    }
-    else{
-      let valasz = await torol.json();
-      alert(valasz.valasz);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
 async function indulas(){
   await felhasznaloIdLeker();
   await kedvencReceptLeker();
   await bevasarloListaLeker();
+  await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
 }
 window.addEventListener("load", indulas())
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);

@@ -1,10 +1,29 @@
 import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
 import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+
 
 let kategoriak = new Set();
 let alapanyagok = new Set();
 let konyhak = new Set();
 let etrendek = new Set();
+
+
+let felhasznalo_id;
+
+async function felhasznaloIdLeker() {
+  try {
+    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    if (response.ok) {
+      felhasznalo_id = await response.text();
+      console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
+    } else {
+      console.error('Hiba a felhasználó ID lekérése során');
+    }
+  } catch (error) {
+    console.error('Hiba történt:', error);
+  }
+}
 
 
 
@@ -664,13 +683,9 @@ function szurokLenullazasa() {
 }
 
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    receptKereses();
-    inicializalSzurok();
-});
-
-window.addEventListener("load", function() {
+async function inditas(){
+    await felhasznaloIdLeker();
+    await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
     arFigyel();
     idoFigyel();
     kaloriaFigyel();
@@ -680,7 +695,18 @@ window.addEventListener("load", function() {
     alapanyagListaLeker();
     kategoriakListaLeker();
     receptekSzuro();
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    receptKereses();
+    inicializalSzurok();
 });
+
+
+window.addEventListener("load", inditas());
+
+
 document.getElementById("btnSzures").addEventListener("click", receptekSzuro);
 document.getElementById("btnNullazas").addEventListener("click", szurokLenullazasa);
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);

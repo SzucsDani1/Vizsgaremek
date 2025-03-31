@@ -1,3 +1,5 @@
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+
 var profilkep;
 var felhasznaloId;
 let alapEmail
@@ -254,6 +256,7 @@ async function fontosAdatokleker(){
 }
 
 window.addEventListener("load", fontosAdatokleker)
+window.addEventListener("load", jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl")))
 
 
 document.getElementById('fileInput').addEventListener("change", ujprofilKep)

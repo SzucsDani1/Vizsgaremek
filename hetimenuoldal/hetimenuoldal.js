@@ -1,9 +1,25 @@
-import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 
 const napok = ['hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat', 'vasárnap'];
 const napszakok = ["reggeli","tízórai","ebéd", "uzsonna", "vacsora"];
 
+let felhasznalo_id;
+
+async function felhasznaloIdLeker() {
+  try {
+    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    if (response.ok) {
+      felhasznalo_id = await response.text();
+      console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
+    } else {
+      console.error('Hiba a felhasználó ID lekérése során');
+    }
+  } catch (error) {
+    console.error('Hiba történt:', error);
+  }
+}
 
 async function kijelentkezesLeker(){
     try {
@@ -142,9 +158,13 @@ async function hetNapjaLeker(){
 }
 
 
-
-window.addEventListener("load", function(){
+async function inditas(){
+    await felhasznaloIdLeker();
+    await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
+    await hetNapjaLeker();
     receptek();
-    hetNapjaLeker();
-})
+}
+
+window.addEventListener("load", inditas());
+
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
