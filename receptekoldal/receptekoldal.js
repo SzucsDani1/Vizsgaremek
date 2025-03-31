@@ -22,7 +22,7 @@ async function kijelentkezesLeker(){
 
 
 
-async function filterReceptek() {
+async function receptekSzuro() {
     try {
 
 
@@ -218,7 +218,9 @@ async function alapanyagListaLeker(){
 
 function checkboxLekerdezes(kivalasztottRecept) {
     const recept = document.getElementById(kivalasztottRecept);
-    if (!recept) return [];
+    if (!recept){
+        return [];
+    } 
     
     const kivalasztottCheckboxok = [];
     const checkboxok = recept.querySelectorAll(".kivalasztott-div");
@@ -618,7 +620,7 @@ function inicializalSzurok() {
 function receptKereses() {
     const KeresesButton = document.getElementById("button_kereses");
     if (KeresesButton) {
-        KeresesButton.addEventListener("click", filterReceptek);
+        KeresesButton.addEventListener("click", receptekSzuro);
     }
 }
 
@@ -658,7 +660,7 @@ function szurokLenullazasa() {
     document.getElementById("etrendKereses").value = "";
     document.getElementById("konyhaKereses").value = "";
     
-    filterReceptek();
+    receptekSzuro();
 }
 
 
@@ -677,8 +679,8 @@ window.addEventListener("load", function() {
     konyhaListaLeker();
     alapanyagListaLeker();
     kategoriakListaLeker();
-    filterReceptek();
+    receptekSzuro();
 });
-document.getElementById("btnSzures").addEventListener("click", filterReceptek);
+document.getElementById("btnSzures").addEventListener("click", receptekSzuro);
 document.getElementById("btnNullazas").addEventListener("click", szurokLenullazasa);
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
