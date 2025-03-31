@@ -49,7 +49,7 @@ function ujprofilKep(){
 //lekeri a megjelenítendő adatokat
 async function adatokLeker() { 
     try {
-        let lekeres = await fetch("./adatbazisInterakciok/LekerAlapAdat",{
+        let lekeres = await fetch("../adatbazisInterakciok/LekerAlapAdat",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -229,7 +229,7 @@ async function modositAlapinf() {
 
 // lekéri a session-ből a kellő adatokat
 async function fontosAdatokleker(){
-    await fetch('./adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
+    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
     .then(response => response.text())  // Get the response as text
     .then(id => {
     if (id) {
@@ -238,8 +238,8 @@ async function fontosAdatokleker(){
     })
     .catch(error => console.error('Error fetching session data:', error));
 
-    
-    await fetch('./adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
+   
+    await fetch('../adatbazisInterakciok/sessionProfilkepValtozot')  // Fetch the PHP script
                     .then(response => response.text())  // Get the response as text
                     .then(userPicturePath => {
                     if (userPicturePath) {

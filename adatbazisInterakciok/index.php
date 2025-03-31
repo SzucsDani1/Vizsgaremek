@@ -3,12 +3,120 @@
 //RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
 
     include "./adatbazisInterakciok.php";
-    $teljesURL = explode("/", $_SERVER["REQUEST_URI"]);
-    $url = explode("?", end($teljesURL));
+    $teljesUrl = $_SERVER["REQUEST_URI"];
+    $url= explode("/",$teljesUrl);
 
     $bodyAdatok = json_decode(file_get_contents("php://input"), true);
 
-    switch (mb_strtolower($url[0])){
+    switch (end($url)){
+        case 'sessionProfilkepValtozot': 
+            if ($_SERVER["REQUEST_METHOD"] === 'GET') {
+                session_start();
+    
+                // Check if the session variable 'userpicture' is set
+                if (isset($_SESSION['profilkep'])) {
+                    echo $_SESSION['profilkep']; // Output the session value (user's picture path)
+                }   
+                else {
+                    echo 'No picture set'; // Fallback if no picture is set
+                }
+            }
+            else {
+                echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                header('Method Not Allowed', true, 405);
+            }
+            break;
+        
+    
+        case 'sessionLekerFelhasznaloId': 
+            if ($_SERVER["REQUEST_METHOD"] === 'GET') {
+                session_start();
+    
+                // Check if the session variable 'userpicture' is set
+                if (isset($_SESSION['bejelentkezetFelhasznaloId'])) {
+                    echo $_SESSION['bejelentkezetFelhasznaloId']; // Output the session value (user's picture path)
+                }   
+                else {
+                    echo 'No id'; // Fallback if no picture is set
+                }
+            }
+            else {
+                echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                header('Method Not Allowed', true, 405);
+            }
+            break;
+        
+    
+        case 'modositAlapadatok': 
+            if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+               
+                $melyikMezo = $bodyAdatok["melyikMezo"];
+                $mezoAdat = $bodyAdatok["mezoAdat"];
+                $felhasznaloId = $bodyAdatok["felhasznaloId"]; 
+                
+                if (!empty($melyikMezo) || !empty($mezoAdat) || !empty($felhasznaloId)) {
+                    if($melyikMezo == "jelszo"){
+                        $mezoAdat = password_hash($mezoAdat, PASSWORD_DEFAULT);
+                    }
+            
+                    if($melyikMezo != "mindketto"){
+                        $ujadatSQL = "UPDATE `felhasznalok` SET `$melyikMezo` = '$mezoAdat' WHERE `felhasznalok`.`id` = $felhasznaloId";
+                    }   
+                    else{
+                        $email = $mezoAdat[0];
+                        $jelszo = password_hash($mezoAdat[1], PASSWORD_DEFAULT);
+                        $ujadatSQL = "UPDATE `felhasznalok` SET `jelszo` = '$jelszo', `email` = '$email' WHERE `felhasznalok`.`id` = $felhasznaloId";
+                    }
+                    $adat = adatokValtoztatasa($ujadatSQL);
+                    if (!is_array($adat)) {
+                        echo json_encode("Sikeres modosítás!");
+                    }
+                    else {
+                        echo json_encode(['valasz' => 'Sikertelen modosítás!'], JSON_UNESCAPED_UNICODE);
+                        header('BAD REQUEST', true, 400);
+                    }
+                }
+                else {
+                    echo json_encode(['valasz' => 'Hiányos adatok!'], JSON_UNESCAPED_UNICODE);
+                    header('BAD REQUEST', true, 400);
+                } 
+            }
+            else {
+                echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                header('Method Not Allowed', true, 405);
+            }
+            break;
+        
+        
+        case 'LekerAlapAdat': 
+            if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+               
+                $felhasznaloId = $bodyAdatok["felhasznaloId"];
+                
+                if (!empty($felhasznaloId)) {
+                    $sqlKod =  "SELECT `felhasznalok`.`felhnev`, `felhasznalok`.`letrehozas`, `felhasznalok`.`email` FROM `felhasznalok` WHERE `felhasznalok`.`id` = $felhasznaloId;";
+                    
+                    $adat = adatokLekerdezese($sqlKod);
+                    if (is_array($adat)) {
+                        echo json_encode($adat);
+                    }
+                    else {
+                        echo json_encode(['valasz' => 'Sikertelen lekérés!'], JSON_UNESCAPED_UNICODE);
+                        header('BAD REQUEST', true, 400);
+                    }
+                }
+                else {
+                    echo json_encode(['valasz' => 'Hiányos adatok!'], JSON_UNESCAPED_UNICODE);
+                    header('BAD REQUEST', true, 400);
+                } 
+            }
+            else {
+                echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                header('Method Not Allowed', true, 405);
+            }
+            break;
+        
+
         case "legujabbreceptek":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $legujabbReceptek = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, etrend.neve AS etrend_nev, etrend.id AS etrend_id FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptek.id = receptetrend.recept_id INNER JOIN etrend ON receptetrend.etrend_id = etrend.id ORDER by receptek.mikor_feltolt DESC LIMIT 15;;");

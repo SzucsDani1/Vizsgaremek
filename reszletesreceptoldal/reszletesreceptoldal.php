@@ -43,7 +43,7 @@
               <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Profil</a>
+                <a class="nav-link" href="../profilszerkeszto/profilszerkeszto.php">Profil</a>
               </li>
             </ul>
             <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
