@@ -2,31 +2,3 @@
     background-color: rgb(252, 244, 237);
     
   }
-
-.navbar-nav{
-    margin: auto;
- }
- .nav-link{
-     margin-left: 10px;
-     margin-right: 10px;
- }
- 
- .navbar-nav .nav-link {
-     position: relative;
- }
- 
- .navbar-nav .nav-link::after {
-     content: '';
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     width: 0;
-     height: 2px;
-     background-color: #ff5722; 
-     transition: width 0.3s; 
- 
- }
- 
- .navbar-nav .nav-link:hover::after {
-     width: 100%; 
- }
