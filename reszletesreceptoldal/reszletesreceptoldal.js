@@ -1,5 +1,7 @@
 import {alertMegjelenit} from "../javascriptFuggvenyek/alertmegjelenit.js";
-import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+
 
 let kivalasztottCsillag = 0;
 let kategoriak = [];
@@ -30,7 +32,6 @@ async function felhasznaloIdLeker() {
 
 async function kijelentkezesLeker(){
     try {
-        console.log("aaaa")
         let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
         if(leker.ok){
             kijelentkezes();
@@ -729,6 +730,7 @@ async function segedFuggvenyInditashoz() {
     await ertekeltE();
     adagFigyel(); 
     await hozzavalokFuggvenyHivas(); 
+    await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
 }
 
 window.addEventListener("load", segedFuggvenyInditashoz);

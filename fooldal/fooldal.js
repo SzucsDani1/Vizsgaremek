@@ -1,5 +1,6 @@
-import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js"
-import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js"
+import {receptekBetoltes} from "../javascriptFuggvenyek/kartyageneralas.js";
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 
 let felhasznalo_id;
@@ -109,9 +110,14 @@ async function kereses(){
 
 
 document.getElementById("button_kereses").addEventListener("click", kereses)
-window.addEventListener("load", function(){
-    felhasznaloIdLeker();
-    receptekLeker();
-    ajanlottReceptekLeker();
-})
+
+
+async function inditas(){
+    await felhasznaloIdLeker();
+    await receptekLeker();
+    await ajanlottReceptekLeker();
+    await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
+}
+
+window.addEventListener("load", inditas());
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);

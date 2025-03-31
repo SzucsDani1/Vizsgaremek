@@ -1,6 +1,4 @@
 <?php
-//RewriteRule ^(.*)$ /13c-szucs/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
-//RewriteRule ^(.*)$ /13osztaly/Viszgaremek/Vizsgaremek/receptekoldal/receptlekeres.php [NC,L,QSA]
 
     include "./adatbazisInterakciok.php";
     $teljesUrl = $_SERVER["REQUEST_URI"];
@@ -1006,6 +1004,30 @@
                     header('bad request', true, 400);
                 }
                 break;
+
+
+            //SELECT felhasznalok.joga_id FROM felhasznalok WHERE felhasznalok.id = 5;
+
+            case "jogosultsag":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["felhasznalo_id"])){
+                        $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                        $leker = adatokLekerdezese("SELECT felhasznalok.joga_id FROM felhasznalok WHERE felhasznalok.id = {$felhasznalo_id};");
+                        if(is_array($leker) && !empty($leker)){
+                            echo json_encode($leker, JSON_UNESCAPED_UNICODE);
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                            
+                        }
+                    }
+            }
+            else{
+                echo json_encode(['valasz' => 'Hibás metődus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+            }
+            break;
 
         default:
             echo "Hiba";
