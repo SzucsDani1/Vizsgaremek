@@ -89,6 +89,35 @@ switch (end($url)) {
         break;
     }    
     
+    case 'LekerAlapAdat': {
+        if ($metodus === 'POST') {
+           
+            $felhasznaloId = $adatPost["felhasznaloId"];
+            
+            if (!empty($felhasznaloId)) {
+                $sqlKod =  "SELECT `felhasznalok`.`felhnev`, `felhasznalok`.`letrehozas`, `felhasznalok`.`email` FROM `felhasznalok` WHERE `felhasznalok`.`id` = $felhasznaloId;";
+                
+                $adat = adatokLekerese($sqlKod);
+                if (is_array($adat)) {
+                    echo json_encode($adat);
+                }
+                else {
+                    echo json_encode(['valasz' => 'Sikertelen lekérés!'], JSON_UNESCAPED_UNICODE);
+                    header('BAD REQUEST', true, 400);
+                }
+            }
+            else {
+                echo json_encode(['valasz' => 'Hiányos adatok!'], JSON_UNESCAPED_UNICODE);
+                header('BAD REQUEST', true, 400);
+            } 
+        }
+        else {
+            echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+            header('Method Not Allowed', true, 405);
+        }
+        break;
+    }    
+
     default:
         echo '';
         break;
