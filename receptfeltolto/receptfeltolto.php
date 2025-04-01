@@ -50,7 +50,7 @@
     <!--END NAVBAR-->    
 
     <!--CÍM-->
-    <h1 class="text-center">Recept feltöltés</h1>
+    <h1 class="text-center display-3 my-5">Recept feltöltés</h1>
 
 
 
@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-warning w-100" id="hozzaadKategoriaGomb">Hozzávalók hozzáadása</button>
+    <button type="button" class="btn btn-warning w-100 my-3" id="hozzaadKategoriaGomb">Hozzávalók hozzáadása</button>
 
     <div id="hozzavaloKategoriak"></div>
 
@@ -144,7 +144,7 @@
             <option value="REGGELI" data-tokens="Reggeli">REGGELI</option>
             <option value="TÍZÓRAI" data-tokens="Tízórai">TÍZÓRAI</option>
             <option value="EBÉD" data-tokens="Ebéd">EBÉD</option>
-            <option value="UZSONNNA" data-tokens="Uzsonna">UZSONNNA</option>
+            <option value="UZSONNNA" data-tokens="Uzsonna">UZSONNA</option>
             <option value="VACSORA" data-tokens="Vacsora">VACSORA</option>
           </select>
         </div>
