@@ -1,0 +1,75 @@
+
+.navbar-nav{
+    margin: auto;
+ }
+ .nav-link{
+     margin-left: 10px;
+     margin-right: 10px;
+ }
+ 
+ .navbar-nav .nav-link {
+     position: relative;
+ }
+ 
+ .navbar-nav .nav-link::after {
+     content: '';
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 0;
+     height: 2px;
+     background-color: #ff5722; 
+     transition: width 0.3s; 
+ 
+ }
+ 
+ .navbar-nav .nav-link:hover::after {
+     width: 100%; 
+ }
+
+ 
+
+
+
+html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#body{
+    background-color: blanchedalmond;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;flex-direction: column;
+}
+
+.footer {
+    background:  rgb(186, 102, 28);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin-top: auto;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+#receptLeiras {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }

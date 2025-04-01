@@ -1048,6 +1048,89 @@
             }
             break;
 
+            case 'receptekNemElf':
+                if ($_SERVER["REQUEST_METHOD"] === 'GET') {
+                    $sql = "SELECT * FROM `receptek` WHERE `receptek`.`elfogadot` = 0;";
+                    $adat = adatokLekerdezese($sql);
+        
+                    if (is_array($adat)) {
+                        echo json_encode($adat, JSON_UNESCAPED_UNICODE);
+                    }
+                    else {
+                        echo json_encode(['valasz' => 'Sikertelen modosítás!'], JSON_UNESCAPED_UNICODE);
+                        header('BAD REQUEST', true, 400);
+                    } 
+                }
+                else {
+                    echo json_encode(['valasz' => 'Hibás metódus!'], JSON_UNESCAPED_UNICODE);
+                    header('Method Not Allowed', true, 405);
+                }
+                break;
+             
+
+
+            case "receptElfogad":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["recept_id"]) ){
+                        $recept_id = $bodyAdatok["recept_id"];
+                      
+   
+                        $kedvencRecept = adatokValtoztatasa("UPDATE `receptek` SET `elfogadot` = '1' WHERE `receptek`.`id` = $recept_id");
+                        if($kedvencRecept == "Sikeres művelet!"){
+           
+                           echo json_encode(["valasz" => "Sikeres módosítás!"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen módosítás!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+
+            case "javaslatFeltolt":
+                if($_SERVER["REQUEST_METHOD"] == "POST"){
+                    if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["javaslat"]) ){
+                        $recept_id = $bodyAdatok["recept_id"];
+                        $javaslat = $bodyAdatok["javaslat"];
+                      
+   
+                        $kedvencRecept = adatokValtoztatasa("UPDATE `receptek` SET `elfogadot` = '2', `modositas_jav` = '$javaslat' WHERE `receptek`.`id` = $recept_id");
+                        if($kedvencRecept == "Sikeres művelet!"){
+           
+                           echo json_encode(["valasz" => "Sikeres módosítás!"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen módosítás!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
+   
+
         default:
             echo "Hiba";
     }
