@@ -36,7 +36,7 @@
                 <a class="nav-link active" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Gyerek menü</a>
+                <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
