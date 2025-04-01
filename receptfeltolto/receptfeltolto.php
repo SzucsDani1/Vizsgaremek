@@ -50,6 +50,12 @@
       </nav>
     <!--END NAVBAR-->    
 
+
+    <!--MÓDOSÍTÁSI JAVASLAT-->
+    <div class="accordion" hidden id="modositasiJavaslatAccordion"></div>
+
+
+
     <!--CÍM-->
     <h1 class="text-center display-3 my-5">Recept feltöltés</h1>
 

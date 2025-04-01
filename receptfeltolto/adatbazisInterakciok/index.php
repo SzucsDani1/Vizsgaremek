@@ -95,6 +95,38 @@
         }
         break;
 
+
+        //SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.modositas_jav, receptek.elfogadot, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON receptek.felhasznalo_id = felhasznalok.id WHERE felhasznalo_id =5 AND receptek.elfogadot = 1
+        case "modositasijavaslatleker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["felhasznalo_id"])){
+                    $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
+                    $recept = adatokLekerdezese("SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.modositas_jav, receptek.elfogadot, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON receptek.felhasznalo_id = felhasznalok.id WHERE felhasznalo_id ={$felhasznalo_id} AND receptek.elfogadot = 1
+                    ");
+                    if(is_array($recept) && !empty($recept)){
+                        echo json_encode($recept, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                        header("bad request", true, 400);
+                    }
+                }
+                else{
+                    header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                    
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+           
+        }
+        break;
+        
+        
+        
+        
         case "feltoltRecept":
           
             if($metodus == "POST"){

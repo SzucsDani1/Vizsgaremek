@@ -837,6 +837,111 @@ function ujReceptKep(){
 }
 
 
+
+
+async function modositasiJavaslat(){
+    try {
+        let divAccordion = document.getElementById("modositasiJavaslatAccordion");
+        let modositasiJavaslatLeker = await fetch("./adatbazisInterakciok/modositasijavaslatleker",{
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                "felhasznalo_id" : felhasznaloId
+            })
+        })
+        let modositasiJavaslatValasz = await modositasiJavaslatLeker.json();
+        if(modositasiJavaslatValasz.valasz == "Nincs találat!"){
+            return;
+        }
+        else if(modositasiJavaslatLeker.ok){
+            accordionGeneral(divAccordion, modositasiJavaslatValasz)
+        }
+    } catch (error) {
+        
+    }
+}
+
+
+
+function accordionGeneral(divAccordion, receptek){
+    divAccordion.innerHTML = "";
+    for(let recept of receptek){
+        let divAccordionItem = document.createElement("div");
+        divAccordionItem.classList = "accordion-item";
+        
+        let h2AccordionHeader = document.createElement("h2");
+        h2AccordionHeader.classList = "accordion-header";
+        //Heading id megadása
+        h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve+"-"+recept.id;
+    
+        let btnLenyit = document.createElement("button");
+        btnLenyit.classList = "accordion-button";
+        btnLenyit.type = "button";
+        btnLenyit.setAttribute("data-bs-toggle", "collapse");
+        //ID megadása
+        btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve+"-"+recept.id);
+        btnLenyit.setAttribute("aria-expanded", "true");
+        btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve+"-"+recept.id);
+        btnLenyit.innerHTML = "Módosítási javaslat: "+recept.neve;
+    
+        let divPanelLenyitva = document.createElement("div");
+        divPanelLenyitva.id = "panelLenyitva-"+recept.neve+"-"+recept.id;
+        divPanelLenyitva.classList = "ccordion-collapse collapse show";
+        divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve+"-"+recept.id);
+    
+        let divAccordionBody = document.createElement("div");
+        divAccordionBody.classList = "accordion-body";
+
+        let divListGroup = document.createElement("ul");
+        divListGroup.classList = "list-group";
+
+        let divListGroupItem = document.createElement("div");
+        divListGroupItem.classList = "list-group-item";
+
+        let divTartalom = document.createElement("div");
+        divTartalom.classList = "d-flex w-100 justify-content-between";
+
+        let pHozzavalo = document.createElement("p");
+        pHozzavalo.innerHTML = "<b>Módosítási javaslat: </b>"+ recept.modositas_jav;
+
+        let btnTorles = document.createElement("input");
+        btnTorles.type = "button";
+        btnTorles.value = "Törlés";
+        btnTorles.classList = "btn btn-danger";
+        btnTorles.id = recept.neve+"-"+recept.id;
+        //Törlés eseménykezelő
+        btnTorles.addEventListener("click", function(){
+            hozzavaloTorolAccordionbol(hozzavalo.hozzavalok_id);
+            console.log("Hozzávaló: "+hozzavalo.hozzavalok_id)
+        })
+
+        divListGroup.appendChild(divListGroupItem);
+
+        divListGroupItem.appendChild(divTartalom);
+
+        divTartalom.appendChild(pHozzavalo);
+        divTartalom.appendChild(btnTorles);
+
+        divAccordion.appendChild(divAccordionItem);
+
+        divAccordionItem.appendChild(h2AccordionHeader);
+        divAccordionItem.appendChild(divPanelLenyitva);
+
+        divPanelLenyitva.appendChild(divAccordionBody);
+
+        divAccordionBody.appendChild(divListGroup);
+
+        divPanelLenyitva.appendChild
+        h2AccordionHeader.appendChild(btnLenyit);
+
+    }
+}
+
+
+
+
   
 
 document.getElementById("hozzaadKategoriaGomb").addEventListener("click", kategoriaHozzaadasa);

@@ -24,7 +24,7 @@
     }
    
 
-    function adatokLekerese($muvelet){
+    function adatokLekerdezese($muvelet){
         $db = new mysqli ('localhost', 'root', '', 'vizsgaremek');
 
         if($db->connect_errno == 0) {
