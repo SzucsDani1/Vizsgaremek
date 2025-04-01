@@ -268,10 +268,11 @@ async function kijelentkezesLeker(){
     }
 }
 
-window.addEventListener("load", fontosAdatokleker)
+
 
 window.addEventListener("load", async function(){
-    
+    await fontosAdatokleker();
+    console.log(felhasznaloId)
     await jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl"));
 })
 
