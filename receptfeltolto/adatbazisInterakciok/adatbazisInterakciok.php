@@ -31,9 +31,8 @@
             $eredmeny = $db->query($muvelet);
             if ($db->errno == 0) {
                 if ($eredmeny->num_rows != 0) {
-                    $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
-                    echo json_encode($adatok);
-                    exit; 
+                    return $eredmeny->fetch_all(MYSQLI_ASSOC);
+                    
                 }
                 else {
                     echo json_encode('Nincs találat!');

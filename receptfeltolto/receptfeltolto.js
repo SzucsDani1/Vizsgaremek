@@ -1,10 +1,12 @@
 let kategoriaSzamlalo = 0;
 let etelfajtak = new Set();
 let etrendek = new Set();
+
 let konyhak = new Set();
 let alapanyagok = new Set();
 
 const kivalasztottEtrendek = new Set();
+
 
 let felhasznaloId;
 
@@ -321,6 +323,7 @@ async function etrendLista(){
             const lista = await eredmeny.json();        
             for(const etrend of lista){
                 etrendek.add(etrend.neve);
+                
             }
         }
         else{
@@ -412,6 +415,7 @@ function letrehozEtrendListaElemet(szuroAdatok) {
     checkbox.addEventListener("change", function() {
         if (checkbox.checked) {
             kivalasztottEtrendek.add(szuroAdatok);
+            
             hozzaadKivalasztottEtrendet(szuroAdatok);
         } else {
             kivalasztottEtrendek.delete(szuroAdatok);
@@ -790,6 +794,8 @@ function mindenKiVanEToltve() {
         return ;
     }
 
+    console.log(Array.from(kivalasztottEtrendek))
+
    
     receptFeltoltes(receptNev, gyerekek,kuldHozzavalok,etelfajtaKereso, napszak, Array.from(kivalasztottEtrendek), konyhaKereso, nehezseg, ar, adag, ido, kaloriaInput.value,receptLeiras.value);
 }
@@ -863,7 +869,6 @@ window.addEventListener("load", function(){
 
 async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak, etrendek, konyha, nehezseg, ar, adag, ido, kaloria,leiras)
 {
-    console.log(etelfajta)
     let eredmeny = await fetch("./adatbazisInterakciok/feltoltRecept", {
         method : "POST",
         headers : {

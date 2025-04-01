@@ -1,5 +1,6 @@
 <?php
     require_once "./adatbazisInterakciok/sessionConfig.php";
+    include "./adatbazisInterakciok/adatbazisFeltolt.php";
 ?>
 
 
@@ -264,82 +265,62 @@
                     </form>
                     <button id="removeButton" class="btn btn-danger w-100 mt-2 my-3" style="display: none; ">Mégsem</button>
                     <?php
-                        include "./adatbazisInterakciok/adatbazisFeltolt.php";
-                                    
-                                    
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
+        $felhasznalonev = $_SESSION["felhasznalonev"];
+  
+        $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
         
-                        //TODO (felhasznalonev helyett recept id)
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
-                                $felhasznalonev = $_COOKIE["felhasznalonev"];
-                                $feltoltesiUtvonal = './feltoltotKepek/profilKepek/'. $felhasznalonev; // Tároló mappa elérési utvonala
-                                
-                                if(!file_exists($feltoltesiUtvonal)){
-                                    mkdir($feltoltesiUtvonal,0777, true);
-                                }
-        
-                                // fájl formátum
-                                $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        
-                                // fájl neve
-                                $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
-        
-                                // fájl az elérési utvonalal
-                                $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
-        
-        
-                                // Vizsgálja, hogy kép e
-                                $check = getimagesize($_FILES['image']['tmp_name']);           
-        
-                                if ($check !== false) {
-                                        
-                                  // * feltöltöt file a kijelolt mappába rakása
-                                  if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
-                                                  
-                                    bejelentHiba("Profilkép sikeresen fellet töltve", false);
-                                    $eleresiUtvonal = "UPDATE 
-                                                            `receptek` 
-                                                        SET 
-                                                            `kepek` = '". $feltoltendoFajl ."' 
-                                                        WHERE 
-                                                            `receptek`.`felhnev` 
-                                                        LIKE 
-                                                        '". $felhasznalonev."';";
-        
-                                    
-                                    adatokValtoztatasa($eleresiUtvonal);
-                                    $_SESSION["profilkep"] = $feltoltendoFajl;
-                                    
-                                } 
-                                else 
-                                {
-                                    bejelentHiba("Hiba történt a kép feltöltése közben.", true);
-                                }
-                            } 
-                          else 
-                          {
-                              bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
-                          }
-                        }
-                           //! Rakd át külőn fájlba !!!
-                           function bejelentHiba($uzenet, $hibae){
-                            if(!empty($uzenet) && $hibae == true){
-                            echo "
-                                <div class='alert alert-danger text-center' role='alert'>
-                                    $uzenet
-                                </div>
-                                ";
-                            }
-                            else{
-                                echo "
-                                <div class='alert alert-success text-center' role='alert'>
-                                    $uzenet
-                                </div>
-                                ";
-                            }
-                        }
-        
-        
-              ?>
+        if(!file_exists($feltoltesiUtvonal)){
+            mkdir($feltoltesiUtvonal,0777, true);
+        }
+
+        // fájl formátum
+        $fileFormatum = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+        // fájl neve
+        $egyeniEleresiNev = $felhasznalonev . "_profilkep" . "." . $fileFormatum;
+
+        // fájl az elérési utvonalal
+        $feltoltendoFajl = $feltoltesiUtvonal . '/' . $egyeniEleresiNev;            
+
+
+        // Vizsgálja, hogy kép e
+        $check = getimagesize($_FILES['image']['tmp_name']);
+
+    if ($check !== false) {
+    
+
+        // * feltöltöt file a kijelolt mappába rakása
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
+            
+            bejelentHiba("Sikeres módosítás!", false);
+            $eleresiUtvonal = "UPDATE 
+                                    `felhasznalok` 
+                                SET 
+                                    `profilkep` = '". $feltoltendoFajl ."' 
+                                WHERE 
+                                    `felhasznalok`.`felhnev` 
+                                LIKE 
+                                '". $felhasznalonev."';";
+
+            
+            adatokValtoztatasa($eleresiUtvonal);
+            $_SESSION["profilkep"] = $feltoltendoFajl;
+            
+        } 
+        else 
+        {
+            bejelentHiba("Hiba történt a kép feltöltése közben.", true);
+        }
+    } 
+    else 
+    {
+        bejelentHiba("A feltöltendő kép formátuma nem megfelelő !", true);
+    }
+}
+?>
                 </div>   
               </div>        
         </div>

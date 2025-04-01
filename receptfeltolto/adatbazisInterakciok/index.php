@@ -80,7 +80,7 @@
 
         case "etrend":
             if($metodus == "GET"){
-                $etrend = adatokLekerese("SELECT etrend.neve FROM `etrend`;");
+                $etrend = adatokLekerese("SELECT etrend.neve, etrend.id FROM `etrend`;");
                 if(is_array($etrend) && !empty($etrend)){
                     echo json_encode($etrend, JSON_UNESCAPED_UNICODE);
                 }
@@ -148,20 +148,41 @@
 
                         adatokValtoztatasa($hozav);
                     }
-                    //recepetrend   
+
+                    //recepetrend  
+                    
                     foreach ($etrend as $adat) {
+                        // Fetch the ID of the etrend based on its name
+                        $etrid = adatokLekerese("SELECT etrend.id FROM etrend WHERE etrend.neve = '$adat';");
+                    
+                        if ($etrid == 'Nincs találat!') {
+                            // Handle the case where no result is found
+                            echo "No matching data found for $adat";
+                            continue; // Skip this entry and move to the next one
+                        }
                         
-
-                       $etrid = adatokLekerese("SELECT etrend.id FROM etrend where etrend.neve LIKE '$adat';");
-                       //echo($adat);
-                       $seg = isset($etrid[0]["id"]) ? $etrid[0]["id"] : $etrid["id"];
-
+                        if (is_string($etrid)) {
+                            // If there's an error message, display it
+                            echo "Error: $etrid";
+                            continue;
+                        }
+                    
+                        // Check if the result is in the expected format
+                        if (isset($etrid[0]["id"])) {
+                            $seg = $etrid[0]["id"]; // Ensure that "id" exists
+                        } else {
+                            // Handle the case where no "id" is found in the result
+                            echo "ID not found for $adat";
+                            continue;
+                        }
+                    
+                        // Prepare the SQL insert statement
                         $etr = "INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')";
+                    
+                        // Output the query for debugging purposes
                         var_dump($etr);
-                       // $seg = $etrid[0]["id"];
-                        $etr = "INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')";
-                        var_dump("INSERT INTO `receptetrend` (`etrend_id`, `recept_id`) VALUES ('$seg', '$id')");
                         
+                        // Execute the query
                         adatokValtoztatasa($etr);
                     }
 
