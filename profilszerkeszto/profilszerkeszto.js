@@ -1,4 +1,5 @@
-//import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 var profilkep;
 var felhasznaloId;
@@ -255,8 +256,27 @@ async function fontosAdatokleker(){
     adatokLeker()
 }
 
+
+async function kijelentkezesLeker(){
+    try {
+        let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+        if(leker.ok){
+            kijelentkezes();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 window.addEventListener("load", fontosAdatokleker)
+
+window.addEventListener("load", async function(){
+    
+    await jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl"));
+})
+
 //window.addEventListener("load", jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl")))
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
 
 
 document.getElementById('fileInput').addEventListener("change", ujprofilKep)
