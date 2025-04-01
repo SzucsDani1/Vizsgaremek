@@ -7,12 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heti menü</title>
+    <title>Gyerek menü</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="hetimenuoldal.css">
+    <link rel="stylesheet" href="./gyerekmenu.css">
     <link rel="stylesheet" href="../footer.css">
     <link rel="stylesheet" href="../navbar.css">
-    <link rel="icon" type="image/png" href="../bejelentkezes/logo/FinomFalatokLogo.png">
 </head>
 <body id="body">
      <!--START NAVBAR-->
@@ -28,7 +27,7 @@
                 <a class="nav-link" href="../receptekoldal/receptekoldal.php">Receptek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="./hetimenuoldal.php">Heti menü</a>
+                <a class="nav-link active" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Recept feltöltés</a>
@@ -54,7 +53,7 @@
 
     <div class="container">
       <div class="row">
-        <h1 class="display-3 my-4 text-center">Heti menük</h1>
+        <h1 class="display-3 my-4 text-center">Gyerek menük</h1>
       </div>
       <div class="row my-4">
           <div class="col-12 col-lg-4 col-md-4 col-sm-6 mx-auto my-2">
@@ -125,7 +124,7 @@
     
     <script src="../javascriptFuggvenyek/bejelentkezesVizsgalat.js"></script>
 
-    <script type="module" src="hetimenuoldal.js"></script>
+    <script type="module" src="./gyerekmenu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
