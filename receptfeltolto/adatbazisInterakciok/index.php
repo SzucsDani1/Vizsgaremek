@@ -30,7 +30,7 @@
         }
         case "etelfajta":
             if($metodus== "GET"){
-                $etelfajta = adatokLekerese("SELECT * FROM etelfajta ORDER BY etelfajta.neve;");
+                $etelfajta = adatokLekerdezese("SELECT * FROM etelfajta ORDER BY etelfajta.neve;");
                 if(is_array($etelfajta) && !empty($etelfajta)){
                     echo json_encode($etelfajta, JSON_UNESCAPED_UNICODE);
                 }
@@ -46,7 +46,7 @@
         break;
         case "alapanyag":
             if($metodus == "GET"){
-                $alapanyag = adatokLekerese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
+                $alapanyag = adatokLekerdezese("SELECT hozzavalok.hozzavalo FROM `hozzavalok`;");
                 if(is_array($alapanyag) && !empty($alapanyag)){
                     echo json_encode($alapanyag, JSON_UNESCAPED_UNICODE);
                 }
@@ -63,7 +63,7 @@
 
         case "konyha":
             if($metodus == "GET"){
-                $konyha = adatokLekerese("SELECT * FROM konyha ORDER BY konyha.neve");
+                $konyha = adatokLekerdezese("SELECT * FROM konyha ORDER BY konyha.neve");
                 if(is_array($konyha) && !empty($konyha)){
                     echo json_encode($konyha, JSON_UNESCAPED_UNICODE);
                 }
@@ -80,7 +80,7 @@
 
         case "etrend":
             if($metodus == "GET"){
-                $etrend = adatokLekerese("SELECT etrend.neve, etrend.id FROM `etrend`;");
+                $etrend = adatokLekerdezese("SELECT etrend.neve, etrend.id FROM `etrend`;");
                 if(is_array($etrend) && !empty($etrend)){
                     echo json_encode($etrend, JSON_UNESCAPED_UNICODE);
                 }
@@ -101,8 +101,7 @@
             if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(!empty($bodyAdatok["felhasznalo_id"])){
                     $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                    $recept = adatokLekerdezese("SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.modositas_jav, receptek.elfogadot, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON receptek.felhasznalo_id = felhasznalok.id WHERE felhasznalo_id ={$felhasznalo_id} AND receptek.elfogadot = 1
-                    ");
+                    $recept = adatokLekerdezese("SELECT receptek.id, receptek.neve, receptek.felhasznalo_id, receptek.modositas_jav, receptek.elfogadot, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON receptek.felhasznalo_id = felhasznalok.id WHERE felhasznalo_id ={$felhasznalo_id} AND receptek.elfogadot = 2");
                     if(is_array($recept) && !empty($recept)){
                         echo json_encode($recept, JSON_UNESCAPED_UNICODE);
                     }
@@ -185,7 +184,7 @@
                     
                     foreach ($etrend as $adat) {
                         // Fetch the ID of the etrend based on its name
-                        $etrid = adatokLekerese("SELECT etrend.id FROM etrend WHERE etrend.neve = '$adat';");
+                        $etrid = adatokLekerdezese("SELECT etrend.id FROM etrend WHERE etrend.neve = '$adat';");
                     
                         if ($etrid == 'Nincs találat!') {
                             // Handle the case where no result is found

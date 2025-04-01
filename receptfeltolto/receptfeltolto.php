@@ -51,8 +51,7 @@
     <!--END NAVBAR-->    
 
 
-    <!--MÓDOSÍTÁSI JAVASLAT-->
-    <div class="accordion" hidden id="modositasiJavaslatAccordion"></div>
+    
 
 
 
@@ -65,7 +64,11 @@
 
     <!--RECEPT NEVE-->
     <div class="container">
+
+    <!--MÓDOSÍTÁSI JAVASLAT-->
+    <div class="accordion mt-3 mb-5" hidden id="modositasiJavaslatAccordion"></div>
      
+    <!--Recept neve-->
     <div class="row  align-items-center g-3">
       <div class="col-sm-12 col-md-6">
           <form class="form-floating">
