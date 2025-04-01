@@ -103,7 +103,7 @@
                                     // * feltöltöt file a kijelolt mappába rakása
                                     if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
                                         
-                                        bejelentHiba("Profilkép sikeresen fellet töltve", false);
+                                        bejelentHiba("Sikeres módosítás!", false);
                                         $eleresiUtvonal = "UPDATE 
                                                                 `felhasznalok` 
                                                             SET 
@@ -175,7 +175,7 @@
     <footer class="footer">
         <p>Elérhetőségek: 
           <br>
-          <a href="mailto:">dani</a>
+          <a href="mailto:szucsdaniel1@gmail.com">szucsdaniel1@gmail.com</a>
           <br>
           <a href="mailto:toth.balazs050313@gmail.com">toth.balazs050313@gmail.com</a>
       </p>

@@ -624,9 +624,16 @@ function hozzaszolasGeneral(hozzaszolasok){
       let divTartalom = document.createElement("div");
       let img = document.createElement("img");
       let spanFelh = document.createElement("span");
+      console.log(hozzaszolas.profilkep);
       let spanIdo = document.createElement("span");
-      
-      img.src = "./kepek/profile.jpg";//PROFILKÉP!!
+
+      if(hozzaszolas.profilkep != null){
+        img.src = "../profilszerkeszto/"+hozzaszolas.profilkep;
+      }
+      else{
+        img.src = "../profilszerkeszto/feltoltotKepek/default/profile_picture.jpg";
+      }
+      //PROFILKÉP!!
       img.alt = "Profil";
       img.classList = "rounded-circle me-2";
       img.style.width = "40px";
@@ -636,10 +643,10 @@ function hozzaszolasGeneral(hozzaszolasok){
       spanIdo.classList = "text-body-secondary ms-4";
       
       if(hozzaszolas.felhasznalo_id == felhasznalo_id){
-          li.classList = "list-group-item list-group-item-primary my-2";
+          li.classList = "list-group-item list-group-item-primary my-2 p-2";
       }
       else{
-          li.classList = "list-group-item my-2";
+          li.classList = "list-group-item my-2 p-2";
       }
       
       divFejlec.classList = "mb-2 text-secondary";

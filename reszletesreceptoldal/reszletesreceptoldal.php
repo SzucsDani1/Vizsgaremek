@@ -173,7 +173,7 @@
       <div id='hozzaszolasAlert' role='alert' hidden></div>
       <div id='hozzaszolasProgressBar' class="mb-3" hidden style=' height: 5px; width: 100%;'></div>
 
-      <div id="divHozzaszolasok" class="filter-box border p-3 bg-light rounded">
+      <div id="divHozzaszolasok" class="filter-box border p-3 bg-light rounded mb-4">
         <h1 id="cimHozzaszolas" class="display-6 my-4">Hozzászólások</h1>
         <ul class="list-group list-group-flush"  id="hozzaszolasok"></ul>
       </div>
