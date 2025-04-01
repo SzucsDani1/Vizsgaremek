@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="hetimenuoldal.css">
     <link rel="stylesheet" href="../footer.css">
     <link rel="stylesheet" href="../navbar.css">
+    <link rel="icon" type="image/png" href="../bejelentkezes/logo/FinomFalatokLogo.png">
 </head>
 <body id="body">
      <!--START NAVBAR-->

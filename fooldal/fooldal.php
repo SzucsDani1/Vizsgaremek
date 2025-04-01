@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="fooldal.css">
     <link rel="stylesheet" href="../footer.css">
     <link rel="stylesheet" href="../navbar.css">
+    <link rel="icon" type="image/png" href="../bejelentkezes/logo/FinomFalatokLogo.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body id="body">
@@ -55,13 +57,25 @@
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="kepek/etel4.jpg" class="d-block w-100" alt="Bolognai">
+          <img src="kepek/etel4.jpg" class="d-block w-100" alt="Étel">
         </div>
         <div class="carousel-item">
-          <img src="kepek/etel2.jpg" class="d-block w-100" alt="Gyümölcsök">
+          <img src="kepek/etel2.jpg" class="d-block w-100" alt="Étel">
         </div>
         <div class="carousel-item">
-          <img src="kepek/etel5.jpg" class="d-block w-100" alt="Tészta">
+          <img src="kepek/etel5.jpg" class="d-block w-100" alt="Étel">
+        </div>
+        <div class="carousel-item">
+          <img src="kepek/etel6.jpg" class="d-block w-100" alt="Étel">
+        </div>
+        <div class="carousel-item">
+          <img src="kepek/etel7.jpg" class="d-block w-100" alt="Étel">
+        </div>
+        <div class="carousel-item">
+          <img src="kepek/etel8.jpg" class="d-block w-100" alt="Étel">
+        </div>
+        <div class="carousel-item">
+          <img src="kepek/etel9.jpg" class="d-block w-100" alt="Étel">
         </div>
       </div>
     </div>
