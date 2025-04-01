@@ -598,7 +598,7 @@
                 if($_SERVER["REQUEST_METHOD"] == "POST"){
                     if(!empty($bodyAdatok["felhasznalo_id"])){
                         $felhasznalo_id = $bodyAdatok["felhasznalo_id"];
-                        $leker = adatokLekerdezese("SELECT DISTINCT bevasarlolista.hozzavalok_id, hozzavalok.hozzavalo, hozzavalok.recept_id, hozzavalok.mennyiseg, hozzavalok.mertek_egyseg, hozzavalok.kategoria FROM bevasarlolista INNER JOIN hozzavalok ON hozzavalok.id=bevasarlolista.hozzavalok_id WHERE bevasarlolista.felhasznalo_id = {$felhasznalo_id};");
+                        $leker = adatokLekerdezese("SELECT DISTINCT bevasarlolista.hozzavalok_id, bevasarlolista.adag,hozzavalok.hozzavalo, hozzavalok.recept_id, hozzavalok.mennyiseg, hozzavalok.mertek_egyseg, hozzavalok.kategoria FROM bevasarlolista INNER JOIN hozzavalok ON hozzavalok.id=bevasarlolista.hozzavalok_id WHERE bevasarlolista.felhasznalo_id = {$felhasznalo_id};");
                         if(is_array($leker)){
                             echo json_encode($leker, JSON_UNESCAPED_UNICODE);
                         }

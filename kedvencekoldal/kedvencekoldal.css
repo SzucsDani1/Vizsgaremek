@@ -13,10 +13,10 @@ legend {
 
 /*Accordion háttér szín*/
 .accordion-button:not(.collapsed) {
-    background-color: #f8f9fa !important;
+    background-color: rgb(250, 250, 250)!important;
     color: #212529 !important;
-    --bs-accordion-active-bg: #f8f9fa !important; /* light szín háttér */
-    --bs-accordion-active-color: #212529 !important; /* sötét szövegszín a jó kontrasztért */
+    --bs-accordion-active-bg: rgb(255, 226, 187) !important; /* light szín háttér */
+    /*--bs-accordion-active-color: #212529 !important; /* sötét szövegszín a jó kontrasztért */
     /*--bs-accordion-btn-focus-box-shadow: none !important;
     --bs-accordion-border-color: #f8f9fa !important;*/
 
@@ -25,7 +25,7 @@ legend {
 /*Accordion kattintás utáni szín*/
   .accordion {
    /* --bs-accordion-btn-focus-border-color: #ffc107 !important; /* warning szín */
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(207, 79, 4, 0.5) !important; /* halvány sárga fókusz */
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgb(255, 226, 187) !important; /* halvány sárga fókusz */
   }
   
 

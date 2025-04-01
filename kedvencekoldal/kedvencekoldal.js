@@ -140,6 +140,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
     let divListGroup = document.createElement("ul");
     divListGroup.classList = "list-group";
+
     for(let hozzavalo of hozzavalok){
       if(recept.id == hozzavalo.recept_id){
         let divListGroupItem = document.createElement("div");
@@ -149,7 +150,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
         divTartalom.classList = "d-flex w-100 justify-content-between";
 
         let pHozzavalo = document.createElement("p");
-        pHozzavalo.innerHTML = "<b>Kategória:</b> "+hozzavalo.kategoria+" - <b>Neve:</b> "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg + " "+ hozzavalo.mertek_egyseg;
+        pHozzavalo.innerHTML = "<b>Kategória:</b> "+hozzavalo.kategoria+" - <b>Neve:</b> "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg*hozzavalo.adag + " "+ hozzavalo.mertek_egyseg;
 
         let btnTorles = document.createElement("input");
         btnTorles.type = "button";

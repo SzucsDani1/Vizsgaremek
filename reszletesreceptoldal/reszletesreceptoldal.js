@@ -698,7 +698,7 @@ function adagFigyel(){
     if(adag > 1){
       adag = adag - 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
-      hozzavalokTablazatGeneral();
+      hozzavalokLeker();
       receptInfoList();
     }
   })
@@ -707,7 +707,7 @@ function adagFigyel(){
     if(adag < 10){
       adag = adag + 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
-      hozzavalokTablazatGeneral();
+      hozzavalokLeker();
       receptInfoList();
     }
   })
