@@ -23,7 +23,6 @@ async function felhasznaloIdLeker() {
 
 async function kijelentkezesLeker(){
     try {
-        console.log("aaaa")
         let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
         if(leker.ok){
             kijelentkezes();

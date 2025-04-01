@@ -5,6 +5,6 @@
         if (isset($_SESSION['bejelentkezetFelhasznaloId'])) {
             echo $_SESSION['bejelentkezetFelhasznaloId']; // Output the session value (user's picture path)
     }   else {
-        echo 'Kijelentkezve'; // Fallback if no picture is set
+        echo "No id"; // Fallback if no picture is set
     }
 ?>

@@ -15,9 +15,12 @@ async function bejelenzkezesVizsg(){
     let oldalTeljesElerese = window.location.pathname
 
     let megnyitottOldal = oldalTeljesElerese.substring(oldalTeljesElerese.lastIndexOf('/') + 1)
-    if(felhasznaloId == "" || felhasznaloId == "Kijelentkezve"){ //van e bejelentkezet felhasználó
+    console.log(felhasznaloId.trim() );
+    console.log(megnyitottOldal);
+    if(felhasznaloId == "" || felhasznaloId.trim() == "No id"){ //van e bejelentkezet felhasználó
+        console.log("asdf")
         if (megnyitottOldal != "bejelentkezes.php") {
-           window.open("bejelentkezes.php", "_self");
+           window.open("../bejelentkezes/bejelentkezes.php", "_self");
         }
     }
     else{

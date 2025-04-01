@@ -10,13 +10,10 @@ export async function kijelentkezes(){
     .catch(error => console.error('Error fetching session data:', error));
     
  
-
     let oldalTeljesElerese = window.location.pathname
 
     let megnyitottOldal = oldalTeljesElerese.substring(oldalTeljesElerese.lastIndexOf('/') + 1)
-    /*if(felhasznaloId == ""){ //van e bejelentkezet felhasználó*/
-        if (megnyitottOldal != "bejelentkezes.php") {
-           window.open("../bejelentkezes/bejelentkezes.php", "_self");
-        }
-   /* }*/
+      if (megnyitottOldal != "bejelentkezes.php") {
+        window.open("../bejelentkezes/bejelentkezes.php", "_self");
+      }
 }
