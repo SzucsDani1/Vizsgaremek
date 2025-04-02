@@ -25,7 +25,7 @@ function ujprofilKep(){
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            profilePicture.innerHTML = `<img src="${e.target.result}" alt="Profilkép">`;
+            profilePicture.innerHTML = `<img src="${e.target.result}" alt="Profilkép">`; 
             
         }
         reader.readAsDataURL(file);
@@ -36,6 +36,8 @@ function ujprofilKep(){
     
     removeButton.addEventListener('click', function() {
         if(profilkep != ""){
+            console.log("aaa")
+
             profilePicture.innerHTML = `<img src="${profilkep}" alt="Profilkép">`
         }
         else{
@@ -77,7 +79,7 @@ async function adatokLeker() {
 async function adatokMegjelenitese(adatok){
 
     console.log(profilkep)
-    if(profilkep != ""){
+    if(profilkep.trim() != ""){
         alapProfilkep(profilkep)
     }
     let regdatum = document.getElementById("regisztracioDatuma")
@@ -279,5 +281,5 @@ window.addEventListener("load", async function(){
 
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
 
-
+document.getElementById("modositas").addEventListener("click", modositasFelold);
 document.getElementById('fileInput').addEventListener("change", ujprofilKep)

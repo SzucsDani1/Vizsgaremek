@@ -67,7 +67,7 @@
                 <div class="profile-container">
                 
                     <div id="profilePicture" class="profile-picture ">Nincs profilkép</div>
-                    <div >
+                    <div>
                         <form method="POST" enctype="multipart/form-data" class="my-3">
                             <input type="file" id="fileInput" name="image" class="form-control mt-2" accept="image/*">
                             <button id="profilkepMentesButton" type="submit" class="btn btn-success w-100 my-3" style="display: none;">Mentés</button>
@@ -101,7 +101,7 @@
                                 if ($check !== false) {
                                 
 
-                                    // * feltöltöt file a kijelolt mappába rakása
+                                    // * feltöltött file a kijelolt mappába rakása
                                     if (move_uploaded_file($_FILES['image']['tmp_name'], $feltoltendoFajl)) {
                                         
                                         bejelentHiba("Sikeres módosítás!", false);
@@ -164,7 +164,7 @@
                     </form>
                 </div>
                 <div  id="gombokHelye">
-                    <button id="modositas"  type="button" class="btn btn-primary w-100 " onclick="modositasFelold()">Módosítás</button>
+                    <button id="modositas"  type="button" class="btn btn-primary w-100 ">Módosítás</button>
                 </div>
             </div>
         </div>
