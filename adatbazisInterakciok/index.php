@@ -961,7 +961,7 @@
                 
                     
                     if (!empty($szuroFeltetelek)) {
-                        $sql .= " WHERE " . implode(" AND ", $szuroFeltetelek);
+                        $sql .= " WHERE  receptek.elfogadot = 1 AND " . implode(" AND ", $szuroFeltetelek);
                     }
                     
                     $sql .= " ORDER BY receptek.neve ASC LIMIT 30";
