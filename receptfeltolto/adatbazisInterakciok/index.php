@@ -230,6 +230,34 @@
         }
         break;
 
+        //UPDATE `receptek` SET `elfogadot`=3 WHERE receptek.id = 1;
+        
+        case "elfogadottmodosit":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["recept_id"])){
+                    $recept_id = $bodyAdatok["recept_id"];
+                    $recept = adatokLekerdezese("UPDATE `receptek` SET `elfogadot`=3 WHERE receptek.id = {$recept_id};");
+                    if(is_array($recept) && !empty($recept)){
+                        echo json_encode(["valasz" => "Sikeres módosítás!"], JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        echo json_encode(["valasz" => "Sikertelen módosítás!"], JSON_UNESCAPED_UNICODE);
+                        header("bad request", true, 400);
+                    }
+                }
+                else{
+                    header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                    
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+           
+        }
+        break;
+
         default:
             echo "Hiba";
     }

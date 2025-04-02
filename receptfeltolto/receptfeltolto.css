@@ -1,3 +1,6 @@
+#body {
+    background-color: rgb(252, 244, 237);
+  }
 .navbar-nav{
     margin: auto;
  }
@@ -48,3 +51,16 @@
     height: 100%;
     object-fit: cover;
 }
+
+/*Accordion háttér szín*/
+.accordion-button:not(.collapsed) {
+    background-color: rgb(255, 244, 223)!important;
+    color: #212529 !important;
+    --bs-accordion-active-bg: rgb(255, 226, 187) !important; 
+
+
+  }
+
+  .accordion {
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgb(255, 212, 156) !important; 
+  }

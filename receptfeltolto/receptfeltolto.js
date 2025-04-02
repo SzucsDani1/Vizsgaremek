@@ -852,7 +852,8 @@ async function modositasiJavaslat(){
             })
         })
         let modositasiJavaslatValasz = await modositasiJavaslatLeker.json();
-        if(modositasiJavaslatValasz.valasz == "Nincs találat!"){
+        console.log(modositasiJavaslatValasz)
+        if(modositasiJavaslatValasz == "Nincs találat!"){
             return;
         }
         else if(modositasiJavaslatLeker.ok){
@@ -869,15 +870,16 @@ function accordionGeneral(divAccordion, receptek) {
     divAccordion.innerHTML = "";
     for (let recept of receptek) {
         let divAccordionItem = document.createElement("div");
-        divAccordionItem.classList = "accordion-item";
+        divAccordionItem.classList = "accordion-item my-2";
         
         // Törlés gomb létrehozása
         let btnTorles = document.createElement("button");
         btnTorles.type = "accordion-button";
         btnTorles.classList.add("btn", "btn-danger", "mt-3", "btn-sm","w-100");
         btnTorles.innerHTML = "Törlés";
+        btnTorles.id = recept.id
         btnTorles.addEventListener("click", function() {
-            divAccordionItem.remove();
+            modositasiJavaslatTorles(btnTorles.id);
         });
 
         let h2AccordionHeader = document.createElement("h2");
@@ -922,7 +924,31 @@ function accordionGeneral(divAccordion, receptek) {
 
 
 
+async function modositasiJavaslatTorles(id){
+ try {
+    let frissit = await fetch("./adatbazisInterakciok/elfogadottmodosit",{
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            "recept_id" : id
+        })
 
+    })
+
+    if(frissit.ok){
+        console.log("Sikeres frissítés");
+        modositasiJavaslat();
+    }
+    else{
+        let valasz = await frissit.json();
+        console.log(valasz.valasz);
+    }
+ } catch (error) {
+    console.log(error);
+ }
+}
 
 
   
@@ -999,5 +1025,5 @@ async function felhasznaloIdLeker() {
     .catch(error => console.error('Error fetching session data:', error));
 
      console.log(felhasznaloId)*/
-     felhasznaloId = 16
+     felhasznaloId = 5
 }
