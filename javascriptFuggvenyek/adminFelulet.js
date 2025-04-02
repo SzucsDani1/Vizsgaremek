@@ -34,7 +34,7 @@ function jogosultsagGeneral(ul){
 
     let a = document.createElement("a");
     a.classList = "nav-link";
-    a.href = "#";
+    a.href = "../adminElfogad/adminElfogad.php";
     a.innerHTML = "Recept elfogadása";
 
     ul.appendChild(li);

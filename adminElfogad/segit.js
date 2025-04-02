@@ -1,4 +1,6 @@
 import { alertMegjelenit } from "./alertmegjelenit.js";
+import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
+import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 let kategoriak = [];
 let adag = 1;
@@ -374,3 +376,22 @@ document.getElementById("javaslatMegse").addEventListener("click", modositasJava
 document.getElementById("elfogadRec").addEventListener("click", receptElfogad)
 document.getElementById("opcioMegse").addEventListener("click", visszalep)
 document.getElementById("javaslatKuld").addEventListener("click", javaslatKuldes)
+
+
+async function kijelentkezesLeker(){
+  try {
+      let leker = await fetch("../adatbazisInterakciok/kijelentkezes");
+      if(leker.ok){
+          kijelentkezes();
+      }
+  } catch (error) {
+      console.log(error);
+  }
+}
+
+window.addEventListener("load", async function(){
+  await felhasznaloIdLeker();
+  await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
+})
+
+document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
