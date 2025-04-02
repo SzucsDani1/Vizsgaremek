@@ -605,7 +605,7 @@ function receptMegjelenit(){
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
 
     document.getElementById("receptIdeje").innerHTML = receptek[0].ido +" perc";
-    document.getElementById("receptKoltseg").innerHTML = receptek[0].ar;
+    document.getElementById("receptKoltseg").innerHTML = receptek[0].ar+ " Ft";
     document.getElementById("receptNehezseg").innerHTML = receptek[0].nehezseg;
 
     document.getElementById("receptLeiras").innerHTML = receptek[0].elkeszites;
