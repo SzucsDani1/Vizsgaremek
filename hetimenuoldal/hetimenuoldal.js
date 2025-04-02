@@ -118,7 +118,7 @@ async function hetNapjaLeker(){
             img.height = 200;
             
             let divCardBody = document.createElement("div");
-            divCardBody.classList = "card-body";
+            divCardBody.classList = "card-body text-center";
             
             let h5 = document.createElement("h5");
             h5.classList = "card-title";
