@@ -43,9 +43,6 @@
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
               <li class="nav-item">

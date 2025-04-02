@@ -15,7 +15,7 @@ let recept_id = urlErtekek.get("recept_id");
 
 async function felhasznaloIdLeker() {
   try {
-    const response = await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId');
+    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
     if (response.ok) {
       felhasznalo_id = await response.text();
       console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
@@ -27,8 +27,7 @@ async function felhasznaloIdLeker() {
   }
 }
 
-// Hívja meg a függvényt a fájl betöltésekor
-window.addEventListener("load",felhasznaloIdLeker);
+
 
 
 
@@ -348,7 +347,6 @@ async function segedFuggvenyInditashoz() {
     await hozzavalokFuggvenyHivas(); 
 }
 
-window.addEventListener("load", segedFuggvenyInditashoz);
 
 
 
@@ -392,6 +390,8 @@ async function kijelentkezesLeker(){
 window.addEventListener("load", async function(){
   await felhasznaloIdLeker();
   await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
+  await segedFuggvenyInditashoz();
+
 })
 
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
