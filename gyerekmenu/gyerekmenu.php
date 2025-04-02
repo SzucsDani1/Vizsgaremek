@@ -30,7 +30,7 @@
                 <a class="nav-link active" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Recept feltöltés</a>
+                <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>

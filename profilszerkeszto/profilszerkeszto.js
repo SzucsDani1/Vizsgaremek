@@ -276,7 +276,7 @@ window.addEventListener("load", async function(){
     await jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl"));
 })
 
-//window.addEventListener("load", jogosultsagLeker(felhasznaloId, document.getElementById("navbarUl")))
+
 document.getElementById("btnKijelentkezes").addEventListener("click", kijelentkezesLeker);
 
 
