@@ -193,7 +193,7 @@
 
 
       <!--ADAG FELVITELE -->
-      <div class="row">
+      <!--<div class="row">
         <div class="filter-box border p-3 bg-light rounded my-3">
         <div class="my-3">
           <label class="form-label">Adag</label>
@@ -201,7 +201,7 @@
           <div id="adagKiir" class="form-text">1 adag</div>
         </div>
         </div>
-      </div>
+      </div>-->
 
       <!--IDŐ FELVITELE-->
       <div class="row">
