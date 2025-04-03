@@ -91,33 +91,7 @@
 
     <div id="hozzavaloKategoriak"></div>
 
-    <!--HOZZÁVALÓK FELVITELÁHEZ SZÜKSÉGES INPUT MEZŐK-->
-    <div class="filter-box border p-3 bg-light rounded my-3" hidden>
-        <h4 class="display-6 text-start">Hozzávalók</h4> 
-        <div class="row">
-          <!--
-            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
-                <form class="form-floating">
-                    <input type="text" class="form-control" id="hozzavalo_neve" placeholder="Hozzávaló">
-                    <label for="hozzavalo_neve">Hozzávaló neve</label>
-                </form>
-            </div>
-            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
-                <form class="form-floating">
-                    <input type="number" class="form-control" id="hozzavalo_mennyiseg" placeholder="Hozzávaló mennyiség">
-                    <label for="hozzavalo_mennyiseg">Hozzávaló mennyiség</label>
-                </form>
-            </div>
-            <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
-                <form class="form-floating">
-                    <input type="text" class="form-control" id="hozzavalo_mertekegyseg" placeholder="Hozzávaló mennyiség">
-                    <label for="hozzavalo_mertekegyseg">Hozzávaló mértékegysége</label>
-                </form>
-            </div>
-            <button type="button" class="btn btn-success" id="btn_hozzaad">Hozzáad</button>
--->
-        </div>
-    </div>
+    
     
     <!--RECEPT HOZZÁVALÓ TÁBLÁZAT-->
     <div class="row">
