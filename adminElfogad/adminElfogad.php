@@ -51,7 +51,7 @@
       </nav>
       <!--END NAVBAR-->
 
-      <h1>Válassz egy receptet</h1>
+      <h1 class="display-2 text-center my-3">Válassz egy receptet</h1>
 
       <div id="receptek" class="container text-center">
       

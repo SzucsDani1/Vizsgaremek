@@ -15,12 +15,17 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
         divCard.style = "width: 18rem;";
         divCard.id = recept.neve;
 
+        let div = document.createElement("div");
+        div.classList = "mx-auto"
+        div.style.height = "230px";
+        div.style.width = "250px"
+
         let img = document.createElement("img");
-        img.src = recept.kep;
+        img.src = "../receptfeltolto/adatbazisInterakciok/"+recept.kepek;
         img.classList = "card-img-top";
         img.alt = recept.neve;
-        img.width = 250;
-        img.height = 200;
+        img.style.maxWidth = "250px";
+        img.style.maxHeight = "230px";
 
         let divCardBody = document.createElement("div");
         divCardBody.classList = "card-body text-center";
@@ -85,7 +90,8 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
 
         divRow.appendChild(divCard);
 
-        divCard.appendChild(img);
+        divCard.appendChild(div);
+        div.appendChild(img);
         divCard.appendChild(divCardBody);
 
         divCardBody.appendChild(pJellemzok);

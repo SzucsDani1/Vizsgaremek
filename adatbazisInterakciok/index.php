@@ -963,6 +963,9 @@
                     if (!empty($szuroFeltetelek)) {
                         $sql .= " WHERE  receptek.elfogadot = 1 AND " . implode(" AND ", $szuroFeltetelek);
                     }
+                    else{
+                        $sql .= " WHERE receptek.elfogadot = 1";
+                    }
                     
                     $sql .= " ORDER BY receptek.neve ASC LIMIT 30";
                     
@@ -1050,7 +1053,7 @@
 
             case 'receptekNemElf':
                 if ($_SERVER["REQUEST_METHOD"] === 'GET') {
-                    $sql = "SELECT * FROM `receptek` WHERE `receptek`.`elfogadot` = 0;";
+                    $sql = "SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id WHERE `receptek`.`elfogadot` = 0;";
                     $adat = adatokLekerdezese($sql);
         
                     if (is_array($adat)) {

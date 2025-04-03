@@ -7,7 +7,7 @@
 .recept-picture {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
+    border-radius: 80%;
     background-color: #e9ecef;
     display: flex;
     justify-content: center;

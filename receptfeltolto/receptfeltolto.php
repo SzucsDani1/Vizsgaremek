@@ -95,6 +95,7 @@
     <div class="filter-box border p-3 bg-light rounded my-3" hidden>
         <h4 class="display-6 text-start">Hozzávalók</h4> 
         <div class="row">
+          <!--
             <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
                     <input type="text" class="form-control" id="hozzavalo_neve" placeholder="Hozzávaló">
@@ -103,7 +104,7 @@
             </div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12 mb-3">
                 <form class="form-floating">
-                    <input type="text" class="form-control" id="hozzavalo_mennyiseg" placeholder="Hozzávaló mennyiség">
+                    <input type="number" class="form-control" id="hozzavalo_mennyiseg" placeholder="Hozzávaló mennyiség">
                     <label for="hozzavalo_mennyiseg">Hozzávaló mennyiség</label>
                 </form>
             </div>
@@ -114,6 +115,7 @@
                 </form>
             </div>
             <button type="button" class="btn btn-success" id="btn_hozzaad">Hozzáad</button>
+-->
         </div>
     </div>
     
@@ -280,6 +282,8 @@
                 </div>   
               </div>        
         </div>
+        <div id='feltoltAlert' role='alert' hidden></div>
+        <div id='feltoltProgressBar' hidden style=' height: 5px; width: 100%;'></div>
       </div>      
                             
       <div class="row">
@@ -288,13 +292,11 @@
         </div>
       </div>
       <div class="row" id="hibaUzenet">
-
+        
       </div>
-</div>
 
-    <!--END ŰRLAP ELEMEK-->
 
- <!--FOOTER KEZDET-->
+      <!--FOOTER KEZDET-->
       <footer class="footer">
         <p>Elérhetőségek: 
           <br>
@@ -306,6 +308,11 @@
         <!-- <p>&copy; 2024 Your Company. All rights reserved.</p> -->
       </footer>
       <!--FOOTER VEGE-->
+</div>
+
+    <!--END ŰRLAP ELEMEK-->
+
+ 
 
       <script src="../javascriptFuggvenyek/bejelentkezesVizsgalat.js"></script>
 

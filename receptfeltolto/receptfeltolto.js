@@ -1,5 +1,7 @@
 import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
 import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
+import {alertMegjelenit} from "../javascriptFuggvenyek/alertmegjelenit.js";
+
 
 let kategoriaSzamlalo = 0;
 let etelfajtak = new Set();
@@ -247,7 +249,7 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     formMennyiseg.classList = "form-floating";
 
     const hozzavaloMennyiseg = document.createElement("input");
-    hozzavaloMennyiseg.type = "text";
+    hozzavaloMennyiseg.type = "number";
     hozzavaloMennyiseg.classList = "form-control";
     hozzavaloMennyiseg.placeholder = "Hozzávaló mennyiség";
 
@@ -599,33 +601,6 @@ function nehezsegFigyel() {
 }
 
 
-function idoFigyel() {
-    const range = document.getElementById("idoInput");
-    let idoKiir = document.getElementById("idoKiir");
-
-    range.addEventListener("input", frissitIdo);
-    range.addEventListener("mousedown", function() { 
-        frissitIdo(); 
-        range.addEventListener("mousemove", frissitIdo); 
-    });
-    range.addEventListener("mouseup", function() { 
-        range.removeEventListener("mousemove", frissitIdo); 
-    });
-
-    function frissitIdo() {
-        if (range.value == 0) {
-            idoKiir.innerHTML = "Mind";
-        } else if (range.value == 1) {
-            idoKiir.innerHTML = "Gyorsan";
-        }else if (range.value == 2) {
-            idoKiir.innerHTML = "Átlagosan";
-        } else {
-            idoKiir.innerHTML = "Hosszan";
-        }
-    }
-}
-
-
 function adagFigyel() {
     const range = document.getElementById("adagInput");
     let adagKiir = document.getElementById("adagKiir");
@@ -676,12 +651,11 @@ function mindenKiVanEToltve() {
     hibaUzenetKiir.innerHTML = "";
 
     let divFigyelmeztet = document.createElement("div");
-    divFigyelmeztet.classList = "alert alert-danger";
+    divFigyelmeztet.classList = "alert alert-danger text-center mx-auto";
     divFigyelmeztet.role = "alert";
     divFigyelmeztet.id = "kategoriaFigyelmeztet" + kategoriaSzamlalo;
+    divFigyelmeztet.hidden = true;
 
-
-    
 
 
     // Recept név ellenőrzése
@@ -690,6 +664,7 @@ function mindenKiVanEToltve() {
     hibaUzenetKiir.appendChild(divFigyelmeztet);
     if (!receptNev || receptNev.trim() === "") {
         divFigyelmeztet.innerHTML ="Kérem adja meg a recept nevét!";
+        divFigyelmeztet.hidden = false;
         return ;
     }
     
@@ -722,6 +697,7 @@ function mindenKiVanEToltve() {
 
     if (!vanHozzavalo) {
         divFigyelmeztet.innerHTML ="Kérem, adjon hozzá legalább egy hozzávalót!";
+        divFigyelmeztet.hidden = false;
         return ;
     }
 
@@ -766,6 +742,7 @@ function mindenKiVanEToltve() {
     //etrend
     if (kivalasztottEtrendek.size === 0) {
         divFigyelmeztet.innerHTML ="Kérem, válasszon ki legalább egy étrendet!";
+        divFigyelmeztet.hidden = false;
         return ;
     }
     
@@ -790,6 +767,7 @@ function mindenKiVanEToltve() {
     let kaloriaInput = document.getElementById("kaloriaInput");
     if (kaloriaInput.value == "") {
         divFigyelmeztet.innerHTML ="Kérem, válasszon kalóriát!";
+        divFigyelmeztet.hidden = false;
         return ;
     }
     
@@ -797,6 +775,7 @@ function mindenKiVanEToltve() {
     let receptLeiras = document.getElementById("receptLeiras");
     if (!receptLeiras.value || receptLeiras.value.trim() === "") {
         divFigyelmeztet.innerHTML ="Kérem, írja le a recept leírását!";
+        divFigyelmeztet.hidden = false;
         return ;
     }
 
@@ -807,6 +786,7 @@ function mindenKiVanEToltve() {
     let  kepInput = document.getElementById("fileInput")
     if (!kepInput.files.length) {
         divFigyelmeztet.innerHTML ="Kérem, adjon meg képet a recepthez!";
+        divFigyelmeztet.hidden = false;
         return;
     }
     let file = kepInput.files[0]
@@ -858,6 +838,7 @@ function ujReceptKep(){
 async function modositasiJavaslat(){
     try {
         let divAccordion = document.getElementById("modositasiJavaslatAccordion");
+        divAccordion.innerHTML = "";
         let modositasiJavaslatLeker = await fetch("./adatbazisInterakciok/modositasijavaslatleker",{
             method : "POST",
             headers : {
@@ -868,7 +849,8 @@ async function modositasiJavaslat(){
             })
         })
         let modositasiJavaslatValasz = await modositasiJavaslatLeker.json();
-        if(modositasiJavaslatValasz.valasz == "Nincs találat!"){
+        console.log(modositasiJavaslatValasz)
+        if(modositasiJavaslatValasz == "Nincs találat!"){
             return;
         }
         else if(modositasiJavaslatLeker.ok){
@@ -880,20 +862,20 @@ async function modositasiJavaslat(){
     }
 }
 
-
 function accordionGeneral(divAccordion, receptek) {
     divAccordion.innerHTML = "";
     for (let recept of receptek) {
         let divAccordionItem = document.createElement("div");
-        divAccordionItem.classList = "accordion-item";
+        divAccordionItem.classList = "accordion-item my-2";
         
         // Törlés gomb létrehozása
         let btnTorles = document.createElement("button");
         btnTorles.type = "accordion-button";
         btnTorles.classList.add("btn", "btn-danger", "mt-3", "btn-sm","w-100");
         btnTorles.innerHTML = "Törlés";
+        btnTorles.id = recept.id
         btnTorles.addEventListener("click", function() {
-            divAccordionItem.remove();
+            modositasiJavaslatTorles(btnTorles.id);
         });
 
         let h2AccordionHeader = document.createElement("h2");
@@ -937,7 +919,31 @@ function accordionGeneral(divAccordion, receptek) {
 }
 
 
-
+async function modositasiJavaslatTorles(id){
+    try {
+       let frissit = await fetch("./adatbazisInterakciok/elfogadottmodosit",{
+           method : "POST",
+           headers : {
+               "Content-Type" : "application/json"
+           },
+           body : JSON.stringify({
+               "recept_id" : id
+           })
+   
+       })
+   
+       if(frissit.ok){
+           console.log("Sikeres frissítés");
+           modositasiJavaslat();
+       }
+       else{
+           let valasz = await frissit.json();
+           console.log(valasz.valasz);
+       }
+    } catch (error) {
+       console.log(error);
+    }
+   }
 
   
 
@@ -997,7 +1003,23 @@ async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak,
             method : "POST",
             body : kep
         })
-        location.reload(true);
+        if(kepFeltolt.ok){
+            let alertbox = document.getElementById("feltoltAlert");
+            let progressBar = document.getElementById("feltoltProgressBar");
+            alertMegjelenit("Sikeres feltöltés!", false, alertbox, progressBar);
+            let duration = 5000; // 5 seconds
+            let step = 5; // update every 100ms
+            let szamlalo = 100;
+            let interval = setInterval(() => {
+                szamlalo -= (100 / (duration / step));
+                if (szamlalo <= 0) {
+                    clearInterval(interval);
+                    location.reload(true);
+                }
+            }, step);
+            
+        }
+        
     }
 }
 

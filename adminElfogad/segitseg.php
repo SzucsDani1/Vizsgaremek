@@ -68,7 +68,7 @@
     
     
           <!--Kép megjelenítés-->
-          <img src="https://www.kreactivity.hu/img/23190/G00176/264x264,r/Kis-tigris-festes-es-gyemantszemes-kreativ-hibrid-kep.webp?time=1715340732" class="rounded mx-auto img-fluid d-block" alt="...">
+          <img src="" class="rounded mx-auto img-fluid d-block" alt="" id="receptKep">
     
           <!--Idő, költség és nehézség táblázatban-->
           <table class="table table-bordered w-75 mx-auto mt-3 text-center table-warning ">

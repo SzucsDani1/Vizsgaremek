@@ -609,6 +609,9 @@ function receptMegjelenit(){
     document.getElementById("receptNehezseg").innerHTML = receptek[0].nehezseg;
 
     document.getElementById("receptLeiras").innerHTML = receptek[0].elkeszites;
+    
+    document.getElementById("receptKep").src = "../receptfeltolto/adatbazisInterakciok/"+receptek[0].kepek;
+    document.getElementById("receptKep").alt = receptek[0].neve;
 }
 
 
