@@ -10,7 +10,6 @@ let alapanyagok = new Set();
 
 const kivalasztottEtrendek = new Set();
 
-
 let felhasznaloId;
 
 function receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat, kategoriaInput) {
