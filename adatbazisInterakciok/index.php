@@ -117,7 +117,7 @@
 
         case "legujabbreceptek":
             if($_SERVER["REQUEST_METHOD"] == "GET"){
-                $legujabbReceptek = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, etrend.neve AS etrend_nev, etrend.id AS etrend_id FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptek.id = receptetrend.recept_id INNER JOIN etrend ON receptetrend.etrend_id = etrend.id WHERE receptek.elfogadot = 1 ORDER by receptek.mikor_feltolt DESC LIMIT 15;;");
+                $legujabbReceptek = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, felhasznalok.felhnev, etrend.neve AS etrend_nev, etrend.id AS etrend_id FROM receptek INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id INNER JOIN receptetrend ON receptek.id = receptetrend.recept_id INNER JOIN etrend ON receptetrend.etrend_id = etrend.id WHERE receptek.elfogadot = 1 ORDER by receptek.mikor_feltolt DESC LIMIT 15;");
                 if(is_array($legujabbReceptek) && !empty($legujabbReceptek)){
                     echo json_encode($legujabbReceptek, JSON_UNESCAPED_UNICODE);
                 }
