@@ -81,7 +81,9 @@ async function kereses(){
             return;
         }
         let keresesiTalalat = document.getElementById("keresesiTalalat");
-
+        keresesiTalalat.innerHTML = "";
+        keresesiTalalat.classList = "mx-auto"
+        keresesiTalalat.role = "";
         let leker = await fetch("../adatbazisInterakciok/keresesrecept",{
             method : "POST",
             headers : {
