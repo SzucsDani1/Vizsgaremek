@@ -5,20 +5,27 @@ import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 
 async function elfogadandoReceptLeker() {
-    try {
-        let leker = await fetch("../adatbazisInterakciok/receptekNemElf");
-
-        if(leker.ok){
-            let adatok = await leker.json()
-            console.log(adatok)
-            kartyaGeneral(adatok)
-        }
-        else{
-            console.log("asd")
-        }
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+      let leker = await fetch("../adatbazisInterakciok/receptekNemElf");
+      let kiirat = document.getElementById("receptek");
+      kiirat.innerHTML = "";
+      kiirat.classList = "text-center";
+      kiirat.role = "";
+      if(leker.ok){
+          let adatok = await leker.json()
+          console.log(adatok)
+          kartyaGeneral(adatok)
+      }
+      else{
+        
+        kiirat.classList = "alert alert-warning text-center";
+        kiirat.role = "alert";
+        kiirat.innerHTML = "Nincs elfogadásra váró recept!"; 
+        console.log("asd")
+      }
+  } catch (error) {
+      console.log(error)
+  }
 }
 
 function kartyaGeneral(receptek){
