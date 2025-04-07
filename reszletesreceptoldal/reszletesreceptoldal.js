@@ -601,6 +601,16 @@ function receptInfoList(){
 }
 
 function receptMegjelenit(){
+    document.getElementById("etelfajtaKiir").innerHTML = "";
+    document.getElementById("receptNeve").innerHTML = "";
+
+    document.getElementById("receptIdeje").innerHTML = "";
+    document.getElementById("receptKoltseg").innerHTML = "";
+    document.getElementById("receptNehezseg").innerHTML = "";
+
+    document.getElementById("receptLeiras").innerHTML = "";
+    
+
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
 
@@ -612,6 +622,8 @@ function receptMegjelenit(){
     
     document.getElementById("receptKep").src = "../receptfeltolto/adatbazisInterakciok/"+receptek[0].kepek;
     document.getElementById("receptKep").alt = receptek[0].neve;
+
+    document.title = receptek[0].neve;
 }
 
 
