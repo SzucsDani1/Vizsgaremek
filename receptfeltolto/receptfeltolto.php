@@ -270,6 +270,8 @@
       </div>
 
 
+  </div>
+</div>
       <!--FOOTER KEZDET-->
       <footer class="footer">
         <p>Elérhetőségek: 
@@ -282,7 +284,7 @@
         <!-- <p>&copy; 2024 Your Company. All rights reserved.</p> -->
       </footer>
       <!--FOOTER VEGE-->
-</div>
+
 
     <!--END ŰRLAP ELEMEK-->
 

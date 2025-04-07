@@ -131,6 +131,7 @@ async function receptLeker(){
             for(let recept of receptekLista){
               receptek.push(recept);
             }
+            console.log(receptek);
             receptMegjelenit();
             receptInfoList();
         }
@@ -576,28 +577,32 @@ async function bevasaloListaTorlesHozzaadas(hozzavalo_id, label, btnBevasarlo){
 function receptInfoList(){
   let ulReceptInfo = document.getElementById("receptInfo");
   ulReceptInfo.innerHTML = "";
+  let etrendek = [];
   for(let recept of receptek){
-    let liEtrend= document.createElement("li");
-    liEtrend.classList = "list-group-item";
-    liEtrend.innerHTML = "<b>Étrend </b>- "+recept.etrend_neve;
-
-    let liKaloria= document.createElement("li");
-    liKaloria.classList = "list-group-item";
-    liKaloria.innerHTML = "<b>Kalória </b>- "+recept.kaloria * adag+" kcal";
-
-    let liKonyha= document.createElement("li");
-    liKonyha.classList = "list-group-item";
-    liKonyha.innerHTML = "<b>Konyha </b>- "+recept.konyha_nev;
-
-    let liNapszak= document.createElement("li");
-    liNapszak.classList = "list-group-item";
-    liNapszak.innerHTML = "<b>Napszak </b>- "+recept.napszak;
-
-    ulReceptInfo.appendChild(liEtrend);
-    ulReceptInfo.appendChild(liKaloria);
-    ulReceptInfo.appendChild(liKonyha);
-    ulReceptInfo.appendChild(liNapszak);
+    etrendek.push(recept.etrend_neve);
   }
+  
+  let liEtrend= document.createElement("li");
+  liEtrend.classList = "list-group-item";
+  liEtrend.innerHTML = "<b>Étrend: </b> " + etrendek.join(", ");
+
+  let liKaloria= document.createElement("li");
+  liKaloria.classList = "list-group-item";
+  liKaloria.innerHTML = "<b>Kalória </b>- "+receptek[0].kaloria * adag+" kcal";
+
+  let liKonyha= document.createElement("li");
+  liKonyha.classList = "list-group-item";
+  liKonyha.innerHTML = "<b>Konyha </b>- "+receptek[0].konyha_nev;
+
+  let liNapszak= document.createElement("li");
+  liNapszak.classList = "list-group-item";
+  liNapszak.innerHTML = "<b>Napszak </b>- "+receptek[0].napszak;
+
+  ulReceptInfo.appendChild(liEtrend);
+  ulReceptInfo.appendChild(liKaloria);
+  ulReceptInfo.appendChild(liKonyha);
+  ulReceptInfo.appendChild(liNapszak);
+  
 }
 
 function receptMegjelenit(){
@@ -609,13 +614,13 @@ function receptMegjelenit(){
     document.getElementById("receptNehezseg").innerHTML = "";
 
     document.getElementById("receptLeiras").innerHTML = "";
-    
+
 
     document.getElementById("etelfajtaKiir").innerHTML = receptek[0].etelfajta_nev;
     document.getElementById("receptNeve").innerHTML = receptek[0].neve;
 
     document.getElementById("receptIdeje").innerHTML = receptek[0].ido +" perc";
-    document.getElementById("receptKoltseg").innerHTML = receptek[0].ar+ " Ft";
+    document.getElementById("receptKoltseg").innerHTML = receptek[0].ar;
     document.getElementById("receptNehezseg").innerHTML = receptek[0].nehezseg;
 
     document.getElementById("receptLeiras").innerHTML = receptek[0].elkeszites;
