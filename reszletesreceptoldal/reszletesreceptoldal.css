@@ -29,4 +29,8 @@
     text-align: justify;
     font-size: large;
   }
+
+  #kedvencReceptGomb{
+    width: 100%;
+  }
   

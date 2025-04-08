@@ -52,12 +52,6 @@
       </nav>
     <!--END NAVBAR-->
 
-    <!--Kedvenc recepthez adás/törlés gomb-->
-    <div class="sticky-sm-top">
-      <input type="checkbox" class="btn-check" id="kedvencRecept">
-      <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat"></label>
-    </div>
-
     <div class="container">
       <!--Ételfajta-->
       <h1 class="display-6 text-body-secondary text-center my-3" id="etelfajtaKiir"></h1>
@@ -130,6 +124,12 @@
           </div>
         </div>
       </div>
+
+       <!--Kedvenc recepthez adás/törlés gomb-->
+    <div class="row mx-auto" id="kedvencReceptGomb">
+      <input type="checkbox" class="btn-check" id="kedvencRecept">
+      <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat"></label>
+    </div>
       <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
@@ -154,6 +154,7 @@
         <div id='ertekelesProgressBar' hidden style=' height: 5px; width: 100%;'></div>
       </div>
       
+     
       
       
 
