@@ -663,7 +663,7 @@ function hozzaszolasGeneral(hozzaszolasok){
       spanIdo.classList = "text-body-secondary ms-4";
       
       if(hozzaszolas.felhasznalo_id == felhasznalo_id){
-          li.classList = "list-group-item list-group-item-primary my-2 p-2";
+          li.classList = "list-group-item list-group-item-primary my-2 p-2 w-100";
       }
       else{
           li.classList = "list-group-item my-2 p-2";
