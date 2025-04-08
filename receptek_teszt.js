@@ -8,6 +8,7 @@ describe('Receptek oldal tesztelése', function() {
 
     before(async function() {
         driver = await new Builder().forBrowser('chrome').build();
+        await driver.manage().window().maximize();
     });
 
     after(async function() {
@@ -28,7 +29,8 @@ describe('Receptek oldal tesztelése', function() {
 
     it('2. Navigálás a receptek oldalra', async () => {
         // Navigálás a receptek oldalra a navigációs sávon keresztül
-        await driver.findElement(By.linkText('Receptek')).click();
+        driver.findElement(By.xpath("//a[text()='Receptek']")).click();
+  
         
         // Várakozás az oldal betöltésére és URL ellenőrzése
         await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/receptekoldal/receptekoldal.php'), 5000);
@@ -41,10 +43,6 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('3. Recept keresése a keresési mezőben', async () => {
-        // Szűrők törlése először
-        await driver.findElement(By.id('btnNullazas')).click();
-        await driver.sleep(1000); // Várakozás a szűrők visszaállítására
-        
         // Keresés egy specifikus receptre
         await driver.findElement(By.id('text_kereses')).sendKeys('Poutine');
         await driver.findElement(By.id('button_kereses')).click();
@@ -70,13 +68,13 @@ describe('Receptek oldal tesztelése', function() {
 
     it('4. Szűrők tesztelése találattal', async () => {
         // Szűrők törlése először
-        await driver.findElement(By.id('btnNullazas')).click();
-        await driver.sleep(1000);
+        /*await driver.findElement(By.id('btnNullazas')).click();
+        await driver.sleep(1000);*/
         
         // Több szűrő beállítása, amelyek találatot kell, hogy adjanak
         
         // "REGGELI" étkezés típus kiválasztása
-        await driver.findElement(By.id('flexCheckREGGELI')).click();
+        await driver.findElement(By.id('napszakReggeli')).click();
         
         // Árszint beállítása "Olcsó"-ra
         const arRange = await driver.findElement(By.id('arInput'));
