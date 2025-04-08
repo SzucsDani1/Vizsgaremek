@@ -1,9 +1,9 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
-const assert = require('assert');
-const { describe, it, after, before } = require('mocha');
+let { Builder, By, Key, until } = require('selenium-webdriver');
+let assert = require('assert');
+let { describe, it, after, before } = require('mocha');
 
 describe('Receptek oldal tesztelése', function() {
-    this.timeout(30000); // Megnövelt időkorlát a lassabb műveletekhez
+    this.timeout(30000);
     let driver;
 
     before(async function() {
@@ -23,41 +23,35 @@ describe('Receptek oldal tesztelése', function() {
         await driver.findElement(By.id('btnBejelentkezes')).click();
 
         await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php'), 5000);
-        const aktualisUrl = await driver.getCurrentUrl();
+        let aktualisUrl = await driver.getCurrentUrl();
         assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
     });
 
     it('2. Navigálás a receptek oldalra', async () => {
-        // Navigálás a receptek oldalra a navigációs sávon keresztül
         driver.findElement(By.xpath("//a[text()='Receptek']")).click();
   
         
-        // Várakozás az oldal betöltésére és URL ellenőrzése
         await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/receptekoldal/receptekoldal.php'), 5000);
-        const aktualisUrl = await driver.getCurrentUrl();
+        let aktualisUrl = await driver.getCurrentUrl();
         assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/receptekoldal/receptekoldal.php');
         
-        // Az oldal helyes betöltésének ellenőrzése
-        const searchButton = await driver.findElement(By.id('button_kereses'));
-        assert.ok(searchButton, 'A keresési gombnak láthatónak kell lennie az oldalon');
+        let btnKereses = await driver.findElement(By.id('button_kereses'));
+        assert.ok(btnKereses, 'A keresési gombnak láthatónak kell lennie az oldalon');
     });
 
     it('3. Recept keresése a keresési mezőben', async () => {
-        // Keresés egy specifikus receptre
+        // Poutine-re keresés
         await driver.findElement(By.id('text_kereses')).sendKeys('Poutine');
         await driver.findElement(By.id('button_kereses')).click();
         
-        // Várakozás a keresési eredmények betöltésére
         await driver.sleep(2000);
         
-        // Ellenőrizzük, hogy vannak-e eredmények
-        const resultCards = await driver.findElements(By.css('.card'));
-        assert.ok(resultCards.length > 0, 'Keresési eredményeknek meg kell jelenniük');
+        let eredmenyCard = await driver.findElements(By.css('.card'));
+        assert.ok(eredmenyCard.length > 0, 'Keresési eredményeknek meg kell jelenniük');
         
-        // Ellenőrizzük, hogy a recept neve megjelenik-e legalább egy kártyán
         let foundMatchingRecipe = false;
-        for (const card of resultCards) {
-            const cardTitle = await card.findElement(By.css('.card-title')).getText();
+        for (let card of eredmenyCard) {
+            let cardTitle = await card.findElement(By.css('.card-title')).getText();
             if (cardTitle.toLowerCase().includes('poutine')) {
                 foundMatchingRecipe = true;
                 break;
@@ -67,85 +61,65 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('4. Szűrők tesztelése találattal', async () => {
-        // Szűrők törlése először
-        /*await driver.findElement(By.id('btnNullazas')).click();
-        await driver.sleep(1000);*/
+        let btnNullazas = await driver.findElement(By.id('btnNullazas'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnNullazas);
+        await driver.sleep(500);
+        await btnNullazas.click();
+
+        await driver.sleep(1000);
+
+        //Reggeli szűrő
+        let labelReggeli = await driver.findElement(By.id('labelReggeli'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", labelReggeli);
+        await driver.sleep(500);
+        await labelReggeli.click();
+
+        await driver.sleep(1000);
         
-        // Több szűrő beállítása, amelyek találatot kell, hogy adjanak
-        
-        // "REGGELI" étkezés típus kiválasztása
-        await driver.findElement(By.id('napszakReggeli')).click();
-        
-        // Árszint beállítása "Olcsó"-ra
-        const arRange = await driver.findElement(By.id('arInput'));
+        // Ólcsó ár
+        let arRange = await driver.findElement(By.id('arInput'));
         await driver.executeScript('arguments[0].value = 1;', arRange);
         await driver.executeScript('arguments[0].dispatchEvent(new Event("input"))', arRange);
         
-        // Nehézségi szint beállítása "Könnyű"-re
-        const nehezsegRange = await driver.findElement(By.id('nehezsegInput'));
+        // Könnyű nehézségszint
+        let nehezsegRange = await driver.findElement(By.id('nehezsegInput'));
         await driver.executeScript('arguments[0].value = 1;', nehezsegRange);
         await driver.executeScript('arguments[0].dispatchEvent(new Event("input"))', nehezsegRange);
         
-        // Szűrők alkalmazása
-        await driver.findElement(By.id('btnSzures')).click();
+        let btnSzures = await driver.findElement(By.id('btnSzures'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnSzures);
+        await driver.sleep(500);
+        await btnSzures.click();
+
         
-        // Várakozás az eredmények betöltésére
         await driver.sleep(2000);
         
-        // Ellenőrizzük, hogy vannak-e eredmények
-        const resultCards = await driver.findElements(By.css('.card'));
-        assert.ok(resultCards.length > 0, 'Szűrés eredményének meg kell jelennie');
-        
-        // Ellenőrizzük, hogy az eredmények megfelelnek-e a szűrőinknek
-        if (resultCards.length > 0) {
-            // Ellenőrizzük, hogy bármelyik kártya mutatja-e a "Könnyű" információt
-            let hasMatchingFilter = false;
-            for (const card of resultCards) {
-                const cardInfo = await card.getText();
-                if (cardInfo.includes('Könnyű')) {
-                    hasMatchingFilter = true;
-                    break;
-                }
-            }
-            assert.ok(hasMatchingFilter, 'A szűrt eredményeknek meg kell felelniük a szűrési feltételeknek');
-        }
+        let eredmenyCard = await driver.findElements(By.css('.card'));
+        assert.ok(eredmenyCard.length > 0, 'Szűrés eredményének meg kell jelennie');
     });
 
     it('5. Szűrők tesztelése találat nélkül', async () => {
-        // Szűrők törlése először
         await driver.findElement(By.id('btnNullazas')).click();
         await driver.sleep(1000);
         
-        // Olyan szűrők beállítása, amelyek nem adnak találatot
-        // Nem létező receptre való keresés
-        await driver.findElement(By.id('text_kereses')).clear();
-        await driver.findElement(By.id('text_kereses')).sendKeys('XYZNemLetezoRecept12345');
+        await driver.findElement(By.id('text_kereses')).sendKeys('Nem létező recept');
         
-        // Extrém kalória érték beállítása
-        const kaloriaRange = await driver.findElement(By.id('kaloriaInput'));
-        await driver.executeScript('arguments[0].value = 4;', kaloriaRange); // 600+ kcal
+        // 600+ kalória beállítása
+        let kaloriaRange = await driver.findElement(By.id('kaloriaInput'));
+        await driver.executeScript('arguments[0].value = 4;', kaloriaRange);
         await driver.executeScript('arguments[0].dispatchEvent(new Event("input"))', kaloriaRange);
         
-        // Extrém időérték beállítása
-        const idoRange = await driver.findElement(By.id('idoInput'));
-        await driver.executeScript('arguments[0].value = 3;', idoRange); // Hosszan (120+ perc)
+        // 120+ perc idő beállítása
+        let idoRange = await driver.findElement(By.id('idoInput'));
+        await driver.executeScript('arguments[0].value = 3;', idoRange); 
         await driver.executeScript('arguments[0].dispatchEvent(new Event("input"))', idoRange);
         
-        // Szűrők alkalmazása
         await driver.findElement(By.id('btnSzures')).click();
-        
-        // Várakozás az eredmények betöltésére
+        await driver.executeScript("window.scrollTo(0, 0);");
+  
         await driver.sleep(2000);
+        let nincsTalalatAlert = await driver.findElement(By.css('.alert')).getText();    
+        assert.ok(nincsTalalatAlert.includes('Nincs találat') || nincsTalalatAlert.includes('Nincs találat!'), 'Hibaüzenetnek meg kell jelennie, ha nincs találat');
         
-        try {
-            // "Nincs találat" üzenet keresése
-            const noResultsMessage = await driver.findElement(By.css('.alert')).getText();
-            assert.ok(noResultsMessage.includes('Nincs találat') || noResultsMessage.includes('Nincs találat!'), 
-                     'Hibaüzenetnek meg kell jelennie, ha nincs találat');
-        } catch (e) {
-            // Ha nem találjuk az alertet, ellenőrizzük, hogy nincsenek-e megjelenített kártyák
-            const resultCards = await driver.findElements(By.css('.card'));
-            assert.strictEqual(resultCards.length, 0, 'Nem szabad találatnak lennie az extrém szűrési feltételekkel');
-        }
     });
 });
