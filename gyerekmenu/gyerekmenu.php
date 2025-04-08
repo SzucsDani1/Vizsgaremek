@@ -27,7 +27,7 @@
                 <a class="nav-link" href="../receptekoldal/receptekoldal.php">Receptek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
+                <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
@@ -36,7 +36,7 @@
                 <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
+                <a class="nav-link active" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>

@@ -126,7 +126,7 @@
           <div class="filter-box border p-5 bg-light rounded my-3 mx-auto">
             <h1 class="display-4 text-center">Recept leírás</h1>
             <hr class="border border-secondary border-1 opacity-20 w-50 mx-auto">
-            <h1 class="display-6 my-3 text-center message-containter" id="receptLeiras"></h1>
+            <div class="my-3 message-containter text-secondary-emphasis" id="receptLeiras"></div>
           </div>
         </div>
       </div>

@@ -32,10 +32,10 @@
                 <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
+              <a class="nav-link active" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="../rolunk/rolunk.php">Rólunk</a>
+                <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>

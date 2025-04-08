@@ -37,7 +37,7 @@
               <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="../rolunk/rolunk.php">Rólunk</a>
+                <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
@@ -46,7 +46,7 @@
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../profilszerkeszto/profilszerkeszto.php">Profil</a>
+                <a class="nav-link active" href="../profilszerkeszto/profilszerkeszto.php">Profil</a>
               </li>
             </ul>
             <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
