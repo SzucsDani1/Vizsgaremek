@@ -154,19 +154,19 @@
                     <!-- Napszak szűrő -->
                     <div class="btn-group d-flex flex-wrap" role="group">
                       <input type="checkbox" class="btn-check" id="napszakReggeli" autocomplete="off" value="Reggeli">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakReggeli">Reggeli</label>
+                      <label class="btn btn-outline-primary flex-fill" id="labelReggeli" for="napszakReggeli">Reggeli</label>
 
                       <input type="checkbox" class="btn-check" id="napszakTizorai" autocomplete="off" value="Tízórai">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakTizorai">Tízórai</label>
+                      <label class="btn btn-outline-primary flex-fill" id="labelTizorai" for="napszakTizorai">Tízórai</label>
 
                       <input type="checkbox" class="btn-check" id="napszakEbed" autocomplete="off" value="Ebéd">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakEbed">Ebéd</label>
+                      <label class="btn btn-outline-primary flex-fill" id="labelEbed" for="napszakEbed">Ebéd</label>
 
                       <input type="checkbox" class="btn-check" id="napszakUzsonna" autocomplete="off" value="Uzsonna">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakUzsonna">Uzsonna</label>
+                      <label class="btn btn-outline-primary flex-fill" id="labelUzsonna" for="napszakUzsonna">Uzsonna</label>
 
                       <input type="checkbox" class="btn-check" id="napszakVacsora" autocomplete="off" value="Vacsora">
-                      <label class="btn btn-outline-primary flex-fill" for="napszakVacsora">Vacsora</label>
+                      <label class="btn btn-outline-primary flex-fill" id="labelVacsora" for="napszakVacsora">Vacsora</label>
                     </div>
 
                     <!-- Ár szint szűrő -->
