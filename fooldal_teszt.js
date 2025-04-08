@@ -1,6 +1,6 @@
-const { Builder, By, Key, until } = require('selenium-webdriver');
-const assert = require('assert');
-const chrome = require('selenium-webdriver/chrome');
+let { Builder, By, Key, until } = require('selenium-webdriver');
+let assert = require('assert');
+let chrome = require('selenium-webdriver/chrome');
 
 describe('Vizsgaremek Tesztek', function() {
     this.timeout(30000);
@@ -25,31 +25,31 @@ describe('Vizsgaremek Tesztek', function() {
         await driver.findElement(By.id('btnBejelentkezes')).click();
 
         await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php'), 5000);
-        const aktualisUrl = await driver.getCurrentUrl();
+        let aktualisUrl = await driver.getCurrentUrl();
         assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
     });
 
     it('2. Keresési funkció tesztelése - Találatos keresés', async () => {
         await driver.get('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
         
-        const keresesiMezo = await driver.findElement(By.id('text_kereses'));
+        let keresesiMezo = await driver.findElement(By.id('text_kereses'));
         await keresesiMezo.sendKeys('teszt');
         await driver.findElement(By.id('button_kereses')).click();
 
         await driver.wait(until.elementLocated(By.css('.card')), 5000);
-        const talalatiKartyak = await driver.findElements(By.css('.card'));
+        let talalatiKartyak = await driver.findElements(By.css('.card'));
         assert(talalatiKartyak.length > 0, 'Legalább 1 találatnak kell lennie');
     });
 
     it('3. Keresési funkció tesztelése - Nincs találat', async () => {
         await driver.get('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
         
-        const keresesiMezo = await driver.findElement(By.id('text_kereses'));
+        let keresesiMezo = await driver.findElement(By.id('text_kereses'));
         await keresesiMezo.sendKeys('xyz123nonexistent');
         await driver.findElement(By.id('button_kereses')).click();
 
-        const hibaUzenet = await driver.wait(until.elementLocated(By.css('.alert-danger')), 5000);
-        const uzenetSzoveg = await hibaUzenet.getText();
+        let hibaUzenet = await driver.wait(until.elementLocated(By.css('.alert-danger')), 5000);
+        let uzenetSzoveg = await hibaUzenet.getText();
         assert.strictEqual(uzenetSzoveg.trim(), 'Nincs találat!');
     });
 });
