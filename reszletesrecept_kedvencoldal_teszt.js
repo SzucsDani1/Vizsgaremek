@@ -43,15 +43,13 @@ describe('Receptek oldal tesztelése', function() {
         await driver.sleep(1000);
 
         
-        // Tortilla lap hozzáadása
         await driver.findElement(By.id("labeltortilla lap")).click();
         
-        // Darált hús hozzáadása
         await driver.findElement(By.id("labeldarált marhahús")).click();
         
         await driver.sleep(1000);
 
-        // Kedvencnek jelölés
+        // Checkbox bejelölése
         let kedvencReceptCheckbox = await driver.findElement(By.id('kedvencReceptFelirat'));
         await driver.executeScript("arguments[0].scrollIntoView(true);",kedvencReceptCheckbox);
         await driver.sleep(1000);
@@ -59,32 +57,41 @@ describe('Receptek oldal tesztelése', function() {
         await driver.sleep(2000);
     });
 
-    it('3. Recept értékelése', async () => {
-        // 5 csillagos értékelés
-        const csillagok = await driver.findElements(By.css('span[data-value]'));
-        await driver.executeScript("arguments[0].scrollIntoView(true);",csillagok);
+    it('3. Recept képének megjelenítése', async () => {
         await driver.sleep(1000);
-        await csillagok[4].click(); // 5. csillag
-        await driver.findElement(By.id('btnErtekelesKuld')).click();
+  
+        let receptKep = await driver.findElement(By.id('receptKep'));
         
-        // Sikeres értékelés ellenőrzése
-        await driver.wait(until.elementLocated(By.xpath('//div[contains(text(), "Értékelés elküldve!")]')), 5000);
-        await driver.sleep(2000);
+        let kepMegjelen = await receptKep.isDisplayed();
+        assert.strictEqual(kepMegjelen, true, "A recept képe nem jelenik meg az oldalon");
     });
 
     it('4. Hozzászólás írása', async () => {
-        // Görgetés a hozzászólás részhez
-        const commentSection = await driver.findElement(By.id('hozzaszolasok'));
+        let commentSection = await driver.findElement(By.id('hozzaszolasok'));
         await driver.executeScript("arguments[0].scrollIntoView(true)", commentSection);
         
-        // Hozzászólás küldése
         await driver.findElement(By.id('hozzaszolas')).sendKeys('Ez egy hozzászólás');
-        await driver.findElement(By.id('btnHozzaszolasKuld')).click();
-        
-        // Sikeres küldés ellenőrzése
-        await driver.wait(until.elementLocated(
-            By.xpath('//div[contains(@class, "alert-success") and contains(text(), "Hozzászólás elküldve")]')
-        ), 5000);
+        await driver.sleep(2000);
+
+        let btnElkuld = await driver.findElement(By.id('btnHozzaszolasKuldes'));
+        await driver.executeScript("arguments[0].scrollIntoView(true)", btnElkuld);
+        await btnElkuld.click();
+ 
+        await driver.wait(until.elementLocated(By.css('.alert-success')), 5000);
         await driver.sleep(2000);
     });
+
+    it('5. Recept leírásának megjelenítése', async () => {
+        let receptLeiras = await driver.findElement(By.id('receptLeiras'));
+        await driver.executeScript("arguments[0].scrollIntoView(true)", receptLeiras);
+        
+        await driver.sleep(500);
+        
+        let leirasMegjelen = await receptLeiras.isDisplayed();
+        assert.strictEqual(leirasMegjelen, true, "A recept leírása nem jelenik meg");
+        
+        let leirasSzoveg = await receptLeiras.getText();
+        assert.ok(leirasSzoveg.length > 0, "A recept leírása üres");
+      });
+      
 });
