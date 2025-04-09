@@ -126,9 +126,9 @@
 
        <!--Kedvenc recepthez adás/törlés gomb-->
     <div class="row mx-auto" id="kedvencReceptGomb">
-      <input type="checkbox" class="btn-check w-50" id="kedvencRecept">
-      <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat"></label>
-    </div>
+        <input type="checkbox" class="btn-check w-50" id="kedvencRecept">
+        <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat"></label>
+      </div>
       <!--Vonal-->
       <hr class="border border-warning border-1 opacity-20 w-80 mx-auto">
 
