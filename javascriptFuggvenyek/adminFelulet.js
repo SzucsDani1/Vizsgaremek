@@ -30,7 +30,7 @@ export async function jogosultsagLeker(felhasznalo_id, ul){
 
 function jogosultsagGeneral(ul){
     let li = document.createElement("li");
-    li.classList = "nav-item";
+    li.classList = "nav-item  text-center";
 
     let a = document.createElement("a");
     a.classList = "nav-link";

@@ -24,53 +24,35 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav" id="navbarUl">
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link active" href="./receptekoldal.php">Receptek</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../profilszerkeszto/profilszerkeszto.php">Profil</a>
               </li>
             </ul>
-            <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
+            <div class="text-center">
+              <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
+            </div>
           </div>
         </div>
       </nav>
     <!--END NAVBAR-->    
-
-
-
-     <!--START CAROUSEL-->
-     <!--
-     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="kepek/etel4.jpg" class="d-block w-100" alt="Bolognai">
-        </div>
-        <div class="carousel-item">
-          <img src="kepek/etel2.jpg" class="d-block w-100" alt="Gyümölcsök">
-        </div>
-        <div class="carousel-item">
-          <img src="kepek/etel5.jpg" class="d-block w-100" alt="Tészta">
-        </div>
-      </div>
-    </div>
-    -->
-    <!--END CAROUSEL-->
 
 
     <h1 class="display-2 text-center my-5">Receptek szűrése</h1>

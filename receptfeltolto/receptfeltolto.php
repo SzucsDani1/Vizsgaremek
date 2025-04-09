@@ -25,29 +25,31 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav" id="navbarUl">
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../receptekoldal/receptekoldal.php">Receptek</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../hetimenuoldal/hetimenuoldal.php">Heti menü</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
               <a class="nav-link active" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../kedvencekoldal/kedvencekoldal.php">Kedvencek</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item text-center">
                 <a class="nav-link" href="../profilszerkeszto/profilszerkeszto.php">Profil</a>
               </li>
             </ul>
-            <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
+            <div class="text-center">
+              <input type="button" value="Kijelentkezés" class="btn btn-outline-danger mt-1" id="btnKijelentkezes">
+            </div>
           </div>
         </div>
       </nav>
