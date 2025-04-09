@@ -80,6 +80,7 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
         inputButton.type = "button";
         inputButton.classList = "btn btn-warning";
         inputButton.value = "Részletek";
+        inputButton.id = "btn"+recept.neve
         inputButton.addEventListener("click", function(){
             window.location.href = "../reszletesreceptoldal/reszletesreceptoldal.php?receptek_id=" + recept.id;
         })
