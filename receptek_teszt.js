@@ -92,6 +92,7 @@ describe('Receptek oldal tesztelése', function() {
         await driver.sleep(500);
         await btnSzures.click();
 
+        await driver.executeScript("window.scrollTo(0, 0);");
         await driver.sleep(2000);
         
         let eredmenyCard = await driver.findElements(By.css('.card'));
