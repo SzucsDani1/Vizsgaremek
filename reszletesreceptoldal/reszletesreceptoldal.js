@@ -480,6 +480,7 @@ function hozzavalokTablazatGeneral(){
         label.classList = "btn btn-outline-warning";
         label.htmlFor = "btn"+hozzavalo.hozzavalo;
         label.innerHTML = "Hozzáadás kosárhoz";
+        label.id = "label"+hozzavalo.hozzavalo;
 
         let btnBevasarlo = document.createElement("input");
         btnBevasarlo.type = "checkbox";
