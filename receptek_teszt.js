@@ -1,6 +1,7 @@
 let { Builder, By, Key, until } = require('selenium-webdriver');
 let assert = require('assert');
 let { describe, it, after, before } = require('mocha');
+//npx mocha receptek_teszt.js
 
 describe('Receptek oldal tesztelése', function() {
     this.timeout(30000);
@@ -22,7 +23,7 @@ describe('Receptek oldal tesztelése', function() {
         await driver.findElement(By.id('jelszo')).sendKeys('admin');
         await driver.findElement(By.id('btnBejelentkezes')).click();
 
-        await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php'), 5000);
+        await driver.sleep(1000);
         let aktualisUrl = await driver.getCurrentUrl();
         assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
     });
@@ -91,7 +92,6 @@ describe('Receptek oldal tesztelése', function() {
         await driver.sleep(500);
         await btnSzures.click();
 
-        
         await driver.sleep(2000);
         
         let eredmenyCard = await driver.findElements(By.css('.card'));
