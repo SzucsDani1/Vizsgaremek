@@ -3,7 +3,7 @@
     require_once "../adatbazisInterakciok/sessionConfig.php";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,8 +102,7 @@
       <!--Hozzávalók-->
       <div id="hozzavalokMegjelenit"></div>
 
-      <div id='hozzavalokAlert' role='alert' hidden></div>
-      <div id='hozzavalokProgressBar' hidden style=' height: 5px; width: 100%;'></div>
+    
 
       <!--Recept infó-->
       <div class="row">
@@ -127,7 +126,7 @@
 
        <!--Kedvenc recepthez adás/törlés gomb-->
     <div class="row mx-auto" id="kedvencReceptGomb">
-      <input type="checkbox" class="btn-check" id="kedvencRecept">
+      <input type="checkbox" class="btn-check w-50" id="kedvencRecept">
       <label class="btn btn-outline-warning" for="kedvencRecept" id="kedvencReceptFelirat"></label>
     </div>
       <!--Vonal-->
@@ -196,6 +195,6 @@
   <script src="../javascriptFuggvenyek/bejelentkezesVizsgalat.js"></script>
     
   <script type="module" src="reszletesreceptoldal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
