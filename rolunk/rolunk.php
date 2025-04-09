@@ -91,7 +91,7 @@
           A vizsgaremekünk célja egy olyan oldal elkészítése volt, amin a felhasználók egy egyszerű felületen képesek receptek után kutatni.
           <br>
           A legnagyobb probléma a jelenleg jelenlévő oldalakkal, hogy rengeteg reklám van rajtuk és vannak olyan megoldások amik fölösleges oldal újra töltésekhez vezetnek.
-          A munkánk sorrán megprobáltuk a <strong>weboldal újratöltését elkerülni</strong> ahol lehet ezzel is egy letiusztulba UX kinálva és az oldal <strong> nem tartalmaz reklámokkat</strong>.
+          A munkánk sorrán megprobáltuk a <strong>weboldal újratöltését elkerülni</strong> ahol lehet ezzel is egy letisztultabb UX-et kinálva és az oldal <strong> nem tartalmaz reklámokkat</strong>.
         </p>
       </div>
    
