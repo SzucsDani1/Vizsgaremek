@@ -47,18 +47,9 @@ describe('Receptek oldal tesztelése', function() {
         
         await driver.sleep(2000);
         
-        let eredmenyCard = await driver.findElements(By.css('.card'));
+        let eredmenyCard = await driver.findElements(By.id('Poutine'));
         assert.ok(eredmenyCard.length > 0, 'Keresési eredményeknek meg kell jelenniük');
         
-        let poutineKartyaE = false;
-        for (let card of eredmenyCard) {
-            let cardTitle = await card.findElement(By.css('.card-title')).getText();
-            if (cardTitle.toLowerCase().includes('poutine')) {
-                poutineKartyaE = true;
-                break;
-            }
-        }
-        assert.ok(poutineKartyaE, 'A keresésnek meg kell jelenítenie a "Poutine" receptet');
     });
 
     it('4. Szűrők tesztelése találattal', async () => {
@@ -100,8 +91,10 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('5. Szűrők tesztelése találat nélkül', async () => {
-        await driver.findElement(By.id('btnNullazas')).click();
+        let btnNullazas = await driver.findElement(By.id('btnNullazas'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnNullazas);
         await driver.sleep(1000);
+        await btnNullazas.click();
         
         await driver.findElement(By.id('text_kereses')).sendKeys('Nem létező recept');
         
@@ -120,7 +113,7 @@ describe('Receptek oldal tesztelése', function() {
   
         await driver.sleep(2000);
         let nincsTalalatAlert = await driver.findElement(By.css('.alert')).getText();    
-        assert.ok(nincsTalalatAlert.includes('Nincs találat') || nincsTalalatAlert.includes('Nincs találat!'), 'Hibaüzenetnek meg kell jelennie, ha nincs találat');
+        assert.ok(nincsTalalatAlert.includes('Nincs találat!'), 'Hibaüzenetnek meg kell jelennie, ha nincs találat');
         
     });
 });
