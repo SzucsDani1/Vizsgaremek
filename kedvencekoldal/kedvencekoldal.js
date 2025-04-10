@@ -145,6 +145,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
       if(recept.id == hozzavalo.recept_id){
         let divListGroupItem = document.createElement("div");
         divListGroupItem.classList = "list-group-item";
+        divListGroupItem.id = "listGroupItem"+hozzavalo.neve+hozzavalo.kategoria;
 
         let divTartalom = document.createElement("div");
         divTartalom.classList = "d-flex w-100 justify-content-between";
