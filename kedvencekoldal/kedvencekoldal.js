@@ -158,7 +158,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
         btnTorles.type = "button";
         btnTorles.value = "Törlés";
         btnTorles.classList = "btn btn-danger";
-        btnTorles.id = hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+        btnTorles.id = "btn"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
         //Törlés eseménykezelő
         btnTorles.addEventListener("click", function(){
           hozzavaloTorolAccordionbol(hozzavalo.hozzavalok_id);
