@@ -43,7 +43,7 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
         if(kedvencOldalE == true){
             
             btnTorles.type = "button";
-            btnTorles.id = "btn"+recept.neve;
+            btnTorles.id = "btnTorles"+recept.neve;
             btnTorles.value = "Törlés";
             btnTorles.classList = "btn btn-danger w-100 mt-2";
             
