@@ -151,6 +151,8 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
         let pHozzavalo = document.createElement("p");
         pHozzavalo.innerHTML = "<b>Kategória:</b> "+hozzavalo.kategoria+" - <b>Neve:</b> "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg*hozzavalo.adag + " "+ hozzavalo.mertek_egyseg;
+        pHozzavalo.id = "list"+hozzavalo.neve+hozzavalo.kategoria;
+
 
         let btnTorles = document.createElement("input");
         btnTorles.type = "button";
