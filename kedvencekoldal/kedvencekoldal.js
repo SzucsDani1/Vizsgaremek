@@ -145,18 +145,20 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
       if(recept.id == hozzavalo.recept_id){
         let divListGroupItem = document.createElement("div");
         divListGroupItem.classList = "list-group-item";
+        divListGroupItem.id = "listGroupItem"+hozzavalo.hozzavalo+hozzavalo.kategoria;
 
         let divTartalom = document.createElement("div");
         divTartalom.classList = "d-flex w-100 justify-content-between";
 
         let pHozzavalo = document.createElement("p");
         pHozzavalo.innerHTML = "<b>Kategória:</b> "+hozzavalo.kategoria+" - <b>Neve:</b> "+hozzavalo.hozzavalo+" - "+hozzavalo.mennyiseg*hozzavalo.adag + " "+ hozzavalo.mertek_egyseg;
+        pHozzavalo.id = "list"+hozzavalo.hozzavalo+hozzavalo.kategoria;
 
         let btnTorles = document.createElement("input");
         btnTorles.type = "button";
         btnTorles.value = "Törlés";
         btnTorles.classList = "btn btn-danger";
-        btnTorles.id = hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
+        btnTorles.id = "btn"+hozzavalo.hozzavalo+"-"+hozzavalo.hozzavalok_id;
         //Törlés eseménykezelő
         btnTorles.addEventListener("click", function(){
           hozzavaloTorolAccordionbol(hozzavalo.hozzavalok_id);

@@ -50,15 +50,15 @@ describe('Receptek oldal tesztelése', function() {
         let eredmenyCard = await driver.findElements(By.css('.card'));
         assert.ok(eredmenyCard.length > 0, 'Keresési eredményeknek meg kell jelenniük');
         
-        let foundMatchingRecipe = false;
+        let poutineKartyaE = false;
         for (let card of eredmenyCard) {
             let cardTitle = await card.findElement(By.css('.card-title')).getText();
             if (cardTitle.toLowerCase().includes('poutine')) {
-                foundMatchingRecipe = true;
+                poutineKartyaE = true;
                 break;
             }
         }
-        assert.ok(foundMatchingRecipe, 'A keresésnek meg kell jelenítenie a "Poutine" receptet');
+        assert.ok(poutineKartyaE, 'A keresésnek meg kell jelenítenie a "Poutine" receptet');
     });
 
     it('4. Szűrők tesztelése találattal', async () => {

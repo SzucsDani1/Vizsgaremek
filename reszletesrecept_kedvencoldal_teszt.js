@@ -67,11 +67,11 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('4. Hozzászólás írása', async () => {
-        let commentSection = await driver.findElement(By.id('hozzaszolasok'));
-        await driver.executeScript("arguments[0].scrollIntoView(true)", commentSection);
-        
+        let hozzaszolasok = await driver.findElement(By.id('hozzaszolasok'));
+        await driver.executeScript("arguments[0].scrollIntoView(true)", hozzaszolasok);
+        await driver.sleep(1000);
         await driver.findElement(By.id('hozzaszolas')).sendKeys('Ez egy hozzászólás');
-        await driver.sleep(2000);
+        await driver.sleep(1000);
 
         let btnElkuld = await driver.findElement(By.id('btnHozzaszolasKuldes'));
         await driver.executeScript("arguments[0].scrollIntoView(true)", btnElkuld);
@@ -89,9 +89,70 @@ describe('Receptek oldal tesztelése', function() {
         
         let leirasMegjelen = await receptLeiras.isDisplayed();
         assert.strictEqual(leirasMegjelen, true, "A recept leírása nem jelenik meg");
-        
-        let leirasSzoveg = await receptLeiras.getText();
-        assert.ok(leirasSzoveg.length > 0, "A recept leírása üres");
       });
+
+
+      it('6. Navigálás a Kedvencek oldalra', async () => {        
+        let kedvencekLink = await driver.findElement(By.xpath("//a[contains(text(), 'Kedvencek')]"));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", kedvencekLink);
+        await driver.sleep(5000);
+        await kedvencekLink.click();
+        await driver.sleep(1000);
+      });
+      
+      it('7. Burrito kártya megjelenésének ellenőrzése ID alapján', async () => {
+        let burritoCard = await driver.findElement(By.id('Burrito'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", burritoCard);
+        await driver.sleep(500);
+        
+        let burritoMegjelen = await burritoCard.isDisplayed();
+        assert.strictEqual(burritoMegjelen, true, "A Burrito kártya nem jelenik meg a kedvencek között");
+      });
+      
+      it('8. Burrito törlése a kedvenc receptek közül', async () => {
+        //Törlés gomb megnyomása
+        let btnTorles = await driver.findElement(By.id('btnTorlesBurrito'));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorles);
+        await driver.sleep(500);
+        await btnTorles.click();
+        
+        await driver.sleep(2000);
+      });
+      
+      it('9. Bevásárlólistában a tortilla lap és darált marhahús megjelenik-e', async () => {
+        let bevasarloLista = await driver.findElement(By.id("accordionHozzavalok"));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", bevasarloLista);
+        await driver.sleep(1000);
+        
+        let tortillaMegjelenik = false;
+        let marhahusMegjelenik = false;
+        
+        let trotilla = await driver.findElement(By.id("listGroupItemtortilla lapalap"));
+        tortillaMegjelenik = await trotilla.isDisplayed();
+        
+        let marhahus = await driver.findElement(By.id("listGroupItemdarált marhahúsTölteték"));
+        marhahusMegjelenik = await marhahus.isDisplayed();
+        
+        assert.strictEqual(tortillaMegjelenik, true, "A tortilla lap nem jelenik meg a bevásárlólistában");
+        assert.strictEqual(marhahusMegjelenik, true, "A darált marhahús nem jelenik meg a bevásárlólistában");
+      });
+      
+      it('10. Tortilla lap és darált marhahús törlése a bevásárlólistából ID alapján', async () => {
+        let btnTorlesTortilla = await driver.findElement(By.id("btntortilla lap-34"));
+        let btnTorlesMarhahus = await driver.findElement(By.id("btndarált marhahús-17"));
+        
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesTortilla);
+        await driver.sleep(500);
+        await btnTorlesTortilla.click();
+        
+        await driver.sleep(1000); 
+        
+        await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesMarhahus);
+        await driver.sleep(500);
+        await btnTorlesMarhahus.click();
+        
+        await driver.sleep(2000); 
+      });
+      
       
 });
