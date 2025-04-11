@@ -2,10 +2,6 @@
     background-color: rgb(252, 244, 237);
 }
 
- .carousel-item img {
-    max-height: 400px;
-    object-fit: cover;
-}
 
  .star {
     font-size: 2rem;
@@ -33,4 +29,9 @@
   #kedvencReceptGomb{
     width: 100%;
   }
-  
+
+ 
+#receptKep{
+  max-height: 800px;
+  max-width: 1200px;
+}

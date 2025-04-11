@@ -121,7 +121,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
     h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve+"-"+recept.id;
   
     let btnLenyit = document.createElement("button");
-    btnLenyit.classList = "accordion-button collapsed";
+    btnLenyit.classList = "accordion-button";
     btnLenyit.type = "button";
     btnLenyit.setAttribute("data-bs-toggle", "collapse");
     btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
@@ -134,7 +134,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
   
     let divPanelLenyitva = document.createElement("div");
     divPanelLenyitva.id = "panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id;
-    divPanelLenyitva.classList = "accordion-collapse collapse";
+    divPanelLenyitva.classList = "accordion-collapse collapse show";
     divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve+"-"+recept.id);
   
     let divAccordionBody = document.createElement("div");

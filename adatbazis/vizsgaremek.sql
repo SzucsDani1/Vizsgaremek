@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Ápr 07. 12:50
+-- Létrehozás ideje: 2025. Ápr 11. 11:36
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -35,18 +35,6 @@ CREATE TABLE `bevasarlolista` (
   `hozzavalok_id` int(11) DEFAULT NULL,
   `adag` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `bevasarlolista`
---
-
-INSERT INTO `bevasarlolista` (`id`, `felhasznalo_id`, `hozzavalok_id`, `adag`) VALUES
-(14, 5, 5, 1),
-(19, 5, 5, 5),
-(21, 5, 5, 6),
-(26, 5, 1, 7),
-(32, 6, 1, 5),
-(33, 6, 5, 7);
 
 --
 -- Eseményindítók `bevasarlolista`
@@ -90,7 +78,9 @@ INSERT INTO `ertekeles` (`id`, `felhasznalo_id`, `recept_id`, `ertek`, `mikor`) 
 (6, 14, 1, 3, '2025-03-17 17:34:13'),
 (29, 5, 1, 1, '2025-03-20 16:44:14'),
 (33, 16, 3, 4, '2025-03-28 21:49:42'),
-(34, 16, 12, 5, '2025-03-28 21:52:21');
+(34, 16, 12, 5, '2025-03-28 21:52:21'),
+(35, 5, 16, 5, '2025-04-08 07:54:33'),
+(36, 5, 14, 3, '2025-04-11 07:39:35');
 
 --
 -- Eseményindítók `ertekeles`
@@ -468,16 +458,10 @@ CREATE TABLE `hetimenu` (
 --
 
 INSERT INTO `hetimenu` (`id`, `recept_id`, `recept_neve`, `napszak`) VALUES
-(16, 3, 'iSTEN', 'REGGELI'),
-(17, 5, 'Tükör tojás', 'REGGELI'),
-(19, 7, 'Virslis-lencsés tész', 'TÍZÓRAI'),
-(20, 6, 'Hagymás tojássaláta', 'TÍZÓRAI'),
-(22, 1, 'teszt', 'EBÉD'),
-(23, 8, 'Rántott karfiol', 'EBÉD'),
-(25, 10, 'Avokádókrém', 'UZSONNA'),
-(26, 9, 'Sonkás-tormás babka', 'UZSONNA'),
-(28, 12, 'Rösztipizza', 'VACSORA'),
-(29, 11, 'Tojásfasírt', 'VACSORA');
+(31, 16, 'Csirke szárny', 'REGGELI'),
+(32, 14, 'Amerikai Palacsinta', 'REGGELI'),
+(34, 15, 'Burrito', 'EBÉD'),
+(35, 13, 'Poutine', 'EBÉD');
 
 -- --------------------------------------------------------
 
@@ -498,13 +482,7 @@ CREATE TABLE `hozzaszolasok` (
 --
 
 INSERT INTO `hozzaszolasok` (`id`, `felhasznalo_id`, `hozzaszolas`, `receptek_id`, `feltoltes_ideje`) VALUES
-(5, 5, 'asd', 1, '2025-03-16 22:43:32'),
-(6, 5, 'asdd', 1, '2025-03-17 18:23:33'),
-(7, 5, 'asdd', 1, '2025-03-17 18:25:58'),
-(8, 5, 'asdd', 1, '2025-03-17 18:26:00'),
-(9, 5, 'asd\nasdasd\nasd', 1, '2025-03-19 22:20:35'),
-(10, 5, 'a\na\naaa', 1, '2025-03-19 23:13:31'),
-(11, 6, 'asda\naa', 1, '2025-03-20 18:00:21');
+(12, 5, 'Szuper étel', 16, '2025-04-08 09:54:46');
 
 --
 -- Eseményindítók `hozzaszolasok`
@@ -1133,7 +1111,48 @@ INSERT INTO `log` (`id`, `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `
 (377, 'receptetrend', 22, '2025-04-07 12:49:34', 'INSERT', NULL, '22'),
 (378, 'receptetrend', 23, '2025-04-07 12:49:34', 'INSERT', NULL, '23'),
 (379, 'receptetrend', 24, '2025-04-07 12:49:34', 'INSERT', NULL, '24'),
-(380, 'receptetrend', 25, '2025-04-07 12:49:34', 'INSERT', NULL, '25');
+(380, 'receptetrend', 25, '2025-04-07 12:49:34', 'INSERT', NULL, '25'),
+(381, 'ertekeles', 35, '2025-04-08 09:54:33', 'INSERT', NULL, '5'),
+(382, 'hozzaszolasok', 12, '2025-04-08 09:54:46', 'INSERT', NULL, 'Szuper étel'),
+(383, 'bevasarlolista', 34, '2025-04-11 09:39:23', 'INSERT', NULL, '5'),
+(384, 'bevasarlolista', 35, '2025-04-11 09:39:23', 'INSERT', NULL, '5'),
+(385, 'bevasarlolista', 36, '2025-04-11 09:39:31', 'INSERT', NULL, '5'),
+(386, 'kedvenceklista', 13, '2025-04-11 09:39:33', 'INSERT', NULL, '5'),
+(387, 'ertekeles', 36, '2025-04-11 09:39:35', 'INSERT', NULL, '3'),
+(388, 'bevasarlolista', 37, '2025-04-11 09:40:03', 'INSERT', NULL, '5'),
+(389, 'kedvenceklista', 13, '2025-04-11 10:40:48', 'DELETE', '13', NULL),
+(390, 'bevasarlolista', 34, '2025-04-11 10:40:52', 'DELETE', '5', NULL),
+(391, 'bevasarlolista', 35, '2025-04-11 10:40:54', 'DELETE', '5', NULL),
+(392, 'bevasarlolista', 36, '2025-04-11 10:41:02', 'DELETE', '5', NULL),
+(393, 'bevasarlolista', 37, '2025-04-11 10:41:22', 'DELETE', '5', NULL),
+(394, 'bevasarlolista', 38, '2025-04-11 10:41:26', 'INSERT', NULL, '5'),
+(395, 'bevasarlolista', 39, '2025-04-11 10:41:26', 'INSERT', NULL, '5'),
+(396, 'bevasarlolista', 40, '2025-04-11 10:41:26', 'INSERT', NULL, '5'),
+(397, 'bevasarlolista', 41, '2025-04-11 10:41:27', 'INSERT', NULL, '5'),
+(398, 'bevasarlolista', 42, '2025-04-11 10:41:32', 'INSERT', NULL, '5'),
+(399, 'bevasarlolista', 43, '2025-04-11 10:41:33', 'INSERT', NULL, '5'),
+(400, 'bevasarlolista', 44, '2025-04-11 10:41:33', 'INSERT', NULL, '5'),
+(401, 'bevasarlolista', 40, '2025-04-11 10:41:38', 'DELETE', '5', NULL),
+(402, 'bevasarlolista', 39, '2025-04-11 10:41:38', 'DELETE', '5', NULL),
+(403, 'bevasarlolista', 38, '2025-04-11 10:41:40', 'DELETE', '5', NULL),
+(404, 'bevasarlolista', 41, '2025-04-11 10:41:40', 'DELETE', '5', NULL),
+(405, 'bevasarlolista', 42, '2025-04-11 10:41:41', 'DELETE', '5', NULL),
+(406, 'bevasarlolista', 43, '2025-04-11 10:41:42', 'DELETE', '5', NULL),
+(407, 'bevasarlolista', 44, '2025-04-11 10:41:43', 'DELETE', '5', NULL),
+(408, 'receptek', 17, '2025-04-11 10:56:00', 'UPDATE_ELFOGADOT', '0', '1'),
+(409, 'hozzaszolasok', 11, '2025-04-11 11:02:08', 'DELETE', 'asda\naa', NULL),
+(410, 'hozzaszolasok', 10, '2025-04-11 11:02:10', 'DELETE', 'a\na\naaa', NULL),
+(411, 'hozzaszolasok', 9, '2025-04-11 11:02:13', 'DELETE', 'asd\nasdasd\nasd', NULL),
+(412, 'hozzaszolasok', 8, '2025-04-11 11:02:15', 'DELETE', 'asdd', NULL),
+(413, 'hozzaszolasok', 7, '2025-04-11 11:02:16', 'DELETE', 'asdd', NULL),
+(414, 'hozzaszolasok', 6, '2025-04-11 11:02:18', 'DELETE', 'asdd', NULL),
+(415, 'hozzaszolasok', 5, '2025-04-11 11:02:20', 'DELETE', 'asd', NULL),
+(416, 'bevasarlolista', 33, '2025-04-11 11:02:31', 'DELETE', '6', NULL),
+(417, 'bevasarlolista', 32, '2025-04-11 11:02:33', 'DELETE', '6', NULL),
+(418, 'bevasarlolista', 26, '2025-04-11 11:02:34', 'DELETE', '5', NULL),
+(419, 'bevasarlolista', 21, '2025-04-11 11:02:36', 'DELETE', '5', NULL),
+(420, 'bevasarlolista', 19, '2025-04-11 11:02:37', 'DELETE', '5', NULL),
+(421, 'bevasarlolista', 14, '2025-04-11 11:02:39', 'DELETE', '5', NULL);
 
 -- --------------------------------------------------------
 
@@ -1180,7 +1199,7 @@ INSERT INTO `receptek` (`id`, `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id
 (14, 'Amerikai Palacsinta', 5, 'REGGELI', 1, 323, './receptkepek/admin/admin_recept_14.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-07 10:01:28', 26, 'Az összes hozzávalót beletesszük a turmixba, és alaposan összemixeljük. Érdemes 2 részletben hozzáadni a tejet és a lisztet, így egyszerűbb, hatékonyabb. Felforrósítunk és beolajozunk egy teflon serpenyőt. A tésztakeverékből 2-3 korongot csorgatunk bele. A turmix kiöntője segítségével egyszerű adagolni. Aranybarnára sütjük mindkét oldalát. Ízlés szerint fogyaszthatjuk mézzel, mogyorókrémmel, olvasztott csokival, lekvárral, juharsziruppal.', 1, NULL, 1),
 (15, 'Burrito', 5, 'EBÉD', 3, 600, './receptkepek/admin/admin_recept_15.jpg', 'NEHÉZ', 50, 1, 'DRÁGA', '2025-04-07 10:31:44', 29, 'Összeállítás Hevítsük fel az olajat és pirítsuk meg rajta a darált húst, amit fűszerezünk a burrito fűszerrel (vagy házilag is keverhetünk: pirospaprika, oregánó,barna cukor, só, cayenne bors, fokhagymapor, vöröshagymapor). A tortillát kenjük meg tejföllel, majd kanalazzunk rá a babból. Jöhet rá a sült hús, főtt rizs, kukorica, pico de gallo, 1-2 karika jalapeno. Csavarjuk fel és serpenyőben süssük meg mindkét oldalát. Csavarjuk alufóliába, hogy jobban összeálljon. Vágjuk félbe és tálaljuk tejföllel és jalapenoval. Pico de gallo Mindent vágjunk fel nagyon apróra, majd facsarjuk rá a lime levét és sózzuk-borsozzuk. Paradicsomos bab Hevítsük fel az olajat és az apróra vágott lila hagymát, fokhagymát dinszteljük meg. Tegyük rá a paradicsompürét és kicsit karamellizáljuk. Jöhet rá az átöblített konzerves bab, amit sózzunk-borsozzunk. Öntsük fel kis vízzel és főzzük puhára.', 1, NULL, 1),
 (16, 'Csirke szárny', 5, 'REGGELI', 38, 350, './receptkepek/admin/admin_recept_16.jpg', 'KÖNNYÜ', 45, 1, 'OLCSÓ', '2025-04-07 10:31:31', 26, 'A csirkeszárnyakat megmossuk, majd \"összecsomagoljuk\", hogy sütés közben ne nyíljanak ki. A fűszereket alaposan összekeverjük a lereszelt fokhagymával és gyömbérrel, valamint az olívaolajjal és a mézzel. Kevés szójaszósszal ízesítjük a pácot, és megkenjük vele a szárnyakat. Hagyjuk legalább fél órát szobahőmérsékleten pácolódni, aztán tegyük sütőpapírral bélelt tepsire, majd a 180 fokra előmelegített sütőbe 30-35 percre, amíg szépen meg nem pirul.', 1, NULL, 1),
-(17, 'chocolate chip cookie', 5, 'UZSONNNA', 12, 200, './receptkepek/admin/admin_recept_17.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-07 10:49:34', 26, 'Melegítsd elő a sütőt 180°C-ra, és bélelj ki egy tepsit sütőpapírral. Egy kis tálban keverd össze a kukoricakeményítőt és a vizet, majd tedd félre. Egy nagyobb tálban habosítsd fel a vajat a barna és kristálycukorral. Add hozzá a tojást és a vaníliakivonatot, majd keverd simára. Szitáld hozzá a lisztet, sütőport, szódabikarbónát és sót, majd keverd össze. Öntsd hozzá a keményítős keveréket, majd óvatosan dolgozd össze a tésztát. Forgasd bele a csokoládét. Egy kanál segítségével adagold a tésztát a sütőpapírra, kb. 5 cm távolságra egymástól. Süsd 10-12 percig, vagy amíg a szélei aranybarnára sülnek. Hűtsd ki rácson, majd tálald.', 0, NULL, 1);
+(17, 'chocolate chip cookie', 5, 'UZSONNNA', 12, 200, './receptkepek/admin/admin_recept_17.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-11 08:56:00', 26, 'Melegítsd elő a sütőt 180°C-ra, és bélelj ki egy tepsit sütőpapírral. Egy kis tálban keverd össze a kukoricakeményítőt és a vizet, majd tedd félre. Egy nagyobb tálban habosítsd fel a vajat a barna és kristálycukorral. Add hozzá a tojást és a vaníliakivonatot, majd keverd simára. Szitáld hozzá a lisztet, sütőport, szódabikarbónát és sót, majd keverd össze. Öntsd hozzá a keményítős keveréket, majd óvatosan dolgozd össze a tésztát. Forgasd bele a csokoládét. Egy kanál segítségével adagold a tésztát a sütőpapírra, kb. 5 cm távolságra egymástól. Süsd 10-12 percig, vagy amíg a szélei aranybarnára sülnek. Hűtsd ki rácson, majd tálald.', 1, NULL, 1);
 
 --
 -- Eseményindítók `receptek`
@@ -1463,13 +1482,13 @@ ALTER TABLE `receptetrend`
 -- AUTO_INCREMENT a táblához `bevasarlolista`
 --
 ALTER TABLE `bevasarlolista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT a táblához `ertekeles`
 --
 ALTER TABLE `ertekeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT a táblához `etelfajta`
@@ -1505,13 +1524,13 @@ ALTER TABLE `gyerekmenu`
 -- AUTO_INCREMENT a táblához `hetimenu`
 --
 ALTER TABLE `hetimenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT a táblához `hozzaszolasok`
 --
 ALTER TABLE `hozzaszolasok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT a táblához `hozzavalok`
@@ -1523,7 +1542,7 @@ ALTER TABLE `hozzavalok`
 -- AUTO_INCREMENT a táblához `kedvenceklista`
 --
 ALTER TABLE `kedvenceklista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT a táblához `konyha`
@@ -1535,7 +1554,7 @@ ALTER TABLE `konyha`
 -- AUTO_INCREMENT a táblához `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
 
 --
 -- AUTO_INCREMENT a táblához `receptek`
@@ -1612,78 +1631,78 @@ DELIMITER $$
 --
 -- Események
 --
-CREATE DEFINER=`root`@`localhost` EVENT `hetimenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-03-24 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+CREATE DEFINER=`root`@`localhost` EVENT `hetimenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-11 11:35:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
     -- Delete the old menu
     DELETE FROM hetimenu;
     
     -- Insert new random recipes for breakfast
     INSERT INTO hetimenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'REGGELI' FROM receptek
-    WHERE napszak = 'REGGELI'
+    WHERE napszak = 'REGGELI' AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
 
     INSERT INTO hetimenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'TÍZÓRAI' FROM receptek
-    WHERE napszak = 'TÍZÓRAI'
+    WHERE napszak = 'TÍZÓRAI' AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
     
     -- Insert new random recipes for lunch
     INSERT INTO hetimenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'EBÉD' FROM receptek
-    WHERE napszak = 'EBÉD'
+    WHERE napszak = 'EBÉD' AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
 
     INSERT INTO hetimenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'UZSONNA' FROM receptek
-    WHERE napszak = 'UZSONNA'
+    WHERE napszak = 'UZSONNA' AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
     
     -- Insert new random recipes for dinner
     INSERT INTO hetimenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'VACSORA' FROM receptek
-    WHERE napszak = 'VACSORA'
+    WHERE napszak = 'VACSORA' AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7; -- Adjust as needed
 END$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `gyerekmenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-03-24 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+CREATE DEFINER=`root`@`localhost` EVENT `gyerekmenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-11 11:08:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
     -- Delete the old menu
     DELETE FROM gyerekmenu;
     
     -- Insert new random recipes for breakfast
     INSERT INTO gyerekmenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'REGGELI' FROM receptek
-    WHERE napszak = 'REGGELI' AND receptek.gyerekmenu = 1
+    WHERE napszak = 'REGGELI' AND receptek.gyerekmenu = 1 AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
 
     INSERT INTO gyerekmenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'TÍZÓRAI' FROM receptek
-    WHERE napszak = 'TÍZÓRAI' AND receptek.gyerekmenu = 1
+    WHERE napszak = 'TÍZÓRAI' AND receptek.gyerekmenu = 1 AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
     
     -- Insert new random recipes for lunch
     INSERT INTO gyerekmenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'EBÉD' FROM receptek
-    WHERE napszak = 'EBÉD' AND receptek.gyerekmenu = 1
+    WHERE napszak = 'EBÉD' AND receptek.gyerekmenu = 1 AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
 
     INSERT INTO gyerekmenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'UZSONNA' FROM receptek
-    WHERE napszak = 'UZSONNA' AND receptek.gyerekmenu = 1
+    WHERE napszak = 'UZSONNA' AND receptek.gyerekmenu = 1 AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7;
     
     -- Insert new random recipes for dinner
     INSERT INTO gyerekmenu (recept_id, recept_neve, napszak)
     SELECT id, neve, 'VACSORA' FROM receptek
-    WHERE napszak = 'VACSORA' AND receptek.gyerekmenu = 1
+    WHERE napszak = 'VACSORA' AND receptek.gyerekmenu = 1 AND receptek.elfogadot = 1
     ORDER BY RAND()
     LIMIT 7; -- Adjust as needed
 END$$

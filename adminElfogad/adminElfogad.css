@@ -1,10 +1,12 @@
-
-
-
-
-
 #receptLeiras {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+  font-size: large;
+}
+
+#receptKep{
+  max-height: 800px;
+  max-width: 1200px;
+}
