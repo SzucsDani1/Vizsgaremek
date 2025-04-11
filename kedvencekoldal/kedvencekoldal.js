@@ -121,17 +121,20 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
     h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve+"-"+recept.id;
   
     let btnLenyit = document.createElement("button");
-    btnLenyit.classList = "accordion-button";
+    btnLenyit.classList = "accordion-button collapsed";
     btnLenyit.type = "button";
     btnLenyit.setAttribute("data-bs-toggle", "collapse");
-    btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve+"-"+recept.id);
+    btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
     btnLenyit.setAttribute("aria-expanded", "true");
-    btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve+"-"+recept.id);
+    btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
     btnLenyit.innerHTML = recept.neve;
+    btnLenyit.addEventListener("click", function(){
+      console.log("asdasdasdasdsa")
+    })
   
     let divPanelLenyitva = document.createElement("div");
-    divPanelLenyitva.id = "panelLenyitva-"+recept.neve+"-"+recept.id;
-    divPanelLenyitva.classList = "ccordion-collapse collapse show";
+    divPanelLenyitva.id = "panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id;
+    divPanelLenyitva.classList = "accordion-collapse collapse";
     divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve+"-"+recept.id);
   
     let divAccordionBody = document.createElement("div");
@@ -182,7 +185,7 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
 
     divAccordionBody.appendChild(divListGroup);
 
-    divPanelLenyitva.appendChild
+    //divPanelLenyitva.appendChild
     h2AccordionHeader.appendChild(btnLenyit);
 
   }
