@@ -662,6 +662,8 @@ function hozzaszolasGeneral(hozzaszolasok){
       spanFelh.innerHTML = "" + hozzaszolas.felhasznalonev + "";
       spanIdo.innerHTML = hozzaszolas.feltoltes_ideje;
       spanIdo.classList = "text-body-secondary ms-4";
+
+      li.id = "hozzaszolasSzoveg";
       
       if(hozzaszolas.felhasznalo_id == felhasznalo_id){
           li.classList = "list-group-item list-group-item-primary my-2 p-2 w-100";

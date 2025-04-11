@@ -35,3 +35,10 @@
   max-height: 800px;
   max-width: 1200px;
 }
+
+#hozzaszolasSzoveg {
+  word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    text-align: justify;
+}
