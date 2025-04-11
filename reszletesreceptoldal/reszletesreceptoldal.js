@@ -636,6 +636,7 @@ function receptMegjelenit(){
 
 function hozzaszolasGeneral(hozzaszolasok){
   let ul = document.getElementById("hozzaszolasok");
+  ul.classList = "list-group list-group-flush w-100";
   ul.innerHTML = "";
   
   for(let hozzaszolas of hozzaszolasok){
