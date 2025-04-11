@@ -670,7 +670,7 @@
 
             case "gyerekmenuleker":
                 if($_SERVER["REQUEST_METHOD"] == "GET"){
-                    $gyerekmenu = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites, hetimenu.id as hetimenu_id,felhasznalok.felhnev FROM receptek INNER JOIN gyerekmenu ON gyerekmenu.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id WHERE receptek.elfogadot = 1 ORDER BY gyerekmenu.id;");
+                    $gyerekmenu = adatokLekerdezese("SELECT receptek.id,receptek.neve, receptek.felhasznalo_id, receptek.napszak, receptek.etelfajta_id, receptek.kaloria, receptek.kepek, receptek.nehezseg, receptek.ido, receptek.adag, receptek.ar, receptek.mikor_feltolt, receptek.konyha_id, receptek.elkeszites,felhasznalok.felhnev FROM receptek INNER JOIN gyerekmenu ON gyerekmenu.recept_id = receptek.id INNER JOIN felhasznalok ON felhasznalok.id = receptek.felhasznalo_id WHERE receptek.elfogadot = 1 ORDER BY gyerekmenu.id;");
                     if(is_array($gyerekmenu) && !empty($gyerekmenu)){
                         echo json_encode($gyerekmenu, JSON_UNESCAPED_UNICODE);
                     }

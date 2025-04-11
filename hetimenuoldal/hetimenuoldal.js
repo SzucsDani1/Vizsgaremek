@@ -109,13 +109,18 @@ async function hetNapjaLeker(){
             divCard.style = "width: 18rem;";
             divCard.id = kivalasztottRecept.neve;
             
+            let div = document.createElement("div");
+            div.classList = "mx-auto"
+            div.style.height = "230px";
+            div.style.width = "250px"
+            
             let img = document.createElement("img");
-            img.src = kivalasztottRecept.kepek || "";
+            img.src = "../receptfeltolto/adatbazisInterakciok/"+kivalasztottRecept.kepek;
             img.classList = "card-img-top";
             img.alt = kivalasztottRecept.neve;
-            img.width = 250;
-            img.height = 200;
-            
+            img.style.maxWidth = "250px";
+            img.style.maxHeight = "230px";
+
             let divCardBody = document.createElement("div");
             divCardBody.classList = "card-body text-center";
             
@@ -148,7 +153,8 @@ async function hetNapjaLeker(){
             divCardBody.appendChild(inputButton);
             divCardBody.appendChild(pFeltolto);
             
-            divCard.appendChild(img);
+            divCard.appendChild(div);
+            div.appendChild(img);
             divCard.appendChild(divCardBody);
             
             receptMegjelenit.appendChild(divCard);
