@@ -3,8 +3,8 @@ let alertSzamlalo = 0;
 
 export function alertMegjelenit(uzenet, hibae, alertBox, progress){
 
-    let duration = 5000; // 5 seconds
-    let step = 5; // update every 100ms
+    let duration = 5000; 
+    let step = 5; 
     let width = 100;
     progress.hidden = false;
     alertBox.hidden = false;

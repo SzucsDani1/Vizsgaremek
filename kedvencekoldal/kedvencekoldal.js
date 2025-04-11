@@ -124,7 +124,6 @@ function accordionGeneral(hozzavalok, receptek,divAccordion){
     btnLenyit.classList = "accordion-button";
     btnLenyit.type = "button";
     btnLenyit.setAttribute("data-bs-toggle", "collapse");
-    //ID megadása
     btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve+"-"+recept.id);
     btnLenyit.setAttribute("aria-expanded", "true");
     btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve+"-"+recept.id);

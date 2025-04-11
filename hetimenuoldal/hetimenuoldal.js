@@ -40,7 +40,6 @@ async function receptek(){
         if(leker.ok){
             let receptek = await leker.json();
             let kiiratasok = document.getElementsByName("hetNapjai");
-            //receptekBetoltes(receptek);
             for (let kiirat of kiiratasok) {
                 kiirat.addEventListener("change", function() {
                     receptekBetoltes(receptek);

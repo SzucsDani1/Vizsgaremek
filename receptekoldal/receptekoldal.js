@@ -13,7 +13,7 @@ let felhasznalo_id;
 
 async function felhasznaloIdLeker() {
   try {
-    const response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
+    let response = await fetch('../bejelentkezes/backendBejelentkezes/sessionGetFelhasznaloId.php');
     if (response.ok) {
       felhasznalo_id = await response.text();
       console.log('Bejelentkezett felhasználó ID:', felhasznalo_id);
@@ -43,8 +43,6 @@ async function kijelentkezesLeker(){
 
 async function receptekSzuro() {
     try {
-
-
         let kategoriaKeresomezo = document.getElementById("kategoriakKereses");
         let alapanyagKeresomezo = document.getElementById("alapanyagKereses");
         let alapanyagNelkulKeresomezo = document.getElementById("alapanyagNelkulKereses");
@@ -57,50 +55,50 @@ async function receptekSzuro() {
         etrendKeresomezo.value = "";
         konyhaKeresomezo.value = "";
 
-        const kategoriak = checkboxLekerdezes("kivalasztottKategoriak");
-        const alapanyagok = checkboxLekerdezes("kivalasztottAlapanyagok");
-        const alapanyagok_nelkul = checkboxLekerdezes("kivalasztottAlapanyagNelkul");
-        const etrend = checkboxLekerdezes("kivalasztottEtrend");
-        const konyha = checkboxLekerdezes("kivalasztottKonyha");
+        let kategoriak = checkboxLekerdezes("kivalasztottKategoriak");
+        let alapanyagok = checkboxLekerdezes("kivalasztottAlapanyagok");
+        let alapanyagok_nelkul = checkboxLekerdezes("kivalasztottAlapanyagNelkul");
+        let etrend = checkboxLekerdezes("kivalasztottEtrend");
+        let konyha = checkboxLekerdezes("kivalasztottKonyha");
 
-        const kereses = document.getElementById("text_kereses")?.value.trim() || "";
+        let kereses = document.getElementById("text_kereses")?.value.trim() || "";
         
 
         // Napszak
-        const NapszakCheckbox = document.querySelectorAll(".btn-check");
-        const napszak = [];
+        let NapszakCheckbox = document.querySelectorAll(".btn-check");
+        let napszak = [];
 
-        for (const checkbox of NapszakCheckbox) {
+        for (let checkbox of NapszakCheckbox) {
             if (checkbox.checked) {
                 napszak.push(checkbox.value);
             }
         }
         
         // Ár
-        const arInput = document.getElementById("arInput");
+        let arInput = document.getElementById("arInput");
         let ar = null;
         if (arInput) {
-            const arValue = parseInt(arInput.value);
+            let arValue = parseInt(arInput.value);
             if (arValue === 1) ar = "Olcsó";
             else if (arValue === 2) ar = "Átlagos";
             else if (arValue === 3) ar = "Drága";
         }
 
         // Idő
-        const idoInput = document.getElementById("idoInput");
+        let idoInput = document.getElementById("idoInput");
         let ido = null;
         if (idoInput) {
-            const idoValue = parseInt(idoInput.value);
+            let idoValue = parseInt(idoInput.value);
             if (idoValue === 1) ido = 30;
             else if (idoValue === 2) ido = 60;
             else if (idoValue === 3) ido = 120;
         }
         
         // Kalória
-        const kaloriaInput = document.getElementById("kaloriaInput");
+        let kaloriaInput = document.getElementById("kaloriaInput");
         let kaloria = null;
         if (kaloriaInput) {
-            const kaloriaValue = parseInt(kaloriaInput.value);
+            let kaloriaValue = parseInt(kaloriaInput.value);
             if (kaloriaValue === 1) kaloria = 200;
             else if (kaloriaValue === 2) kaloria = 400;
             else if (kaloriaValue === 3) kaloria = 600;
@@ -108,17 +106,16 @@ async function receptekSzuro() {
         }
         
         
-        // Get difficulty level
-        const nehezsegInput = document.getElementById("nehezsegInput");
+        let nehezsegInput = document.getElementById("nehezsegInput");
         let nehezseg = null;
         if (nehezsegInput) {
-            const nehezsegValue = parseInt(nehezsegInput.value);
+            let nehezsegValue = parseInt(nehezsegInput.value);
             if (nehezsegValue === 1) nehezseg = "Könnyű";
             else if (nehezsegValue === 2) nehezseg = "Közepes";
             else if (nehezsegValue === 3) nehezseg = "Nehéz";
         }
         
-        const body = {
+        let body = {
             kereses, 
             kategoriak,
             alapanyagok,
@@ -133,13 +130,13 @@ async function receptekSzuro() {
         };
 
 
-        for (const index in body) {
+        for (let index in body) {
             if (body[index] === null || (Array.isArray(body[index]) && !body[index].length)) {
                 delete body[index];
             }
         }
         
-        const lekerReceptek = await fetch("../adatbazisInterakciok/szuresreceptek", {
+        let lekerReceptek = await fetch("../adatbazisInterakciok/szuresreceptek", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -152,7 +149,7 @@ async function receptekSzuro() {
             nincsTalalatKeresesre("Nincs találat!");
         }
         else if (lekerReceptek.ok) {
-            const receptek = await lekerReceptek.json();
+            let receptek = await lekerReceptek.json();
             let divContainer = document.getElementById("kartyak");
             receptekBetoltes(receptek, divContainer);
         } 
@@ -165,8 +162,8 @@ async function konyhaListaLeker(){
     try{
         let eredmeny = await fetch("../adatbazisInterakciok/konyha");
         if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const konyha of lista){
+            let lista = await eredmeny.json();        
+            for(let konyha of lista){
                 konyhak.add(konyha.neve)
             }
         }
@@ -184,8 +181,8 @@ async function etrendListaLeker(){
     try{
         let eredmeny = await fetch("../adatbazisInterakciok/etrend");
         if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const etrend of lista){
+            let lista = await eredmeny.json();        
+            for(let etrend of lista){
                 etrendek.add(etrend.neve);
             }            
         }
@@ -202,8 +199,8 @@ async function kategoriakListaLeker(){
     try{
         let eredmeny = await fetch("../adatbazisInterakciok/etelfajta");
         if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const kategoria of lista){
+            let lista = await eredmeny.json();        
+            for(let kategoria of lista){
                 kategoriak.add(kategoria.neve)
             }            
         }
@@ -220,8 +217,8 @@ async function alapanyagListaLeker(){
     try{
         let eredmeny = await fetch("../adatbazisInterakciok/alapanyag");
         if(eredmeny.ok){
-            const lista = await eredmeny.json();        
-            for(const alapanyag of lista){
+            let lista = await eredmeny.json();        
+            for(let alapanyag of lista){
                 alapanyagok.add(alapanyag.hozzavalo)
             }
         }
@@ -236,16 +233,16 @@ async function alapanyagListaLeker(){
 
 
 function checkboxLekerdezes(kivalasztottRecept) {
-    const recept = document.getElementById(kivalasztottRecept);
+    let recept = document.getElementById(kivalasztottRecept);
     if (!recept){
         return [];
     } 
     
-    const kivalasztottCheckboxok = [];
-    const checkboxok = recept.querySelectorAll(".kivalasztott-div");
+    let kivalasztottCheckboxok = [];
+    let checkboxok = recept.querySelectorAll(".kivalasztott-div");
     
-    for (const checkbox of checkboxok) {
-        const checkboxSzoveg = checkbox.textContent.trim().replace("×", "").trim();
+    for (let checkbox of checkboxok) {
+        let checkboxSzoveg = checkbox.textContent.trim().replace("×", "").trim();
         kivalasztottCheckboxok.push(checkboxSzoveg);
     }
     
@@ -269,7 +266,7 @@ function nincsTalalatKeresesre(error)
 
 
 function arFigyel() {
-    const range = document.getElementById("arInput");
+    let range = document.getElementById("arInput");
     let arKiir = document.getElementById("arKiir");
 
     range.addEventListener("input", frissitAr); 
@@ -297,7 +294,7 @@ function arFigyel() {
 
 
 function kaloriaFigyel() {
-    const range = document.getElementById("kaloriaInput");
+    let range = document.getElementById("kaloriaInput");
     let kaloriaKiir = document.getElementById("kaloriaKiir");
 
     range.addEventListener("input", frissitKaloria);
@@ -326,7 +323,7 @@ function kaloriaFigyel() {
 }
 
 function nehezsegFigyel() {
-    const range = document.getElementById("nehezsegInput");
+    let range = document.getElementById("nehezsegInput");
     let nehezsegKiir = document.getElementById("nehezsegKiir");
 
     range.addEventListener("input", frissitNehezseg);
@@ -353,7 +350,7 @@ function nehezsegFigyel() {
 
 
 function idoFigyel() {
-    const range = document.getElementById("idoInput");
+    let range = document.getElementById("idoInput");
     let idoKiir = document.getElementById("idoKiir");
 
     range.addEventListener("input", frissitIdo);
@@ -637,7 +634,7 @@ function inicializalSzurok() {
 }
 
 function receptKereses() {
-    const KeresesButton = document.getElementById("button_kereses");
+    let KeresesButton = document.getElementById("button_kereses");
     if (KeresesButton) {
         KeresesButton.addEventListener("click", receptekSzuro);
     }
@@ -655,7 +652,7 @@ function szurokLenullazasa() {
     document.getElementById("kivalasztottKonyha").innerHTML = "";
     
     let checkboxes = document.querySelectorAll(".btn-check");
-    for (const checkbox of checkboxes) {
+    for (let checkbox of checkboxes) {
         checkbox.checked = false;
     }
     

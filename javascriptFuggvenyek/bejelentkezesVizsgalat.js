@@ -1,8 +1,8 @@
 
 async function bejelenzkezesVizsg(){
     let felhasznaloId
-    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
-    .then(response => response.text())  // Get the response as text
+    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId') 
+    .then(response => response.text())  
     .then(id => {
     if (id) {
         felhasznaloId = id;
@@ -29,7 +29,6 @@ async function bejelenzkezesVizsg(){
         }
     }
 }
-//? felhasznalonev
 
 window.addEventListener("load",bejelenzkezesVizsg); 
 

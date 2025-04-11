@@ -62,8 +62,6 @@ export function receptekBetoltes(receptek, divContainer, kedvencOldalE, felhaszn
                     
                     if(torol.ok){
                       console.log("Sikeres törlés!");
-                      //kedvencReceptLeker();
-                      //receptekBetoltes(receptek, divContainer, true, felhasznalo_id);
                       window.location.reload()
                     }
                     else{

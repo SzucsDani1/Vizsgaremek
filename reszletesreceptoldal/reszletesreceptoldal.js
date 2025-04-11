@@ -11,8 +11,8 @@ let hozzavalok = [];
 let felhasznalo_id;
 let bevasarloLista = [];
 
-const urlParams = new URLSearchParams(window.location.search);
-const receptek_id = urlParams.get('receptek_id');
+const URL = new URLSearchParams(window.location.search);
+const receptek_id = URL.get('receptek_id');
 
 async function felhasznaloIdLeker() {
   try {
@@ -654,7 +654,6 @@ function hozzaszolasGeneral(hozzaszolasok){
       else{
         img.src = "../profilszerkeszto/feltoltotKepek/default/profile_picture.jpg";
       }
-      //PROFILKÉP!!
       img.alt = "Profil";
       img.classList = "rounded-circle me-2";
       img.style.width = "40px";
@@ -672,7 +671,7 @@ function hozzaszolasGeneral(hozzaszolasok){
       
       divFejlec.classList = "mb-2 text-secondary";
       
-      // Sortörések kezelése
+      // Sortörés
       divTartalom.innerHTML = hozzaszolas.hozzaszolas.replace(/\n/g, '<br>');
       
       ul.appendChild(li);

@@ -183,7 +183,6 @@ function kategoriaHozzaadasa() {
     btn_hozzaad.classList = "btn btn-primary w-50 mx-auto";
     btn_hozzaad.innerHTML = "Hozzáad";
     
-    // Az új kategória elejére tesszük a lista elemeit
     kategoriakKiir.prepend(divTablazat);
     kategoriakKiir.prepend(divFigyelmeztet);
     kategoriakKiir.prepend(divFilterBox);
@@ -868,7 +867,6 @@ function accordionGeneral(divAccordion, receptek) {
         let divAccordionItem = document.createElement("div");
         divAccordionItem.classList = "accordion-item my-2";
         
-        // Törlés gomb létrehozása
         let btnTorles = document.createElement("button");
         btnTorles.type = "accordion-button";
         btnTorles.classList.add("btn", "btn-danger", "mt-3", "btn-sm","w-100");
@@ -905,7 +903,6 @@ function accordionGeneral(divAccordion, receptek) {
         let divModositJavaslat = document.createElement("div");
         divModositJavaslat.innerHTML = "<b>Módosítási javaslat:</b> "+recept.modositas_jav;
 
-        // Elemek összeépítése
         h2AccordionHeader.appendChild(btnLenyit);
         
         divAccordionItem.appendChild(h2AccordionHeader);
@@ -1007,8 +1004,8 @@ async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak,
             let alertbox = document.getElementById("feltoltAlert");
             let progressBar = document.getElementById("feltoltProgressBar");
             alertMegjelenit("Sikeres feltöltés!", false, alertbox, progressBar);
-            let duration = 5000; // 5 seconds
-            let step = 5; // update every 100ms
+            let duration = 5000; 
+            let step = 5; 
             let szamlalo = 100;
             let interval = setInterval(() => {
                 szamlalo -= (100 / (duration / step));
@@ -1024,8 +1021,8 @@ async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak,
 }
 
 async function felhasznaloIdLeker() {
-    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId')  // Fetch the PHP script
-    .then(response => response.text())  // Get the response as text
+    await fetch('../adatbazisInterakciok/sessionLekerFelhasznaloId') 
+    .then(response => response.text()) 
     .then(id => {
     if (id) {
         felhasznaloId = id;
