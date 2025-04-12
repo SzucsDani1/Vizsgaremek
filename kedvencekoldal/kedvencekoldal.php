@@ -1,3 +1,9 @@
+<?php
+    require_once "../adatbazisInterakciok/sessionConfig.php";
+    
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
