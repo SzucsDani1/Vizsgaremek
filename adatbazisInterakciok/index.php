@@ -1132,6 +1132,56 @@
                
             }
             break;
+
+            case "receptTorol":
+                if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                    if(!empty($bodyAdatok["recept_id"]) && !empty($bodyAdatok["felhasznaloId"])){
+                        $recept_id = $bodyAdatok["recept_id"];
+                        $felhasznaloId = $bodyAdatok["felhasznaloId"]; 
+                        
+                        
+
+                        $torlesEtrend = adatokValtoztatasa("DELETE FROM receptetrend WHERE `receptetrend`.`recept_id` = $recept_id ");
+                        $torlesHozzavalo = adatokValtoztatasa("DELETE FROM hozzavalok WHERE `hozzavalok`.`recept_id` = $recept_id ");
+                        $torlesRecept = adatokValtoztatasa("DELETE FROM receptek WHERE `receptek`.`id` = $recept_id ");
+
+                        $felhasznaloNev = adatokLekerdezese("SELECT `felhasznalok`.`felhnev` FROM `felhasznalok` WHERE  `felhasznalok`.`id` = $felhasznaloId");
+
+                        $kepNeve = $felhasznaloNev[0]["felhnev"] . "_recept_". $recept_id;
+                        $kepMappa  = "../receptfeltolto/adatbazisInterakciok/receptkepek/". $felhasznaloNev[0]["felhnev"] . "/";
+
+                        $utvonal = $kepMappa . $kepNeve . ".*";
+
+                        $kepek = glob($utvonal);
+                        foreach ($kepek as $kep) {
+                            # code...
+                            if(is_file($kep)){
+                                unlink($kep);
+                            }
+                        }
+
+                        if($torlesEtrend == "Sikeres művelet!" && $torlesHozzavalo == "Sikeres művelet!"&& $torlesRecept == "Sikeres művelet!"){
+           
+                           echo json_encode(["valasz" => "Sikeres módosítás!"], JSON_UNESCAPED_UNICODE);
+                            
+                        }
+                        else{
+                            echo json_encode(["valasz" => "Sikertelen módosítás!"], JSON_UNESCAPED_UNICODE);
+                            header("bad request", true, 400);
+                        }
+                    }
+                    else{
+                        header("bad request", true, 400);
+                        echo json_encode(["valasz" => "Hiányos adatok!"], JSON_UNESCAPED_UNICODE);
+                        
+                    }
+               }
+               else{
+                echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+                header('bad request', true, 400);
+               
+            }
+            break;
    
 
         default:

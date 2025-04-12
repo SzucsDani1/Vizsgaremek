@@ -136,6 +136,8 @@
             <button id="elfogadRec" type="button" class="btn btn-success col-md-3 col-sm-12">Elfogadás</button>
             <button id="modositasJavButton" type="button" class="btn btn-warning col-md-3 col-sm-12">Módosítási javaslat írása</button>
             <button id="opcioMegse" type="button" class="btn btn-danger col-md-3 col-sm-12">Mégse</button>
+            <button id="receptTorles" type="button" class="btn btn-dark col-md-3 col-sm-12">Törlés</button>
+
         </form>
         <!-- END OPCIÓK -->
 

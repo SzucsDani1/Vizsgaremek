@@ -6,7 +6,7 @@ let kategoriak = [];
 let adag = 1;
 let receptek = [];
 let hozzavalok = [];
-let felhasznalo_id = 5;
+let felhasznalo_id
 const urlErtekek = new URLSearchParams(window.location.search);
 let recept_id = urlErtekek.get("recept_id");
 
@@ -354,7 +354,26 @@ async function segedFuggvenyInditashoz() {
     await hozzavalokFuggvenyHivas(); 
 }
 
+async function receptTorles() {
+    try {
+        let torles = await fetch("../adatbazisInterakciok/receptTorol",{
+          method : "DELETE",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify({
+            "recept_id" : recept_id,
+            "felhasznaloId" : felhasznalo_id
+          })
+        })
 
+        if(torles.ok){
+          window.location.href = "./adminElfogad.php"
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 function modositasJavas(){
@@ -371,7 +390,7 @@ function modositasJavasMegse(){
 }
 
 function visszalep(){
-     window.location.href = "adminElfogad.php"
+     window.location.href = "./adminElfogad.php"
 }
 
 
@@ -381,6 +400,7 @@ document.getElementById("javaslatMegse").addEventListener("click", modositasJava
 document.getElementById("elfogadRec").addEventListener("click", receptElfogad)
 document.getElementById("opcioMegse").addEventListener("click", visszalep)
 document.getElementById("javaslatKuld").addEventListener("click", javaslatKuldes)
+document.getElementById("receptTorles").addEventListener("click", receptTorles)
 
 
 async function kijelentkezesLeker(){
