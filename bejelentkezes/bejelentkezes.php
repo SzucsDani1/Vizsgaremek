@@ -56,7 +56,7 @@
     <div class="row my-5 mx-2">
         <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
         <div class="col-12 col-lg-4 col-md-12 col-sm-12">
-            <button type="button" class="btn btn-outline-primary btn-md w-100" data-bs-toggle="modal" data-bs-target="#felugro">Regisztráció</button>
+            <button id="regButton" type="button" class="btn btn-outline-primary btn-md w-100" data-bs-toggle="modal" data-bs-target="#felugro">Regisztráció</button>
         </div>
         <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
     </div>
