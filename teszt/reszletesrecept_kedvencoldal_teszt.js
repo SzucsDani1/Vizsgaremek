@@ -147,7 +147,7 @@ describe('Receptek oldal tesztelése', function() {
         
         await driver.sleep(1000); 
         
-        await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesMarhahus);
+        //await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesMarhahus);
         await driver.sleep(500);
         await btnTorlesMarhahus.click();
         
