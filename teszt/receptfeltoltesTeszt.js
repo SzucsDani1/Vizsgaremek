@@ -10,8 +10,8 @@ async function setupDriver() {
 
 async function tesztReceptFelolt() {
     let driver = await setupDriver();
-    bejelentkezes()
     try {
+        await bejelentkezes(driver)
         await driver.get('http://localhost/13c-toth/Vizsgaremek/receptfeltolto/receptfeltolto.php');
 
         await driver.findElement(By.id('receptNev')).sendKeys('tesztadat');
@@ -24,6 +24,7 @@ async function tesztReceptFelolt() {
         await driver.findElement(By.id('hozzavNev_tesztId')).sendKeys('tesztadat neve');
         await driver.findElement(By.id('receptNev')).sendKeys('tesztadat');
         await driver.findElement(By.id('receptNev')).sendKeys('tesztadat');
+        await driver.sleep(3000);
 
         /*
         await driver.wait(until.alertIsPresent(), 5000);
@@ -44,18 +45,17 @@ async function tesztReceptFelolt() {
     }
 }
 
-async function bejelentkezes() {
-    let driver = await setupDriver();
+async function bejelentkezes(driver) {
 
     await driver.get('http://localhost/13c-toth/Vizsgaremek/bejelentkezes/bejelentkezes.php');
         
     await driver.findElement(By.id('felhnev')).sendKeys('admin');
     await driver.findElement(By.id('jelszo')).sendKeys('admin');
     await driver.findElement(By.id('btnBejelentkezes')).click();
+   
+    
 
-        // await driver.sleep(1000);
-        // let aktualisUrl = await driver.getCurrentUrl();
-        // assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
+    await driver.wait(until.urlContains('fooldal'), 5000);
 }
 
 async function testHianyosRegisztracio() {
