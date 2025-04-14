@@ -182,6 +182,7 @@ function kategoriaHozzaadasa() {
     btn_hozzaad.type = "button";
     btn_hozzaad.classList = "btn btn-primary w-50 mx-auto";
     btn_hozzaad.innerHTML = "Hozzáad";
+    btn_hozzaad.id = "tesztId"
     
     kategoriakKiir.prepend(divTablazat);
     kategoriakKiir.prepend(divFigyelmeztet);
@@ -238,8 +239,10 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     hozzavaloNeve.type = "text";
     hozzavaloNeve.classList = "form-control";
     hozzavaloNeve.placeholder = "Hozzávaló";
+    hozzavaloNeve.id = "hozzavNev_tesztId"
     const labelNev = document.createElement("label");
     labelNev.innerHTML = "Hozzávaló neve";
+    
 
     const divColMennyiseg = document.createElement("div");
     divColMennyiseg.classList = "col-12 col-lg-4 col-md-12 col-sm-12 mb-3";
