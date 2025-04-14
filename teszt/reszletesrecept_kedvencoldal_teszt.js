@@ -138,21 +138,20 @@ describe('Receptek oldal tesztelése', function() {
       });
       
       it('10. Tortilla lap és darált marhahús törlése a bevásárlólistából ID alapján', async () => {
+        // Tortilla lap törlése
         let btnTorlesTortilla = await driver.findElement(By.id("btntortilla lap-34"));
-        let btnTorlesMarhahus = await driver.findElement(By.id("btndarált marhahús-17"));
-        
         await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesTortilla);
         await driver.sleep(500);
         await btnTorlesTortilla.click();
+        await driver.sleep(1000);
         
-        await driver.sleep(1000); 
-        
-        //await driver.executeScript("arguments[0].scrollIntoView(true);", btnTorlesMarhahus);
+        // Az elem újrakeresése a DOM változása után
+        let btnTorlesMarhahus = await driver.findElement(By.id("btndarált marhahús-17"));
         await driver.sleep(500);
         await btnTorlesMarhahus.click();
-        
-        await driver.sleep(2000); 
-      });
+        await driver.sleep(2000);
+    });
+    
       
       
 });
