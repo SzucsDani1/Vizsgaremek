@@ -29,7 +29,7 @@
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12">
                 <!-- FELHASZNÁLÓVÉV -->
-                <input type="text" name="Bejfelhasznalonev" class="form-control " placeholder="Felhasználónév" aria-label="Recept">
+                <input type="text" name="Bejfelhasznalonev" class="form-control" id="felhnev" placeholder="Felhasználónév" aria-label="Recept">
             </div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
         </div>
@@ -37,14 +37,14 @@
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12">
                 <!-- JELSZÓ -->
-                <input type="password" name="Bejjelszo" class="form-control " placeholder="Jelszó" aria-label="Recept">
+                <input type="password" name="Bejjelszo" class="form-control " placeholder="Jelszó" id="jelszo" aria-label="Recept">
             </div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
         </div>
         <div class="row my-5 mx-2">
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12">
-                <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" class="btn btn-outline-primary btn-md w-100 " />
+                <input type="submit" value="Bejelentkezés" name="bejelentkezes" type="button" id="btnBejelentkezes" class="btn btn-outline-primary btn-md w-100 " />
             </div>
             <div class="col-12 col-lg-4 col-md-12 col-sm-12"></div>
         </div>

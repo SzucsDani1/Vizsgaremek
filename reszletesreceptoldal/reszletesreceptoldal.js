@@ -503,7 +503,7 @@ function hozzavalokTablazatGeneral(){
 
         tdSorszam.innerHTML = szamlalo;
         tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
-        tdMennyiseg.innerHTML = Math.round(hozzavalo.mennyiseg * adag) + " " + hozzavalo.mertek_egyseg;
+        tdMennyiseg.innerHTML = hozzavalo.mennyiseg * adag + " " + hozzavalo.mertek_egyseg;
 
         tbody.appendChild(tbodyTR);
         tbodyTR.appendChild(tdSorszam);
@@ -589,7 +589,7 @@ function receptInfoList(){
 
   let liKaloria= document.createElement("li");
   liKaloria.classList = "list-group-item";
-  liKaloria.innerHTML = "<b>Kalória </b>- "+Math.round(receptek[0].kaloria * adag)+" kcal";
+  liKaloria.innerHTML = "<b>Kalória </b>- "+receptek[0].kaloria * adag+" kcal";
 
   let liKonyha= document.createElement("li");
   liKonyha.classList = "list-group-item";
