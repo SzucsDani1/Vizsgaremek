@@ -262,16 +262,13 @@
         </div>
         <div id='feltoltAlert' role='alert' hidden></div>
         <div id='feltoltProgressBar' hidden style=' height: 5px; width: 100%;'></div>
-      </div>      
-                            
-      <div class="row">
-        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
-          <input type="button" value="Recept feltöltése" class="btn btn-warning m-2 col-12 col-lg-12 col-md-12 col-sm-12" id="btnReceptFeltoltes">
+
+        <input type="button" value="Recept feltöltése" class="btn btn-warning m-2 w-100 mx-auto" id="btnReceptFeltoltes">
+        <div class="row mx-auto" id="hibaUzenet">
         </div>
-      </div>
-      <div class="row" id="hibaUzenet">
-        
-      </div>
+      </div>                           
+
+       
 
 
   </div>

@@ -261,7 +261,7 @@ async function hozzavalokLeker(){
         }
       }
       
-      
+      console.log(hozzavalokLista);
       hozzavalokTablazatGeneral();
     }
     else{
@@ -534,7 +534,7 @@ function hozzavalokTablazatGeneral(){
         tdSorszam.innerHTML = szamlalo;
         tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
         let adagEredmeny = 0;
-        adagEredmeny = parseFloat(((receptek[0].kaloria / alapAdag)* (adag)).toFixed(2));
+        adagEredmeny = parseFloat(((hozzavalo.mennyiseg / alapAdag)* (adag)).toFixed(2));
         
         tdMennyiseg.innerHTML = adagEredmeny + " " + hozzavalo.mertek_egyseg;
 
@@ -755,7 +755,7 @@ function adagFigyel(){
   document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
   document.getElementById("adagKivon").addEventListener("click", function(){
     if(adag > 1){
-      adag = adag - 1;
+      adag = parseFloat(adag) - 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
       hozzavalokLeker();
       receptInfoList();
@@ -764,7 +764,7 @@ function adagFigyel(){
 
   document.getElementById("adagHozzaad").addEventListener("click", function(){
     if(adag < 10){
-      adag = adag + 1;
+      adag = parseFloat(adag)+ 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
       hozzavalokLeker();
       receptInfoList();

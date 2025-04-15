@@ -3,7 +3,8 @@ import {kijelentkezes} from "../javascriptFuggvenyek/kijelentkezes.js";
 import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 let kategoriak = [];
-let adag = 1;
+var adag;
+var alapAdag;
 let receptek = [];
 let hozzavalok = [];
 let felhasznalo_id
@@ -183,7 +184,10 @@ function hozzavalokTablazatGeneral(){
 
         tdSorszam.innerHTML = szamlalo;
         tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
-        tdMennyiseg.innerHTML = Math.round(hozzavalo.mennyiseg * adag) + " " + hozzavalo.mertek_egyseg;
+        let adagEredmeny = 0;
+        adagEredmeny = parseFloat(((hozzavalo.mennyiseg / alapAdag)* (adag)).toFixed(2));
+        
+        tdMennyiseg.innerHTML = adagEredmeny + " " + hozzavalo.mertek_egyseg;
 
         tbody.appendChild(tbodyTR);
         tbodyTR.appendChild(tdSorszam);
@@ -214,7 +218,9 @@ function receptInfoList(){
 
   let liKaloria= document.createElement("li");
   liKaloria.classList = "list-group-item";
-  liKaloria.innerHTML = "<b>Kalória </b>- "+Math.round(receptek[0].kaloria * adag)+" kcal";
+  let adagEredmeny = 0;
+  adagEredmeny = parseFloat(((receptek[0].kaloria / alapAdag)* (adag)).toFixed(2));
+  liKaloria.innerHTML = "<b>Kalória </b>- "+adagEredmeny+" kcal";
 
   let liKonyha= document.createElement("li");
   liKonyha.classList = "list-group-item";
@@ -246,6 +252,32 @@ function receptMegjelenit(){
 }
 
 
+async function adagLeker(){
+  try {
+    
+    let lekerAdag = await fetch("../adatbazisInterakciok/adagleker",{
+      method : "POST",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "recept_id" : recept_id
+      })
+    })
+    
+    let adagLekert= await lekerAdag.json();
+
+    if(lekerAdag.ok){
+      adag = adagLekert[0].adag;
+      alapAdag = adagLekert[0].adag;
+    }
+    else{
+        console.log(adagLekert.valasz);
+    }
+} catch (error) {
+    console.log(error);
+}
+}
 
 
 
@@ -253,18 +285,18 @@ function adagFigyel(){
   document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
   document.getElementById("adagKivon").addEventListener("click", function(){
     if(adag > 1){
-      adag = adag - 1;
+      adag = parseFloat(adag) - 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
-      hozzavalokTablazatGeneral();
+      hozzavalokLeker();
       receptInfoList();
     }
   })
 
   document.getElementById("adagHozzaad").addEventListener("click", function(){
     if(adag < 10){
-      adag = adag + 1;
+      adag = parseFloat(adag)+ 1;
       document.getElementById("adagKiir").innerHTML = "Adag: "+adag;
-      hozzavalokTablazatGeneral();
+      hozzavalokLeker();
       receptInfoList();
     }
   })
@@ -337,22 +369,6 @@ async function javaslatKuldes(){
   }
 
 
-async function hozzavalokFuggvenyHivas() {
-  try {
-      await hozzavalokKategoriaLeker();
-      await hozzavalokLeker();
-  } catch (error) {
-      console.log(error);
-  }
-}
-
-
-async function segedFuggvenyInditashoz() {
-
-    receptLeker();
-    adagFigyel(); 
-    await hozzavalokFuggvenyHivas(); 
-}
 
 async function receptTorles() {
     try {
@@ -401,7 +417,7 @@ document.getElementById("elfogadRec").addEventListener("click", receptElfogad)
 document.getElementById("opcioMegse").addEventListener("click", visszalep)
 document.getElementById("javaslatKuld").addEventListener("click", javaslatKuldes)
 document.getElementById("receptTorles").addEventListener("click", receptTorles)
-
+//window.addEventListener("load", adagLeker);
 
 async function kijelentkezesLeker(){
   try {
@@ -414,7 +430,26 @@ async function kijelentkezesLeker(){
   }
 }
 
+
+async function hozzavalokFuggvenyHivas() {
+  try {
+      await hozzavalokKategoriaLeker();
+      await hozzavalokLeker();
+  } catch (error) {
+      console.log(error);
+  }
+}
+
+
+async function segedFuggvenyInditashoz() {
+
+    await receptLeker();
+    adagFigyel(); 
+    await hozzavalokFuggvenyHivas(); 
+}
+
 window.addEventListener("load", async function(){
+  await adagLeker();
   await felhasznaloIdLeker();
   await jogosultsagLeker(felhasznalo_id, document.getElementById("navbarUl"));
   await segedFuggvenyInditashoz();

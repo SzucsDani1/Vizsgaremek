@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Ápr 11. 11:36
+-- Létrehozás ideje: 2025. Ápr 15. 11:48
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -367,7 +367,7 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `felhnev`, `jelszo`, `joga_id`, `email`, `profilkep`, `letrehozas`, `feltoltot_receptek_szama`) VALUES
-(5, 'admin', '$2y$10$ZJb/iRnFrzUGOeYjX12IV.Hut6wYiVh4c2Q/Zv9Fd8E4GmncYHfx.', 1, 'teszt@teszt.com', './feltoltotKepek/profilKepek/admin/admin_profilkep.jpg', '2025-04-07 10:32:43', NULL),
+(5, 'admin', '$2y$10$ZJb/iRnFrzUGOeYjX12IV.Hut6wYiVh4c2Q/Zv9Fd8E4GmncYHfx.', 1, 'teszt@teszt.co', './feltoltotKepek/profilKepek/admin/admin_profilkep.jpg', '2025-04-13 18:16:36', NULL),
 (6, 'alma', '$2y$10$mbd.cLq9dRTJd/51lHCEF.fs3uh.UBfi6SHfe7KKoXeSMQmQe2DBK', 2, 'alma', NULL, '2024-11-25 11:54:58', NULL),
 (14, 'Pistabéá', '123', 3, '1', NULL, '2025-03-08 17:31:20', 100),
 (16, '111', '$2y$10$QZ1XJxmiUr7BJMsmjswemeCS/Hbs3hYZufEkBGNThwolyOoE.cnfy', 2, '111', NULL, '2025-03-28 21:49:13', NULL);
@@ -440,6 +440,20 @@ CREATE TABLE `gyerekmenu` (
   `napszak` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+--
+-- Eseményindítók `gyerekmenu`
+--
+DELIMITER $$
+CREATE TRIGGER `gyerekmenu_Delete` AFTER DELETE ON `gyerekmenu` FOR EACH ROW INSERT INTO `log` (`id`, `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `elozo_ertek`, `uj_ertek`)
+    VALUES (NULL, 'gyerekmenu', OLD.id, NOW(), 'DELETE', OLD.recept_id, NULL)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `gyerekmenu_Insert` AFTER INSERT ON `gyerekmenu` FOR EACH ROW INSERT INTO `log` ( `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `elozo_ertek`, `uj_ertek`)
+    VALUES ( 'gyerekmenu', NEW.id, NOW(), 'INSERT', NULL, NEW.recept_id)
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -463,6 +477,20 @@ INSERT INTO `hetimenu` (`id`, `recept_id`, `recept_neve`, `napszak`) VALUES
 (34, 15, 'Burrito', 'EBÉD'),
 (35, 13, 'Poutine', 'EBÉD');
 
+--
+-- Eseményindítók `hetimenu`
+--
+DELIMITER $$
+CREATE TRIGGER `hetimenu_Delete` AFTER DELETE ON `hetimenu` FOR EACH ROW INSERT INTO `log` (`id`, `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `elozo_ertek`, `uj_ertek`)
+    VALUES (NULL, 'hetimenu', OLD.id, NOW(), 'DELETE', OLD.recept_id, NULL)
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `hetimenu_Insert` AFTER INSERT ON `hetimenu` FOR EACH ROW INSERT INTO `log` ( `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `elozo_ertek`, `uj_ertek`)
+    VALUES ( 'hetimenu', NEW.id, NOW(), 'INSERT', NULL, NEW.recept_id)
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -482,7 +510,9 @@ CREATE TABLE `hozzaszolasok` (
 --
 
 INSERT INTO `hozzaszolasok` (`id`, `felhasznalo_id`, `hozzaszolas`, `receptek_id`, `feltoltes_ideje`) VALUES
-(12, 5, 'Szuper étel', 16, '2025-04-08 09:54:46');
+(12, 5, 'Szuper étel', 16, '2025-04-08 09:54:46'),
+(13, 5, 'Ez egy hozzászólás', 15, '2025-04-15 07:57:18'),
+(14, 5, 'Ez egy hozzászólás', 15, '2025-04-15 08:00:28');
 
 --
 -- Eseményindítók `hozzaszolasok`
@@ -523,8 +553,6 @@ CREATE TABLE `hozzavalok` (
 --
 
 INSERT INTO `hozzavalok` (`id`, `recept_id`, `hozzavalo`, `mennyiseg`, `mertek_egyseg`, `kategoria`) VALUES
-(1, 1, 'teszt', 12, 'kg', 'Próba'),
-(5, 1, '[value-3]', 3, '[value-5]', 'Próba'),
 (6, 13, 'sült krumpli', 1, 'kg', 'Hozzávalók'),
 (7, 13, 'sajtos túró', 0.5, 'kg', 'Hozzávalók'),
 (8, 13, 'szaft', 0.5, 'l', 'Hozzávalók'),
@@ -580,7 +608,80 @@ INSERT INTO `hozzavalok` (`id`, `recept_id`, `hozzavalo`, `mennyiseg`, `mertek_e
 (58, 17, 'sütőpor', 0.5, 'tk', 'tészta'),
 (59, 17, 'szódabikarbóna', 0.25, 'tk', 'tészta'),
 (60, 17, 'só', 0.25, 'tk', 'tészta'),
-(61, 17, 'csokoládé', 1, 'csésze', 'tészta');
+(61, 17, 'csokoládé', 1, 'csésze', 'tészta'),
+(65, 21, 'asdf', 23, 'df', 'a'),
+(67, 23, 'ketchup', 3, 'evőkanál', 'Tálaláshoz'),
+(68, 23, 'mustár', 3, 'evőkanál', 'Tálaláshoz'),
+(69, 23, 'finom liszt', 7, 'dkg', 'Corn dog'),
+(70, 23, 'kukorica liszt', 7, 'dkg', 'Corn dog'),
+(71, 23, 'instant élesztő', 4, 'g', 'Corn dog'),
+(72, 23, 'tojás', 1, 'db', 'Corn dog'),
+(73, 23, 'tej', 1, 'dl', 'Corn dog'),
+(74, 23, 'só', 1, 'csipet', 'Corn dog'),
+(75, 23, 'cukor', 1, 'csipet', 'Corn dog'),
+(76, 23, 'virsli', 140, 'g', 'Corn dog'),
+(77, 23, 'finomliszt virslihez', 1, 'evőkanál', 'Corn dog'),
+(78, 23, 'napraforgó olaj (a sütéshez)', 2, 'dl', 'Corn dog'),
+(79, 24, 'csirkemellfilé', 500, 'g', 'Currys csirkemell'),
+(80, 24, 'fokhagyma', 3, 'gerezd', 'Currys csirkemell'),
+(81, 24, 'vöröshagyma', 1, 'nagy fej', 'Currys csirkemell'),
+(82, 24, 'reszelt gyömbér', 1, 'hüvelykujjnyi', 'Currys csirkemell'),
+(83, 24, 'curry por', 5, 'teáskanál', 'Currys csirkemell'),
+(84, 24, 'kókuszkrém', 2, 'dl', 'Currys csirkemell'),
+(85, 24, 'paradicsom ivólé', 200, 'ml', 'Currys csirkemell'),
+(86, 24, 'bébispenót', 250, 'g', 'Currys csirkemell'),
+(87, 24, 'limelé', 1, 'limeból nyert', 'Currys csirkemell'),
+(88, 24, 'olívaolaj', 1, 'dl', 'Currys csirkemell'),
+(89, 24, 'bors', 1, 'ízlés szerint', 'Currys csirkemell'),
+(90, 25, 'darált marhahhús', 500, 'g', 'hamburger'),
+(91, 25, 'fűszerkeverék', 1, 'tasak', 'hamburger'),
+(92, 25, 'víz', 175, 'ml', 'hamburger'),
+(93, 25, 'hamburger zsemle', 4, 'db', 'hamburger'),
+(94, 25, 'cheddar sajt', 50, 'g', 'hamburger'),
+(95, 25, 'nagy paradicsom', 1, 'db', 'hamburger'),
+(96, 25, 'közepes fejessaláta', 1, 'fejessaláta', 'hamburger'),
+(97, 25, 'vaj', 25, 'g', 'hamburger'),
+(98, 25, 'olívaolaj', 2, 'ek', 'hamburger'),
+(99, 25, 'burgerszósz', 2, 'evőkanál', 'hamburger'),
+(100, 25, 'majonéz', 2, 'evőkanál', 'hamburger'),
+(101, 25, 'kis lilahagyma', 1, 'db', 'hamburger'),
+(102, 25, 'csemegeuborka', 2, 'db', 'hamburger'),
+(103, 25, 'fűszerpaprika', 1, 'kk', 'hamburger'),
+(104, 25, 'csemegeuborka (lé)', 20, 'g', 'hamburger'),
+(107, 27, 'habtejszín', 200, 'ml', 'Töltelék'),
+(108, 27, 'étcsokoládé', 200, 'g', 'Töltelék'),
+(109, 27, 'mandula', 140, 'g', 'Macaron'),
+(110, 27, 'porcukor', 280, 'g', 'Macaron'),
+(111, 27, 'ételfesték (pink és sárga)', 2, 'csepp', 'Macaron'),
+(112, 27, 'tojásfehérje', 4, 'db', 'Macaron'),
+(113, 27, 'só', 1, 'csipet', 'Macaron'),
+(114, 27, 'vaníliaaroma', 1, 'kávéskanál', 'Macaron'),
+(115, 27, 'citromlé', 1, 'ek', 'Macaron'),
+(116, 28, 'zabpehely', 60, 'g', 'Banános zabsüti'),
+(117, 28, 'búzakorpa', 70, 'g', 'Banános zabsüti'),
+(118, 28, 'méz', 3, 'ek', 'Banános zabsüti'),
+(119, 28, 'banán', 1.5, 'db', 'Banános zabsüti'),
+(120, 28, 'nagy alma', 1, 'db', 'Banános zabsüti'),
+(121, 28, 'vaníliaaroma', 5, 'ml', 'Banános zabsüti'),
+(122, 29, 'dió', 100, 'g', 'Diósajt'),
+(123, 29, 'fokhagymapor', 2, 'tk', 'Diósajt'),
+(124, 29, 'só', 1, 'tk', 'Diósajt'),
+(125, 29, 'passzírozott paradicsom', 20, 'dkg', 'Feltét'),
+(126, 29, 'piros kaliforniai paprika', 0.5, 'db', 'Feltét'),
+(127, 29, 'sárga kaliforniai paprika', 0.5, 'db', 'Feltét'),
+(128, 29, 'zöld kaliforniai paprika', 0.5, 'db', 'Feltét'),
+(129, 29, 'csiperkegomba', 100, 'g', 'Feltét'),
+(130, 29, 'lilahagyma', 1, 'db', 'Feltét'),
+(131, 29, 'csemegekukorica', 150, 'g', 'Feltét'),
+(132, 29, 'só', 1, 'csipet', 'Feltét'),
+(133, 29, 'fűszerkömény', 1, 'tk', 'Feltét'),
+(134, 29, 'rukkola', 200, 'g', 'Feltét'),
+(135, 29, 'olívaolaj', 2, 'ek', 'Feltét'),
+(136, 29, 'víz', 220, 'g', 'Tészta'),
+(137, 29, 'finomliszt', 380, 'g', 'Tészta'),
+(138, 29, 'friss élesztő', 20, 'g', 'Tészta'),
+(139, 29, 'cukor', 1, 'ek', 'Tészta'),
+(140, 29, 'cukor', 2, 'ek', 'Tészta');
 
 --
 -- Eseményindítók `hozzavalok`
@@ -1152,7 +1253,177 @@ INSERT INTO `log` (`id`, `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `
 (418, 'bevasarlolista', 26, '2025-04-11 11:02:34', 'DELETE', '5', NULL),
 (419, 'bevasarlolista', 21, '2025-04-11 11:02:36', 'DELETE', '5', NULL),
 (420, 'bevasarlolista', 19, '2025-04-11 11:02:37', 'DELETE', '5', NULL),
-(421, 'bevasarlolista', 14, '2025-04-11 11:02:39', 'DELETE', '5', NULL);
+(421, 'bevasarlolista', 14, '2025-04-11 11:02:39', 'DELETE', '5', NULL),
+(422, 'receptek', 10, '2025-04-12 17:46:03', 'UPDATE_ELFOGADOT', '0', '2'),
+(423, 'receptek', 12, '2025-04-12 17:46:39', 'UPDATE_ELFOGADOT', '0', '2'),
+(424, 'receptek', 11, '2025-04-12 17:46:45', 'UPDATE_ELFOGADOT', '0', '2'),
+(425, 'receptetrend', 4, '2025-04-12 17:53:23', 'DELETE', '4', NULL),
+(426, 'receptek', 18, '2025-04-12 17:55:11', 'INSERT', NULL, 'Torles tesut'),
+(427, 'hozzavalok', 62, '2025-04-12 17:55:12', 'INSERT', NULL, 'igen'),
+(428, 'receptetrend', 26, '2025-04-12 17:55:12', 'INSERT', NULL, '26'),
+(429, 'receptetrend', 26, '2025-04-12 17:55:27', 'DELETE', '26', NULL),
+(430, 'hozzavalok', 62, '2025-04-12 17:55:27', 'DELETE', 'igen', NULL),
+(431, 'receptek', 18, '2025-04-12 17:55:27', 'DELETE', 'Torles tesut', NULL),
+(432, 'receptek', 19, '2025-04-12 17:56:53', 'INSERT', NULL, 'a'),
+(433, 'hozzavalok', 63, '2025-04-12 17:56:53', 'INSERT', NULL, 'a'),
+(434, 'receptetrend', 27, '2025-04-12 17:56:53', 'INSERT', NULL, '27'),
+(435, 'receptetrend', 27, '2025-04-12 17:57:08', 'DELETE', '27', NULL),
+(436, 'hozzavalok', 63, '2025-04-12 17:57:08', 'DELETE', 'a', NULL),
+(437, 'receptek', 19, '2025-04-12 17:57:09', 'DELETE', 'a', NULL),
+(438, 'receptek', 20, '2025-04-12 18:18:04', 'INSERT', NULL, 're'),
+(439, 'hozzavalok', 64, '2025-04-12 18:18:04', 'INSERT', NULL, 'r'),
+(440, 'receptetrend', 28, '2025-04-12 18:18:04', 'INSERT', NULL, '28'),
+(441, 'receptetrend', 28, '2025-04-12 18:18:41', 'DELETE', '28', NULL),
+(442, 'hozzavalok', 64, '2025-04-12 18:18:41', 'DELETE', 'r', NULL),
+(443, 'receptek', 20, '2025-04-12 18:18:41', 'DELETE', 're', NULL),
+(444, 'kedvenceklista', 14, '2025-04-12 18:22:52', 'INSERT', NULL, '5'),
+(445, 'bevasarlolista', 45, '2025-04-12 18:22:55', 'INSERT', NULL, '5'),
+(446, 'bevasarlolista', 45, '2025-04-12 18:23:05', 'DELETE', '5', NULL),
+(447, 'kedvenceklista', 14, '2025-04-12 18:23:07', 'DELETE', '14', NULL),
+(448, 'receptek', 21, '2025-04-12 18:24:10', 'INSERT', NULL, 'teszt'),
+(449, 'hozzavalok', 65, '2025-04-12 18:24:10', 'INSERT', NULL, 'asdf'),
+(450, 'receptetrend', 29, '2025-04-12 18:24:10', 'INSERT', NULL, '29'),
+(451, 'receptetrend', 30, '2025-04-12 18:24:10', 'INSERT', NULL, '30'),
+(452, 'receptek', 21, '2025-04-12 18:24:23', 'UPDATE_ELFOGADOT', '0', '2'),
+(453, 'receptek', 21, '2025-04-12 18:24:38', 'UPDATE_ELFOGADOT', '2', '3'),
+(454, 'felhasznalok', 5, '2025-04-13 20:16:36', 'UPDATE_EMAIL', 'teszt@teszt.com', 'teszt@teszt.co'),
+(455, 'receptek', 22, '2025-04-13 20:27:17', 'INSERT', NULL, 'a'),
+(456, 'hozzavalok', 66, '2025-04-13 20:27:17', 'INSERT', NULL, 'a'),
+(457, 'receptetrend', 31, '2025-04-13 20:27:17', 'INSERT', NULL, '31'),
+(458, 'receptetrend', 31, '2025-04-13 20:41:42', 'DELETE', '31', NULL),
+(459, 'hozzavalok', 66, '2025-04-13 20:41:42', 'DELETE', 'a', NULL),
+(460, 'receptek', 22, '2025-04-13 20:41:42', 'DELETE', 'a', NULL),
+(461, 'hetimenu', 37, '2025-04-13 20:48:33', 'INSERT', NULL, '12'),
+(462, 'hetimenu', 37, '2025-04-13 20:48:38', 'DELETE', '12', NULL),
+(463, 'gyerekmenu', 1, '2025-04-13 20:48:49', 'INSERT', NULL, '12'),
+(464, 'hetimenu', 1, '2025-04-13 20:48:53', 'DELETE', '12', NULL),
+(465, 'bevasarlolista', 46, '2025-04-15 07:57:11', 'INSERT', NULL, '5'),
+(466, 'bevasarlolista', 47, '2025-04-15 07:57:11', 'INSERT', NULL, '5'),
+(467, 'kedvenceklista', 15, '2025-04-15 07:57:13', 'INSERT', NULL, '5'),
+(468, 'hozzaszolasok', 13, '2025-04-15 07:57:18', 'INSERT', NULL, 'Ez egy hozzászólás'),
+(469, 'kedvenceklista', 15, '2025-04-15 07:57:28', 'DELETE', '15', NULL),
+(470, 'bevasarlolista', 46, '2025-04-15 07:57:31', 'DELETE', '5', NULL),
+(471, 'bevasarlolista', 47, '2025-04-15 07:57:33', 'DELETE', '5', NULL),
+(472, 'bevasarlolista', 48, '2025-04-15 08:00:20', 'INSERT', NULL, '5'),
+(473, 'bevasarlolista', 49, '2025-04-15 08:00:20', 'INSERT', NULL, '5'),
+(474, 'kedvenceklista', 16, '2025-04-15 08:00:22', 'INSERT', NULL, '5'),
+(475, 'hozzaszolasok', 14, '2025-04-15 08:00:28', 'INSERT', NULL, 'Ez egy hozzászólás'),
+(476, 'kedvenceklista', 16, '2025-04-15 08:00:38', 'DELETE', '16', NULL),
+(477, 'bevasarlolista', 48, '2025-04-15 08:00:41', 'DELETE', '5', NULL),
+(478, 'bevasarlolista', 49, '2025-04-15 08:00:43', 'DELETE', '5', NULL),
+(479, 'receptek', 23, '2025-04-15 08:23:26', 'INSERT', NULL, 'Corn dog'),
+(480, 'hozzavalok', 67, '2025-04-15 08:23:26', 'INSERT', NULL, 'ketchup'),
+(481, 'hozzavalok', 68, '2025-04-15 08:23:26', 'INSERT', NULL, 'mustár'),
+(482, 'hozzavalok', 69, '2025-04-15 08:23:26', 'INSERT', NULL, 'finom liszt'),
+(483, 'hozzavalok', 70, '2025-04-15 08:23:26', 'INSERT', NULL, 'kukorica liszt'),
+(484, 'hozzavalok', 71, '2025-04-15 08:23:26', 'INSERT', NULL, 'instant élesztő'),
+(485, 'hozzavalok', 72, '2025-04-15 08:23:26', 'INSERT', NULL, 'tojás'),
+(486, 'hozzavalok', 73, '2025-04-15 08:23:26', 'INSERT', NULL, 'tej'),
+(487, 'hozzavalok', 74, '2025-04-15 08:23:26', 'INSERT', NULL, 'só'),
+(488, 'hozzavalok', 75, '2025-04-15 08:23:26', 'INSERT', NULL, 'cukor'),
+(489, 'hozzavalok', 76, '2025-04-15 08:23:26', 'INSERT', NULL, 'virsli'),
+(490, 'hozzavalok', 77, '2025-04-15 08:23:26', 'INSERT', NULL, 'finomliszt virslihez'),
+(491, 'hozzavalok', 78, '2025-04-15 08:23:26', 'INSERT', NULL, 'napraforgó olaj (a sütéshez)'),
+(492, 'receptetrend', 32, '2025-04-15 08:23:26', 'INSERT', NULL, '32'),
+(493, 'receptek', 17, '2025-04-15 09:42:08', 'UPDATE_ADAG', '1', '3'),
+(494, 'receptek', 17, '2025-04-15 09:50:52', 'UPDATE_ADAG', '3', '1'),
+(495, 'receptek', 24, '2025-04-15 09:58:15', 'INSERT', NULL, 'Currys csirkemell'),
+(496, 'hozzavalok', 79, '2025-04-15 09:58:15', 'INSERT', NULL, 'csirkemellfilé'),
+(497, 'hozzavalok', 80, '2025-04-15 09:58:15', 'INSERT', NULL, 'fokhagyma'),
+(498, 'hozzavalok', 81, '2025-04-15 09:58:15', 'INSERT', NULL, 'vöröshagyma'),
+(499, 'hozzavalok', 82, '2025-04-15 09:58:15', 'INSERT', NULL, 'reszelt gyömbér'),
+(500, 'hozzavalok', 83, '2025-04-15 09:58:15', 'INSERT', NULL, 'curry por'),
+(501, 'hozzavalok', 84, '2025-04-15 09:58:15', 'INSERT', NULL, 'kókuszkrém'),
+(502, 'hozzavalok', 85, '2025-04-15 09:58:15', 'INSERT', NULL, 'paradicsom ivólé'),
+(503, 'hozzavalok', 86, '2025-04-15 09:58:15', 'INSERT', NULL, 'bébispenót'),
+(504, 'hozzavalok', 87, '2025-04-15 09:58:15', 'INSERT', NULL, 'limelé'),
+(505, 'hozzavalok', 88, '2025-04-15 09:58:15', 'INSERT', NULL, 'olívaolaj'),
+(506, 'hozzavalok', 89, '2025-04-15 09:58:15', 'INSERT', NULL, 'bors'),
+(507, 'receptetrend', 33, '2025-04-15 09:58:15', 'INSERT', NULL, '33'),
+(508, 'receptek', 24, '2025-04-15 09:58:41', 'UPDATE_ELFOGADOT', '0', '1'),
+(509, 'receptek', 23, '2025-04-15 10:08:26', 'UPDATE_GYEREKMENU', '0', '1'),
+(510, 'receptek', 25, '2025-04-15 10:15:04', 'INSERT', NULL, 'Hamburger'),
+(511, 'hozzavalok', 90, '2025-04-15 10:15:04', 'INSERT', NULL, 'darált marhahhús'),
+(512, 'hozzavalok', 91, '2025-04-15 10:15:04', 'INSERT', NULL, 'fűszerkeverék'),
+(513, 'hozzavalok', 92, '2025-04-15 10:15:04', 'INSERT', NULL, 'víz'),
+(514, 'hozzavalok', 93, '2025-04-15 10:15:04', 'INSERT', NULL, 'hamburger zsemle'),
+(515, 'hozzavalok', 94, '2025-04-15 10:15:04', 'INSERT', NULL, 'cheddar sajt'),
+(516, 'hozzavalok', 95, '2025-04-15 10:15:04', 'INSERT', NULL, 'nagy paradicsom'),
+(517, 'hozzavalok', 96, '2025-04-15 10:15:04', 'INSERT', NULL, 'közepes fejessaláta'),
+(518, 'hozzavalok', 97, '2025-04-15 10:15:04', 'INSERT', NULL, 'vaj'),
+(519, 'hozzavalok', 98, '2025-04-15 10:15:04', 'INSERT', NULL, 'olívaolaj'),
+(520, 'hozzavalok', 99, '2025-04-15 10:15:04', 'INSERT', NULL, 'burgerszósz'),
+(521, 'hozzavalok', 100, '2025-04-15 10:15:04', 'INSERT', NULL, 'majonéz'),
+(522, 'hozzavalok', 101, '2025-04-15 10:15:04', 'INSERT', NULL, 'kis lilahagyma'),
+(523, 'hozzavalok', 102, '2025-04-15 10:15:04', 'INSERT', NULL, 'csemegeuborka'),
+(524, 'hozzavalok', 103, '2025-04-15 10:15:04', 'INSERT', NULL, 'fűszerpaprika'),
+(525, 'hozzavalok', 104, '2025-04-15 10:15:04', 'INSERT', NULL, 'csemegeuborka (lé)'),
+(526, 'receptetrend', 34, '2025-04-15 10:15:04', 'INSERT', NULL, '34'),
+(527, 'receptek', 25, '2025-04-15 10:16:38', 'UPDATE_ELFOGADOT', '0', '1'),
+(528, 'receptek', 26, '2025-04-15 10:19:26', 'INSERT', NULL, 'macaron'),
+(529, 'hozzavalok', 105, '2025-04-15 10:19:26', 'INSERT', NULL, '3'),
+(530, 'hozzavalok', 106, '2025-04-15 10:19:26', 'INSERT', NULL, 'asd'),
+(531, 'receptetrend', 35, '2025-04-15 10:19:26', 'INSERT', NULL, '35'),
+(532, 'receptetrend', 35, '2025-04-15 10:48:12', 'DELETE', '35', NULL),
+(533, 'hozzavalok', 105, '2025-04-15 10:48:12', 'DELETE', '3', NULL),
+(534, 'hozzavalok', 106, '2025-04-15 10:48:12', 'DELETE', 'asd', NULL),
+(535, 'receptek', 26, '2025-04-15 10:48:12', 'DELETE', 'macaron', NULL),
+(536, 'receptek', 27, '2025-04-15 10:53:07', 'INSERT', NULL, 'Macaron'),
+(537, 'hozzavalok', 107, '2025-04-15 10:53:07', 'INSERT', NULL, 'habtejszín'),
+(538, 'hozzavalok', 108, '2025-04-15 10:53:07', 'INSERT', NULL, 'étcsokoládé'),
+(539, 'hozzavalok', 109, '2025-04-15 10:53:07', 'INSERT', NULL, 'mandula'),
+(540, 'hozzavalok', 110, '2025-04-15 10:53:07', 'INSERT', NULL, 'porcukor'),
+(541, 'hozzavalok', 111, '2025-04-15 10:53:07', 'INSERT', NULL, 'ételfesték (pink és sárga)'),
+(542, 'hozzavalok', 112, '2025-04-15 10:53:07', 'INSERT', NULL, 'tojásfehérje'),
+(543, 'hozzavalok', 113, '2025-04-15 10:53:07', 'INSERT', NULL, 'só'),
+(544, 'hozzavalok', 114, '2025-04-15 10:53:07', 'INSERT', NULL, 'vaníliaaroma'),
+(545, 'hozzavalok', 115, '2025-04-15 10:53:07', 'INSERT', NULL, 'citromlé'),
+(546, 'receptetrend', 36, '2025-04-15 10:53:07', 'INSERT', NULL, '36'),
+(547, 'receptek', 28, '2025-04-15 11:07:18', 'INSERT', NULL, 'Banános zabsüti'),
+(548, 'hozzavalok', 116, '2025-04-15 11:07:18', 'INSERT', NULL, 'zabpehely'),
+(549, 'hozzavalok', 117, '2025-04-15 11:07:18', 'INSERT', NULL, 'búzakorpa'),
+(550, 'hozzavalok', 118, '2025-04-15 11:07:18', 'INSERT', NULL, 'méz'),
+(551, 'hozzavalok', 119, '2025-04-15 11:07:18', 'INSERT', NULL, 'banán'),
+(552, 'hozzavalok', 120, '2025-04-15 11:07:18', 'INSERT', NULL, 'nagy alma'),
+(553, 'hozzavalok', 121, '2025-04-15 11:07:18', 'INSERT', NULL, 'vaníliaaroma'),
+(554, 'receptetrend', 37, '2025-04-15 11:07:19', 'INSERT', NULL, '37'),
+(555, 'receptek', 28, '2025-04-15 11:12:04', 'UPDATE_ELFOGADOT', '0', '1'),
+(556, 'receptek', 29, '2025-04-15 11:41:23', 'INSERT', NULL, 'Vegán pizza'),
+(557, 'hozzavalok', 122, '2025-04-15 11:41:23', 'INSERT', NULL, 'dió'),
+(558, 'hozzavalok', 123, '2025-04-15 11:41:23', 'INSERT', NULL, 'fokhagymapor'),
+(559, 'hozzavalok', 124, '2025-04-15 11:41:23', 'INSERT', NULL, 'só'),
+(560, 'hozzavalok', 125, '2025-04-15 11:41:23', 'INSERT', NULL, 'passzírozott paradicsom'),
+(561, 'hozzavalok', 126, '2025-04-15 11:41:23', 'INSERT', NULL, 'piros kaliforniai paprika'),
+(562, 'hozzavalok', 127, '2025-04-15 11:41:23', 'INSERT', NULL, 'sárga kaliforniai paprika'),
+(563, 'hozzavalok', 128, '2025-04-15 11:41:23', 'INSERT', NULL, 'zöld kaliforniai paprika'),
+(564, 'hozzavalok', 129, '2025-04-15 11:41:23', 'INSERT', NULL, 'csiperkegomba'),
+(565, 'hozzavalok', 130, '2025-04-15 11:41:23', 'INSERT', NULL, 'lilahagyma'),
+(566, 'hozzavalok', 131, '2025-04-15 11:41:23', 'INSERT', NULL, 'csemegekukorica'),
+(567, 'hozzavalok', 132, '2025-04-15 11:41:23', 'INSERT', NULL, 'só'),
+(568, 'hozzavalok', 133, '2025-04-15 11:41:23', 'INSERT', NULL, 'fűszerkömény'),
+(569, 'hozzavalok', 134, '2025-04-15 11:41:23', 'INSERT', NULL, 'rukkola'),
+(570, 'hozzavalok', 135, '2025-04-15 11:41:23', 'INSERT', NULL, 'olívaolaj'),
+(571, 'hozzavalok', 136, '2025-04-15 11:41:23', 'INSERT', NULL, 'víz'),
+(572, 'hozzavalok', 137, '2025-04-15 11:41:23', 'INSERT', NULL, 'finomliszt'),
+(573, 'hozzavalok', 138, '2025-04-15 11:41:23', 'INSERT', NULL, 'friss élesztő'),
+(574, 'hozzavalok', 139, '2025-04-15 11:41:23', 'INSERT', NULL, 'cukor'),
+(575, 'hozzavalok', 140, '2025-04-15 11:41:23', 'INSERT', NULL, 'cukor'),
+(576, 'receptetrend', 38, '2025-04-15 11:41:23', 'INSERT', NULL, '38'),
+(577, 'receptetrend', 39, '2025-04-15 11:41:23', 'INSERT', NULL, '39'),
+(578, 'receptetrend', 40, '2025-04-15 11:41:23', 'INSERT', NULL, '40'),
+(579, 'receptetrend', 41, '2025-04-15 11:41:23', 'INSERT', NULL, '41'),
+(580, 'receptek', 29, '2025-04-15 11:41:51', 'UPDATE_ELFOGADOT', '0', '1'),
+(581, 'receptek', 29, '2025-04-15 11:43:05', 'UPDATE_ETELFAJTA', '40', '3'),
+(582, 'bevasarlolista', 50, '2025-04-15 11:43:59', 'INSERT', NULL, '5'),
+(583, 'bevasarlolista', 51, '2025-04-15 11:43:59', 'INSERT', NULL, '5'),
+(584, 'bevasarlolista', 52, '2025-04-15 11:44:03', 'INSERT', NULL, '5'),
+(585, 'bevasarlolista', 53, '2025-04-15 11:44:04', 'INSERT', NULL, '5'),
+(586, 'bevasarlolista', 50, '2025-04-15 11:44:20', 'DELETE', '5', NULL),
+(587, 'bevasarlolista', 51, '2025-04-15 11:44:21', 'DELETE', '5', NULL),
+(588, 'bevasarlolista', 52, '2025-04-15 11:44:21', 'DELETE', '5', NULL),
+(589, 'bevasarlolista', 53, '2025-04-15 11:44:22', 'DELETE', '5', NULL),
+(590, 'hozzavalok', 5, '2025-04-15 11:47:30', 'DELETE', '[value-3]', NULL),
+(591, 'hozzavalok', 1, '2025-04-15 11:47:34', 'DELETE', 'teszt', NULL);
 
 -- --------------------------------------------------------
 
@@ -1192,14 +1463,21 @@ INSERT INTO `receptek` (`id`, `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id
 (7, 'Virslis-lencsés tész', 6, 'TÍZÓRAI', 6, 345, NULL, 'Közepes', 2, 1, '8', '2025-03-28 19:59:40', 28, 'aaaaaa', NULL, NULL, NULL),
 (8, 'Rántott karfiol', 6, 'EBÉD', 5, 3, NULL, 'Könnyű', 4, 1, '34', '2025-03-28 20:00:26', NULL, 'ffff', NULL, NULL, NULL),
 (9, 'Sonkás-tormás babka', 5, 'UZSONNA', 6, 4, NULL, 'Könnyű', 3, 1, '23', '2025-03-28 20:01:28', 23, 'hhhhhhhh', NULL, NULL, 0),
-(10, 'Avokádókrém', 6, 'UZSONNA', 37, 3, NULL, 'Nehéz', 3, 1, '4455', '2025-03-28 20:02:35', 4, 'ggggg', 0, NULL, 0),
-(11, 'Tojásfasírt', 6, 'VACSORA', 4, 3, NULL, 'Nehéz', 23, 1, '34', '2025-03-28 20:03:29', 2, 'qqqqq', 0, NULL, 0),
-(12, 'Rösztipizza', 6, 'VACSORA', 4, 3, NULL, 'Közepes', 23, 1, NULL, '2025-03-28 20:04:04', 8, NULL, 0, NULL, 0),
+(10, 'Avokádókrém', 6, 'UZSONNA', 37, 3, NULL, 'Nehéz', 3, 1, '4455', '2025-04-12 15:46:03', 4, 'ggggg', 2, 'asd', 0),
+(11, 'Tojásfasírt', 6, 'VACSORA', 4, 3, NULL, 'Nehéz', 23, 1, '34', '2025-04-12 15:46:45', 2, 'qqqqq', 2, 'd', 0),
+(12, 'Rösztipizza', 6, 'VACSORA', 4, 3, NULL, 'Közepes', 23, 1, NULL, '2025-04-12 15:46:39', 8, NULL, 2, 'a', 0),
 (13, 'Poutine', 5, 'EBÉD', 3, 750, './receptkepek/admin/admin_recept_13.png', 'KÖNNYÜ', 25, 1, 'OLCSÓ', '2025-04-07 09:50:28', 20, 'Megsütjük a krumplit. A krumplira rá szórjuk a sajtos túró darabkakákat majd nyakon öntjük a szafttal és ízlés szerint tálaljuk.', 1, NULL, 1),
 (14, 'Amerikai Palacsinta', 5, 'REGGELI', 1, 323, './receptkepek/admin/admin_recept_14.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-07 10:01:28', 26, 'Az összes hozzávalót beletesszük a turmixba, és alaposan összemixeljük. Érdemes 2 részletben hozzáadni a tejet és a lisztet, így egyszerűbb, hatékonyabb. Felforrósítunk és beolajozunk egy teflon serpenyőt. A tésztakeverékből 2-3 korongot csorgatunk bele. A turmix kiöntője segítségével egyszerű adagolni. Aranybarnára sütjük mindkét oldalát. Ízlés szerint fogyaszthatjuk mézzel, mogyorókrémmel, olvasztott csokival, lekvárral, juharsziruppal.', 1, NULL, 1),
 (15, 'Burrito', 5, 'EBÉD', 3, 600, './receptkepek/admin/admin_recept_15.jpg', 'NEHÉZ', 50, 1, 'DRÁGA', '2025-04-07 10:31:44', 29, 'Összeállítás Hevítsük fel az olajat és pirítsuk meg rajta a darált húst, amit fűszerezünk a burrito fűszerrel (vagy házilag is keverhetünk: pirospaprika, oregánó,barna cukor, só, cayenne bors, fokhagymapor, vöröshagymapor). A tortillát kenjük meg tejföllel, majd kanalazzunk rá a babból. Jöhet rá a sült hús, főtt rizs, kukorica, pico de gallo, 1-2 karika jalapeno. Csavarjuk fel és serpenyőben süssük meg mindkét oldalát. Csavarjuk alufóliába, hogy jobban összeálljon. Vágjuk félbe és tálaljuk tejföllel és jalapenoval. Pico de gallo Mindent vágjunk fel nagyon apróra, majd facsarjuk rá a lime levét és sózzuk-borsozzuk. Paradicsomos bab Hevítsük fel az olajat és az apróra vágott lila hagymát, fokhagymát dinszteljük meg. Tegyük rá a paradicsompürét és kicsit karamellizáljuk. Jöhet rá az átöblített konzerves bab, amit sózzunk-borsozzunk. Öntsük fel kis vízzel és főzzük puhára.', 1, NULL, 1),
 (16, 'Csirke szárny', 5, 'REGGELI', 38, 350, './receptkepek/admin/admin_recept_16.jpg', 'KÖNNYÜ', 45, 1, 'OLCSÓ', '2025-04-07 10:31:31', 26, 'A csirkeszárnyakat megmossuk, majd \"összecsomagoljuk\", hogy sütés közben ne nyíljanak ki. A fűszereket alaposan összekeverjük a lereszelt fokhagymával és gyömbérrel, valamint az olívaolajjal és a mézzel. Kevés szójaszósszal ízesítjük a pácot, és megkenjük vele a szárnyakat. Hagyjuk legalább fél órát szobahőmérsékleten pácolódni, aztán tegyük sütőpapírral bélelt tepsire, majd a 180 fokra előmelegített sütőbe 30-35 percre, amíg szépen meg nem pirul.', 1, NULL, 1),
-(17, 'chocolate chip cookie', 5, 'UZSONNNA', 12, 200, './receptkepek/admin/admin_recept_17.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-11 08:56:00', 26, 'Melegítsd elő a sütőt 180°C-ra, és bélelj ki egy tepsit sütőpapírral. Egy kis tálban keverd össze a kukoricakeményítőt és a vizet, majd tedd félre. Egy nagyobb tálban habosítsd fel a vajat a barna és kristálycukorral. Add hozzá a tojást és a vaníliakivonatot, majd keverd simára. Szitáld hozzá a lisztet, sütőport, szódabikarbónát és sót, majd keverd össze. Öntsd hozzá a keményítős keveréket, majd óvatosan dolgozd össze a tésztát. Forgasd bele a csokoládét. Egy kanál segítségével adagold a tésztát a sütőpapírra, kb. 5 cm távolságra egymástól. Süsd 10-12 percig, vagy amíg a szélei aranybarnára sülnek. Hűtsd ki rácson, majd tálald.', 1, NULL, 1);
+(17, 'chocolate chip cookie', 5, 'UZSONNNA', 12, 200, './receptkepek/admin/admin_recept_17.jpg', 'KÖNNYÜ', 30, 1, 'ÁTLAGOS', '2025-04-15 07:50:52', 26, 'Melegítsd elő a sütőt 180°C-ra, és bélelj ki egy tepsit sütőpapírral. Egy kis tálban keverd össze a kukoricakeményítőt és a vizet, majd tedd félre. Egy nagyobb tálban habosítsd fel a vajat a barna és kristálycukorral. Add hozzá a tojást és a vaníliakivonatot, majd keverd simára. Szitáld hozzá a lisztet, sütőport, szódabikarbónát és sót, majd keverd össze. Öntsd hozzá a keményítős keveréket, majd óvatosan dolgozd össze a tésztát. Forgasd bele a csokoládét. Egy kanál segítségével adagold a tésztát a sütőpapírra, kb. 5 cm távolságra egymástól. Süsd 10-12 percig, vagy amíg a szélei aranybarnára sülnek. Hűtsd ki rácson, majd tálald.', 1, NULL, 1),
+(21, 'teszt', 5, 'REGGELI', 40, 123, './receptkepek/admin/admin_recept_21.png', 'KÖNNYÜ', 123, 1, 'OLCSÓ', '2025-04-12 16:24:38', 29, 'sdf', 3, 'Ez így gatya', 0),
+(23, 'Corn dog', 5, 'EBÉD', 38, 1410, './receptkepek/admin/admin_recept_23.jpg', 'KÖNNYÜ', 13, 1, 'ÁTLAGOS', '2025-04-15 08:08:26', 26, 'A langyos tejet elkeverjük egy csipet cukorral, a szobahőmérsékletű\ntojással, és az élesztővel. A liszteket elegyítjük, majd a tejes keverékkel\nösszekeverjük, sóval ízesítjük, és egy magas falú pohárba töltjük.\nVirsliket lisztben meghempergetjük, nyársra húzzuk. Az olajat\nfelforrosítjuk (bő olajban kell sütni!), majd a virslinyársakat a masszába\nmártjuk, kicsit lecsöpögtetjük, és pár perc alatt megsütjük. Ketchup-pal,\nmustárral, majonézzel tálaljuk.', 0, NULL, 1),
+(24, 'Currys csirkemell', 5, 'EBÉD', 3, 557, './receptkepek/admin/admin_recept_24.png', 'KÖZEPES', 60, 4, 'ÁTLAGOS', '2025-04-15 07:58:41', 10, 'Serpenyőben olívaolajon lepirítjuk a csirkemellet, majd ha jól átsült,\nfélretesszük. Az apróra vágott hagymát, fokhagymát és reszelt\ngyömbért lepirítjuk, majd amikor üvegesre pároltuk, ráöntjük a\ncurryport. Hozzáadjuk a csirkemellet, és hozzáöntjük a kókuszkrémet és\na paradicsomot. Jól összeforraljuk, borsozzuk, végül a spenótot is\nhozzárakjuk. Pár percig főzzük még, végül rizzsel tálaljuk.', 1, NULL, 0),
+(25, 'Hamburger', 5, 'VACSORA', 3, 563, './receptkepek/admin/admin_recept_25.jpg', 'KÖNNYÜ', 30, 4, 'ÁTLAGOS', '2025-04-15 08:16:38', 26, 'Hamburger A Knorr Szaftos Hamburger Alapját elkeverjük 175 ml forró\nvízzel, majd 5 percig állni hagyjuk, amíg a keverék felveszi a\nnedvességet. Ezután hozzáadjuk a darált marhahúshoz, végül\negyneművé keverjük a húspogácsát. A húspogácsák kisütése előtt\nállítsuk össze a burgerszószt, vágjuk fel a paradicsomot karikákra, és\npirítsuk elő a hamburgerbucikat. A hamburgerbucikat vágjuk ketté, és\nközepesen forró serpenyőben egy kevés vajon pirítsuk aranybarnára\nőket. Beolajozott kézzel 4 vastagabb (vagy 6 vékonyabb) húspogácsát\nformázzunk, majd tegyük őket forró serpenyőbe pirulni. Oldalanként 4-\n5 percig süssük, és mielőtt elkészülnének, tegyünk rájuk 1-1 szelet\ncheddar sajtot, és hagyjuk ráolvadni. A pirított bucik alját kenjük meg a\nburgerszósszal, tépjünk rá salátát, majd helyezzünk rá egy szelet\nparadicsomot. Erre jöhet az elkészült szaftos húspogácsa, végül a bucik\nteteje. Tálaljuk coleslaw salátával, fogyasszuk el mihamarabb!\nBurgerszósz A csemegeuborkát és a lilahagymát vágjuk fel nagyon\nfinomra, és adjuk hozzá a majonézhez. Fűszerezzük egy kevés füstölt\nfűszerpaprikával, és némi uborkalével hígítsuk fel. Kavarjuk\negyneművé.', 1, NULL, 1),
+(27, 'Macaron', 5, 'UZSONNNA', 12, 990, './receptkepek/admin/admin_recept_27.jpg', 'NEHÉZ', 44, 4, 'ÁTLAGOS', '2025-04-15 08:53:07', 29, 'Macaron A tojásfehérjét kemény habbá verjük egy csipet sóval. A mandulát\nés porcukrot át szoktam egész finomra darálni, majd egy tálba szitálom. A\ntojásfehérjét szétválasztjuk annyi felé, amennyi színű macaront szeretnénk,\nés hozzákeverjük az ételfestéket. (3 felé választottam, pirosra, sárgára\nfestettem, egyet pedig színező nélkül.) Hozzátesszük a vanília aromát és egy\ncsepp citromlevet is. Óvatosan a tojásfehérjéhez dolgozzuk a mandulás\nporcukros keveréket, apránként adagoljuk. Egy tepsit kibélelünk sütőpapírral\n(legjobb 2 réteggel), és a masszát nyomózsák segítségével kis kör alakú\n\nformákra nyomjuk ki. Nem sütjük azonnal ki, várunk egy órát, hogy\nmegszáradjon a teteje. 140 fokon 14 percig sütjük, maradjon halvány.\nHagyjuk teljesen kihűlni, és óvatosan elválasztjuk a sütőpapírtól. Töltelék\nVízgőz felett megolvasztjuk a csokoládét, elkeverjük benne a tejszínt és a\nvajat. Lefóliázzuk, és hagyjuk kihűlni. Egy robotgép segítségével kihabosítjuk.\nNyomózsákba töltjük, megtöltjük a macaronokat, és összetapasztjuk őket.', 0, NULL, 1),
+(28, 'Banános zabsüti', 5, 'UZSONNNA', 1, 222, './receptkepek/admin/admin_recept_28.jpg', 'KÖNNYÜ', 22, 4, 'ÁTLAGOS', '2025-04-15 09:12:04', 4, 'A korpát keverjük össze a pépes banánnal, a lereszelt almával, mézzel,\na pár csepp vanília aromával és a fűszerrel. Ha kész a massza, keverjük\nbele a zabpelyhet is (azért csak ekkor adjuk hozzá, hogy ne tudja magát\na gyümölcsök és a méz miatt túlságosan megszívni, ne legyen\nszétpuhulva teljesen). Adjunk hozzá annyi vizet, amitől kissé ragacsos,\ntrutyis állagú lesz. Egy kanál segítségével sütőpapírral kibélelt tepsibe\n\nrakosgassuk korongokat (nem szükséges kilapítani, úgyis szétterül még\negy picit). Előmelegített, 180°C-os sütőben addig sütjük, amíg a külseje\nmár nem ragad, elkezdenek ropogósak lenni rajta a zabszemek. Hagyjuk\nőket kihűlni (persze ha bírsz várni:)).', 1, NULL, 1),
+(29, 'Vegán pizza', 5, 'EBÉD', 3, 691, './receptkepek/admin/admin_recept_29.jpg', 'KÖNNYÜ', 60, 4, 'OLCSÓ', '2025-04-15 09:43:05', 3, 'A tésztához\nA liszt harmadát elkeverjük a langyos vízzel, cukorral és élesztővel, majd 20 percig állni hagyjuk. Utána hozzáadjuk a maradék lisztet és az olajat és ruganyos tésztát gyúrunk. Ekkor adjuk hozzá a sót, hogy ne semlegesítse az élesztőt. Ha túl ragacsos lenne, adjunk hozzá kevés plusz lisztet, de ne túl sokat. A lényeg, hogy ne ragadjon a deszkához.\nA tésztát 10 percig dagasztjuk, amíg egy feszes gombócot nem kapunk. Kiolajozott tálba tesszük és a gombócot is bevonjuk olajjal, nehogy kiszáradjon. Lefedjük frissentartó fóliával és meleg helyen duplájára kelesztjük a tésztát.\nA feltétekhez\nA paprikákat megmossuk, majd vékony csíkokra vágjuk. Egy serpenyőben felhevítjük az olajat, majd belevetjük a paprikákat. Megszórjuk a köménnyel, oreganóval, majd ízlés szerint sózzuk-borsozzuk. Magas lángon, 3-5 perc alatt alaposan lepirítjuk és egy tálba tesszük.\nElőmelegítjük a sütőnket 240 fokra. A megkelt tésztát két részre osztjuk, kigombócozzuk, majd sodrófával vékonyra nyújtjuk. Kilisztezünk egy gáztepsit, ráhelyezzük az első pizzatésztát, majd megkenjük passatával. Szórunk rá a sült paprikából, a szeletekre vágott gombából, szeletekre vágott lilahagymából és kukoricából. Megsózzuk az egészet, majd betesszük a sütőbe és 10-15 perc alatt készre sütjük.\nFrissen felvágjuk, majd rukkolával, olívaolajjal és „diósajtos” szórással tálaljuk.\nA „diósajthoz”\nA diót száraz serpenyőben addig pirítjuk, míg aromás nem lesz. Ekkor késes aprítóba tesszük a fűszerekkel és szemcsésre dolgozzuk. Ezzel tálaljuk a pizzát.', 1, NULL, 1);
 
 --
 -- Eseményindítók `receptek`
@@ -1311,7 +1589,6 @@ CREATE TABLE `receptetrend` (
 
 INSERT INTO `receptetrend` (`id`, `etrend_id`, `recept_id`) VALUES
 (1, 1, 1),
-(4, 33, 3),
 (5, 50, 5),
 (6, 48, 6),
 (7, 3, 7),
@@ -1332,7 +1609,18 @@ INSERT INTO `receptetrend` (`id`, `etrend_id`, `recept_id`) VALUES
 (22, 47, 17),
 (23, 45, 17),
 (24, 44, 17),
-(25, 8, 17);
+(25, 8, 17),
+(29, 3, 21),
+(30, 7, 21),
+(32, 13, 23),
+(33, 5, 24),
+(34, 2, 25),
+(36, 5, 27),
+(37, 5, 28),
+(38, 54, 29),
+(39, 56, 29),
+(40, 57, 29),
+(41, 55, 29);
 
 --
 -- Eseményindítók `receptetrend`
@@ -1482,7 +1770,7 @@ ALTER TABLE `receptetrend`
 -- AUTO_INCREMENT a táblához `bevasarlolista`
 --
 ALTER TABLE `bevasarlolista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT a táblához `ertekeles`
@@ -1518,31 +1806,31 @@ ALTER TABLE `felhasznalok`
 -- AUTO_INCREMENT a táblához `gyerekmenu`
 --
 ALTER TABLE `gyerekmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `hetimenu`
 --
 ALTER TABLE `hetimenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT a táblához `hozzaszolasok`
 --
 ALTER TABLE `hozzaszolasok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT a táblához `hozzavalok`
 --
 ALTER TABLE `hozzavalok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT a táblához `kedvenceklista`
 --
 ALTER TABLE `kedvenceklista`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT a táblához `konyha`
@@ -1554,19 +1842,19 @@ ALTER TABLE `konyha`
 -- AUTO_INCREMENT a táblához `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=592;
 
 --
 -- AUTO_INCREMENT a táblához `receptek`
 --
 ALTER TABLE `receptek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT a táblához `receptetrend`
 --
 ALTER TABLE `receptetrend`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Megkötések a kiírt táblákhoz
