@@ -17,7 +17,7 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('1. Bejelentkezés tesztelése', async () => {
-        await driver.get('http://localhost/13c-szucs/Vizsgaremek/bejelentkezes/bejelentkezes.php');
+        await driver.get('http://localhost/Vizsgaremek/bejelentkezes/bejelentkezes.php');
         
         await driver.findElement(By.id('felhnev')).sendKeys('admin');
         await driver.findElement(By.id('jelszo')).sendKeys('admin');
@@ -25,16 +25,16 @@ describe('Receptek oldal tesztelése', function() {
 
         await driver.sleep(1000);
         let aktualisUrl = await driver.getCurrentUrl();
-        assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
+        assert.strictEqual(aktualisUrl, 'http://localhost/Vizsgaremek/fooldal/fooldal.php');
     });
 
     it('2. Navigálás a receptek oldalra', async () => {
         driver.findElement(By.xpath("//a[text()='Receptek']")).click();
   
         
-        await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/receptekoldal/receptekoldal.php'), 5000);
+        await driver.wait(until.urlIs('http://localhost/Vizsgaremek/receptekoldal/receptekoldal.php'), 5000);
         let aktualisUrl = await driver.getCurrentUrl();
-        assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/receptekoldal/receptekoldal.php');
+        assert.strictEqual(aktualisUrl, 'http://localhost/Vizsgaremek/receptekoldal/receptekoldal.php');
         
         let btnKereses = await driver.findElement(By.id('button_kereses'));
         assert.ok(btnKereses, 'A keresési gombnak láthatónak kell lennie az oldalon');

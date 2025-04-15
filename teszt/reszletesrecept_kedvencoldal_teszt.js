@@ -16,18 +16,22 @@ describe('Receptek oldal tesztelése', function() {
     });
 
     it('1. Bejelentkezés tesztelése', async () => {
-        await driver.get('http://localhost/13c-szucs/Vizsgaremek/bejelentkezes/bejelentkezes.php');
+        await driver.get('http://localhost/Vizsgaremek/bejelentkezes/bejelentkezes.php');
         
         await driver.findElement(By.id('felhnev')).sendKeys('admin');
         await driver.findElement(By.id('jelszo')).sendKeys('admin');
         await driver.findElement(By.id('btnBejelentkezes')).click();
 
-        await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php'), 5000);
+        await driver.wait(until.urlIs('http://localhost/Vizsgaremek/fooldal/fooldal.php'), 5000);
     });
 
     it('2. Burrito recept részletei és bevásárlólista kezelése', async () => {
         // Burrito recept megnyomása
         await driver.sleep(2000);
+        await driver.findElement(By.id("text_kereses")).sendKeys("Burrito");
+        await driver.sleep(500);
+        await driver.findElement(By.id("button_kereses")).click();
+        await driver.sleep(500);
         let btnBurrito= await driver.findElement(By.id("btnBurrito"));
         await driver.executeScript("arguments[0].scrollIntoView(true);", btnBurrito);
         await driver.sleep(500);

@@ -18,19 +18,19 @@ describe('Vizsgaremek Tesztek', function() {
     });
 
     it('1. Bejelentkezés tesztelése', async () => {
-        await driver.get('http://localhost/13c-szucs/Vizsgaremek/bejelentkezes/bejelentkezes.php');
+        await driver.get('http://localhost/Vizsgaremek/bejelentkezes/bejelentkezes.php');
         
         await driver.findElement(By.id('felhnev')).sendKeys('admin');
         await driver.findElement(By.id('jelszo')).sendKeys('admin');
         await driver.findElement(By.id('btnBejelentkezes')).click();
 
-        await driver.wait(until.urlIs('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php'), 5000);
+        await driver.wait(until.urlIs('http://localhost/Vizsgaremek/fooldal/fooldal.php'), 5000);
         let aktualisUrl = await driver.getCurrentUrl();
-        assert.strictEqual(aktualisUrl, 'http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
+        assert.strictEqual(aktualisUrl, 'http://localhost/Vizsgaremek/fooldal/fooldal.php');
     });
 
     it('2. Keresési funkció tesztelése - Találatos keresés', async () => {
-        await driver.get('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
+        await driver.get('http://localhost/Vizsgaremek/fooldal/fooldal.php');
         
         let keresesiMezo = await driver.findElement(By.id('text_kereses'));
         await keresesiMezo.sendKeys('teszt');
@@ -42,7 +42,7 @@ describe('Vizsgaremek Tesztek', function() {
     });
 
     it('3. Keresési funkció tesztelése - Nincs találat', async () => {
-        await driver.get('http://localhost/13c-szucs/Vizsgaremek/fooldal/fooldal.php');
+        await driver.get('http://localhost/Vizsgaremek/fooldal/fooldal.php');
         
         let keresesiMezo = await driver.findElement(By.id('text_kereses'));
         await keresesiMezo.sendKeys('xyz123nonexistent');
