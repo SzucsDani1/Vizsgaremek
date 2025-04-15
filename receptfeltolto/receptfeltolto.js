@@ -257,6 +257,7 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     hozzavaloMennyiseg.type = "number";
     hozzavaloMennyiseg.classList = "form-control";
     hozzavaloMennyiseg.placeholder = "Hozzávaló mennyiség";
+    hozzavaloMennyiseg.id = "hozzavMenny_tesztId"
 
     const labelMennyiseg = document.createElement("label");
     labelMennyiseg.innerHTML = "Hozzávaló mennyiség";
@@ -271,6 +272,8 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     hozzavaloMertekegyseg.type = "text";
     hozzavaloMertekegyseg.classList = "form-control";
     hozzavaloMertekegyseg.placeholder = "Hozzávaló mértékegység";
+    hozzavaloMertekegyseg.id = "hozzavMertekegy_tesztId"
+
 
     const labelMertekegyseg = document.createElement("label");
     labelMertekegyseg.innerHTML = "Hozzávaló mértékegysége";
@@ -279,6 +282,7 @@ function hozzavaloHozzaadasa(divFilterBox, kategoriaInput, divFigyelmeztet, divT
     btnHozzaad.type = "button";
     btnHozzaad.classList = "btn btn-success w-50 mx-auto";
     btnHozzaad.innerHTML = "Hozzáad";
+    btnHozzaad.id = "hozzavHozaad_tesztId"
 
     divFilterBox.appendChild(h4);
     divFilterBox.appendChild(divRow);

@@ -11,7 +11,7 @@ async function setupDriver() {
 async function testSikeresRegisztracio() {
     let driver = await setupDriver();
     try {
-        await driver.get('http://localhost/13c-toth/Vizsgaremek/bejelentkezes/bejelentkezes.php');
+        await driver.get('http://localhost/Vizsgaremek/bejelentkezes/bejelentkezes.php');
         const regButton = await driver.wait(until.elementIsVisible(driver.findElement(By.id('regButton'))), 5000);
         await regButton.click();
         await driver.sleep(1000);
@@ -43,7 +43,7 @@ async function testSikeresRegisztracio() {
 async function testHianyosRegisztracio() {
     let driver = await setupDriver();
     try {
-        await driver.get('http://localhost/13c-toth/Vizsgaremek/bejelentkezes/bejelentkezes.php');
+        await driver.get('http://localhost/Vizsgaremek//bejelentkezes/bejelentkezes.php');
         const regButton = await driver.wait(until.elementIsVisible(driver.findElement(By.id('regButton'))), 5000);
         await regButton.click();
         await driver.sleep(1000);
