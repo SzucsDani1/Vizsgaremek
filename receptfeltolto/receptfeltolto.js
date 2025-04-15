@@ -14,12 +14,15 @@ const kivalasztottEtrendek = new Set();
 
 let felhasznaloId;
 
-function receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat, kategoriaInput) {
-    document.getElementById("figyelmezteto_uzenet").hidden = true;
-    
+function receptFeltolto(hozzavaloNeve, hozzavaloMertekegyseg, hozzavaloMennyiseg, divTablazat, kategoriaInput) {    
+    alertUzenet.innerHTML = "";
     if (hozzavaloMennyiseg.value === "" || hozzavaloMertekegyseg.value === "" || hozzavaloNeve.value === "") {
-        document.getElementById("figyelmezteto_uzenet").innerHTML = "Kérem töltsön ki minden mezőt!";
-        document.getElementById("figyelmezteto_uzenet").hidden = false;
+        let alertUzenet = document.createElement("div")
+        alertUzenet.classList = "alert alert-danger text-center";
+        alertUzenet.role = "alert";
+        alertUzenet.innerHTML = "Kérem töltsön ki minden mezőt!";
+        document.getElementById("alertUzenet").appendChild(alertUzenet);
+        alertUzenet.scrollIntoView({ behavior: "smooth" });
         return;
     }
     
@@ -682,11 +685,11 @@ function mindenKiVanEToltve() {
         vanHozzavalo = true;
     }
     
-    let tables = hozzavaloKategoriak.querySelectorAll("table");
+    let tableHozzavaloKategorai = hozzavaloKategoriak.querySelectorAll("table");
 
     if (hozzavaloKategoriak) {
        
-        for (let table of tables) {
+        for (let table of tableHozzavaloKategorai) {
             
             if (table && table.querySelector("tbody") && table.querySelector("tbody").children.length > 0) {
                 vanHozzavalo = true;
@@ -706,7 +709,7 @@ function mindenKiVanEToltve() {
     //hozzavalok kivalogat 
     let kuldHozzavalok = []
     
-    for (const table of tables) {
+    for (const table of tableHozzavaloKategorai) {
 
         let sorok = table.querySelector("tbody").querySelectorAll("tr")
         

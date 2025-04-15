@@ -91,13 +91,16 @@
     </div>
 
     <button type="button" class="btn btn-warning w-100 my-3" id="hozzaadKategoriaGomb">Hozzávalók hozzáadása</button>
-
-    <div id="hozzavaloKategoriak"></div>
+    
+    <div id="hozzavaloKategoriak">
+      <div id="alertUzenet"></div>
+    </div>
 
     
     
     <!--RECEPT HOZZÁVALÓ TÁBLÁZAT-->
     <div class="row">
+    
     <table class="table table-success" id="table_hozzavalok" hidden>
       <thead>
         <tr>
@@ -111,9 +114,7 @@
       <tbody id="tbody_hozzavalok">
       </tbody>
     </table>
-    <div class="alert alert-danger" id="figyelmezteto_uzenet" hidden role="alert">
-
-    </div>
+    
 
     <!--ÉTELFAJTÁK SZŰRÉSE-->
     <div class="row">
