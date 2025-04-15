@@ -605,7 +605,7 @@ function nehezsegFigyel() {
     }
 }
 
-/*
+
 function adagFigyel() {
     const range = document.getElementById("adagInput");
     let adagKiir = document.getElementById("adagKiir");
@@ -648,7 +648,7 @@ function adagFigyel() {
         }
     }
 }
-*/
+
 
 function mindenKiVanEToltve() {
  
@@ -763,7 +763,7 @@ function mindenKiVanEToltve() {
     let ar = document.getElementById("arKiir").innerHTML;
 
     //adag
-    //let adag = document.getElementById("adagInput").value;
+    let adag = document.getElementById("adagInput").value;
 
     //ido
     let ido = document.getElementById("idoInput").value;
@@ -798,7 +798,7 @@ function mindenKiVanEToltve() {
     let adatForm = new FormData()
 
     adatForm.append("image", file)
-    receptFeltoltes(receptNev, gyerekek,kuldHozzavalok,etelfajtaKereso, napszak, Array.from(kivalasztottEtrendek), konyhaKereso, nehezseg, ar, /*adag,*/ ido, kaloriaInput.value,receptLeiras.value, adatForm);
+    receptFeltoltes(receptNev, gyerekek,kuldHozzavalok,etelfajtaKereso, napszak, Array.from(kivalasztottEtrendek), konyhaKereso, nehezseg, ar, adag, ido, kaloriaInput.value,receptLeiras.value, adatForm);
 }
 
 
@@ -968,7 +968,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 
 
-async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak, etrendek, konyha, nehezseg, ar, /*adag*/ ido, kaloria,leiras, kep)
+async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak, etrendek, konyha, nehezseg, ar, adag, ido, kaloria,leiras, kep)
 {
     let eredmeny = await fetch("./adatbazisInterakciok/feltoltRecept", {
         method : "POST",
@@ -985,7 +985,7 @@ async function receptFeltoltes(receptNev, gyereke,hozzavalok,etelfajta, napszak,
             "konyha" : konyha,
             "nehezseg" : nehezseg,
             "ar" : ar,
-            //"adag" : adag,
+            "adag" : adag,
             "ido" : ido,
             "kaloria" : kaloria,
             "leiras" : leiras,
@@ -1063,7 +1063,7 @@ window.addEventListener("load", async function(){
     alapanyagLista();
     nehezsegFigyel();
     arFigyel();
-    //adagFigyel();
+    adagFigyel();
     modositasiJavaslat();
 })
 

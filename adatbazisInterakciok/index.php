@@ -201,7 +201,31 @@
         break;
 
 
-
+        case "adagleker":
+            if($_SERVER["REQUEST_METHOD"] == "POST"){
+                if(!empty($bodyAdatok["recept_id"])){
+                    $recept_id = $bodyAdatok["recept_id"];
+                    $keresesReceptek = adatokLekerdezese("SELECT receptek.adag FROM receptek WHERE receptek.id = {$recept_id};");
+                    if(is_array($keresesReceptek)){
+                        echo json_encode($keresesReceptek, JSON_UNESCAPED_UNICODE);
+                    }
+                    else{
+                        echo json_encode(["valasz" => "Nincs találat!"], JSON_UNESCAPED_UNICODE);
+                        header("bad request", true, 400);
+                    }
+                }
+                else{
+                    header("bad request", true, 400);
+                    echo json_encode(["valasz" => "Nincs találat"], JSON_UNESCAPED_UNICODE);
+                    
+                }
+           }
+           else{
+            echo json_encode(['valasz' => 'Hibás metódus'], JSON_UNESCAPED_UNICODE);
+            header('bad request', true, 400);
+           
+        }
+        break;
 
         //reszletesreceptoldal
         case "ertekeles":

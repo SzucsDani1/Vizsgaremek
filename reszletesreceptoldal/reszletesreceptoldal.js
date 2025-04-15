@@ -5,7 +5,8 @@ import {jogosultsagLeker} from "../javascriptFuggvenyek/adminFelulet.js";
 
 let kivalasztottCsillag = 0;
 let kategoriak = [];
-let adag = 1;
+var adag;
+var alapAdag;
 let receptek = [];
 let hozzavalok = [];
 let felhasznalo_id;
@@ -243,9 +244,10 @@ async function hozzavalokLeker(){
           "felhasznalo_id" : felhasznalo_id
       })
     })
-    
+
     let hozzavalokLista = await hozzavalokLeker.json();
     let bevasarloListaLekert = await lekerBevasarlolista.json();
+    
 
     if(hozzavalokLeker.ok){
 
@@ -269,6 +271,34 @@ async function hozzavalokLeker(){
     console.log(error);
 }
 }
+
+async function adagLeker(){
+  try {
+    
+    let lekerAdag = await fetch("../adatbazisInterakciok/adagleker",{
+      method : "POST",
+      headers : {
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+          "recept_id" : receptek_id
+      })
+    })
+    
+    let adagLekert= await lekerAdag.json();
+
+    if(lekerAdag.ok){
+      adag = adagLekert[0].adag;
+      alapAdag = adagLekert[0].adag;
+    }
+    else{
+        console.log(adagLekert.valasz);
+    }
+} catch (error) {
+    console.log(error);
+}
+}
+
 
 async function hozzavalokKategoriaLeker(){
   try {
@@ -503,7 +533,10 @@ function hozzavalokTablazatGeneral(){
 
         tdSorszam.innerHTML = szamlalo;
         tdHozzavaloNev.innerHTML = hozzavalo.hozzavalo;
-        tdMennyiseg.innerHTML = hozzavalo.mennyiseg * adag + " " + hozzavalo.mertek_egyseg;
+        let adagEredmeny = 0;
+        adagEredmeny = parseFloat(((receptek[0].kaloria / alapAdag)* (adag)).toFixed(2));
+        
+        tdMennyiseg.innerHTML = adagEredmeny + " " + hozzavalo.mertek_egyseg;
 
         tbody.appendChild(tbodyTR);
         tbodyTR.appendChild(tdSorszam);
@@ -589,7 +622,10 @@ function receptInfoList(){
 
   let liKaloria= document.createElement("li");
   liKaloria.classList = "list-group-item";
-  liKaloria.innerHTML = "<b>Kalória </b>- "+receptek[0].kaloria * adag+" kcal";
+  let adagEredmeny = 0;
+  adagEredmeny = parseFloat(((receptek[0].kaloria / alapAdag)* (adag)).toFixed(2));
+  
+  liKaloria.innerHTML = "<b>Kalória </b>- "+adagEredmeny+" kcal";
 
   let liKonyha= document.createElement("li");
   liKonyha.classList = "list-group-item";
@@ -740,6 +776,7 @@ function adagFigyel(){
 
 async function hozzavalokFuggvenyHivas() {
   try {
+      
       await hozzavalokKategoriaLeker();
       await hozzavalokLeker();
   } catch (error) {
@@ -750,6 +787,7 @@ async function hozzavalokFuggvenyHivas() {
 
 document.getElementById("btnHozzaszolasKuldes").addEventListener("click", hozzaszolasElkuld);
 document.getElementById("kedvencRecept").addEventListener("change", kedvencRecept);
+window.addEventListener("load", adagLeker);
 async function segedFuggvenyInditashoz() {
 
     await felhasznaloIdLeker();

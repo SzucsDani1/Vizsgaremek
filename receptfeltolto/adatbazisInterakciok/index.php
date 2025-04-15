@@ -147,7 +147,7 @@
                 $nehezseg = $bodyAdatok["nehezseg"];
 
                 $ar = $bodyAdatok["ar"];
-                //$adag = $bodyAdatok["adag"];
+                $adag = $bodyAdatok["adag"];
                 $ido = $bodyAdatok["ido"];
 
                 $kaloria = $bodyAdatok["kaloria"];
@@ -158,12 +158,12 @@
                 
                 if(!empty($receptNev) && !empty($etelfajta) && !empty($napszak) && !empty($etrend) 
                 && !empty($konyhak) && !empty($nehezseg) && !empty($ar)
-                && /*!empty($adag) &&*/!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($felhsznaloId) && !empty($hozzavalok) && isset($gyereke) 
+                && !empty($adag) &&!empty($ido) && !empty($kaloria) && !empty($receptLeiras) && !empty($felhsznaloId) && !empty($hozzavalok) && isset($gyereke) 
                 ){
                     //feltolt a recept és visszakapjuk az új recept id-t
                     $sql = "INSERT INTO `receptek` ( `neve`, `felhasznalo_id`, `napszak`, `etelfajta_id`, `kaloria`,  `nehezseg`, `ido`, `adag`, `ar`, `mikor_feltolt`
                     , `konyha_id`, `elkeszites`, `elfogadot`, `gyerekmenu`) 
-                    VALUES ( '$receptNev', '$felhsznaloId', '$napszak', '$etelfajta', '$kaloria', '$nehezseg', '$ido', '1', '$ar', current_timestamp(), '$konyhak',
+                    VALUES ( '$receptNev', '$felhsznaloId', '$napszak', '$etelfajta', '$kaloria', '$nehezseg', '$ido', '$adag', '$ar', current_timestamp(), '$konyhak',
                      '$receptLeiras', '0', '$gyereke') ";
                      //echo $sql;
                     $id = adatokValtoztatasa($sql);
