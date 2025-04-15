@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Ápr 15. 11:48
+-- Létrehozás ideje: 2025. Ápr 15. 17:18
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -441,6 +441,18 @@ CREATE TABLE `gyerekmenu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
+-- A tábla adatainak kiíratása `gyerekmenu`
+--
+
+INSERT INTO `gyerekmenu` (`id`, `recept_id`, `recept_neve`, `napszak`) VALUES
+(16, 14, 'Amerikai Palacsinta', 'REGGELI'),
+(17, 16, 'Csirke szárny', 'REGGELI'),
+(19, 13, 'Poutine', 'EBÉD'),
+(20, 29, 'Vegán pizza', 'EBÉD'),
+(21, 15, 'Burrito', 'EBÉD'),
+(22, 25, 'Hamburger', 'VACSORA');
+
+--
 -- Eseményindítók `gyerekmenu`
 --
 DELIMITER $$
@@ -472,10 +484,13 @@ CREATE TABLE `hetimenu` (
 --
 
 INSERT INTO `hetimenu` (`id`, `recept_id`, `recept_neve`, `napszak`) VALUES
-(31, 16, 'Csirke szárny', 'REGGELI'),
-(32, 14, 'Amerikai Palacsinta', 'REGGELI'),
-(34, 15, 'Burrito', 'EBÉD'),
-(35, 13, 'Poutine', 'EBÉD');
+(38, 16, 'Csirke szárny', 'REGGELI'),
+(39, 14, 'Amerikai Palacsinta', 'REGGELI'),
+(41, 24, 'Currys csirkemell', 'EBÉD'),
+(42, 15, 'Burrito', 'EBÉD'),
+(43, 29, 'Vegán pizza', 'EBÉD'),
+(44, 13, 'Poutine', 'EBÉD'),
+(48, 25, 'Hamburger', 'VACSORA');
 
 --
 -- Eseményindítók `hetimenu`
@@ -1423,7 +1438,48 @@ INSERT INTO `log` (`id`, `tablazat_nev`, `valtozott_id`, `datum`, `log_tipus`, `
 (588, 'bevasarlolista', 52, '2025-04-15 11:44:21', 'DELETE', '5', NULL),
 (589, 'bevasarlolista', 53, '2025-04-15 11:44:22', 'DELETE', '5', NULL),
 (590, 'hozzavalok', 5, '2025-04-15 11:47:30', 'DELETE', '[value-3]', NULL),
-(591, 'hozzavalok', 1, '2025-04-15 11:47:34', 'DELETE', 'teszt', NULL);
+(591, 'hozzavalok', 1, '2025-04-15 11:47:34', 'DELETE', 'teszt', NULL),
+(592, 'gyerekmenu', 2, '2025-04-15 17:11:00', 'INSERT', NULL, '14'),
+(593, 'gyerekmenu', 3, '2025-04-15 17:11:00', 'INSERT', NULL, '16'),
+(594, 'gyerekmenu', 5, '2025-04-15 17:11:00', 'INSERT', NULL, '13'),
+(595, 'gyerekmenu', 6, '2025-04-15 17:11:00', 'INSERT', NULL, '29'),
+(596, 'gyerekmenu', 7, '2025-04-15 17:11:00', 'INSERT', NULL, '15'),
+(597, 'gyerekmenu', 8, '2025-04-15 17:11:00', 'INSERT', NULL, '25'),
+(598, 'gyerekmenu', 2, '2025-04-15 17:12:00', 'DELETE', '14', NULL),
+(599, 'gyerekmenu', 3, '2025-04-15 17:12:00', 'DELETE', '16', NULL),
+(600, 'gyerekmenu', 5, '2025-04-15 17:12:00', 'DELETE', '13', NULL),
+(601, 'gyerekmenu', 6, '2025-04-15 17:12:00', 'DELETE', '29', NULL),
+(602, 'gyerekmenu', 7, '2025-04-15 17:12:00', 'DELETE', '15', NULL),
+(603, 'gyerekmenu', 8, '2025-04-15 17:12:00', 'DELETE', '25', NULL),
+(604, 'gyerekmenu', 9, '2025-04-15 17:12:00', 'INSERT', NULL, '16'),
+(605, 'gyerekmenu', 10, '2025-04-15 17:12:00', 'INSERT', NULL, '14'),
+(606, 'gyerekmenu', 12, '2025-04-15 17:12:00', 'INSERT', NULL, '13'),
+(607, 'gyerekmenu', 13, '2025-04-15 17:12:00', 'INSERT', NULL, '29'),
+(608, 'gyerekmenu', 14, '2025-04-15 17:12:00', 'INSERT', NULL, '15'),
+(609, 'gyerekmenu', 15, '2025-04-15 17:12:00', 'INSERT', NULL, '25'),
+(610, 'hetimenu', 31, '2025-04-15 17:14:00', 'DELETE', '16', NULL),
+(611, 'hetimenu', 32, '2025-04-15 17:14:00', 'DELETE', '14', NULL),
+(612, 'hetimenu', 34, '2025-04-15 17:14:00', 'DELETE', '15', NULL),
+(613, 'gyerekmenu', 9, '2025-04-15 17:14:00', 'DELETE', '16', NULL),
+(614, 'gyerekmenu', 10, '2025-04-15 17:14:00', 'DELETE', '14', NULL),
+(615, 'gyerekmenu', 12, '2025-04-15 17:14:00', 'DELETE', '13', NULL),
+(616, 'gyerekmenu', 13, '2025-04-15 17:14:00', 'DELETE', '29', NULL),
+(617, 'gyerekmenu', 14, '2025-04-15 17:14:00', 'DELETE', '15', NULL),
+(618, 'gyerekmenu', 15, '2025-04-15 17:14:00', 'DELETE', '25', NULL),
+(619, 'hetimenu', 35, '2025-04-15 17:14:00', 'DELETE', '13', NULL),
+(620, 'gyerekmenu', 16, '2025-04-15 17:14:00', 'INSERT', NULL, '14'),
+(621, 'gyerekmenu', 17, '2025-04-15 17:14:00', 'INSERT', NULL, '16'),
+(622, 'hetimenu', 38, '2025-04-15 17:14:00', 'INSERT', NULL, '16'),
+(623, 'hetimenu', 39, '2025-04-15 17:14:00', 'INSERT', NULL, '14'),
+(624, 'hetimenu', 41, '2025-04-15 17:14:00', 'INSERT', NULL, '24'),
+(625, 'gyerekmenu', 19, '2025-04-15 17:14:00', 'INSERT', NULL, '13'),
+(626, 'hetimenu', 42, '2025-04-15 17:14:00', 'INSERT', NULL, '15'),
+(627, 'gyerekmenu', 20, '2025-04-15 17:14:00', 'INSERT', NULL, '29'),
+(628, 'hetimenu', 43, '2025-04-15 17:14:00', 'INSERT', NULL, '29'),
+(629, 'gyerekmenu', 21, '2025-04-15 17:14:00', 'INSERT', NULL, '15'),
+(630, 'hetimenu', 44, '2025-04-15 17:14:00', 'INSERT', NULL, '13'),
+(631, 'hetimenu', 48, '2025-04-15 17:14:00', 'INSERT', NULL, '25'),
+(632, 'gyerekmenu', 22, '2025-04-15 17:14:00', 'INSERT', NULL, '25');
 
 -- --------------------------------------------------------
 
@@ -1806,13 +1862,13 @@ ALTER TABLE `felhasznalok`
 -- AUTO_INCREMENT a táblához `gyerekmenu`
 --
 ALTER TABLE `gyerekmenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT a táblához `hetimenu`
 --
 ALTER TABLE `hetimenu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT a táblához `hozzaszolasok`
@@ -1842,7 +1898,7 @@ ALTER TABLE `konyha`
 -- AUTO_INCREMENT a táblához `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=592;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
 
 --
 -- AUTO_INCREMENT a táblához `receptek`
@@ -1919,7 +1975,7 @@ DELIMITER $$
 --
 -- Események
 --
-CREATE DEFINER=`root`@`localhost` EVENT `hetimenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-11 11:35:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+CREATE DEFINER=`root`@`localhost` EVENT `hetimenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-15 17:14:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
     -- Delete the old menu
     DELETE FROM hetimenu;
     
@@ -1957,7 +2013,7 @@ CREATE DEFINER=`root`@`localhost` EVENT `hetimenu_general` ON SCHEDULE EVERY 1 W
     LIMIT 7; -- Adjust as needed
 END$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `gyerekmenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-11 11:08:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+CREATE DEFINER=`root`@`localhost` EVENT `gyerekmenu_general` ON SCHEDULE EVERY 1 WEEK STARTS '2025-04-15 17:14:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
     -- Delete the old menu
     DELETE FROM gyerekmenu;
     
