@@ -35,7 +35,7 @@
               <a class="nav-link" href="../receptfeltolto/receptfeltolto.php">Recept feltöltés</a>
               </li>
               <li class="nav-item text-center">
-                <a class="nav-link active" href="../rolunk/rolunk.php">Rólunk</a>
+                <a class="nav-link" href="../rolunk/rolunk.php">Rólunk</a>
               </li>
               <li class="nav-item text-center">
                 <a class="nav-link" href="../gyerekmenu/gyerekmenu.php">Gyerek menü</a>
