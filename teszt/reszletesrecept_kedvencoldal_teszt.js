@@ -2,7 +2,7 @@ let { Builder, By, Key, until } = require('selenium-webdriver');
 let assert = require('assert');
 let { describe, it, after, before } = require('mocha');
 
-describe('Receptek oldal tesztelése', function() {
+describe('Részletes receptek és kedvencek oldal tesztelése', function() {
     this.timeout(60000);
     let driver;
 

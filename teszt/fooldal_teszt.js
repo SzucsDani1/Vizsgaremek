@@ -2,7 +2,7 @@ let { Builder, By, Key, until } = require('selenium-webdriver');
 let assert = require('assert');
 let chrome = require('selenium-webdriver/chrome');
 
-describe('Vizsgaremek Tesztek', function() {
+describe('Főoldal Tesztek', function() {
     this.timeout(30000);
     let driver;
 
