@@ -888,7 +888,7 @@ function accordionGeneral(divAccordion, receptek) {
 
         let h2AccordionHeader = document.createElement("h2");
         h2AccordionHeader.classList = "accordion-header";
-        h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve+"-"+recept.id;
+        h2AccordionHeader.id = "panelLenyitvaHeading-"+recept.neve.replace(/\s/g, '')+"-"+recept.id;
         h2AccordionHeader.style.display = "flex";
         h2AccordionHeader.style.alignItems = "center";
 
@@ -897,15 +897,15 @@ function accordionGeneral(divAccordion, receptek) {
         btnLenyit.style.flexGrow = "1";
         btnLenyit.type = "button";
         btnLenyit.setAttribute("data-bs-toggle", "collapse");
-        btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve+"-"+recept.id);
+        btnLenyit.setAttribute("data-bs-target", "#panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
         btnLenyit.setAttribute("aria-expanded", "true");
-        btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve+"-"+recept.id);
-        btnLenyit.innerHTML = "Módosítási javaslat: "+" "+recept.neve;
+        btnLenyit.setAttribute("aria-controls", "panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
+        btnLenyit.innerHTML = "Recept neve: "+" "+recept.neve;
 
         let divPanelLenyitva = document.createElement("div");
-        divPanelLenyitva.id = "panelLenyitva-"+recept.neve+"-"+recept.id;
+        divPanelLenyitva.id = "panelLenyitva-"+recept.neve.replace(/\s/g, '')+"-"+recept.id;
         divPanelLenyitva.classList = "accordion-collapse collapse show";
-        divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve+"-"+recept.id);
+        divPanelLenyitva.setAttribute("aria-labelledby", "panelLenyitvaHeading-"+recept.neve.replace(/\s/g, '')+"-"+recept.id);
 
         let divAccordionBody = document.createElement("div");
         divAccordionBody.classList = "accordion-body";
