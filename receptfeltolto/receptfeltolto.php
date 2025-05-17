@@ -137,7 +137,7 @@
             <option value="REGGELI" data-tokens="Reggeli">REGGELI</option>
             <option value="TÍZÓRAI" data-tokens="Tízórai">TÍZÓRAI</option>
             <option value="EBÉD" data-tokens="Ebéd">EBÉD</option>
-            <option value="UZSONNNA" data-tokens="Uzsonna">UZSONNA</option>
+            <option value="UZSONNA" data-tokens="Uzsonna">UZSONNA</option>
             <option value="VACSORA" data-tokens="Vacsora">VACSORA</option>
           </select>
         </div>
