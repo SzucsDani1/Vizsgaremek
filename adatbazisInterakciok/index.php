@@ -991,7 +991,7 @@
                         $sql .= " WHERE receptek.elfogadot = 1";
                     }
                     
-                    $sql .= " GROUP BY receptek.id ORDER BY receptek.neve ASC LIMIT 30";
+                    $sql .= " GROUP BY receptek.id ORDER BY receptek.neve ASC";
                     
                     $receptLista = adatokLekerdezese($sql);
                     foreach ($receptLista as $recept) {
