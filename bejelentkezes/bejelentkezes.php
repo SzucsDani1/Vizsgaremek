@@ -1,7 +1,6 @@
 <?php 
     require_once "./backendBejelentkezes/sessionConfig.php";
     include "../adatbazisInterakciok/adatbazisInterakciok.php" ;
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
